@@ -14,7 +14,9 @@
     "underscore": "~1.6.0",
     "backbone": "~1.1.2",
     "marionette": "~2.2.2",
-    "fontawesome": "~4.2.0"
+    "fontawesome": "~4.2.0",
+    "animate.css": "~3.2.0",
+    "jquery-waypoints": "~2.0.5"
   },
   "devDependencies": {},
   "resolutions": {

@@ -14,8 +14,8 @@ html, html a {
 }
 
 body {
-    min-height: 100%;
-    background: #3498db;
+    background:  #3498db;
+    font-family: Raleway, sans-serif;
 }
 
 a:hover,
@@ -23,11 +23,36 @@ a:focus {
     text-decoration: none;
 }
 
+// ********** LOGO *********** //
+
+.logo {
+    margin:         50px auto;
+    text-align:     center;
+    color:          #fff;
+    font-size:      48px;
+    text-transform: uppercase;
+    font-family:    'Raleway', sans-serif;
+    font-weight:    300;
+}
+
+.logo__name, .logo__city {
+    display: inline-block;
+}
+
+.logo__name:after {
+    content: '|';
+    margin:  0 .5em;
+}
+
+.logo__city {
+    font-weight: 100;
+}
+
 // ********* LOADER ********** //
 
 .hero {
     position:   relative;
-    top:        calc(30% - 20px);
+    top:        calc(10% - 20px);
     margin:     0 auto;
     text-align: center;
 }
@@ -50,10 +75,11 @@ a:focus {
     width:         54px;
     height:        54px;
     background:    #fff;
-    animation:     bounce .5s linear infinite;
+    animation:     bounce .5s linear 1s infinite;
     position:      relative;
     border-radius: 3px;
     z-index:       200;
+    transform:     rotate(45deg);
 }
 
 .loader_type_box .loader__deco {
@@ -62,27 +88,31 @@ a:focus {
     background:    #000;
     opacity:       0.1;
     position:      relative;
-    top:           9px;
+    top:           15px;
     border-radius: 50%;
-    animation:     shadow .5s linear infinite;
+    animation:     shadow .5s linear 1s infinite;
 }
 
 @keyframes bounce {
+    0% {
+        transform: rotate(45deg);
+    }
     17% {
+        transform:                  rotate(45deg);
         border-bottom-right-radius: 3px;
     }
     25% {
-        transform: translateY(9px) rotate(22.5deg);
+        transform: translateY(15px) rotate(45deg);
     }
     50% {
-        transform:                  translateY(18px) scale(1, .9) rotate(45deg);
+        transform:                  translateY(24px) scale(1, .9) rotate(45deg);
         border-bottom-right-radius: 40px;
     }
     75% {
-        transform: translateY(9px) rotate(67.5deg);
+        transform: translateY(15px) rotate(45deg);
     }
     100% {
-        transform: translateY(0) rotate(90deg);
+        transform: translateY(0) rotate(45deg);
     }
 }
 
@@ -93,9 +123,11 @@ a:focus {
 }
 
 .ad {
+    position:   relative;
     margin-top: 45px;
     padding:    45px 0;
     background: #2c3e50;
+    top:        calc(20% - 20px);
 }
 
 .ad__button {
@@ -107,7 +139,6 @@ a:focus {
     font-weight:    bold;
     letter-spacing: 1px;
     transition:     all 0.5s;
-    overflow:       hidden;
 }
 
 .ad__button span {
@@ -145,4 +176,16 @@ footer {
     .text_color_muted {
         color: #ddd;
     }
+}
+
+// ************ ANIMATION ********** //
+
+.delay-05s {
+    animation-delay:         0.5s;
+    -webkit-animation-delay: 0.5s;
+}
+
+.delay-1s {
+    animation-delay:         1s;
+    -webkit-animation-delay: 1s;
 }

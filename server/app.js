@@ -25,6 +25,11 @@ app.get('/', function (req, res) {
     res.sendfile(path.join(__dirname, '../app/index.html'));
 });
 
+app.get('/nationals/promo(/)', function(req, res) {
+    console.log('get: nationals/promo');
+    res.sendfile(path.join(__dirname, '../app/promo/nationals.html'));
+})
+
 var server = app.listen(3000, function () {
 
     var host = server.address().address

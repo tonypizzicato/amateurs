@@ -7,6 +7,7 @@ require.config({
         'backbone.wreqr': '../vendor/backbone.wreqr/lib/backbone.wreqr'
         'marionette': '../vendor/marionette/lib/backbone.marionette'
         'handlebars': '../vendor/require-handlebars-plugin/hbs'
+        'waypoints': '../vendor/jquery-waypoints/waypoints'
 
     shim:
         'underscore':
@@ -23,6 +24,8 @@ require.config({
             exports: 'Marionette'
         'handlebars':
             exports: 'Handlebars'
+        'waypoints':
+            deps: ['jquery']
 });
 
 require ['app', 'jquery'], (app, $)->
