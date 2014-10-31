@@ -2,7 +2,7 @@ define ['app'], (App)->
 
     Router = Marionette.AppRouter.extend
         appRoutes:
-            'promo/nationals.html': 'showPromoPage'
+            'nationals/promo(/)': 'showPromoPage'
 
     API =
         showPromoPage: ()->
