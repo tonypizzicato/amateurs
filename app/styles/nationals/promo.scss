@@ -9,6 +9,7 @@ Globals
 ========================================================================== */
 
 body {
+    height:      auto;
     font-family: Roboto, sans-serif;
 }
 
@@ -265,10 +266,10 @@ iPhone Section
 }
 
 /* ==========================================================================
-Swag
+Field
 ========================================================================== */
-.swag {
-    background:              url('../../images/nationals/promo/plants-bg.jpg') no-repeat center center;
+.field {
+    background:              url('../../images/nationals/promo/map-bg.jpg') no-repeat center center;
     -webkit-background-size: cover;
     -moz-background-size:    cover;
     -o-background-size:      cover;
@@ -277,38 +278,29 @@ Swag
     padding:                 50px 0;
 }
 
-.swag h1 {
+.field__heading {
     color:          #fff;
     font-size:      40px;
     text-transform: uppercase;
     letter-spacing: 5px;
 }
 
-.swag h1 span {
-    display:    block;
-    font-size:  25px;
-    margin-top: 20px;
+.field__icon, .field__link {
+    color: #fff;
 }
 
-.down-arrow-btn {
-    width:                 40px;
-    height:                40px;
-    border-radius:         50%;
-    -moz-border-radius:    50%;
-    -webkit-border-radius: 50%;
-    -o-border-radius:      50%;
-    background:            rgba(61, 201, 179, 0.8);
-    display:               inline-block;
-    margin:                10px auto 20px;
-    color:                 #fff;
-    font-size:             16px;
-    line-height:           40px;
-    text-align:            center;
+.field__icon {
+    font-size:      24px;
+    margin-left:    10px;
+    vertical-align: middle;
 }
 
-.down-arrow-btn:hover, .down-arrow-btn:focus {
-    color:      #fff;
-    background: rgba(61, 201, 179, 1);
+.field__link {
+    margin-top: 5px;
+}
+
+.field__link:hover {
+    color: #3dc9b3;
 }
 
 /* ==========================================================================
@@ -443,57 +435,30 @@ a.expand {
 }
 
 /* ==========================================================================
-Subscribe
+Date start
 ========================================================================== */
-.subscribe {
-    background:              url('../../images/nationals/promo/keyboard-bg.jpg') no-repeat center center;
+.date-start {
+    background:              url('../../images/nationals/promo/tactics-bg.jpg') no-repeat center center;
     -webkit-background-size: cover;
     -moz-background-size:    cover;
     -o-background-size:      cover;
     background-size:         cover;
     background-attachment:   fixed;
-    padding:                 120px 0 140px;
+    padding:                 80px 0 100px;
 }
 
-.subscribe h1 {
+.date-start h1 {
     color:         #fff;
     margin-bottom: 40px;
 }
 
-.subscribe h1 span {
+.date-start h1 span {
     display:        block;
-    font-size:      15px;
+    font-size:      32px;
     text-transform: uppercase;
     font-weight:    bold;
     margin-top:     20px;
     letter-spacing: 1px;
-}
-
-.subscribe input[type=text] {
-    background-color: rgba(255, 255, 255, 0.1);
-    border:           solid 1px #fff;
-    padding:          20px;
-    width:            30%;
-    color:            #fff;
-}
-
-.subscribe input[type=submit] {
-    background:         rgba(61, 201, 179, 0.5);
-    border:             solid 1px rgba(61, 201, 179, 0.5);
-    padding:            20px;
-    color:              #fff;
-    text-transform:     uppercase;
-    letter-spacing:     1px;
-    transition:         all 0.5s ease;
-    -moz-transition:    all 0.5s ease;
-    -webkit-transition: all 0.5s ease;
-    -o-transition:      all 0.5s ease;
-}
-
-.subscribe input[type=submit]:hover {
-    background: rgba(61, 201, 179, 1);
-    border:     solid 1px rgba(61, 201, 179, 1);
-    color:      #fff;
 }
 
 /* ==========================================================================
