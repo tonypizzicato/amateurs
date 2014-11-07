@@ -31,36 +31,65 @@
 
 </head>
 <body>
-    <!--[if lt IE 10]>
-    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your
-                                                                                                                        browser</a> to
-                           improve your experience.</p>
-    <![endif]-->
+<!--[if lt IE 10]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your
+    browser</a> to
+    improve your experience.</p>
+<![endif]-->
+<div class="content-wrapper">
     <div class="logo animated fadeInDown">
         <div class="logo__name">Amateur football league</div><div class="logo__city">Moscow</div>
     </div>
 
-    <div class="hero">
-        <div class="loader loader_type_box animated fadeInDown">
+    <div class="hero animated fadeInUp delay-05s">
+        <div class="loader loader_type_box animated fadeInDown delay-1s">
             <div class="loader__block"></div>
             <div class="loader__deco"></div>
         </div>
-        <h4 class="hero__heading animated fadeInUp delay-05s">Under construction</h4>
 
+        <h4 class="hero__heading animated fadeInUp delay-1s">Сайт в разработке</h4>
+
+        <div class='flag-wrapper rotate rotate_deg_0'>
+            <div class="flag flag_country_br"></div>
+        </div>
+        <div class='flag-wrapper rotate rotate_deg_45'>
+            <div class="flag flag_country_en"></div>
+        </div>
+        <div class='flag-wrapper rotate rotate_deg_90'>
+            <div class="flag flag_country_es"></div>
+        </div>
+        <div class='flag-wrapper rotate rotate_deg_135'>
+            <div class="flag flag_country_fr"></div>
+        </div>
+        <div class='flag-wrapper rotate rotate_deg_180'>
+            <div class="flag flag_country_it"></div>
+        </div>
+        <div class='flag-wrapper rotate rotate_deg_225'>
+            <div class="flag flag_country_bel"></div>
+        </div>
+        <div class='flag-wrapper rotate rotate_deg_270'>
+            <div class="flag flag_country_nl"></div>
+        </div>
+        <div class='flag-wrapper rotate rotate_deg_315'>
+            <div class="flag flag_country_ger"></div>
+        </div>
+    </div>
+
+    <div class="links">
         <div class="ad animated fadeInUp">
             <a href="/nationals/promo/" class="ad__button animated zoomIn delay-1s">
-                <span data-hover="\f073 Comming Soon"><i class="fa fa-2x fa-star-o"></i> Leagues Championship</span>
+                <span data-hover="\f073 Comming Soon"><i class="fa fa-2x fa-star-o"></i> Турнир сборных</span>
             </a>
         </div>
     </div>
 
+</div>
+<footer>
+    <p>Designed & Developed by <span class="text_color_muted">tony.pizzicato</span> exclusively for Amateur Football League</p>
+</footer>
 
-    <footer>
-        <p>Designed & Developed by <span class="text_color_muted">tony.pizzicato</span> exclusively for Amateur Football League</p>
-    </footer>
-
-    <!-- build:js({app,.tmp}) scripts/main.js -->
-    <script data-main="/scripts/main" src="/vendor/requirejs/require.js"></script>
-    <!-- endbuild -->
+<!-- build:js({app,.tmp}) scripts/main.js -->
+<script data-main="/scripts/main" src="/vendor/requirejs/require.js"></script>
+<!-- endbuild -->
 </body>
 </html>

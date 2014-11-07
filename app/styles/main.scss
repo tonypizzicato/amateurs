@@ -14,8 +14,15 @@ html, html a {
 }
 
 body {
+    padding-top: 50px;
     background:  #3498db;
     font-family: Raleway, sans-serif;
+
+    background:  -webkit-linear-gradient(90deg, #134E5E 10%, #71B280 90%); /* Chrome 10+, Saf5.1+ */
+    background:  -moz-linear-gradient(90deg, #134E5E 10%, #71B280 90%); /* FF3.6+ */
+    background:  -ms-linear-gradient(90deg, #134E5E 10%, #71B280 90%); /* IE10 */
+    background:  -o-linear-gradient(90deg, #134E5E 10%, #71B280 90%); /* Opera 11.10+ */
+    background:  linear-gradient(90deg, #134E5E 10%, #71B280 90%); /* W3C */
 }
 
 a:hover,
@@ -23,10 +30,18 @@ a:focus {
     text-decoration: none;
 }
 
+.content-wrapper {
+    min-height:     100%;
+    height:         auto !important;
+    height:         100%;
+    margin:         0 auto -40px;
+    padding-bottom: 40px;
+}
+
 // ********** LOGO *********** //
 
 .logo {
-    margin:         50px auto;
+    margin:         0 auto;
     text-align:     center;
     color:          #fff;
     font-size:      48px;
@@ -51,10 +66,14 @@ a:focus {
 // ********* LOADER ********** //
 
 .hero {
-    position:   relative;
-    top:        calc(10% - 20px);
-    margin:     0 auto;
-    text-align: center;
+    position:      relative;
+    width:         400px;
+    height:        400px;
+    margin:        60px auto 120px;
+    border:        dashed 1px #1abc9c;
+    border-radius: 50%;
+
+    text-align:    center;
 }
 
 .hero__heading {
@@ -66,9 +85,9 @@ a:focus {
 }
 
 .loader {
-    position:      relative;
-    display:       inline-block;
-    margin-bottom: 18px;
+    position: relative;
+    display:  inline-block;
+    margin:   140px 0 20px;
 }
 
 .loader_type_box .loader__block {
@@ -160,12 +179,166 @@ a:focus {
     border: solid 1px #3dc9b3;
 }
 
+.flag-wrapper {
+    position:           relative;
+    display:            inline-block;
+    width:              80px;
+    height:             80px;
+    vertical-align:     middle;
+    border-radius:      50%;
+    background-image:   url('http://www.demortalz.com/wp-content/uploads/2012/08/Russia_Flag_wallpaper_1.jpg');
+    background-size:    cover;
+    overflow:           hidden;
+    box-sizing:         border-box;
+
+    -webkit-box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.7);
+    -moz-box-shadow:    0px 0px 20px 0px rgba(0, 0, 0, 0.7);
+    box-shadow:         0px 0px 10px 0px rgba(0, 0, 0, 0.7);
+
+}
+
+.flag-wrapper:before {
+    content:       " ";
+    display:       inline-block;
+    position:      relative;
+    width:         100%;
+    height:        100%;
+    background:    rgba(44, 62, 80, .1);
+    border-radius: 50%;
+    z-index:       100;
+}
+
+.flag-wrapper:after {
+    content:       " ";
+    display:       inline-block;
+    position:      absolute;
+    left:          -30%;
+    top:           -50%;
+    width:         160%;
+    height:        100%;
+    background:    rgba(255, 255, 255, .3);
+    border-radius: 50%;
+    z-index:       100;
+}
+
+.flag {
+    position:            absolute;
+    top:                 4%;
+    left:                4%;
+    height:              92%;
+    width:               92%;
+    border-radius:       50%;
+    background-size:     auto 116%;
+    background-position: center -4px;
+    background-repeat:   no-repeat;
+
+    -webkit-box-shadow:  inset 0px 0px 20px 0px rgba(0, 0, 0, 0.9);
+    -moz-box-shadow:     inset 0px 0px 20px 0px rgba(0, 0, 0, 0.9);
+    box-shadow:          inset 0px 0px 20px 0px rgba(0, 0, 0, 0.9);
+
+    vertical-align:      middle;
+    font-family:         sans-serif;
+    text-transform:      uppercase;
+    overflow:            hidden;
+    z-index:             1;
+    box-sizing:          border-box;
+    border:              3px solid rgba(189, 195, 199, .3);
+}
+
+.flag span {
+    display:     inline-block;
+    position:    relative;
+    width:       100%;
+    margin-top:  40%;
+
+    background:  rgba(0, 0, 0, .5);
+    font-size:   32px;
+    font-weight: bold;
+    color:       #3dc9b3;
+    text-align:  center;
+}
+
+.flag_country_br {
+    background-image: url('https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRuStmlJPIYxEX5pCWQLgCliaJ2UFtMpOXCqqIDTs1rmB4oaNzp');
+}
+
+.flag_country_en {
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjMmG6b-LZzTTo7wBNIMDdYp-J0nGSTxAKdnoh3HS1LDGisEon');
+}
+
+.flag_country_es {
+    background-image: url('https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQO7nEki_BNptQ2XTN2NRfXjpECaLsnyG9cyTaXT-EV-cHAi1yr');
+}
+
+.flag_country_fr {
+    background-image: url('https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRxUJAmLPqDQCJOJIV6wN33i7n95M-Lji7M8F--1axHjBb5Bg_g');
+}
+
+.flag_country_it {
+    background-image: url('https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQFGVNAcjnwmHB2iZbWPiTCFpAjnNhz9wCLl4q7xv3-4Ea8pxz1');
+}
+
+.flag_country_bel {
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrrU6i1Ao5uaZkOJDzu-UDnFFFWbaLrRzeE64n2oZiKJLG7jao');
+}
+
+.flag_country_nl {
+    background-image: url('http://images.fineartamerica.com/images-medium-large-5/netherlands-flag-vintage-distressed-finish-design-turnpike.jpg');
+}
+
+.flag_country_ger {
+    background-image: url('http://cameralabs.org/media/cameralabs/images/daily/2012/08/08/9_germany_flag_wallpaper_1.jpg');
+}
+
+.rotate {
+    position: absolute;
+    top:      50%;
+    left:     50%;
+    margin:   -40px /* 2em = 4em/2 */
+    /* half the width */
+}
+
+.rotate_deg_0 {
+    transform: translate(200px);
+}
+
+.rotate_deg_45 {
+    transform: rotate(45deg) translate(200px) rotate(-45deg);
+}
+
+.rotate_deg_90 {
+    transform: rotate(90deg) translate(200px) rotate(-90deg);
+}
+
+.rotate_deg_135 {
+    transform: rotate(135deg) translate(200px) rotate(-135deg);
+}
+
+.rotate_deg_180 {
+    transform: rotate(180deg) translate(200px) rotate(-180deg);
+}
+
+.rotate_deg_225 {
+    transform: rotate(225deg) translate(200px) rotate(-225deg);
+}
+
+.rotate_deg_270 {
+    transform: rotate(270deg) translate(200px) rotate(-270deg);
+}
+
+.rotate_deg_315 {
+    transform: rotate(315deg) translate(200px) rotate(-315deg);
+}
+
+.links {
+    text-align: center;
+}
+
 // ********** FOOTER ********** //
 
 footer {
-    position:   absolute;
-    width:      100%;
-    bottom:     9px;
+    height:     20px;
+    margin-top: 20px;
     color:      #eee;
     font-size:  12px;
     text-align: center;
