@@ -179,7 +179,7 @@ a:focus {
     border: solid 1px #3dc9b3;
 }
 
-.flag-wrapper {
+.flag__wrapper {
     position:           relative;
     display:            inline-block;
     width:              80px;
@@ -197,7 +197,7 @@ a:focus {
 
 }
 
-.flag-wrapper:before {
+.flag__wrapper:before {
     content:       " ";
     display:       inline-block;
     position:      relative;
@@ -208,7 +208,7 @@ a:focus {
     z-index:       100;
 }
 
-.flag-wrapper:after {
+.flag__wrapper:after {
     content:       " ";
     display:       inline-block;
     position:      absolute;

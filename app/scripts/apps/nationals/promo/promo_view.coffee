@@ -10,6 +10,9 @@ define ['marionette', 'waypoints', ''], (Marionette, waypoints)->
             wp5: '.wp5'
             wp6: '.wp6'
 
+        events:
+            'click a[href*=#]:not([href=#])': "_scroll"
+
         initialize: ()->
             @.bindUIElements()
             @._initWaypoints()
@@ -40,4 +43,14 @@ define ['marionette', 'waypoints', ''], (Marionette, waypoints)->
                 @.ui.wp6.addClass('animated fadeInDown')
             , offset: '75%'
 
+        _scroll: (e)->
+            el = e.currentTarget
+            if location.pathname.replace(/^\//, '') == el.pathname.replace(/^\//, '') && location.hostname == el.hostname
+                target = $(el.hash)
+                target = if target.length then target else $('[name=' + target.hash.slice(1) + ']')
+                if target.length
+                    $('html,body').animate
+                        scrollTop: target.offset().top
+                    , 1500
+                    return false
     View
