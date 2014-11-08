@@ -3,6 +3,7 @@ $fa-font-path: "/vendor/fontawesome/fonts/";
 
 @import 'fontawesome/scss/font-awesome';
 @import 'bootstrap-sass/vendor/assets/stylesheets/bootstrap';
+@import 'flags';
 
 /* ==========================================================================
 Globals
@@ -97,7 +98,7 @@ p {
 Hero
 ========================================================================== */
 .hero {
-    background:              url('../../images/nationals/promo/hero-bg.jpg') no-repeat center center;
+    background:              image-url('/images/nationals/promo/hero-bg.jpg') no-repeat center center;
     -webkit-background-size: cover;
     -moz-background-size:    cover;
     -o-background-size:      cover;
@@ -106,26 +107,49 @@ Hero
     height:                  auto;
 }
 
-.hero__content {
-    position:   relative;
-    width:      200%;
-    left:       -50%;
+.hero__overlay {
+    position:   absolute;
+    height:     200px;
+    width:      100%;
     background: rgba(52, 73, 94, .4);
+}
+
+@media (max-width: 664px) {
+    .hero__overlay {
+        height: 320px;
+    }
+}
+
+@media (min-width: 664px) and (max-width: 1199px) {
+    .hero__overlay {
+        height: 250px;
+    }
+}
+
+.hero__content {
+    position: relative;
 }
 
 .hero__heading {
     font-size:      48px;
     font-weight:    300;
     letter-spacing: 12px;
-    margin:         10px;
     color:          #fff;
     text-transform: uppercase;
     font-family:    Raleway, sans-serif;
     text-shadow:    1px 1px 0 #333;
 }
 
-.hero__heading-part_city {
-    display:     block;
+.logo__name, .logo__city {
+    display: inline-block;
+}
+
+.logo__sep {
+    margin: 0 .4em;
+}
+
+.logo__city {
+    font-weight: 100;
     color:       #3dc9b3;
     text-shadow: 1px 1px 0 #16a085;
 }
@@ -177,12 +201,21 @@ Intro
     margin: 50px 0 0;
 }
 
+.intro ul {
+    list-style: none;
+    color:      #8c9398;
+    font-size:  1.2em;
+
+    padding:    0;
+    margin:     30px 0 0;
+}
+
 h1.arrow {
     font-size:      15px;
     text-transform: uppercase;
     color:          #353535;
     letter-spacing: 1px;
-    background:     url('../../images/nationals/promo/h1-bg.png') no-repeat center bottom;
+    background:     image-url('/images/nationals/promo/h1-bg.png') no-repeat center bottom;
     padding-bottom: 30px;
     font-weight:    bold;
 }
@@ -190,7 +223,7 @@ h1.arrow {
 /* ==========================================================================
 Features
 ========================================================================== */
-.features-wrapper, .team-wrapper {
+.features-wrapper, .teams-wrapper {
     margin: 70px 0 0;
 }
 
@@ -226,7 +259,7 @@ Features
 Field
 ========================================================================== */
 .field {
-    background:              url('../../images/nationals/promo/map-bg.jpg') no-repeat center center;
+    background:              image-url('/images/nationals/promo/map-bg.jpg') no-repeat center center;
     -webkit-background-size: cover;
     -moz-background-size:    cover;
     -o-background-size:      cover;
@@ -264,7 +297,7 @@ Field
 Date start
 ========================================================================== */
 .date-start {
-    background:              url('../../images/nationals/promo/tactics-bg.jpg') no-repeat center center;
+    background:              image-url('/images/nationals/promo/tactics-bg.jpg') no-repeat center center;
     -webkit-background-size: cover;
     -moz-background-size:    cover;
     -o-background-size:      cover;
@@ -288,10 +321,15 @@ Date start
 }
 
 /* ==========================================================================
-Team
+Teams
 ========================================================================== */
-.team img {
-    margin-bottom: 40px;
+.teams-wrapper .flag__wrapper {
+    margin-bottom: 20px;
+}
+
+.teams-wrapper h4 {
+    text-transform: uppercase;
+    color:          #3dc9b3;
 }
 
 ul.social-buttons {
@@ -357,6 +395,10 @@ Join
     border: solid 1px #3dc9b3;
 }
 
+.join-btn span {
+    font-size: 10px;
+}
+
 .up-btn {
     width:                 50px;
     height:                50px;
@@ -398,6 +440,10 @@ footer {
 
 footer p {
     color: #fff;
+
+    .text_color_muted {
+        color: #ddd;
+    }
 }
 
 ul.legals {
@@ -427,17 +473,6 @@ ul.legals li:last-child::after {
 }
 
 /* ==========================================================================
-FlexSlider Custom CSS
-========================================================================== */
-#servicesSlider {
-    margin-top: 70px;
-}
-
-ul.slides li {
-    margin-bottom: 20px;
-}
-
-/* ==========================================================================
 Waypoints
 ========================================================================== */
 .wp1, .wp2, .wp3, .wp4, .wp5, .wp6 {
@@ -456,4 +491,41 @@ Waypoints
 .delay-1s {
     animation-delay:         1s;
     -webkit-animation-delay: 1s;
+}
+
+/* ==========================================================================
+Queries
+========================================================================== */
+
+/* 320px (iPhone) */
+@media screen and (max-width: 320px) {
+}
+
+/* 480px (WVGA - Low End Windows Phone) */
+@media screen and (max-width: 480px) {
+    .wrapper {
+        background: #f3f5f8;
+        height:     640px;
+    }
+    .wp2, .wp4, .wp5, .light-box {
+        margin-bottom: 30px;
+    }
+    .legals {
+        text-align: center;
+        margin:     0;
+        padding:    0;
+    }
+    .credit {
+        text-align: center;
+    }
+}
+
+/* xGA iPad */
+@media screen and (max-width: 991px) {
+    .field {
+        background-attachment: scroll;
+    }
+    .date-start {
+        background-attachment: scroll;
+    }
 }

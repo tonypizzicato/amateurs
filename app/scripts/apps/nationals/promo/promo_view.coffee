@@ -1,4 +1,4 @@
-define ['marionette', 'waypoints', ''], (Marionette, waypoints)->
+define ['marionette', 'waypoints'], (Marionette, waypoints)->
     View = {}
 
     View.Layout = Marionette.LayoutView.extend
