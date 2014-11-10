@@ -205,7 +205,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd:    '.tmp/styles/',
-                    src:    '{,*/}*.css',
+                    src:    '{,*/}{,*/}{,*/}*.css',
                     dest:   '.tmp/styles/'
                 }]
             }
@@ -238,8 +238,8 @@ module.exports = function (grunt) {
                 files: {
                     src: [
                         '<%= yeoman.dist %>/scripts/{,*/}*.js',
-                        '<%= yeoman.dist %>/styles/{,*/}*.css',
-                        '<%= yeoman.dist %>/images/{,*/}*',
+                        '<%= yeoman.dist %>/styles/{,*/}{,*/}*.css',
+                        '<%= yeoman.dist %>/images/{,*/}{,*/}*',
                         '<%= yeoman.dist %>/styles/fonts/{,*/}*.*'
                     ]
                 }
@@ -253,7 +253,7 @@ module.exports = function (grunt) {
             options: {
                 dest: '<%= yeoman.dist %>'
             },
-            html:    '<%= yeoman.app %>/index.html'
+            html:    ['<%= yeoman.app %>/index.html', '<%= yeoman.app %>/nationals.html']
         },
 
         // Performs rewrites based on rev and the useminPrepare configuration
@@ -262,7 +262,7 @@ module.exports = function (grunt) {
                 assetsDirs: ['<%= yeoman.dist %>']
             },
             html:    ['<%= yeoman.dist %>/{,*/}*.html'],
-            css:     ['<%= yeoman.dist %>/styles/{,*/}*.css']
+            css:     ['<%= yeoman.dist %>/styles/{,*/}{,*/}*.css']
         },
 
         // The following *-min tasks produce minified files in the dist folder
@@ -271,7 +271,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd:    '<%= yeoman.app %>/images',
-                    src:    '{,*/}*.{gif,jpeg,jpg,png}',
+                    src:    '{,*/}{,*/}*.{gif,jpeg,jpg,png}',
                     dest:   '<%= yeoman.dist %>/images'
                 }]
             }
@@ -301,7 +301,7 @@ module.exports = function (grunt) {
                 files:   [{
                     expand: true,
                     cwd:    '<%= yeoman.dist %>',
-                    src:    '{,*/}*.html',
+                    src:    '{,*/}{,*/}*.html',
                     dest:   '<%= yeoman.dist %>'
                 }]
             }
@@ -374,6 +374,8 @@ module.exports = function (grunt) {
             },
             prod:    {
                 options: {
+                    port: '8081',
+                    env: 'production',
                     script: 'server/app.js'
                 }
             },
