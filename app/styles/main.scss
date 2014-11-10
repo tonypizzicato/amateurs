@@ -3,6 +3,7 @@ $fa-font-path: "/vendor/fontawesome/fonts/";
 
 @import 'fontawesome/scss/font-awesome';
 @import 'bootstrap-sass/vendor/assets/stylesheets/bootstrap';
+@import 'flags';
 
 html, body {
     height: 100%;
@@ -14,8 +15,15 @@ html, html a {
 }
 
 body {
+    padding-top: 50px;
     background:  #3498db;
     font-family: Raleway, sans-serif;
+
+    background:  -webkit-linear-gradient(90deg, #134E5E 10%, #71B280 90%); /* Chrome 10+, Saf5.1+ */
+    background:  -moz-linear-gradient(90deg, #134E5E 10%, #71B280 90%); /* FF3.6+ */
+    background:  -ms-linear-gradient(90deg, #134E5E 10%, #71B280 90%); /* IE10 */
+    background:  -o-linear-gradient(90deg, #134E5E 10%, #71B280 90%); /* Opera 11.10+ */
+    background:  linear-gradient(90deg, #134E5E 10%, #71B280 90%); /* W3C */
 }
 
 a:hover,
@@ -23,10 +31,18 @@ a:focus {
     text-decoration: none;
 }
 
+.content-wrapper {
+    min-height:     100%;
+    height:         auto !important;
+    height:         100%;
+    margin:         0 auto -40px;
+    padding-bottom: 40px;
+}
+
 // ********** LOGO *********** //
 
 .logo {
-    margin:         50px auto;
+    margin:         0 auto;
     text-align:     center;
     color:          #fff;
     font-size:      48px;
@@ -39,9 +55,8 @@ a:focus {
     display: inline-block;
 }
 
-.logo__name:after {
-    content: '|';
-    margin:  0 .5em;
+.logo__sep {
+    margin: 0 .4em;
 }
 
 .logo__city {
@@ -51,10 +66,14 @@ a:focus {
 // ********* LOADER ********** //
 
 .hero {
-    position:   relative;
-    top:        calc(10% - 20px);
-    margin:     0 auto;
-    text-align: center;
+    position:      relative;
+    width:         400px;
+    height:        400px;
+    margin:        60px auto 120px;
+    border:        dashed 1px #1abc9c;
+    border-radius: 50%;
+
+    text-align:    center;
 }
 
 .hero__heading {
@@ -66,9 +85,9 @@ a:focus {
 }
 
 .loader {
-    position:      relative;
-    display:       inline-block;
-    margin-bottom: 18px;
+    position: relative;
+    display:  inline-block;
+    margin:   140px 0 20px;
 }
 
 .loader_type_box .loader__block {
@@ -91,6 +110,27 @@ a:focus {
     top:           15px;
     border-radius: 50%;
     animation:     shadow .5s linear 1s infinite;
+}
+
+@media screen and (max-width: 480px) {
+    .hero {
+        width:  260px;
+        height: 260px;
+        margin: 40px auto 20px;
+    }
+    .hero__heading {
+        font-size: 18px;
+    }
+    .logo__name {
+        line-height: .9em;
+    }
+    .loader {
+        margin-top: 60px;
+    }
+    .loader__block {
+        width:  36px;
+        height: 36px;
+    }
 }
 
 @keyframes bounce {
@@ -160,12 +200,108 @@ a:focus {
     border: solid 1px #3dc9b3;
 }
 
+.rotate {
+    position: absolute;
+    top:      50%;
+    left:     50%;
+    margin:   -40px
+}
+
+.rotate_deg_0 {
+    transform: translate(200px);
+}
+
+.rotate_deg_45 {
+    transform: rotate(45deg) translate(200px) rotate(-45deg);
+}
+
+.rotate_deg_90 {
+    transform: rotate(90deg) translate(200px) rotate(-90deg);
+}
+
+.rotate_deg_135 {
+    transform: rotate(135deg) translate(200px) rotate(-135deg);
+}
+
+.rotate_deg_180 {
+    transform: rotate(180deg) translate(200px) rotate(-180deg);
+}
+
+.rotate_deg_225 {
+    transform: rotate(225deg) translate(200px) rotate(-225deg);
+}
+
+.rotate_deg_270 {
+    transform: rotate(270deg) translate(200px) rotate(-270deg);
+}
+
+.rotate_deg_315 {
+    transform: rotate(315deg) translate(200px) rotate(-315deg);
+}
+
+.flag__wrapper {
+    width:  80px;
+    height: 80px;
+
+}
+
+.flag {
+    border: 1px solid rgba(189, 195, 199, .3);
+}
+
+@media screen and (max-width: 480px) {
+    .rotate {
+        margin: -25px
+    }
+    .flag__wrapper {
+        width:  50px;
+        height: 50px;
+    }
+    .flag {
+        border-width: 1px;
+    }
+    .rotate_deg_0 {
+        transform: translate(130px);
+    }
+
+    .rotate_deg_45 {
+        transform: rotate(45deg) translate(130px) rotate(-45deg);
+    }
+
+    .rotate_deg_90 {
+        transform: rotate(90deg) translate(130px) rotate(-90deg);
+    }
+
+    .rotate_deg_135 {
+        transform: rotate(135deg) translate(130px) rotate(-135deg);
+    }
+
+    .rotate_deg_180 {
+        transform: rotate(180deg) translate(130px) rotate(-180deg);
+    }
+
+    .rotate_deg_225 {
+        transform: rotate(225deg) translate(130px) rotate(-225deg);
+    }
+
+    .rotate_deg_270 {
+        transform: rotate(270deg) translate(130px) rotate(-270deg);
+    }
+
+    .rotate_deg_315 {
+        transform: rotate(315deg) translate(130px) rotate(-315deg);
+    }
+}
+
+.links {
+    text-align: center;
+}
+
 // ********** FOOTER ********** //
 
 footer {
-    position:   absolute;
-    width:      100%;
-    bottom:     9px;
+    height:     20px;
+    margin-top: 20px;
     color:      #eee;
     font-size:  12px;
     text-align: center;

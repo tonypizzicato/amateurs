@@ -1,0 +1,531 @@
+$icon-font-path: "/vendor/bootstrap-sass/vendor/assets/fonts/";
+$fa-font-path: "/vendor/fontawesome/fonts/";
+
+@import 'fontawesome/scss/font-awesome';
+@import 'bootstrap-sass/vendor/assets/stylesheets/bootstrap';
+@import 'flags';
+
+/* ==========================================================================
+Globals
+========================================================================== */
+
+body {
+    height:      auto;
+    font-family: Roboto, sans-serif;
+}
+
+html, html a {
+    -webkit-font-smoothing: antialiased;
+    text-shadow:            1px 1px 1px rgba(0, 0, 0, 0.004);
+}
+
+a:hover {
+    text-decoration:    none;
+    color:              inherit;
+
+    -webkit-transition: all 0.5s;
+    -moz-transition:    all 0.5s;
+    -o-transition:      all 0.5s;
+    transition:         all 0.5s;
+}
+
+p {
+    color:        #8c9398;
+    word-spacing: 1px;
+    line-height:  25px;
+    font-size:    14px;
+}
+
+.section_padded_yes {
+    padding: 90px 0 100px;
+}
+
+.bg_dark_yes {
+    background: #f3f5f8;
+}
+
+.bg_light_yes {
+    background-color: #fff;
+}
+
+.box_light_yes {
+    background-color:   #fff;
+    -webkit-box-shadow: 0px 3px 0px 0px #f0f2f4;
+    -moz-box-shadow:    0px 3px 0px 0px #f0f2f4;
+    box-shadow:         0px 3px 0px 0px #f0f2f4;
+    padding:            20px 0;
+}
+
+.box_dark_yes {
+    background:         #f3f5f8;
+    -webkit-box-shadow: 0px 3px 0px 0px #f0f2f4;
+    -moz-box-shadow:    0px 3px 0px 0px #f0f2f4;
+    box-shadow:         0px 3px 0px 0px #f0f2f4;
+}
+
+.box_light_yes:hover, .box_light_yes:focus {
+    -webkit-box-shadow: 0px 3px 0px 0px #3dc9b3;
+    -moz-box-shadow:    0px 3px 0px 0px #3dc9b3;
+    box-shadow:         0px 3px 0px 0px #3dc9b3;
+}
+
+.box_hover_yes {
+    transition:         all 500ms ease-in-out;
+    -webkit-transition: all 500ms ease-in-out;
+    -moz-transition:    all 500ms ease-in-out;
+    -o-transition:      all 500ms ease-in-out;
+}
+
+.box_hover_yes:hover, .box_hover_yes:focus {
+    transform:         translate(0, -15px);
+    -webkit-transform: translate(0, -15px);
+    -ms-transform:     translate(0, -15px);
+}
+
+.text_align_c {
+    text-align: center;
+}
+
+.text_align_r {
+    text-align: right;
+}
+
+.text_align_l {
+    text-align: left;
+}
+
+/* ==========================================================================
+Hero
+========================================================================== */
+.hero {
+    background:              image-url('/images/nationals/promo/hero-bg.jpg') no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size:    cover;
+    -o-background-size:      cover;
+    background-size:         cover;
+    padding:                 185px 0 180px 0;
+    height:                  auto;
+}
+
+.hero__overlay {
+    position:   absolute;
+    height:     200px;
+    width:      100%;
+    background: rgba(52, 73, 94, .4);
+}
+
+@media (max-width: 664px) {
+    .hero__overlay {
+        height: 320px;
+    }
+}
+
+@media (min-width: 664px) and (max-width: 1199px) {
+    .hero__overlay {
+        height: 250px;
+    }
+}
+
+.hero__content {
+    position: relative;
+}
+
+.hero__heading {
+    font-size:      48px;
+    font-weight:    300;
+    letter-spacing: 12px;
+    color:          #fff;
+    text-transform: uppercase;
+    font-family:    Raleway, sans-serif;
+    text-shadow:    1px 1px 0 #333;
+}
+
+.logo__name, .logo__city {
+    display: inline-block;
+}
+
+.logo__sep {
+    margin: 0 .4em;
+}
+
+.logo__city {
+    font-weight: 100;
+    color:       #3dc9b3;
+    text-shadow: 1px 1px 0 #16a085;
+}
+
+.hero__text {
+    margin-top:     30px;
+    letter-spacing: 2px;
+    color:          #eee;
+}
+
+.hero__button-learn-more {
+    background:            rgba(61, 201, 179, 1);
+    padding:               20px 40px;
+    border-radius:         5px;
+    -moz-border-radius:    5px;
+    -webkit-border-radius: 5px;
+    -o-border-radius:      5px;
+    color:                 #fff;
+    text-transform:        uppercase;
+    letter-spacing:        1px;
+    display:               inline-block;
+    -webkit-box-shadow:    0px 3px 0px 0px #309383;
+    -moz-box-shadow:       0px 3px 0px 0px #309383;
+    box-shadow:            0px 3px 0px 0px #309383;
+    margin:                160px 0 0;
+    font-weight:           bold;
+}
+
+.hero__button-learn-more.button_disabled_yes {
+    cursor:  default;
+    padding: 22px 40px 18px;
+}
+
+.hero__button-learn-more.button_disabled_yes,
+.hero__button-learn-more:hover,
+.hero__button-learn-more:focus {
+    background: rgba(61, 201, 179, 0.6);
+    color:      #fff;
+}
+
+/* ==========================================================================
+Intro
+========================================================================== */
+.intro {
+    background: #f3f5f8;
+}
+
+.intro p {
+    margin: 50px 0 0;
+}
+
+.intro ul {
+    list-style: none;
+    color:      #8c9398;
+    font-size:  1.2em;
+
+    padding:    0;
+    margin:     30px 0 0;
+}
+
+h1.arrow {
+    font-size:      15px;
+    text-transform: uppercase;
+    color:          #353535;
+    letter-spacing: 1px;
+    background:     image-url('/images/nationals/promo/h1-bg.png') no-repeat center bottom;
+    padding-bottom: 30px;
+    font-weight:    bold;
+}
+
+/* ==========================================================================
+Features
+========================================================================== */
+.features-wrapper, .teams-wrapper {
+    margin: 70px 0 0;
+}
+
+.shadow {
+    text-shadow: rgb(55, 181, 161) 1px 1px, rgb(55, 181, 161) 2px 2px, rgb(55, 181, 161) 3px 3px, rgb(55, 181, 161) 4px 4px, rgb(55, 181, 161) 5px 5px, rgb(55, 181, 161) 6px 6px, rgb(55, 181, 161) 7px 7px, rgb(55, 181, 161) 8px 8px, rgb(55, 181, 161) 9px 9px, rgb(55, 181, 161) 10px 10px, rgb(55, 181, 161) 11px 11px, rgb(55, 181, 161) 12px 12px, rgb(55, 182, 162) 13px 13px, rgb(55, 183, 163) 14px 14px, rgb(56, 184, 164) 15px 15px, rgb(56, 185, 165) 16px 16px, rgb(56, 186, 166) 17px 17px, rgb(57, 187, 167) 18px 18px, rgb(57, 188, 168) 19px 19px, rgb(57, 189, 169) 20px 20px, rgb(58, 191, 170) 21px 21px, rgb(58, 192, 171) 22px 22px, rgb(58, 193, 172) 23px 23px, rgb(59, 194, 173) 24px 24px, rgb(59, 195, 174) 25px 25px, rgb(59, 196, 175) 26px 26px, rgb(60, 197, 176) 27px 27px, rgb(60, 198, 177) 28px 28px, rgb(60, 199, 178) 29px 29px, rgb(61, 201, 179) 30px 30px;
+}
+
+.icon {
+    height:                175px;
+    width:                 175px;
+    line-height:           175px;
+    max-width:             100%;
+    background:            #3dc9b3;
+    border-radius:         50%;
+    -o-border-radius:      50%;
+    -moz-border-radius:    50%;
+    -webkit-border-radius: 50%;
+    display:               block;
+    color:                 #fff;
+    font-size:             48px;
+    text-align:            center;
+    vertical-align:        middle;
+    position:              relative;
+    margin:                0 auto 50px;
+    overflow:              hidden;
+}
+
+.icon_size_xxl {
+    font-size: 120px;
+}
+
+/* ==========================================================================
+Field
+========================================================================== */
+.field {
+    background:              image-url('/images/nationals/promo/map-bg.jpg') no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size:    cover;
+    -o-background-size:      cover;
+    background-size:         cover;
+    background-attachment:   fixed;
+    padding:                 50px 0;
+}
+
+.field__heading {
+    color:          #fff;
+    font-size:      40px;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+}
+
+.field__icon, .field__link {
+    color: #fff;
+}
+
+.field__icon {
+    font-size:      24px;
+    margin-left:    10px;
+    vertical-align: middle;
+}
+
+.field__link {
+    margin-top: 5px;
+}
+
+.field__link:hover {
+    color: #3dc9b3;
+}
+
+/* ==========================================================================
+Date start
+========================================================================== */
+.date-start {
+    background:              image-url('/images/nationals/promo/tactics-bg.jpg') no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size:    cover;
+    -o-background-size:      cover;
+    background-size:         cover;
+    background-attachment:   fixed;
+    padding:                 80px 0 100px;
+}
+
+.date-start h1 {
+    color:         #fff;
+    margin-bottom: 40px;
+}
+
+.date-start h1 span {
+    display:        block;
+    font-size:      32px;
+    text-transform: uppercase;
+    font-weight:    bold;
+    margin-top:     20px;
+    letter-spacing: 1px;
+}
+
+/* ==========================================================================
+Teams
+========================================================================== */
+.teams-wrapper .flag__wrapper {
+    margin-bottom: 20px;
+}
+
+.teams-wrapper h4 {
+    text-transform: uppercase;
+    color:          #3dc9b3;
+}
+
+ul.social-buttons {
+    list-style: none;
+    margin:     0;
+    padding:    0;
+}
+
+ul.social-buttons li {
+    display:      inline-block;
+    margin-right: 10px;
+}
+
+ul.social-buttons li:last-child {
+    margin-right: 0;
+}
+
+.social-btn {
+    width:                 40px;
+    height:                40px;
+    border-radius:         50%;
+    -moz-border-radius:    50%;
+    -webkit-border-radius: 50%;
+    -o-border-radius:      50%;
+    background:            #242830;
+    display:               inline-block;
+    color:                 #fff;
+    font-size:             17px;
+    line-height:           40px;
+    text-align:            center;
+}
+
+.social-btn:hover, .social-btn:focus {
+    background: #3dc9b3;
+    color:      #fff;
+}
+
+.social {
+    margin-top: 25px
+}
+
+/* ==========================================================================
+Join
+========================================================================== */
+
+.join-wrap {
+    position: relative;
+}
+
+.join-btn {
+    display:        inline-block;
+    padding:        25px 40px;
+    color:          #2c3e50;
+    border:         solid 1px #2c3e50;
+    text-transform: uppercase;
+    font-weight:    bold;
+    letter-spacing: 1px;
+    transition:     all 0.5s;
+}
+
+.join-btn:hover, .join-btn:focus {
+    color:  #3dc9b3;
+    border: solid 1px #3dc9b3;
+}
+
+.join-btn span {
+    font-size: 10px;
+}
+
+.up-btn {
+    width:                 50px;
+    height:                50px;
+    border-radius:         50%;
+    -moz-border-radius:    50%;
+    -webkit-border-radius: 50%;
+    -o-border-radius:      50%;
+    background:            rgba(61, 201, 179, 0.5);
+    display:               block;
+    margin:                0 auto;
+    color:                 #fff;
+    font-size:             18px;
+    line-height:           46px;
+    text-align:            center;
+    position:              absolute;
+    top:                   -26px;
+    left:                  0;
+    right:                 0;
+    margin-left:           auto;
+    margin-right:          auto;
+}
+
+.up-btn:hover, .up-btn:focus {
+    color:      #fff;
+    background: rgba(61, 201, 179, 1);
+}
+
+/* ==========================================================================
+Footer
+========================================================================== */
+footer a {
+    color: #a1a9b0;
+}
+
+footer {
+    background-color: #242830;
+    padding:          40px 0 30px;
+}
+
+footer p {
+    color: #fff;
+
+    .text_color_muted {
+        color: #ddd;
+    }
+}
+
+ul.legals {
+    list-style:  none;
+    color:       #fff;
+    line-height: 25px;
+}
+
+ul.legals li {
+    display: inline-block;
+}
+
+ul.legals li::after {
+    content: " |";
+}
+
+ul.legals li:last-child::after {
+    content: "";
+}
+
+.legals {
+    text-align: left;
+}
+
+.credit {
+    text-align: right;
+}
+
+/* ==========================================================================
+Waypoints
+========================================================================== */
+.wp1, .wp2, .wp3, .wp4, .wp5, .wp6 {
+    visibility: hidden;
+}
+
+.bounceInLeft, .bounceInRight, .fadeInUp, .fadeInUpDelay, .fadeInDown, .fadeInUpD, .fadeInLeft, .fadeInRight {
+    visibility: visible;
+}
+
+.delay-05s {
+    animation-delay:         0.5s;
+    -webkit-animation-delay: 0.5s;
+}
+
+.delay-1s {
+    animation-delay:         1s;
+    -webkit-animation-delay: 1s;
+}
+
+/* ==========================================================================
+Queries
+========================================================================== */
+
+/* 320px (iPhone) */
+@media screen and (max-width: 320px) {
+}
+
+/* 480px (WVGA - Low End Windows Phone) */
+@media screen and (max-width: 480px) {
+    .wrapper {
+        background: #f3f5f8;
+        height:     640px;
+    }
+    .wp2, .wp4, .wp5, .light-box {
+        margin-bottom: 30px;
+    }
+    .legals {
+        text-align: center;
+        margin:     0;
+        padding:    0;
+    }
+    .credit {
+        text-align: center;
+    }
+}
+
+/* xGA iPad */
+@media screen and (max-width: 991px) {
+    .field {
+        background-attachment: scroll;
+    }
+    .date-start {
+        background-attachment: scroll;
+    }
+}

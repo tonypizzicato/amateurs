@@ -5,3 +5,4 @@ dist
 app/vendor
 test/vendor
 .idea
+.tmp_assets
