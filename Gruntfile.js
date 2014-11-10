@@ -32,34 +32,34 @@ module.exports = function (grunt) {
                 livereload: true
             },
             coffee:     {
-                files: ['<%= yeoman.app %>/scripts/{,*/}{,*/}{,*/}{,*/}*.{coffee,litcoffee,coffee.md}'],
+                files: ['<%= yeoman.app %>/scripts/**/*.{coffee,litcoffee,coffee.md}'],
                 tasks: ['coffee:dist']
             },
             coffeeTest: {
-                files: ['test/spec/{,*/}{,*/}{,*/}{,*/}*.{coffee,litcoffee,coffee.md}'],
+                files: ['test/spec/**/*.{coffee,litcoffee,coffee.md}'],
                 tasks: ['coffee:test', 'test:watch']
             },
             gruntfile:  {
                 files: ['Gruntfile.js']
             },
             compass:    {
-                files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
+                files: ['<%= yeoman.app %>/styles/**/*.{scss,sass}'],
                 tasks: ['compass:server', 'autoprefixer']
             },
             styles:     {
-                files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
+                files: ['<%= yeoman.app %>/styles/**/*.css'],
                 tasks: ['newer:copy:styles', 'autoprefixer']
             },
             livereload: {
                 files: [
-                    '<%= yeoman.app %>/{,*/}*.html',
-                    '.tmp/styles/{,*/}*.css',
-                    '.tmp/scripts/{,*/}{,*/}{,*/}{,*/}*.js',
-                    '<%= yeoman.app %>/images/{,*/}*'
+                    '<%= yeoman.app %>/**/*.html',
+                    '.tmp/styles/**/*.css',
+                    '.tmp/scripts/**/*.js',
+                    '<%= yeoman.app %>/images/**/*'
                 ]
             },
             express:    {
-                files:   ['<%= yeoman.server %>/{,*/}*.js'],   //Files to be watched
+                files:   ['<%= yeoman.server %>/**/*.js'],   //Files to be watched
                 tasks:   ['express:dev'],   //(Re)start the server
                 options: {            //Server options
                     spawn:      false,       //Must have for reload
@@ -151,7 +151,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd:    '<%= yeoman.app %>/scripts',
-                    src:    '{,*/}{,*/}{,*/}{,*/}{,*/}*.{coffee,litcoffee,coffee.md}',
+                    src:    '**/*.{coffee,litcoffee,coffee.md}',
                     dest:   '.tmp/scripts',
                     ext:    '.js'
                 }]
@@ -160,7 +160,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd:    'test/spec',
-                    src:    '{,*/}{,*/}{,*/}{,*/}{,*/}*.{coffee,litcoffee,coffee.md}',
+                    src:    '**/*.{coffee,litcoffee,coffee.md}',
                     dest:   '.tmp/spec',
                     ext:    '.js'
                 }]
@@ -205,7 +205,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd:    '.tmp/styles/',
-                    src:    '{,*/}{,*/}{,*/}*.css',
+                    src:    '<%= yeoman.app %>/styles/**/*.css',
                     dest:   '.tmp/styles/'
                 }]
             }
@@ -225,7 +225,8 @@ module.exports = function (grunt) {
                     // http://requirejs.org/docs/errors.html#sourcemapcomments
                     preserveLicenseComments: false,
                     useStrict:               true,
-                    wrap:                    true
+                    wrap:                    true,
+                    findNestedDependencies:  true
                     //uglify2: {} // https://github.com/mishoo/UglifyJS2
                 }
             }
@@ -238,8 +239,8 @@ module.exports = function (grunt) {
                 files: {
                     src: [
                         '<%= yeoman.dist %>/scripts/{,*/}*.js',
-                        '<%= yeoman.dist %>/styles/{,*/}{,*/}*.css',
-                        '<%= yeoman.dist %>/images/{,*/}{,*/}*',
+                        '<%= yeoman.dist %>/styles/**/*.css',
+                        '<%= yeoman.dist %>/images/**/*.{gif,jpeg,jpg,png}',
                         '<%= yeoman.dist %>/styles/fonts/{,*/}*.*'
                     ]
                 }
@@ -253,7 +254,7 @@ module.exports = function (grunt) {
             options: {
                 dest: '<%= yeoman.dist %>'
             },
-            html:    ['<%= yeoman.app %>/index.html', '<%= yeoman.app %>/nationals.html']
+            html:    ['<%= yeoman.app %>/index.html', '<%= yeoman.app %>/promo/nationals.html']
         },
 
         // Performs rewrites based on rev and the useminPrepare configuration
@@ -262,7 +263,7 @@ module.exports = function (grunt) {
                 assetsDirs: ['<%= yeoman.dist %>']
             },
             html:    ['<%= yeoman.dist %>/{,*/}*.html'],
-            css:     ['<%= yeoman.dist %>/styles/{,*/}{,*/}*.css']
+            css:     ['<%= yeoman.dist %>/styles/**/*.css']
         },
 
         // The following *-min tasks produce minified files in the dist folder
@@ -301,7 +302,7 @@ module.exports = function (grunt) {
                 files:   [{
                     expand: true,
                     cwd:    '<%= yeoman.dist %>',
-                    src:    '{,*/}{,*/}*.html',
+                    src:    '{,*/}*.html',
                     dest:   '<%= yeoman.dist %>'
                 }]
             }
@@ -321,7 +322,8 @@ module.exports = function (grunt) {
                         'images/{,*/}*.webp',
                         '{,*/}*.html',
                         'styles/fonts/{,*/}*.*',
-                        'vendor/bootstrap-sass/vendor/assets/fonts/bootstrap/*.*'
+                        'vendor/bootstrap-sass/vendor/assets/fonts/bootstrap/*.*',
+                        'vendor/fontawesome/fonts/*.*'
                     ]
                 }]
             },
@@ -374,8 +376,8 @@ module.exports = function (grunt) {
             },
             prod:    {
                 options: {
-                    port: '8081',
-                    env: 'production',
+                    port:   '8081',
+                    env:    'production',
                     script: 'server/app.js'
                 }
             },

@@ -74,7 +74,7 @@ app.get('/nationals/promo', function (req, res) {
     console.log('get: nationals/promo');
     console.log('client dir: ' + clientDir);
 
-    res.sendfile(path.join(__dirname, clientDir + '/nationals.html'));
+    res.sendfile(path.join(__dirname, clientDir + '/promo/nationals.html'));
 });
 
 var server = app.listen(port, function () {
