@@ -21,9 +21,9 @@ module.exports = function (grunt) {
         // Project settings
         yeoman:       {
             // Configurable paths
-            app:    'app',
+            app:    'public',
             dist:   'dist',
-            server: 'server'
+            server: '.'
         },
 
         // Watches files for changes and runs tasks based on the changed files
@@ -59,7 +59,7 @@ module.exports = function (grunt) {
                 ]
             },
             express:    {
-                files:   ['<%= yeoman.server %>/**/*.js'],   //Files to be watched
+                files:   ['<%= yeoman.server %>/server.js'],   //Files to be watched
                 tasks:   ['express:dev'],   //(Re)start the server
                 options: {            //Server options
                     spawn:      false,       //Must have for reload
@@ -205,7 +205,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd:    '.tmp/styles/',
-                    src:    '<%= yeoman.app %>/styles/**/*.css',
+                    src:    '**/*.css',
                     dest:   '.tmp/styles/'
                 }]
             }
@@ -371,19 +371,19 @@ module.exports = function (grunt) {
             },
             dev:     {
                 options: {
-                    script: 'server/app.js'
+                    script: '<%= yeoman.server %>/server.js'
                 }
             },
             prod:    {
                 options: {
                     port:   '8081',
                     env:    'production',
-                    script: 'server/app.js'
+                    script: '<%= yeoman.server %>/server.js'
                 }
             },
             test:    {
                 options: {
-                    script: 'server/app.js'
+                    script: '<%= yeoman.server %>/server.js'
                 }
             }
         },

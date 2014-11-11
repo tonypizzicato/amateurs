@@ -1,6 +1,6 @@
 var express = require('express');
 var path = require('path');
-
+var hbs = require('hbs');
 
 var app = express();
 
@@ -15,15 +15,18 @@ app.use(express.cookieParser());
 app.use(express.bodyParser());
 app.use(express.session({secret: 'keyboard cat'}));
 
+app.set('view engine', 'hbs');
+hbs.registerPartials(__dirname + '/views/partials');
+
 var clientDir;
 /**
  * Development Settings
  */
 if (app.get('env') === 'development') {
-    clientDir = 'app';
+    clientDir = 'public';
 
     app.use(express.static(path.join(__dirname, '.tmp')));
-    app.use(express.static(path.join(__dirname, 'app')));
+    app.use(express.static(path.join(__dirname, 'public')));
 
     app.use(function(err, req, res, next) {
         res.status(err.status || 500);
@@ -75,6 +78,10 @@ app.get('/nationals/promo', function (req, res) {
     console.log('client dir: ' + clientDir);
 
     res.sendfile(path.join(__dirname, clientDir + '/promo/nationals.html'));
+});
+
+app.get('/hbs', function(req, res) {
+    res.render('main');
 });
 
 var server = app.listen(port, function () {
