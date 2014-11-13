@@ -15,24 +15,23 @@ app.use(express.cookieParser());
 app.use(express.bodyParser());
 app.use(express.session({secret: 'keyboard cat'}));
 
-app.set('view engine', 'hbs');
-hbs.registerPartials(__dirname + '/views/partials');
 
-var clientDir;
+var clientDir, viewsDir;
 /**
  * Development Settings
  */
 if (app.get('env') === 'development') {
-    clientDir = 'public';
+    clientDir = '/public';
+    viewsDir = '/views';
 
     app.use(express.static(path.join(__dirname, '.tmp')));
     app.use(express.static(path.join(__dirname, 'public')));
 
-    app.use(function(err, req, res, next) {
+    app.use(function (err, req, res, next) {
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,
-            error: err
+            error:   err
         });
     });
 }
@@ -41,18 +40,24 @@ if (app.get('env') === 'development') {
  * Production Settings
  */
 if (app.get('env') === 'production') {
-    clientDir = 'dist';
+    clientDir = '/dist';
+    viewsDir = '/dist/views';
 
     app.use(express.static(path.join(__dirname, 'dist')));
 
-    app.use(function(err, req, res, next) {
+    app.use(function (err, req, res, next) {
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,
-            error: {}
+            error:   {}
         });
     });
 }
+
+app.set('view engine', 'hbs');
+app.set('views', __dirname + viewsDir);
+
+hbs.registerPartials(__dirname + viewsDir + '/partials');
 
 
 app.use(app.router);
@@ -70,7 +75,7 @@ app.get('/', function (req, res) {
     console.log('get: index');
     console.log('client dir: ' + clientDir);
 
-    res.sendfile(path.join(__dirname, clientDir + '/index.html'));
+    res.sendfile(path.join(__dirname, clientDir + '/construct.html'));
 });
 
 app.get('/nationals/promo', function (req, res) {
@@ -80,7 +85,7 @@ app.get('/nationals/promo', function (req, res) {
     res.sendfile(path.join(__dirname, clientDir + '/promo/nationals.html'));
 });
 
-app.get('/hbs', function(req, res) {
+app.get('/hbs', function (req, res) {
     res.render('main');
 });
 
