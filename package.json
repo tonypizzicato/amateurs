@@ -10,7 +10,7 @@
     "mongoose": "~3.6.11",
     "request": "~2.21.0",
     "socket.io": "~0.9.14",
-    "underscore": "~1.4.4"
+    "underscore": "^1.4.4"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

@@ -1,6 +1,7 @@
 var express = require('express');
 var path = require('path');
 var hbs = require('hbs');
+var routes = require('./app/routes');
 
 var app = express();
 
@@ -56,6 +57,7 @@ if (app.get('env') === 'production') {
 
 app.set('view engine', 'hbs');
 app.set('views', __dirname + viewsDir);
+app.set('public', __dirname + clientDir);
 
 hbs.registerPartials(__dirname + viewsDir + '/partials');
 
@@ -70,24 +72,8 @@ app.use(function (req, res, next) {
     }
 });
 
-// Route index.html
-app.get('/', function (req, res) {
-    console.log('get: index');
-    console.log('client dir: ' + clientDir);
-
-    res.sendfile(path.join(__dirname, clientDir + '/construct.html'));
-});
-
-app.get('/nationals/promo', function (req, res) {
-    console.log('get: nationals/promo');
-    console.log('client dir: ' + clientDir);
-
-    res.sendfile(path.join(__dirname, clientDir + '/promo/nationals.html'));
-});
-
-app.get('/hbs', function (req, res) {
-    res.render('main');
-});
+//routes list:
+routes.initialize(app);
 
 var server = app.listen(port, function () {
 

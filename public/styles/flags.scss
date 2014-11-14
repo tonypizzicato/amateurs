@@ -4,6 +4,7 @@
     display:            inline-block;
     width:              200px;
     height:             200px;
+    padding:            1%;
     vertical-align:     middle;
     border-radius:      50%;
     background-image:   image-url('/images/nationals/promo/flag-ru.jpg');
@@ -20,7 +21,7 @@
 .flag__wrapper:before {
     content:       " ";
     display:       inline-block;
-    position:      relative;
+    position:      absolute;
     width:         100%;
     height:        100%;
     background:    rgba(44, 62, 80, .1);
@@ -42,11 +43,8 @@
 }
 
 .flag {
-    position:            absolute;
-    top:                 4%;
-    left:                4%;
-    height:              92%;
-    width:               92%;
+    height:              100%;
+    width:               100%;
     border-radius:       50%;
     background-size:     auto 104%;
     background-position: center center;

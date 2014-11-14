@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Flaticon WebFont</title>
+    <link rel="stylesheet" type="text/css" href="flaticon.css">
+    <meta charset="UTF-8">
+    <style>
+    body {
+        font-family: sans-serif;
+        line-height: 1.5;
+        font-size: 16px;
+        padding: 20px;
+        color:#333;
+    }
+    * {
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+    [class^="flaticon-"]:before, [class*=" flaticon-"]:before, [class^="flaticon-"]:after, [class*=" flaticon-"]:after {
+        font-family: Flaticon;
+        font-size: 30px;
+        font-style: normal;
+        margin-left: 20px;
+        color: #333;
+    }
+    .image p {
+		font-size: 12px;
+		margin: 0px;
+		clear: none;
+		width: 300px;
+		line-height: 40px;
+	}
+    .text {
+        float: left;
+        font-size:14px;
+        margin-top: 15px;
+    }
+    .text ul {
+        margin-left:0px;
+        color:#111;
+        margin-bottom:20px;
+    }
+    .text .ex {
+        font-size:12px;
+        color:#666;
+        margin-left:35px;
+        display:block;
+    }
+    .text ul li {
+        margin-top:10px;
+        list-style:none;
+    }
+    .num {
+        background:#66A523;
+        color:#fff;
+        border-radius:20px;
+        padding:1px;
+        display:inline-block;
+        width:22px;
+        height:22px;
+        text-align:center;
+        margin-right: 5px;
+    }
+    .text ul strong {
+        font-weight:normal;
+        color:#000;
+    }
+    .image {
+        width: 280px;
+        float: left;
+        margin-bottom: 15px;
+        margin-right: 30px;
+    }
+    #glyphs {
+        clear: both;
+    }
+    .image p:nth-child(even) i {
+        clear: none;
+    }
+    .glyph {
+        display: inline-block;
+        width: 120px;
+        margin: 10px;
+        text-align: center;
+        vertical-align: top;
+        background: #FFF;
+    }
+    .glyph .glyph-icon {
+        padding: 10px;
+        display: block;
+        font-family:"Flaticon";
+        font-size: 64px;
+        line-height: 1;
+    }
+    .glyph .glyph-icon:before {
+        font-size: 64px;
+        color: #666;
+        margin-left: 0;
+    }
+    .class-name {
+        font-size: 12px;
+    }
+    .author-name {
+		font-size: 10px;
+	}
+	a{
+		color: #66A523;
+	}
+    .instructions {
+        font-style:italic;
+        font-size:22px;
+        margin-bottom:10px;
+    }
+    .iconsuse {
+        font-size:22px;
+        font-style:italic;
+        padding-top:20px;
+        margin-top:20px;
+        border-top:1px solid #bbb;
+    }
+    .usetitle {
+        margin-bottom: 10px;
+        font-size: 20px;
+        font-style: italic;
+    }
+    .class-name:last-child {
+        font-size: 10px;
+        color:#888;
+    }
+    .class-name:last-child a {
+        font-size: 10px;
+        color:#555;
+    }
+    .class-name:last-child a:hover {
+        color:#66A523;
+    }
+    .glyph > input {
+        display: block;
+        width: 100px;
+        margin: 5px auto;
+        text-align: center;
+        font-size: 12px;
+        cursor: text;
+    }
+    .glyph > input.icon-input {
+        font-family:"Flaticon";
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+    h1.logo {
+        font-size: 40px;
+        letter-spacing: -1px;
+        margin-top: -16px;
+        text-transform: lowercase;
+        border-bottom:1px solid #bbb;
+    }
+    h1.logo strong {
+        font-size: 16px;
+        font-family:sans-serif;
+        font-weight:normal;
+        color:#333;
+    }
+    h1.logo a {
+        color:#34302d;
+        text-decoration: none;
+    }
+    h1.logo a span {
+        color:#66A523;
+    }
+    #footer {
+        padding-top:40px;
+        clear:both;
+        text-align:center;
+    }
+    #footer a {
+        color:#66A523;
+    }
+    textarea {
+		margin: 0px;
+		width: 800px;
+		height: 150px;
+		border: 1px solid #CCC;
+		resize: none;
+		background: #EEE;
+    }
+    .author-link, .attrDiv a{
+    	font-size: 12px;
+    	color: #333;
+    	text-decoration: none;
+    }
+    .external {
+    	display: block;
+    }
+    .attrDiv {
+		font-size: 12px;
+	}
+    .attribution {
+        border-top: 1px solid #AAA;
+        margin: 10px 0;
+        padding-top: 15px;
+    }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1 class="logo">
+            <a href="http://www.flaticon.com">
+                <span>FLAT</span>ICON</a>
+            <strong>Font Demo</strong>
+        </h1>
+    </header>
+
+    <section class="demo">
+        <div class="text">
+
+            <div class="instructions">Instructions:</div>
+
+            <ul>
+                <li>
+                    <p>
+                        <span class="num">1</span>Copy the "Fonts" files and CSS files to your website CSS folder.
+                </li>
+                <li>
+                    <p>
+                        <span class="num">2</span>Add the CSS link to your website source code on header.
+                        <br />
+                        <span class="ex">&lt;head&gt;
+                            <br/>...
+                            <br/>&lt;link rel="stylesheet" type="text/css" href="your_website_domain/css_root/flaticon.css"&gt;
+                            <br/>...
+                            <br/>&lt;/head&gt;</span>
+                </li>
+
+                <li>
+                    <p>
+                        <span class="num">3</span>Use the icon class on "display:inline" elements:
+                        <br />
+                        <span class="ex">Use example: &lt;i class=&quot;flaticon-airplane49&quot;&gt;&lt;/i&gt; or &lt;span class=&quot;flaticon-airplane49&quot;&gt;&lt;/span&gt;</span>
+                </li>
+            </ul>
+        </div>
+
+    </section>
+
+    <section id="glyphs"><div class="glyph">
+		<div class="glyph-icon flaticon-bees"></div>
+		<div class="class-name">.flaticon-bees</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/bees-panel-texture_26756">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-black188"></div>
+		<div class="class-name">.flaticon-black188</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/black-and-white-whistle-variant_27266">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-checkered3"></div>
+		<div class="class-name">.flaticon-checkered3</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/checkered-flags_27267">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-couple40"></div>
+		<div class="class-name">.flaticon-couple40</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/couple-of-football-cones_26338">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-flaming"></div>
+		<div class="class-name">.flaticon-flaming</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/flaming-football_27098">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football100"></div>
+		<div class="class-name">.flaticon-football100</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-player-with-injury_27096">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football101"></div>
+		<div class="class-name">.flaticon-football101</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-player-chasing-the-ball_27105">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football102"></div>
+		<div class="class-name">.flaticon-football102</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-player-setting-ball_27127">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football103"></div>
+		<div class="class-name">.flaticon-football103</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-card-with-cross-mark_27132">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football104"></div>
+		<div class="class-name">.flaticon-football104</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-short_27146">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football105"></div>
+		<div class="class-name">.flaticon-football105</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-player-close-up-with-delete-cross-symbol_27147">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football106"></div>
+		<div class="class-name">.flaticon-football106</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-ball-variant_27151">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football107"></div>
+		<div class="class-name">.flaticon-football107</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-winning-trophy-with-check-mark_27156">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football108"></div>
+		<div class="class-name">.flaticon-football108</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-referee-raising-card_27170">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football109"></div>
+		<div class="class-name">.flaticon-football109</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-championship-trophy_27171">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football110"></div>
+		<div class="class-name">.flaticon-football110</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-player-landing-on-field-missing-the-ball_27174">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football111"></div>
+		<div class="class-name">.flaticon-football111</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-player-long-socks_27181">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football112"></div>
+		<div class="class-name">.flaticon-football112</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-team-bench_27186">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football113"></div>
+		<div class="class-name">.flaticon-football113</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-player-silhouette-kicking-ball_27204">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football114"></div>
+		<div class="class-name">.flaticon-football114</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-shirt_27206">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football115"></div>
+		<div class="class-name">.flaticon-football115</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-chalice-shaped-trophy_27208">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football116"></div>
+		<div class="class-name">.flaticon-football116</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-ball-variant_27212">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football117"></div>
+		<div class="class-name">.flaticon-football117</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-championship-trophy-variant_27216">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football118"></div>
+		<div class="class-name">.flaticon-football118</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-player-attempting-to-kick-ball_27221">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football119"></div>
+		<div class="class-name">.flaticon-football119</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-player-kicking-ball_27224">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football11"></div>
+		<div class="class-name">.flaticon-football11</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-player-with-the-ball-under-the-feet_26209">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football120"></div>
+		<div class="class-name">.flaticon-football120</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-player-blocking-another-player_27231">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football121"></div>
+		<div class="class-name">.flaticon-football121</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-trophy-award_27250">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football122"></div>
+		<div class="class-name">.flaticon-football122</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-championship-award-variant_27252">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football123"></div>
+		<div class="class-name">.flaticon-football123</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-trophy-with-ball-variant_27265">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football124"></div>
+		<div class="class-name">.flaticon-football124</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-sports-gloves_27276">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football125"></div>
+		<div class="class-name">.flaticon-football125</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-triangular-trophy-with-minus-sign_27296">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football126"></div>
+		<div class="class-name">.flaticon-football126</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-jersey-shirt_27318">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football127"></div>
+		<div class="class-name">.flaticon-football127</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-triangle-award-with-minus-sign_27324">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football128"></div>
+		<div class="class-name">.flaticon-football128</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-ball-with-thick-outline_27334">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football129"></div>
+		<div class="class-name">.flaticon-football129</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-players-on-field_27335">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football12"></div>
+		<div class="class-name">.flaticon-football12</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-player-posture_26231">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football130"></div>
+		<div class="class-name">.flaticon-football130</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-long-socks-with-white-lines_27337">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football131"></div>
+		<div class="class-name">.flaticon-football131</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-field-with-white-detailing_27341">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football132"></div>
+		<div class="class-name">.flaticon-football132</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-player-kicking-ball-upward_27348">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football133"></div>
+		<div class="class-name">.flaticon-football133</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-player-wearing-jersey-number-10-with-plus-sign_27351">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football134"></div>
+		<div class="class-name">.flaticon-football134</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-socks-with-white-lines-design_27359">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football135"></div>
+		<div class="class-name">.flaticon-football135</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-protector-vest_27375">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football136"></div>
+		<div class="class-name">.flaticon-football136</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-player-chasing-ball_27383">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football137"></div>
+		<div class="class-name">.flaticon-football137</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-championship-award-with-plus-sign_27395">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football138"></div>
+		<div class="class-name">.flaticon-football138</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-game-plan-on-field_27459">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football139"></div>
+		<div class="class-name">.flaticon-football139</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-champion-trophy_27464">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football13"></div>
+		<div class="class-name">.flaticon-football13</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-strategic-sketch_26232">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football140"></div>
+		<div class="class-name">.flaticon-football140</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-fan-raising-flag_27465">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football141"></div>
+		<div class="class-name">.flaticon-football141</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-game-on-tv_27466">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football14"></div>
+		<div class="class-name">.flaticon-football14</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-player-running-with-the-ball_26239">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football15"></div>
+		<div class="class-name">.flaticon-football15</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-trophy-silhouette_26243">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football16"></div>
+		<div class="class-name">.flaticon-football16</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-referree-with-plus-sign_26267">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football17"></div>
+		<div class="class-name">.flaticon-football17</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-field-with-white-details_26269">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football18"></div>
+		<div class="class-name">.flaticon-football18</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-referee-with-minus-sign_26277">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football19"></div>
+		<div class="class-name">.flaticon-football19</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-referee-with-hand-gestures_26288">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football20"></div>
+		<div class="class-name">.flaticon-football20</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-socks_26294">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football21"></div>
+		<div class="class-name">.flaticon-football21</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-goal-outline_26296">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football22"></div>
+		<div class="class-name">.flaticon-football22</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-shorts-with-number-12_26305">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football23"></div>
+		<div class="class-name">.flaticon-football23</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-players-on-game_26310">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football24"></div>
+		<div class="class-name">.flaticon-football24</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-short_26313">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football25"></div>
+		<div class="class-name">.flaticon-football25</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-trophy-with-delete-symbol_26330">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football26"></div>
+		<div class="class-name">.flaticon-football26</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-fans-group_26341">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football27"></div>
+		<div class="class-name">.flaticon-football27</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-game-top-view_26354">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football28"></div>
+		<div class="class-name">.flaticon-football28</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-ball_26356">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football29"></div>
+		<div class="class-name">.flaticon-football29</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-player-with-the-ball-on-his-chest_26360">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football30"></div>
+		<div class="class-name">.flaticon-football30</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-court-illumination-lamps_26386">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football31"></div>
+		<div class="class-name">.flaticon-football31</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-list-with-up-and-down-arrows_26449">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football32"></div>
+		<div class="class-name">.flaticon-football32</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-coach-screaming_26455">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football33"></div>
+		<div class="class-name">.flaticon-football33</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-trophy-cup_26483">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football34"></div>
+		<div class="class-name">.flaticon-football34</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-practice-strategic-sketch_26497">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football35"></div>
+		<div class="class-name">.flaticon-football35</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-glove-of-archer_26502">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football36"></div>
+		<div class="class-name">.flaticon-football36</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-game-field-top-view_26507">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football37"></div>
+		<div class="class-name">.flaticon-football37</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-in-midair_26524">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football38"></div>
+		<div class="class-name">.flaticon-football38</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-pads_26538">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football39"></div>
+		<div class="class-name">.flaticon-football39</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-referee-with-hand-signal_26540">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football40"></div>
+		<div class="class-name">.flaticon-football40</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-referee-with-check-mark_26543">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football41"></div>
+		<div class="class-name">.flaticon-football41</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-field-with-white-details_26547">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football42"></div>
+		<div class="class-name">.flaticon-football42</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-award-with-white-details_26563">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football43"></div>
+		<div class="class-name">.flaticon-football43</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-badge_26565">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football44"></div>
+		<div class="class-name">.flaticon-football44</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-trophy-with-check-mark_26568">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football45"></div>
+		<div class="class-name">.flaticon-football45</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-player-with-number-10-jersey-and-check-mark_26585">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football46"></div>
+		<div class="class-name">.flaticon-football46</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-fan-with-facepaint_26592">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football47"></div>
+		<div class="class-name">.flaticon-football47</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-award-with-white-details_26599">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football48"></div>
+		<div class="class-name">.flaticon-football48</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-trophy-with-minus-sign_26607">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football49"></div>
+		<div class="class-name">.flaticon-football49</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-player-holding-ball_26610">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football50"></div>
+		<div class="class-name">.flaticon-football50</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-referee-with-whistle_26645">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football51"></div>
+		<div class="class-name">.flaticon-football51</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-player-using-head-to-hit-ball_26647">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football52"></div>
+		<div class="class-name">.flaticon-football52</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-shorts-with-string-belt_26681">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football53"></div>
+		<div class="class-name">.flaticon-football53</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-game-statistics_26686">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football54"></div>
+		<div class="class-name">.flaticon-football54</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-player-kicking-ball_26687">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football55"></div>
+		<div class="class-name">.flaticon-football55</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-trophy-with-cross-mark_26692">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football56"></div>
+		<div class="class-name">.flaticon-football56</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-game-referee-doing-hand-signals_26708">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football57"></div>
+		<div class="class-name">.flaticon-football57</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-shorts-with-number-10_26711">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football58"></div>
+		<div class="class-name">.flaticon-football58</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-sketch-on-a-court_26722">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football59"></div>
+		<div class="class-name">.flaticon-football59</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-sketch-for-practice_26734">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football60"></div>
+		<div class="class-name">.flaticon-football60</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-trophy_26745">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football61"></div>
+		<div class="class-name">.flaticon-football61</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-player-with-the-ball-in-hands_26759">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football62"></div>
+		<div class="class-name">.flaticon-football62</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-trophy_26760">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football63"></div>
+		<div class="class-name">.flaticon-football63</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-player-running_26769">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football64"></div>
+		<div class="class-name">.flaticon-football64</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-long-socks_26771">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football65"></div>
+		<div class="class-name">.flaticon-football65</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-field-top-view_26776">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football66"></div>
+		<div class="class-name">.flaticon-football66</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-medal_26781">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football67"></div>
+		<div class="class-name">.flaticon-football67</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-player-options_26782">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football68"></div>
+		<div class="class-name">.flaticon-football68</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-player-running-behind-the-ball_26792">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football69"></div>
+		<div class="class-name">.flaticon-football69</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-court-top-view_26799">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football70"></div>
+		<div class="class-name">.flaticon-football70</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-player-inclined-to-front-flexed-on-knees_26807">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football71"></div>
+		<div class="class-name">.flaticon-football71</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-long-socks_26808">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football72"></div>
+		<div class="class-name">.flaticon-football72</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-red-card-in-a-hand_26823">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football73"></div>
+		<div class="class-name">.flaticon-football73</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-ticket_26829">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football74"></div>
+		<div class="class-name">.flaticon-football74</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-line-referee-t-shirt-with-stripes_26840">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football75"></div>
+		<div class="class-name">.flaticon-football75</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-whistle-of-referee_26846">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football76"></div>
+		<div class="class-name">.flaticon-football76</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-trophy_26847">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football77"></div>
+		<div class="class-name">.flaticon-football77</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-sketch-for-practice_26850">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football78"></div>
+		<div class="class-name">.flaticon-football78</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-medal-hanging-of-a-ribbon-in-black-shaped_26851">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football79"></div>
+		<div class="class-name">.flaticon-football79</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-yellow-warning-card_26858">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football80"></div>
+		<div class="class-name">.flaticon-football80</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-player-number-10-out_26859">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football81"></div>
+		<div class="class-name">.flaticon-football81</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-medal-with-number-1_26864">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football82"></div>
+		<div class="class-name">.flaticon-football82</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-referee-showing-a-foul-card-on-top_26894">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football83"></div>
+		<div class="class-name">.flaticon-football83</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-goalkeeper-behind-the-ball_26911">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football84"></div>
+		<div class="class-name">.flaticon-football84</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-or-soccer-board-with-results-of-games_26913">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football85"></div>
+		<div class="class-name">.flaticon-football85</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-referee-showing-admonition-card_26914">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football86"></div>
+		<div class="class-name">.flaticon-football86</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-stats-graphic_26924">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football87"></div>
+		<div class="class-name">.flaticon-football87</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-game-top-view_26930">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football88"></div>
+		<div class="class-name">.flaticon-football88</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-frontal-standing-player-with-the-ball_26947">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football89"></div>
+		<div class="class-name">.flaticon-football89</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-trophy_26949">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football90"></div>
+		<div class="class-name">.flaticon-football90</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-list-and-field-outline_26986">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football91"></div>
+		<div class="class-name">.flaticon-football91</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-goalkeeper-catching-the-ball_26989">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football92"></div>
+		<div class="class-name">.flaticon-football92</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-warning-card-in-a-referee-hand_26990">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football93"></div>
+		<div class="class-name">.flaticon-football93</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-player-stretching-with-flexed-leg-to-chest_27004">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football94"></div>
+		<div class="class-name">.flaticon-football94</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-player-number-10-out-symbol-with-minus-sign_27034">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football95"></div>
+		<div class="class-name">.flaticon-football95</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-leader-man_27045">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football96"></div>
+		<div class="class-name">.flaticon-football96</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-field-in-perspective_27047">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football97"></div>
+		<div class="class-name">.flaticon-football97</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-signal-of-a-game-announcement-of-one-team-vs-other_27051">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football98"></div>
+		<div class="class-name">.flaticon-football98</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-field-top-view_27063">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-football99"></div>
+		<div class="class-name">.flaticon-football99</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/football-player-kicking-ball_27080">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-game17"></div>
+		<div class="class-name">.flaticon-game17</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/game-planning-on-a-football-field_26646">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-goalkeeper"></div>
+		<div class="class-name">.flaticon-goalkeeper</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/goalkeeper-chasing-the-ball_26660">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-goal"></div>
+		<div class="class-name">.flaticon-goal</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/goal_26336">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-horn2"></div>
+		<div class="class-name">.flaticon-horn2</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/horn-speaker-with-handle_27362">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-inflatable"></div>
+		<div class="class-name">.flaticon-inflatable</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/inflatable-cheerer_26663">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-male99"></div>
+		<div class="class-name">.flaticon-male99</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/male-standing-with-helmet-and-jacket_26696">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-man144"></div>
+		<div class="class-name">.flaticon-man144</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/man-wearing-suit-and-tie_27261">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-rattle"></div>
+		<div class="class-name">.flaticon-rattle</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/rattle_26482">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-referees"></div>
+		<div class="class-name">.flaticon-referees</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/referees-whistle-tool_27356">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-soccer17"></div>
+		<div class="class-name">.flaticon-soccer17</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/soccer-cup-trophy-black-shape_26376">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-soccer18"></div>
+		<div class="class-name">.flaticon-soccer18</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/soccer-t-shirt_26397">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-sportive20"></div>
+		<div class="class-name">.flaticon-sportive20</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/sportive-ball_26454">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-sportive22"></div>
+		<div class="class-name">.flaticon-sportive22</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/sportive-trophy-cup_27025">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-sports24"></div>
+		<div class="class-name">.flaticon-sports24</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/sports-badge-recognition_26420">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-substitution"></div>
+		<div class="class-name">.flaticon-substitution</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/substitution-of-player_26654">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-timer20"></div>
+		<div class="class-name">.flaticon-timer20</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/timer-clock_27133">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-trophy4"></div>
+		<div class="class-name">.flaticon-trophy4</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/trophy-football-cup_26479">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-trophy5"></div>
+		<div class="class-name">.flaticon-trophy5</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/trophy-cup-black-shape_26506">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-trophy6"></div>
+		<div class="class-name">.flaticon-trophy6</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/trophy-black-silhouette_27040">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-up23"></div>
+		<div class="class-name">.flaticon-up23</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/up-and-down-arrows-inside-boxes_27365">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-whistle2"></div>
+		<div class="class-name">.flaticon-whistle2</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/whistle_26731">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-whistle5"></div>
+		<div class="class-name">.flaticon-whistle5</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/whistle-with-white-detail_27248">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-whistle6"></div>
+		<div class="class-name">.flaticon-whistle6</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/whistle-with-necklace_27470">Freepik</a></div></div><div class="glyph">
+		<div class="glyph-icon flaticon-white68"></div>
+		<div class="class-name">.flaticon-white68</div><div class="author-name">Author: <a href="http://www.flaticon.com/free-icon/white-flag-outline-with-thin-pole_27319">Freepik</a></div></div></section>
+
+<section class="attribution">
+
+	<div class="usetitle">License and attribution:</div><div class="attrDiv">Font generated by <a href="http://www.flaticon.com">flaticon.com</a>
+ under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY</a>. The authors are: <a href="http://www.freepik.com">Freepik</a>.</div><div class="usetitle">Copy the Attribution License:</div>
+
+<textarea onclick="this.focus();this.select();">Font generated by &lt;a href=&quot;http://www.flaticon.com&quot;&gt;flaticon.com&lt;/a&gt;
+ under &lt;a href=&quot;http://creativecommons.org/licenses/by/3.0/&quot;&gt;CC BY&lt;/a&gt;. The authors are: &lt;a href=&quot;http://www.freepik.com&quot;&gt;Freepik&lt;/a&gt;.</textarea>
+
+</section>
+
+<section class="iconsuse">
+    	<div class="usetitle">Examples:</div>
+		<div class="image"><p>&lt;i class=&quot;flaticon-bees&quot;&gt;&lt;/i&gt; <i class="flaticon-bees"></i></p><p>&lt;i class=&quot;flaticon-black188&quot;&gt;&lt;/i&gt; <i class="flaticon-black188"></i></p><p>&lt;i class=&quot;flaticon-checkered3&quot;&gt;&lt;/i&gt; <i class="flaticon-checkered3"></i></p><p>&lt;i class=&quot;flaticon-couple40&quot;&gt;&lt;/i&gt; <i class="flaticon-couple40"></i></p><p>&lt;i class=&quot;flaticon-flaming&quot;&gt;&lt;/i&gt; <i class="flaticon-flaming"></i></p></div><div class="image"><p>&lt;span class=&quot;flaticon-football100&quot;&gt;&lt;/span&gt; <span class="flaticon-football100"></span></p><p>&lt;span class=&quot;flaticon-football101&quot;&gt;&lt;/span&gt; <span class="flaticon-football101"></span></p><p>&lt;span class=&quot;flaticon-football102&quot;&gt;&lt;/span&gt; <span class="flaticon-football102"></span></p><p>&lt;span class=&quot;flaticon-football103&quot;&gt;&lt;/span&gt; <span class="flaticon-football103"></span></p><p>&lt;span class=&quot;flaticon-football104&quot;&gt;&lt;/span&gt; <span class="flaticon-football104"></span></p></div><div class="image"><p>&lt;span class=&quot;flaticon-football105&quot;&gt;&lt;/span&gt; <span class="flaticon-football105"></span></p><p>&lt;i class=&quot;flaticon-football106&quot;&gt;&lt;/i&gt; <i class="flaticon-football106"></i></p><p>&lt;i class=&quot;flaticon-football107&quot;&gt;&lt;/i&gt; <i class="flaticon-football107"></i></p><p>&lt;i class=&quot;flaticon-football108&quot;&gt;&lt;/i&gt; <i class="flaticon-football108"></i></p><p>&lt;i class=&quot;flaticon-football109&quot;&gt;&lt;/i&gt; <i class="flaticon-football109"></i></p></div><div class="image"><p>&lt;span class=&quot;flaticon-football110&quot;&gt;&lt;/span&gt; <span class="flaticon-football110"></span></p><p>&lt;span class=&quot;flaticon-football111&quot;&gt;&lt;/span&gt; <span class="flaticon-football111"></span></p><p>&lt;span class=&quot;flaticon-football112&quot;&gt;&lt;/span&gt; <span class="flaticon-football112"></span></p><p>&lt;span class=&quot;flaticon-football113&quot;&gt;&lt;/span&gt; <span class="flaticon-football113"></span></p><p>&lt;span class=&quot;flaticon-football114&quot;&gt;&lt;/span&gt; <span class="flaticon-football114"></span></p></div><div class="image"></div>
+</section>
+<div id="footer">
+    <div>Generated by <a href="http://www.flaticon.com">flaticon.com</a>
+    </div>
+</div>
+	</body>
+</html>
