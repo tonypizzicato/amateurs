@@ -72,6 +72,16 @@ app.use(function (req, res, next) {
     }
 });
 
+app.get('*', function(req, res, next) {
+    if (req.url === '/api') {
+        return next();
+    }
+    var leagues = require('./models/league');
+    res.locals.leagues = leagues.get();
+
+    next();
+});
+
 //routes list:
 routes.initialize(app);
 

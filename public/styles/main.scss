@@ -227,6 +227,183 @@ a:focus {
     width:    100%;
 }
 
+// =============================================
+//                  PANELS
+// =============================================
+.panel {
+    box-shadow: none
+}
+
+.panel__heading {
+    color:         #fff;
+    font-weight:   500;
+    font-size:     18px;
+    border-bottom: 0;
+    padding:       10px;
+    background:    #1abc9c;
+    border-bottom: 4px solid #16a085;
+}
+
+.panel__heading i {
+    font-size:      24px;
+    vertical-align: middle;
+}
+
+.panel__heading i:first-child {
+    margin-right: 10px;
+}
+
+.panel__heading i.pull-right {
+    padding-top: 3px;
+}
+
+.panel__heading a,
+.panel__heading a:hover {
+    color: #fff;
+}
+
+.panel__heading a:hover {
+    text-decoration: underline;
+}
+
+.panel__heading .text_color_muted {
+    font-size: 14px;
+    color:     #ecf0f1;
+}
+
+.panel__heading.panel__heading_color_white {
+    background: #fff;
+    color:      #707070
+}
+
+.panel__heading.panel__heading_color_white i {
+    color: #ccc
+}
+
+.panel__heading.panel__heading_color_gray {
+    background:    #f9f9f9;
+    color:         #707070;
+    border-bottom: 1px solid #efefef
+}
+
+.panel__heading.panel__heading_color_gray i {
+    color: #ccc
+}
+
+.panel__body {
+    padding:     15px;
+    font-size:   12px;
+    line-height: 1.7em;
+}
+
+.panel__body i {
+    font-size:    16px;
+    margin-right: 10px;
+}
+
+.panel__body.text_color_muted {
+    color: #7f8c8d;
+}
+
+.panel__footer {
+    background: #fff
+}
+
+// ===================================== //
+//               COMMENTS                //
+// ===================================== //
+
+.panel .comment__button-add {
+    position:                    relative;
+    color:                       #fff;
+    font-weight:                 500;
+    font-size:                   18px;
+    border-bottom:               0;
+    padding:                     10px;
+    background:                  #1abc9c;
+    cursor:                      pointer;
+    text-transform:              uppercase;
+    letter-spacing:              1px;
+    text-align:                  center;
+    transition:                  all 0.3s;
+
+    overflow:                    hidden;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility:    hidden;
+    backface-visibility:         hidden;
+}
+
+.panel .comment__button-add:before {
+    font-style:             normal;
+    font-weight:            normal;
+    font-variant:           normal;
+    text-transform:         none;
+    line-height:            1;
+    position:               relative;
+    -webkit-font-smoothing: antialiased;
+
+    position:               absolute;
+    height:                 100%;
+    width:                  100%;
+    left:                   0;
+    top:                    -100%;
+    line-height:            1.3em;
+    font-size:              1.8em;
+    -webkit-transition:     all 0.3s;
+    -moz-transition:        all 0.3s;
+    transition:             all 0.3s;
+
+    font-family:            FontAwesome;
+}
+
+.panel .comment__button-add:hover:before {
+    top: 0;
+}
+
+.panel .comment__button-add:after {
+    content:            '';
+    position:           absolute;
+    z-index:            -1;
+    -webkit-transition: all 0.3s;
+    -moz-transition:    all 0.3s;
+    transition:         all 0.3s;
+}
+
+.panel .comment__button-add span {
+    display:                     inline-block;
+    width:                       100%;
+    height:                      100%;
+    -webkit-transition:          all 0.3s;
+    -webkit-backface-visibility: hidden;
+    -moz-transition:             all 0.3s;
+    -moz-backface-visibility:    hidden;
+    transition:                  all 0.3s;
+    backface-visibility:         hidden;
+}
+
+.panel .comment__button-add:hover span {
+    -webkit-transform: translateY(300%);
+    -moz-transform:    translateY(300%);
+    -ms-transform:     translateY(300%);
+    transform:         translateY(300%);
+}
+
+.form__input {
+    font-family: 'Open Sans', Arial, sans-serif;
+    line-height: 1.5;
+    font-size:   1.2em;
+    padding:     5px 10px;
+    color:       #7f8c8d;
+    display:     block;
+    width:       100%;
+    max-width:   100%;
+    background:  transparent;
+}
+
+.comment__form .form__input {
+    min-height: 100px;
+}
+
 // ********** FOOTER ********** //
 
 footer {
@@ -257,6 +434,10 @@ footer {
 
 .image_circled_yes {
     border-radius: 50%;
+}
+
+.text_color_muted {
+    color: #ccc;
 }
 
 @media (min-width: 768px) {
