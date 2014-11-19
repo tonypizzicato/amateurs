@@ -17,5 +17,5 @@ module.exports.initialize = function (app) {
     app.get('/fields', fields.fields);
     app.get('/fields/:name', fields.fields);
 
-    app.get('/countries/:name', countries.countries);
+    app.get('/countries/:country', countries.countries);
 };

@@ -6,10 +6,11 @@ var countriesModel = require('../models/country'),
 module.exports = {
     countries: function (req, res) {
         console.log('countries called');
-        var country = countriesModel.get(req.param('name'));
+        var country = countriesModel.get(req.param('country'));
 
-        if (!req.param('name').length || !country) {
-            res.status(404);
+        if (!req.param('country').length || !country) {
+            res.status(404).send('Not found COuntry');
+
             return;
         }
 

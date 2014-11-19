@@ -208,6 +208,10 @@ a:focus {
     border: none;
 }
 
+.sidebar__block .country_active_yes a {
+    color: #fff;
+}
+
 //=========== Content styles ==============//
 
 #content {
@@ -216,8 +220,9 @@ a:focus {
 
 .cover {
     max-height: 300px;
-    margin:     -15px -15px 15px;
+    margin:     -15px 0;
     overflow:   hidden;
+    height:     300px;
 }
 
 .cover__image {

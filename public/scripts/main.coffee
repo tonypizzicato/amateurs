@@ -8,7 +8,7 @@ require.config({
         'marionette':          '../vendor/marionette/lib/backbone.marionette'
         'handlebars':          '../vendor/require-handlebars-plugin/hbs'
         'waypoints':           '../vendor/jquery-waypoints/waypoints'
-        'imagesloaded':        '../vendor/imagesloaded/imagesloaded'
+        'imageScroll':         '../vendor/Parallax-ImageScroll/jquery.imageScroll'
 
     shim:
         'underscore':
@@ -27,7 +27,7 @@ require.config({
             exports: 'Handlebars'
         'waypoints':
             deps: ['jquery']
-        'imagesloaded':
+        'imageScroll':
             deps: ['jquery']
 });
 

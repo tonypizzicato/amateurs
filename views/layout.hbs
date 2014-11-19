@@ -50,12 +50,12 @@
                 <div class="sidebar__block">
                     <h4>Лиги</h4>
                     <ul>
-                        {{#each leagues}}
-                            <li>
+                        {{#each globals.leagues}}
+                            <li class="{{#equals country ../globals.currentCountry}}country_active_yes{{/equals}}" data-country="country">
                                 <div class='flag__wrapper rotate rotate_deg_0'>
                                     <div class="flag flag_country_{{country}}"></div>
                                 </div>
-                                <a href="/leagues/{{country}}"> {{country}}</a>
+                                <a href="/countries/{{country}}"> {{country}}</a>
                             </li>
                         {{/each}}
                     </ul>
@@ -105,9 +105,7 @@
             </nav>
 
             <div class="container-fluid">
-                <div class="cover">
-                    <img class="cover__image" src="http://placehold.it/1400x300">
-                </div>
+                <div class="cover img-holder" data-image="/images/hero-bg.jpg"></div>
                 <div>
                     {{{body}}}
                 </div>

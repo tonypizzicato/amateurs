@@ -7,6 +7,11 @@ var countries = [
         name:  'Англия',
         url:   'england',
         short: 'en'
+    },
+    {
+        name:  'Испания',
+        url:   'spain',
+        short: 'es'
     }
 ]
 

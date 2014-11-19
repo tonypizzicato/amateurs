@@ -59,7 +59,7 @@ module.exports = function (grunt) {
                 ]
             },
             express:    {
-                files:   ['<%= yeoman.server %>/server.js', '<%= yeoman.server %>/controllers/*.js', '<%= yeoman.server %>/models/*.js', '<%= yeoman.server %>/views/**/*.hbs'],   //Files to be watched
+                files:   ['<%= yeoman.server %>/server.js', '<%= yeoman.server %>/app/*.js', '<%= yeoman.server %>/controllers/*.js', '<%= yeoman.server %>/models/*.js', '<%= yeoman.server %>/views/**/*.hbs'],   //Files to be watched
                 tasks:   ['express:dev'],   //(Re)start the server
                 options: {            //Server options
                     spawn:      false,       //Must have for reload

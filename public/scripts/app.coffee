@@ -14,4 +14,10 @@ define ['marionette'], (Marionette) ->
         if Backbone.history
             require ['apps/nationals/nationals_app'], (NationalsApp)->
                 Backbone.history.start pushState: true
+
+    App.on 'start', ()->
+        require ['imageScroll'], ()->
+            $('.img-holder').imageScroll
+                holderClass: 'cover'
+                extraHeight: 500
     App

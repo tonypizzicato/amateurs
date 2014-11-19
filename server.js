@@ -1,6 +1,7 @@
 var express = require('express');
 var path = require('path');
 var hbs = require('hbs');
+var helpers = require('./app/hbs-helpers');
 var routes = require('./app/routes');
 
 var app = express();
@@ -59,6 +60,7 @@ app.set('view engine', 'hbs');
 app.set('views', __dirname + viewsDir);
 app.set('public', __dirname + clientDir);
 
+helpers.initialize(hbs);
 hbs.registerPartials(__dirname + viewsDir + '/partials');
 
 
@@ -72,12 +74,20 @@ app.use(function (req, res, next) {
     }
 });
 
-app.get('*', function(req, res, next) {
+app.get('*', function (req, res, next) {
+    res.locals.globals = res.locals.globals || {};
+
     if (req.url === '/api') {
         return next();
     }
     var leagues = require('./models/league');
-    res.locals.leagues = leagues.get();
+    res.locals.globals.leagues = leagues.get();
+
+    next();
+});
+
+app.get('/countries/:country', function(req, res, next) {
+    res.locals.globals.currentCountry = req.params.country || null;
 
     next();
 });
