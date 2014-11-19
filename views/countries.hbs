@@ -1,0 +1,47 @@
+<h1>{{name}}</h1>
+
+<div class="row s_mb_20">
+    {{#each countryLeagues}}
+        <div class="col-md-4">
+            <div class="panel panel_type_default s_m_0">
+                <div class="panel__heading">
+                    <i class="flaticon-football31"></i>
+                    <a href="/leagues/{{short}}">{{name}}</a>
+                </div>
+                <div class="panel__body s_p_0">
+                    {{> table this}}
+                </div>
+            </div>
+        </div>
+    {{/each}}
+</div>
+
+<div class="row s_mb_20">
+    {{#each countryLeagues}}
+        <div class="col-md-4">
+            <div class="panel panel_type_default s_m_0">
+                <div class="panel__heading">
+                    <i class="flaticon-goal"></i>
+                    <a href="/leagues/{{short}}/stats/players">Бомбардиры</a>
+                </div>
+                <div class="panel__body s_p_0">
+                    {{> strikers this}}
+                </div>
+                <div class="panel__heading">
+                    <i class="flaticon-football13"></i>
+                    <a href="/leagues/{{short}}/stats/players">Ассистенты</a>
+                </div>
+                <div class="panel__body s_p_0">
+                    {{> assists this}}
+                </div>
+                <div class="panel__heading">
+                    <i class="flaticon-football53"></i>
+                    <a href="/leagues/{{short}}/stats/players">Гол+Пас</a>
+                </div>
+                <div class="panel__body s_p_0">
+                    {{> strikers_assists this}}
+                </div>
+            </div>
+        </div>
+    {{/each}}
+</div>

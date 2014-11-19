@@ -1,0 +1,25 @@
+<table class="table s_m_0">
+    <thead>
+    <tr>
+        <th class="col-md-1">#</th>
+        <th>Игрок</th>
+        <th>Команда</th>
+        <th>Позиция</th>
+        <th class="col-md-1 text_align_r">Игры</th>
+        <th class="col-md-s text_align_r">Пасы</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {{#each player_stats.assists}}
+        <tr>
+            <td>{{number}}</td>
+            <td>{{player}}</td>
+            <td>{{team}}</td>
+            <td>{{position}}</td>
+            <td class="text_align_r">{{games}}</td>
+            <td class="text_align_r">{{passes}}</td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>

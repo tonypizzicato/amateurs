@@ -1,0 +1,27 @@
+<table class="table s_m_0">
+    <thead>
+    <tr>
+        <th class="col-md-1">Pos</th>
+        <th>Team</th>
+        <th class="col-md-1 text_align_r">G</th>
+        <th class="col-md-1 text_align_r">W</th>
+        <th class="col-md-1 text_align_r">D</th>
+        <th class="col-md-1 text_align_r">L</th>
+        <th class="col-md-1 text_align_r">P</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {{#each table}}
+        <tr>
+            <td>{{position}}</td>
+            <td>{{team}}</td>
+            <td class="text_align_r">{{games}}</td>
+            <td class="text_align_r">{{win}}</td>
+            <td class="text_align_r">{{draw}}</td>
+            <td class="text_align_r">{{loose}}</td>
+            <td class="text_align_r">{{points}}</td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>

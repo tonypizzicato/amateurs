@@ -178,13 +178,12 @@ a:focus {
     text-align: center;
 }
 
-.sidebar__block li i[class^="flaticon-"] {
+.sidebar__block li i[class*="flaticon-"] {
     display:     inline-block;
     line-height: 1;
 }
 
-.sidebar__block li i[class^="flaticon-"]:before,
-.sidebar__block li i[class*=" flaticon-"]:before,
+.sidebar__block li i[class*="flaticon-"]:before,
 {
     text-align:     center;
     vertical-align: middle;
@@ -231,7 +230,9 @@ a:focus {
 //                  PANELS
 // =============================================
 .panel {
-    box-shadow: none
+    //    box-shadow: none
+
+    margin-bottom: 20px;
 }
 
 .panel__heading {
@@ -240,8 +241,8 @@ a:focus {
     font-size:     18px;
     border-bottom: 0;
     padding:       10px;
-    background:    #1abc9c;
-    border-bottom: 4px solid #16a085;
+    background:    #3498db;
+    border-bottom: 4px solid #2980b9;
 }
 
 .panel__heading i {
@@ -255,6 +256,24 @@ a:focus {
 
 .panel__heading i.pull-right {
     padding-top: 3px;
+}
+
+.panel__heading i[class*="flaticon-"] {
+    display:     inline-block;
+    line-height: 1;
+    font-size:   inherit;
+}
+
+.panel__heading i[class*="flaticon-"]:first-child {
+    margin-right: 0;
+}
+
+.panel__heading i[class*="flaticon-"]:before,
+{
+    text-align:     center;
+    vertical-align: middle;
+    font-size:      24px;
+    margin:         0;
 }
 
 .panel__heading a,
@@ -320,7 +339,7 @@ a:focus {
     font-size:                   18px;
     border-bottom:               0;
     padding:                     10px;
-    background:                  #1abc9c;
+    background:                  #3498db;
     cursor:                      pointer;
     text-transform:              uppercase;
     letter-spacing:              1px;
@@ -436,8 +455,32 @@ footer {
     border-radius: 50%;
 }
 
+.text_align_l {
+    text-align: left;
+}
+
+.text_align_c {
+    text-align: center;
+}
+
+.text_align_r {
+    text-align: right;
+}
+
 .text_color_muted {
     color: #ccc;
+}
+
+.s_p_0 {
+    padding: 0;
+}
+
+.s_m_0 {
+    margin: 0;
+}
+
+.s_mb_20 {
+    margin-bottom: 20px;
 }
 
 @media (min-width: 768px) {

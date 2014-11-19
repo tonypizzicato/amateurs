@@ -40,7 +40,9 @@ module.exports = {
         if (id) {
             id = id.toLowerCase();
             result = _.findWhere(_.map(fields, function (item) {
-                return item.name.toLowerCase();
+                item.name = item.name.toLowerCase();
+
+                return item;
             }), {name: id});
         } else {
             result = fields;
