@@ -167,6 +167,10 @@ a:focus {
     padding-left: 0;
 }
 
+.sidebar__block ul ul {
+    padding-left: 45px;
+}
+
 .sidebar__block li {
     color:         #676767;
     margin-bottom: 5px;
@@ -208,7 +212,7 @@ a:focus {
     border: none;
 }
 
-.sidebar__block .country_active_yes a {
+.sidebar__block .country_active_yes > a {
     color: #fff;
 }
 

@@ -9,13 +9,12 @@ module.exports = {
         var country = countriesModel.get(req.param('country'));
 
         if (!req.param('country').length || !country) {
-            res.status(404).send('Not found COuntry');
+            res.status(404).send('Not found Country');
 
             return;
         }
 
         var leagues = leaguesModel.find({country: country.short});
-        console.log(leagues);
 
         res.render('countries', {country: country, countryLeagues: leagues, pageCountry: true});
     }

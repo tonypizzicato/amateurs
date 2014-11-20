@@ -1,4 +1,5 @@
 var express = require('express');
+var session = require('express-session');
 var path = require('path');
 var hbs = require('hbs');
 var helpers = require('./app/hbs-helpers');
@@ -63,8 +64,11 @@ app.set('public', __dirname + clientDir);
 helpers.initialize(hbs);
 hbs.registerPartials(__dirname + viewsDir + '/partials');
 
-
-app.use(app.router);
+app.use(session({
+    secret:            'test secret',
+    resave:            true,
+    saveUninitialized: true
+}));
 
 app.use(function (req, res, next) {
     if (req.url.substr(-1) == '/' && req.url.length > 1) {
@@ -81,19 +85,44 @@ app.get('*', function (req, res, next) {
         return next();
     }
     var leagues = require('./models/league');
-    res.locals.globals.leagues = leagues.get();
+    res.locals.globals.leagues = leagues.getCountries();
 
     next();
 });
 
-app.get('/countries/:country', function(req, res, next) {
-    res.locals.globals.currentCountry = req.params.country || null;
+app.get('/countries/:country', function (req, res, next) {
+    var country = req.param('country', req.session.currentCountry);
+
+    res.locals.globals.currentCountry = country;
+    req.session.currentCountry = country;
+
+    next();
+});
+
+app.get('/leagues/:name', function (req, res, next) {
+    var leagueName = req.param('name', req.session.currentLeague),
+        leagues = require('./models/league').find({short: leagueName});
+
+    if (leagues.length) {
+        var league = leagues.pop();
+
+        res.locals.globals.currentCountry = league.country;
+        res.locals.globals.currentLeague = league.short;
+        req.session.currentCountry = league.country;
+        req.session.currentLeague = league.short;
+    } else {
+        res.status(404).send('Not found League');
+
+        return;
+    }
 
     next();
 });
 
 //routes list:
 routes.initialize(app);
+
+app.use(app.router);
 
 var server = app.listen(port, function () {
 

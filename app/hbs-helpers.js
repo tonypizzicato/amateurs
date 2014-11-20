@@ -7,6 +7,14 @@ var helpers = {
         } else {
             return options.fn(this);
         }
+    },
+
+    lowercase: function(str) {
+        return str.toLowerCase();
+    },
+
+    uppercase: function(str) {
+        return str.toUpperCase();
     }
 };
 
