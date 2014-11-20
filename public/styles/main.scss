@@ -195,7 +195,7 @@ a:focus {
     margin:         0;
 }
 
-.sidebar__block .flag__wrapper {
+.sidebar__block_type_leagues .flag__wrapper {
     display:      inline-block;
     height:       32px;
     width:        32px;
@@ -204,16 +204,35 @@ a:focus {
     background:   none;
 }
 
-.sidebar__block .flag__wrapper:after {
+.sidebar__block_type_leagues .flag__wrapper:after {
     display: none;
 }
 
-.sidebar__block .flag {
+.sidebar__block_type_leagues .flag {
     border: none;
 }
 
-.sidebar__block .country_active_yes > a {
+.sidebar__block_type_leagues .country_active_yes .link__wrapper a {
     color: #fff;
+}
+
+.sidebar__block_type_leagues .country .link__wrapper {
+    text-transform: uppercase;
+}
+
+.sidebar__block_type_leagues a:hover {
+    text-decoration: none;
+}
+
+.sidebar__block_type_leagues .country ul {
+    max-height: 0;
+    overflow:   hidden;
+    transition: max-height .3s ease-out;
+}
+
+.sidebar__block_type_leagues .country_active_yes ul {
+    max-height: 200px;
+    transition: max-height .2s ease-in;
 }
 
 //=========== Content styles ==============//

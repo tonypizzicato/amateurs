@@ -20,4 +20,9 @@ define ['marionette'], (Marionette) ->
             $('.img-holder').imageScroll
                 holderClass: 'cover'
                 extraHeight: 500
+
+        $('.js-country-link').click (e)->
+            e.preventDefault()
+            $(@).parent().toggleClass 'country_active_yes'
+
     App

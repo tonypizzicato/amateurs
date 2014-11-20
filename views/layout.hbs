@@ -47,19 +47,21 @@
                         <li><i class="fa fa-calendar"></i> 3 года в лиге</li>
                     </ul>
                 </div>
-                <div class="sidebar__block">
+                <div class="sidebar__block sidebar__block_type_leagues">
                     <h4>Лиги</h4>
                     <ul>
                         {{#each globals.leagues}}
-                            <li class="{{#equals short ../globals.currentCountry}}country_active_yes{{/equals}}" data-country="country">
-                                <div class='flag__wrapper rotate rotate_deg_0'>
-                                    <div class="flag flag_country_{{short}}"></div>
+                            <li class="country{{#equals short ../globals.currentCountry}} country_active_yes{{/equals}}" data-country="country">
+                                <div class="link__wrapper js-country-link">
+                                    <div class='flag__wrapper rotate rotate_deg_0'>
+                                        <div class="flag flag_country_{{short}}"></div>
+                                    </div>
+                                    <a href="/countries/{{short}}"> {{name}}</a>
                                 </div>
-                                <a href="/countries/{{short}}"> {{name}}</a>
                                 {{#if leagues}}
                                     <ul>
                                         {{#each leagues}}
-                                            <li><a href="/leagues/{{lowercase short}}"> {{name}}</a></li>
+                                            <li><a class="js-league-link" href="/leagues/{{lowercase short}}"> {{name}}</a></li>
                                         {{/each}}
                                     </ul>
                                 {{/if}}
