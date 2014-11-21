@@ -44,7 +44,7 @@ var leagues = [
                     team:     'team 1',
                     player:   'Player One',
                     games:    10,
-                    goals:    1,
+                    goals:    16,
                     position: 'striker'
                 },
                 {
@@ -52,25 +52,33 @@ var leagues = [
                     team:     'team 1',
                     player:   'Player One',
                     games:    10,
-                    goals:    1,
+                    goals:    2,
                     position: 'striker'
                 },
                 {
                     number:   1,
                     team:     'team 1',
                     player:   'Player One',
-                    games:    10,
+                    games:    12,
                     goals:    1,
                     position: 'striker'
                 }
             ],
             assists:          [
                 {
-                    number:   1,
+                    number:   11,
                     team:     'team 1',
                     player:   'Player One',
                     games:    10,
-                    passes:   1,
+                    passes:   12,
+                    position: 'striker'
+                },
+                {
+                    number:   6,
+                    team:     'team 1',
+                    player:   'Player One',
+                    games:    10,
+                    passes:   2,
                     position: 'striker'
                 },
                 {
@@ -78,15 +86,7 @@ var leagues = [
                     team:     'team 1',
                     player:   'Player One',
                     games:    10,
-                    passes:   1,
-                    position: 'striker'
-                },
-                {
-                    number:   1,
-                    team:     'team 1',
-                    player:   'Player One',
-                    games:    10,
-                    passes:   1,
+                    passes:   2,
                     position: 'striker'
                 }
             ],
@@ -103,8 +103,8 @@ var leagues = [
                     number:       1,
                     team:         'team 1',
                     player:       'Player One',
-                    games:        10,
-                    goals_passes: 1,
+                    games:        21,
+                    goals_passes: 2,
                     position:     'striker'
                 },
                 {
@@ -296,7 +296,8 @@ module.exports = {
         if (name) {
             name = name.toLowerCase();
             result = _.findWhere(_.map(leagues, function (item) {
-                return item.short.toLowerCase();
+                item.short = item.short.toLowerCase();
+                return item;
             }), {short: name});
         } else {
             result = _.uniq(leagues, false, function (item) {

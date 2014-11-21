@@ -8,11 +8,14 @@
         <th class="col-md-1 text_align_r">D</th>
         <th class="col-md-1 text_align_r">L</th>
         <th class="col-md-1 text_align_r">P</th>
+        {{#if tableFull}}
+            <th class="col-md-3 text_align_r">Shape</th>
+        {{/if}}
     </tr>
     </thead>
 
     <tbody>
-    {{#each table}}
+    {{#each league.table}}
         <tr>
             <td>{{position}}</td>
             <td>{{team}}</td>
@@ -21,6 +24,9 @@
             <td class="text_align_r">{{draw}}</td>
             <td class="text_align_r">{{loose}}</td>
             <td class="text_align_r">{{points}}</td>
+            {{#if ../tableFull}}
+                <td class="text_align_r">dot dot dot</td>
+            {{/if}}
         </tr>
     {{/each}}
     </tbody>

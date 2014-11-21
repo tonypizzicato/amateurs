@@ -23,6 +23,11 @@ body {
     font-family: "Open Sans", sans-serif;
 }
 
+h1, h2, h3,
+.h1, .h2, .h3 {
+    font-weight: 300;
+}
+
 a:hover,
 a:focus {
     text-decoration: none;
@@ -121,7 +126,7 @@ a:focus {
     display:     block;
     font-weight: 600;
     font-size:   16px;
-    color:       #16ae9f;
+    color:       #3498db;
     height:      36px;
     line-height: 36px;
 }
@@ -168,7 +173,7 @@ a:focus {
 }
 
 .sidebar__block ul ul {
-    padding-left: 45px;
+    padding-left: 55px;
 }
 
 .sidebar__block li {
@@ -212,6 +217,12 @@ a:focus {
     border: none;
 }
 
+.sidebar__block_type_leagues .country {
+    border-bottom:  1px solid #3a3a3a;
+    margin-bottom:  5px;
+    padding-bottom: 7px;
+}
+
 .sidebar__block_type_leagues .country_active_yes .link__wrapper a {
     color: #fff;
 }
@@ -226,13 +237,41 @@ a:focus {
 
 .sidebar__block_type_leagues .country ul {
     max-height: 0;
+    position:   relative;
     overflow:   hidden;
-    transition: max-height .3s ease-out;
+    opacity:    0;
+    transition: all .1s ease-out;
 }
 
 .sidebar__block_type_leagues .country_active_yes ul {
     max-height: 200px;
-    transition: max-height .2s ease-in;
+    opacity:    1;
+    transition: all .2s ease-in;
+}
+
+.sidebar__block_type_leagues .country ul:before {
+    content:     " ";
+    position:    absolute;
+    display:     inline-block;
+    left:        45px;
+    top:         .3em;
+    bottom:      .5em;
+    opacity:     0;
+    transition:  all .5s;
+    border-left: 1px solid #6f6f6f;
+}
+
+.sidebar__block_type_leagues .country.country_active_yes ul:before {
+    opacity:    1;
+    transition: all .5s;
+}
+
+.sidebar__block_type_leagues .league {
+    font-size: 12px;
+}
+
+.sidebar__block_type_leagues .league_active_yes {
+    color: #3498db;
 }
 
 //=========== Content styles ==============//

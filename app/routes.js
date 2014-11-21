@@ -12,7 +12,7 @@ module.exports.initialize = function (app) {
     app.get('/nationals/promo', index.nationalsPromo);
 
     app.get('/leagues', leagues.leagues);
-    app.get('/leagues/:name', leagues.leagues);
+    app.get('/leagues/:name', leagues.league);
 
     app.get('/fields', fields.fields);
     app.get('/fields/:name', fields.fields);

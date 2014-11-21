@@ -1,0 +1,66 @@
+<h1>{{league.name}}</h1>
+
+<div class="row">
+    <div class="col-md-9">
+        <div class="row s_mb_20">
+            <div class="col-md-12">
+                <div class="panel panel_type_default s_m_0">
+                    <div class="panel__heading">
+                        <i class="flaticon-football31"></i> Table
+                    </div>
+                    <div class="panel__body s_p_0">
+                        {{> table this}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row s_mb_20">
+            <div class="col-md-6">
+                <div class="panel panel_type_default">
+                    <div class="panel__heading">
+                        <i class="flaticon-goal"></i> Бамбардиры
+                    </div>
+                    <div class="panel__body">
+                        {{> strikers league}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel_type_default">
+                    <div class="panel__heading">
+                        <i class="flaticon-football13"></i> Ассистенты
+                    </div>
+                    <div class="panel__body">
+                        {{> assists league}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="row s_mb_20">
+            <div class="col-md-12">
+                <div class="panel panel_type_default">
+                    <div class="panel__heading">
+                        <i class="fa fa-newspaper-o"></i> Новости
+                    </div>
+                    <div class="panel__body">
+                        Новости
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row s_mb_20">
+            <div class="col-md-12">
+                <div class="panel panel_type_default s_m_0">
+                    <div class="panel__heading">
+                        <i class="fa fa-phone"></i> Контакты
+                    </div>
+                    <div class="panel__body">
+                        Контакты
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
