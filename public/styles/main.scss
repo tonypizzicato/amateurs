@@ -325,6 +325,10 @@ a:focus {
     font-size: inherit;
 }
 
+.feature__icon.fa.fa-group {
+    font-size: 56px;
+}
+
 .feature__title {
     display:       block;
     text-align:    center;
@@ -594,6 +598,10 @@ footer {
 
 .s_mb_20 {
     margin-bottom: 20px;
+}
+
+.s_mb_40 {
+    margin-bottom: 40px;
 }
 
 @media (min-width: 768px) {
