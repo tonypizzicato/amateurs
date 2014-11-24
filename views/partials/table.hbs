@@ -1,29 +1,35 @@
-<table class="table s_m_0">
+<table class="table table-hover s_m_0">
     <thead>
     <tr>
-        <th class="col-md-1">Pos</th>
-        <th>Team</th>
-        <th class="col-md-1 text_align_r">G</th>
-        <th class="col-md-1 text_align_r">W</th>
-        <th class="col-md-1 text_align_r">D</th>
-        <th class="col-md-1 text_align_r">L</th>
-        <th class="col-md-1 text_align_r">P</th>
+        <th class="col-md-05 text_align_c"></th>
+        <th class="col-md-6"></th>
+        <th class="col-md-05 text_align_c">И</th>
+        <th class="col-md-05 text_align_c">В</th>
+        <th class="col-md-05 text_align_c">Н</th>
+        <th class="col-md-05 text_align_c">П</th>
+        <th class="col-md-05 text_align_c">О</th>
+        <th class="col-md-05 text_align_c">ГЗ</th>
+        <th class="col-md-05 text_align_c">ГП</th>
+        <th class="col-md-05 text_align_c">ГР</th>
         {{#if tableFull}}
-            <th class="col-md-3 text_align_r">Shape</th>
+            <th class="col-md-2 text_align_r">Форма</th>
         {{/if}}
     </tr>
     </thead>
 
     <tbody>
     {{#each league.table}}
-        <tr>
-            <td>{{position}}</td>
+        <tr class="table__position" data-pos="{{position}}">
+            <td class="text_align_c">{{position}} <span class="text_color_muted">({{#if previous}}{{previous}}{{else}}&mdash;{{/if}})</span></td>
             <td>{{team}}</td>
-            <td class="text_align_r">{{games}}</td>
-            <td class="text_align_r">{{win}}</td>
-            <td class="text_align_r">{{draw}}</td>
-            <td class="text_align_r">{{loose}}</td>
-            <td class="text_align_r">{{points}}</td>
+            <td class="text_align_c">{{games}}</td>
+            <td class="text_align_c">{{win}}</td>
+            <td class="text_align_c">{{draw}}</td>
+            <td class="text_align_c">{{loose}}</td>
+            <td class="text_align_c">{{points}}</td>
+            <td class="text_align_c">{{for}}</td>
+            <td class="text_align_c">{{against}}</td>
+            <td class="text_align_c">{{diff}}</td>
             {{#if ../tableFull}}
                 <td class="text_align_r">dot dot dot</td>
             {{/if}}

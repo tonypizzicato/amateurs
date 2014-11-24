@@ -4,8 +4,26 @@ var hbs = require('hbs'),
 var helpers = {
     equals: function (lvalue, rvalue, options) {
         if (arguments.length < 3)
-            throw new Error("hbs Helper equal needs 2 parameters");
+            throw new Error("hbs Helper equals needs 2 parameters");
         if (lvalue != rvalue) {
+            return options.inverse(this);
+        } else {
+            return options.fn(this);
+        }
+    },
+    lt: function (lvalue, rvalue, options) {
+        if (arguments.length < 3)
+            throw new Error("hbs Helper lt needs 2 parameters");
+        if (lvalue >= rvalue) {
+            return options.inverse(this);
+        } else {
+            return options.fn(this);
+        }
+    },
+    gt: function (lvalue, rvalue, options) {
+        if (arguments.length < 3)
+            throw new Error("hbs Helper gt needs 2 parameters");
+        if (lvalue <= rvalue) {
             return options.inverse(this);
         } else {
             return options.fn(this);

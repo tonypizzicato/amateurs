@@ -11,82 +11,144 @@ var leagues = [
         table:        [
             {
                 position: 1,
+                previous: 1,
                 team:     'team 1',
                 games:    10,
                 win:      10,
                 draw:     0,
                 loose:    0,
+                for:      32,
+                against:  12,
+                diff:     20,
                 points:   30
             },
             {
                 position: 2,
+                previous: 3,
                 team:     'team 2',
                 games:    10,
                 win:      6,
                 draw:     2,
                 loose:    2,
+                for:      41,
+                against:  35,
+                diff:     6,
                 points:   20
             },
             {
                 position: 3,
+                previous: 2,
                 team:     'team 3',
                 games:    10,
                 win:      1,
                 draw:     3,
                 loose:    7,
+                for:      15,
+                against:  25,
+                diff:     -10,
                 points:   6
+            },
+            {
+                position: 4,
+                previous: 4,
+                team:     'team 4',
+                games:    10,
+                win:      1,
+                draw:     3,
+                loose:    7,
+                for:      15,
+                against:  25,
+                diff:     -10,
+                points:   6
+            },
+            {
+                position: 5,
+                previous: 5,
+                team:     'team 4',
+                games:    10,
+                win:      1,
+                draw:     3,
+                loose:    7,
+                for:      15,
+                against:  45,
+                diff:     -30,
+                points:   2
             }
         ],
         player_stats: {
             strikers:         [
                 {
                     number:   1,
+                    previous: 1,
                     team:     'team 1',
                     player:   'Player One',
                     games:    10,
                     goals:    16,
+                    home:     12,
+                    away:     4,
+                    perGame:  1.6,
                     position: 'striker'
                 },
                 {
-                    number:   1,
+                    number:   2,
+                    previous: 3,
                     team:     'team 1',
                     player:   'Player One',
                     games:    10,
                     goals:    2,
+                    home:     0,
+                    away:     2,
+                    perGame:  .2,
                     position: 'striker'
                 },
                 {
-                    number:   1,
+                    number:   3,
+                    previous: 2,
                     team:     'team 1',
                     player:   'Player One',
                     games:    12,
                     goals:    1,
+                    home:     1,
+                    away:     0,
+                    perGame:  .08,
                     position: 'striker'
                 }
             ],
             assists:          [
                 {
-                    number:   11,
-                    team:     'team 1',
-                    player:   'Player One',
-                    games:    10,
-                    passes:   12,
-                    position: 'striker'
-                },
-                {
-                    number:   6,
-                    team:     'team 1',
-                    player:   'Player One',
-                    games:    10,
-                    passes:   2,
-                    position: 'striker'
-                },
-                {
                     number:   1,
+                    previous: 1,
+                    team:     'team 1',
+                    player:   'Player One',
+                    games:    10,
+                    passes:   16,
+                    home:     12,
+                    away:     4,
+                    perGame:  1.6,
+                    position: 'striker'
+                },
+                {
+                    number:   2,
+                    previous: 3,
                     team:     'team 1',
                     player:   'Player One',
                     games:    10,
                     passes:   2,
+                    home:     0,
+                    away:     2,
+                    perGame:  .2,
+                    position: 'striker'
+                },
+                {
+                    number:   3,
+                    previous: 2,
+                    team:     'team 1',
+                    player:   'Player One',
+                    games:    12,
+                    passes:   1,
+                    home:     1,
+                    away:     0,
+                    perGame:  .08,
                     position: 'striker'
                 }
             ],
@@ -311,7 +373,7 @@ module.exports = {
     /**
      * @returns {Array} Array of countries with leagues
      */
-    getCountries: function() {
+    getCountries: function () {
         return countries;
     },
 
