@@ -6,7 +6,7 @@
             <div class="col-md-12">
                 <div class="panel panel_type_default s_m_0">
                     <div class="panel__heading">
-                        <i class="flaticon-football31"></i> Таблица
+                        <i class="fa fa-newspaper-o"></i> Новости Лиги {{league.name}}
                     </div>
                     <div class="panel__body s_p_0">
                         {{> table this}}
@@ -40,12 +40,33 @@
     <div class="col-md-3 content__sidebar">
         <div class="row s_mb_20">
             <div class="col-md-12">
-                <div class="panel panel_type_default">
+                <div class="panel panel_type_table">
                     <div class="panel__heading">
-                        <i class="fa fa-newspaper-o"></i> Новости
+                        <i class="flaticon-football31"></i> Таблица
                     </div>
                     <div class="panel__body">
-                        Новости
+                        {{$ 'table' this tableFull=false league=league}}
+                    </div>
+                    <div class="panel__footer">
+                        <a href="/leagues/{{league.short}}/table">Полная таблица</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row s_mb_20">
+            <div class="col-md-12">
+                <div class="panel panel_type_table">
+                    <div class="panel__heading">
+                        <i class="flaticon-football31"></i> Результаты
+                    </div>
+                    <div class="panel__body">
+                        <h5>Последние матчи</h5>
+                        {{$ 'fixtures' fixture=globals.recent}}
+                        <h5>Ближайшие матчи</h5>
+                        {{$ 'fixtures' fixture=globals.comming}}
+                    </div>
+                    <div class="panel__footer">
+                        <a href="/leagues/{{league.short}}/fixture">Календарь</a>
                     </div>
                 </div>
             </div>

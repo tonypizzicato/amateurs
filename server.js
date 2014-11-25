@@ -4,6 +4,7 @@ var path = require('path');
 var hbs = require('hbs');
 var helpers = require('./app/hbs-helpers');
 var routes = require('./app/routes');
+var mongoose = require('mongoose');
 
 var app = express();
 
@@ -11,6 +12,9 @@ var app = express();
 var port = process.env.NODE_PORT || 3000;
 
 console.log(port);
+
+// connect to Mongo when the app initializes
+mongoose.connect('mongodb://localhost/amateur');
 
 app.set('port', port);
 app.use(express.favicon());
@@ -91,15 +95,23 @@ app.get('*', function (req, res, next) {
 });
 
 app.get('/countries/:country', function (req, res, next) {
+    var contactsModel = require('./models/contact');
     var country = req.param('country', req.session.currentCountry);
 
     res.locals.globals.currentCountry = country;
+
+    contactsModel.find({country: country}, function (err, contacts) {
+        res.locals.globals.contactsCountry = contacts;
+    });
+
     req.session.currentCountry = country;
 
     next();
 });
 
 app.get('/leagues/:name', function (req, res, next) {
+    var contactsModel = require('./models/contact');
+    var fixtureModel = require('./models/fixture');
     var leagueName = req.param('name', req.session.currentLeague),
         leagues = require('./models/league').find({short: leagueName});
 
@@ -110,6 +122,17 @@ app.get('/leagues/:name', function (req, res, next) {
         res.locals.globals.currentLeague = league.short;
         req.session.currentCountry = league.country;
         req.session.currentLeague = league.short;
+
+
+        contactsModel.find({country: league.country}, function (err, contacts) {
+            res.locals.globals.contactsCountry = contacts;
+        });
+        contactsModel.find({league: league.short}, function (err, contacts) {
+            res.locals.globals.contactsLeague = contacts;
+        });
+
+        res.locals.globals.recent = fixtureModel.recent(league.short);
+        res.locals.globals.comming = fixtureModel.comming(league.short);
     } else {
         res.status(404).send('Not found League');
 

@@ -389,6 +389,17 @@ a:focus {
     margin-top: -30px;
 }
 
+.content__sidebar .table_type_table {
+    th, td {
+        padding:   5px;
+        font-size: 11px;
+    }
+
+    th {
+        border-bottom: 1px;
+    }
+}
+
 // =============================================
 //                  PANELS
 // =============================================
@@ -508,6 +519,26 @@ a:focus {
     background: #fff
 }
 
+.panel__footer {
+    padding: 5px 15px 10px;
+}
+
+.content__sidebar .panel__footer a {
+    font-size: 11px;
+    color:     #333;
+    border:    none;
+}
+
+.content__sidebar .panel__footer a:hover {
+    color:         #676767;
+    border-bottom: 1px dashed #676767;
+}
+
+.content__sidebar .panel_type_table .panel__body {
+    padding-top:    5px;
+    padding-bottom: 5px;
+}
+
 // ===================================== //
 //               CONTACTS                //
 // ===================================== //
@@ -543,7 +574,6 @@ a:focus {
 .contact:nth-child(4) .contact__photo {
     background-image: url("https://pp.vk.me/c421430/v421430983/583c/zmQJUCGxaRw.jpg");
 }
-
 
 .contact:nth-child(5) .contact__photo {
     background-image: url("https://pp.vk.me/c10290/u337595/a_112b575a.jpg");

@@ -1,0 +1,17 @@
+{{#each fixture}}
+    <div class="fixture">
+        <span class="fixture__date">{{@key}}</span>
+        {{#each this}}
+            <div class="fixture__match">
+                <span class="fixture__time">{{time}}</span>
+                <span class="fixture__team">{{home}}</span>
+                {{#if score}}
+                    <span class="fixture__score">{{score.home}}</span>:<span class="fixture__score">{{score.away}}</span>
+                {{else}}
+                    <span class="fixture__score">-:-</span>
+                {{/if}}
+                <span class="fixture__team">{{away}}</span>
+            </div>
+        {{/each}}
+    </div>
+{{/each}}
