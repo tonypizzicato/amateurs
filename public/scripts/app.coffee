@@ -1,4 +1,4 @@
-define ['marionette'], (Marionette) ->
+define ['marionette', 'bootstrap.dropdown'], (Marionette) ->
     App = new Marionette.Application()
 
     App.navigate = (route, options)->

@@ -13,6 +13,8 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,500,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Raleway:100,300,400,500,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Exo+2:400,100,300,600,700,500&subset=latin,cyrillic' rel='stylesheet'
+          type='text/css'>
     <!-- build:css({public,.tmp}) /styles/main.css -->
     <link rel="stylesheet" href="/styles/main.css">
     <!-- endbuild -->
@@ -23,111 +25,239 @@
 
 </head>
 <body>
-<div class="content-wrapper">
-    <div class="sidebar sidebar_position_left hidden-xs">
-        <div class="block_scrollable_yes">
-            <div class="sidebar__block">
-                <div class="profile">
-                    <div class="profile__photo">
-                        <span>
-                        <img class="image_circled_yes"
-                             src="data:image/jpeg;base64,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"
-                             alt="profile">
-                        </span>
+
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><span
+                            class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span
+                            class="icon-bar"></span></button>
+                    <a class="navbar-brand" href="#">AFL</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-angle-down"></i>
+                                {{#if globals.currentCountry}}
+
+                                    {{#each globals.leagues}}
+                                        {{#equals short ../globals.currentCountry}}{{name}}{{/equals}}
+                                    {{/each}}
+                                {{else}}
+                                    Федерация
+                                {{/if}}
+                            </a>
+                            <ul class="dropdown-menu">
+                                {{#each globals.leagues}}
+                                    <li>
+                                        <div class='flag__wrapper rotate rotate_deg_0'>
+                                            <div class="flag flag_country_{{short}}"></div>
+                                        </div>
+                                        <a href="/countries/{{short}}"> {{name}}</a>
+                                    </li>
+                                {{/each}}
+                            </ul>
+                        </li>
+                        <li class="navbar__item navbar__item_active_yes">
+                            <a href="#">Главная</a>
+                        </li>
+                        <li class="navbar__item">
+                            <a href="#">Результаты</a>
+                        </li>
+                        <li class="navbar__item">
+                            <a href="#">Календарь</a>
+                        </li>
+                        <li class="navbar__item">
+                            <a href="#">Клубы</a>
+                        </li>
+                        <li class="navbar__item">
+                            <a href="#">Игроки</a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav_type_user navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-angle-down"></i>
+                                <i class="fa fa-user"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Вход</a></li>
+                                <li><a href="#">Регистрация</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+            </nav>
+        </div>
+    </div>
+    <div class="row clearfix news">
+        <div class="column col-md-9 s_pr_0">
+            <div class="news__image">
+                <img src="https://pp.vk.me/c625724/v625724943/b541/XOSppT0DJhI.jpg">
+            </div>
+        </div>
+        <div class="column col-md-3 s_pl_0">
+            <ul class="news__list">
+                <li class="news__item">
+                    <span class="news__time">01.12.2014</span>
+                    <span class="news__title"><a href="#">Cras sit amet nibh libero, in gravida nulla.</a></span>
+                </li>
+                <li class="news__item">
+                    <span class="news__time">01.12.2014</span>
+                    <span class="news__title"><a href="#">Nulla vel metus scelerisque ante sollicitudin commodo.</a></span>
+                </li>
+                <li class="news__item">
+                    <span class="news__time">01.12.2014</span>
+                    <span class="news__title"><a href="#">Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</a></span>
+                </li>
+                <li class="news__item">
+                    <span class="news__time">01.12.2014</span>
+                    <span class="news__title"><a href="#">Nulla vel metus scelerisque ante sollicitudin commodo.</a></span>
+                </li>
+                <li class="news__item">
+                    <span class="news__time">01.12.2014</span>
+                    <span class="news__title"><a href="#">Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</a></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row clearfix news-preview">
+        <div class="column col-md-4 s_pr_0">
+            <div class="news__title">Cras purus odio, vestibulum in vulputate at, tempus viverra turpis:</div>
+        </div>
+        <div class="column col-md-8 s_pl_0">
+            <div class="news__body">A small collection of various hover tooltip styles and effects for your inspiration.</div>
+        </div>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-8 column">
+            <div class="row clearfix">
+                <div class="col-md-6 column">
+                </div>
+                <div class="col-md-6 column">
+                    <div class="row clearfix">
+                        <div class="col-md-12 column">
+                            <div class="tabbable" id="tabs-992576">
+                                <ul class="nav nav-tabs">
+                                    <li class="active">
+                                        <a href="#panel-335817" data-toggle="tab">Section 1</a>
+                                    </li>
+                                    <li>
+                                        <a href="#panel-632108" data-toggle="tab">Section 2</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="panel-335817">
+                                        <p>
+                                            I'm in Section 1.
+                                        </p>
+                                    </div>
+                                    <div class="tab-pane" id="panel-632108">
+                                        <p>
+                                            Howdy, I'm in Section 2.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    s
-                    <h4 class="profile__name">Tony Pizzicato</h4>
                 </div>
             </div>
-            <div class="sidebar__block">
-                <h4>Профиль</h4>
-                <ul>
-                    <li><i class="fa fa-group"></i> Вест Хэм Юнайтед</li>
-                    <li><i class="flaticon-soccer18"></i> 13, Вратарь</li>
-                    <li><i class="fa fa-calendar"></i> 3 года в лиге</li>
-                </ul>
-            </div>
-            <div class="sidebar__block sidebar__block_type_leagues">
-                <h4>Лиги</h4>
-                <ul>
-                    {{#each globals.leagues}}
-                        <li class="country{{#equals short ../globals.currentCountry}} country_active_yes{{/equals}}" data-country="country">
-                            <div class="link__wrapper js-country-link">
-                                <div class='flag__wrapper rotate rotate_deg_0'>
-                                    <div class="flag flag_country_{{short}}"></div>
-                                </div>
-                                <a href="/countries/{{short}}"> {{name}}</a>
-                            </div>
-                            {{#if leagues}}
-                                <ul>
-                                    {{#each leagues}}
-                                        <li>
-                                            <a class="league js-league-link{{#equals short ../../../globals.currentLeague}}
-                                                league_active_yes{{/equals}}" href="/leagues/{{lowercase short}}"> {{name}}</a>
-                                        </li>
-                                    {{/each}}
-                                </ul>
-                            {{/if}}
-                        </li>
-                    {{/each}}
-                </ul>
+        </div>
+        <div class="col-md-4 column">
+        </div>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="media well">
+                <a href="#" class="pull-left"><img src="http://lorempixel.com/64/64/" class="media-object" alt=''/></a>
+
+                <div class="media-body">
+                    <h4 class="media-heading">
+                        Nested media heading
+                    </h4> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus
+                    odio, vestibulum in vulputate at, tempus viverra turpis.
+                    <div class="media">
+                        <a href="#" class="pull-left"><img src="http://lorempixel.com/64/64/" class="media-object" alt=''/></a>
+
+                        <div class="media-body">
+                            <h4 class="media-heading">
+                                Nested media heading
+                            </h4> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras
+                            purus odio, vestibulum in vulputate at, tempus viverra turpis.
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div id="content">
-        <nav class="navbar navbar-subnav navbar-static-top" role="navigation">
-            <div class="container-fluid">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="thumbnail">
+                        <img alt="300x200" src="http://lorempixel.com/600/200/people"/>
 
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar__toggle navbar-toggle collapsed" data-toggle="collapse" data-target="#subnav">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="fa fa-ellipsis-h"></span>
-                    </button>
-                </div>
+                        <div class="caption">
+                            <h3>
+                                Thumbnail label
+                            </h3>
 
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="subnav">
-                    <ul class="nav navbar-nav">
-                        <li class="active">
-                            <a class="navbar__link{{#if pageLeagues}} navbar__link_active_yes{{/if}}" href="/leagues">
-                                <i class="navbar__icon fa fa-fw fa-clock-o"></i> Лиги
-                            </a>
-                        </li>
-                        <li>
-                            <a class="navbar__link{{#if pageFields}} navbar__link_active_yes{{/if}}" href="/fields">
-                                <i class="navbar__icon fa fa-fw fa-futbol-o"></i> Поля
-                            </a>
-                        </li>
-                        <li>
-                            <a class="navbar__link{{#if pageContacts}} navbar__link_active_yes{{/if}}" href="/contacts">
-                                <i class="navbar__icon fa fa-fw fa-users"></i> Контакты
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right hidden-xs">
-                        <li>
-                            <a class="navbar__link" href="#" data-toggle="chat-box">Chat <i class="fa fa-fw fa-comment-o"></i></a>
-                        </li>
-                    </ul>
-                </div>
+                            <p>
+                                Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget
+                                metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                            </p>
 
-                <!-- /.navbar-collapse -->
-            </div>
-        </nav>
-
-        <div class="container-fluid">
-            <div class="cover img-holder" data-image="/images/hero-bg.jpg">
-                <div class="hero" style="-webkit-transform: translateZ(1px)">
-                    {{#if globals.currentLeague}}
-                        <div class="hero__title">
-                            <h3>{{globals.currentLeague}}</h3>
+                            <p>
+                                <a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a>
+                            </p>
                         </div>
-                    {{/if}}
+                    </div>
                 </div>
-            </div>
-            <div class="content">
-                {{{body}}}
+                <div class="col-md-4">
+                    <div class="thumbnail">
+                        <img alt="300x200" src="http://lorempixel.com/600/200/city"/>
+
+                        <div class="caption">
+                            <h3>
+                                Thumbnail label
+                            </h3>
+
+                            <p>
+                                Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget
+                                metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                            </p>
+
+                            <p>
+                                <a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="thumbnail">
+                        <img alt="300x200" src="http://lorempixel.com/600/200/sports"/>
+
+                        <div class="caption">
+                            <h3>
+                                Thumbnail label
+                            </h3>
+
+                            <p>
+                                Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget
+                                metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                            </p>
+
+                            <p>
+                                <a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -9,25 +9,28 @@ require.config({
         'handlebars':          '../vendor/require-handlebars-plugin/hbs'
         'waypoints':           '../vendor/jquery-waypoints/waypoints'
         'imageScroll':         '../vendor/Parallax-ImageScroll/jquery.imageScroll'
+        'bootstrap.dropdown':  '../vendor/bootstrap-sass/vendor/assets/javascripts/bootstrap/dropdown'
 
     shim:
         'underscore':
             exports: '_'
         'backbone':
-            deps: ['jquery', 'underscore']
+            deps:        ['jquery', 'underscore']
             exports: 'backbone'
         'backbone.babysitter':
             deps: ['backbone']
         'backbone.wreqr':
             deps: ['backbone']
         'marionette':
-            deps: ['backbone']
+            deps:        ['backbone']
             exports: 'Marionette'
         'handlebars':
             exports: 'Handlebars'
         'waypoints':
             deps: ['jquery']
         'imageScroll':
+            deps: ['jquery']
+        'bootstrap.dropdown':
             deps: ['jquery']
 });
 
