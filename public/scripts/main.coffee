@@ -10,12 +10,13 @@ require.config({
         'waypoints':           '../vendor/jquery-waypoints/waypoints'
         'imageScroll':         '../vendor/Parallax-ImageScroll/jquery.imageScroll'
         'bootstrap.dropdown':  '../vendor/bootstrap-sass/vendor/assets/javascripts/bootstrap/dropdown'
+        'bootstrap.tab':       '../vendor/bootstrap-sass/vendor/assets/javascripts/bootstrap/tab'
 
     shim:
         'underscore':
             exports: '_'
         'backbone':
-            deps:        ['jquery', 'underscore']
+            deps: ['jquery', 'underscore']
             exports: 'backbone'
         'backbone.babysitter':
             deps: ['backbone']
@@ -31,6 +32,8 @@ require.config({
         'imageScroll':
             deps: ['jquery']
         'bootstrap.dropdown':
+            deps: ['jquery']
+        'bootstrap.tab':
             deps: ['jquery']
 });
 

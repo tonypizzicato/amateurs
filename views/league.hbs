@@ -1,84 +1,148 @@
 <h1>{{league.name}}</h1>
 
-<div class="row">
-    <div class="col-md-9 content__main">
-        <div class="row s_mb_40">
-            <div class="col-md-12">
-                <div class="panel panel_type_default s_m_0">
-                    <div class="panel__heading">
-                        <i class="fa fa-newspaper-o"></i> Новости Лиги {{league.name}}
-                    </div>
-                    <div class="panel__body s_p_0">
-                        {{> table this}}
-                    </div>
-                </div>
+<div class="row clearfix s_mb_20">
+    <div class="col-md-8 column">
+        <div class="row clearfix">
+            <div class="col-md-6 column">
+
+                <h5>Последние матчи</h5>
+                {{$ 'fixtures' fixture=globals.recent}}
+                <h5>Ближайшие матчи</h5>
+                {{$ 'fixtures' fixture=globals.comming}}
             </div>
-        </div>
-        <div class="row s_mb_40">
-            <div class="col-md-6">
-                <div class="panel panel_type_default s_m_0">
-                    <div class="panel__heading">
-                        <i class="flaticon-goal"></i> Бамбардиры
-                    </div>
-                    <div class="panel__body s_p_0">
-                        {{> strikers league}}
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="panel panel_type_default s_m_0">
-                    <div class="panel__heading">
-                        <i class="flaticon-football13"></i> Ассистенты
-                    </div>
-                    <div class="panel__body s_p_0">
-                        {{> assists league}}
+            <div class="col-md-6 column">
+                <div class="row clearfix">
+                    <div class="col-md-12 column">
+                        <div class="tabbable" id="tabs-992576">
+                            <ul class="nav nav-tabs">
+                                <li class="tab__title active">
+                                    <a href="#tab-strikers" data-toggle="tab">Бомбардиры</a>
+                                </li>
+                                <li class="tab__title">
+                                    <a href="#tab-assists" data-toggle="tab">Ассистенты</a>
+                                </li>
+                            </ul><div class="tab-content">
+                                <div class="tab-pane active" id="tab-strikers">
+                                    <p>
+                                        {{> strikers league}}
+                                    </p>
+                                </div>
+                                <div class="tab-pane" id="tab-assists">
+                                    <p>
+                                        {{> assists league}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="link_type_full">
+                            <a href="/league/{{league.short}}/table">Полная таблица</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-md-3 content__sidebar">
-        <div class="row s_mb_20">
-            <div class="col-md-12">
-                <div class="panel panel_type_table">
-                    <div class="panel__heading">
-                        <i class="flaticon-football31"></i> Таблица
-                    </div>
-                    <div class="panel__body">
+    <div class="col-md-4 column">
+        <div class="tabbable" id="tabs-992576">
+            <ul class="nav nav-tabs">
+                <li class="tab__title active">
+                    <a href="#tab-table" data-toggle="tab">Таблица</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab-table">
+                    <p>
                         {{$ 'table' this tableFull=false league=league}}
-                    </div>
-                    <div class="panel__footer">
-                        <a href="/leagues/{{league.short}}/table">Полная таблица</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row clearfix">
+    <div class="col-md-12 column">
+        <div class="media well">
+            <a href="#" class="pull-left"><img src="http://lorempixel.com/64/64/" class="media-object" alt=''/></a>
+
+            <div class="media-body">
+                <h4 class="media-heading">
+                    Nested media heading
+                </h4> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus
+                      odio, vestibulum in vulputate at, tempus viverra turpis.
+                <div class="media">
+                    <a href="#" class="pull-left"><img src="http://lorempixel.com/64/64/" class="media-object" alt=''/></a>
+
+                    <div class="media-body">
+                        <h4 class="media-heading">
+                            Nested media heading
+                        </h4> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras
+                              purus odio, vestibulum in vulputate at, tempus viverra turpis.
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row s_mb_20">
-            <div class="col-md-12">
-                <div class="panel panel_type_table">
-                    <div class="panel__heading">
-                        <i class="flaticon-football31"></i> Результаты
-                    </div>
-                    <div class="panel__body">
-                        <h5>Последние матчи</h5>
-                        {{$ 'fixtures' fixture=globals.recent}}
-                        <h5>Ближайшие матчи</h5>
-                        {{$ 'fixtures' fixture=globals.comming}}
-                    </div>
-                    <div class="panel__footer">
-                        <a href="/leagues/{{league.short}}/fixture">Календарь</a>
+    </div>
+</div>
+<div class="row clearfix">
+    <div class="col-md-12 column">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="thumbnail">
+                    <img alt="300x200" src="http://lorempixel.com/600/200/people"/>
+
+                    <div class="caption">
+                        <h3>
+                            Thumbnail label
+                        </h3>
+
+                        <p>
+                            Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget
+                            metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                        </p>
+
+                        <p>
+                            <a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a>
+                        </p>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row s_mb_20">
-            <div class="col-md-12">
-                <div class="panel panel_type_default s_m_0">
-                    <div class="panel__heading">
-                        <i class="fa fa-phone"></i> Контакты
+            <div class="col-md-4">
+                <div class="thumbnail">
+                    <img alt="300x200" src="http://lorempixel.com/600/200/city"/>
+
+                    <div class="caption">
+                        <h3>
+                            Thumbnail label
+                        </h3>
+
+                        <p>
+                            Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget
+                            metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                        </p>
+
+                        <p>
+                            <a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a>
+                        </p>
                     </div>
-                    <div class="panel__body">
-                        {{> contacts}}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="thumbnail">
+                    <img alt="300x200" src="http://lorempixel.com/600/200/sports"/>
+
+                    <div class="caption">
+                        <h3>
+                            Thumbnail label
+                        </h3>
+
+                        <p>
+                            Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget
+                            metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                        </p>
+
+                        <p>
+                            <a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a>
+                        </p>
                     </div>
                 </div>
             </div>

@@ -1,19 +1,17 @@
-<table class="table table-hover table_type_table s_m_0">
+<table class="table table_type_table s_m_0">
     <thead>
     <tr>
-        <th class="{{#if tableFull}}col-md-05{{else}}col-md-2{{/if}} text_align_c"></th>
-        <th class="{{#if tableFull}}col-md-6{{else}}col-md-5{{/if}}"></th>
-        <th class="col-md-05 text_align_c">И</th>
-        <th class="col-md-05 text_align_c">В</th>
-        <th class="col-md-05 text_align_c">Н</th>
-        <th class="col-md-05 text_align_c">П</th>
+        <th class="{{#if tableFull}}col-md-05{{else}}col-md-2{{/if}} text_align_c">Место</th>
+        <th class="{{#if tableFull}}col-md-6{{else}}col-md-8{{/if}}">Клуб</th>
+        <th class="col-md-1 text_align_c">И</th>
         {{#if tableFull}}
+            <th class="col-md-05 text_align_c">В</th>
+            <th class="col-md-05 text_align_c">Н</th>
+            <th class="col-md-05 text_align_c">П</th>
             <th class="col-md-05 text_align_c">ГЗ</th>
             <th class="col-md-05 text_align_c">ГП</th>
             <th class="col-md-05 text_align_c">ГР</th>
             <th class="col-md-2 text_align_r">Форма</th>
-        {{else}}
-            <th class="{{#if tableFull}}col-md-05{{else}}col-md-2{{/if}} text_align_c">Г</th>
         {{/if}}
         <th class="col-md-1 text_align_c">О</th>
     </tr>
@@ -25,16 +23,14 @@
             <td class="text_align_c">{{position}} <span class="text_color_muted">({{#if previous}}{{previous}}{{else}}&mdash;{{/if}})</span></td>
             <td>{{team}}</td>
             <td class="text_align_c">{{games}}</td>
-            <td class="text_align_c">{{win}}</td>
-            <td class="text_align_c">{{draw}}</td>
-            <td class="text_align_c">{{loose}}</td>
             {{#if ../tableFull}}
+                <td class="text_align_c">{{win}}</td>
+                <td class="text_align_c">{{draw}}</td>
+                <td class="text_align_c">{{loose}}</td>
                 <td class="text_align_c">{{for}}</td>
                 <td class="text_align_c">{{against}}</td>
                 <td class="text_align_c">{{diff}}</td>
                 <td class="text_align_r">dot dot dot</td>
-            {{else}}
-                <td class="text_align_c">{{for}}-{{against}}</td>
             {{/if}}
             <td class="text_align_c">{{points}}</td>
         </tr>

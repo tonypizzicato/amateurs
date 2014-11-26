@@ -34,6 +34,7 @@ html, html a {
 
 body {
     background:  #f6f6f6;
+    color:       $navbar-default-link-color;
     font-family: "Exo 2", "Roboto", "Open Sans", sans-serif;
 
     background:  -webkit-linear-gradient(90deg, #040C19 10%, #040A16 90%); /* Chrome 10+, Saf5.1+ */
@@ -57,6 +58,11 @@ a:focus {
 /*------------------------------------*\
                 #COMPONENTS
 \*------------------------------------*/
+
+.link_type_full {
+    padding:    10px 15px;
+    background: rgba(255, 255, 255, .05);
+}
 
 /**
  * Navigation
@@ -126,9 +132,9 @@ a:focus {
     font-size: 22px;
 }
 
-/*------------------------------------*\
-                #NEWS
-\*------------------------------------*/
+/**
+ * News
+ */
 
 .news {
     margin-top:    20px;
@@ -207,6 +213,122 @@ a:focus {
     color:      $navbar-default-link-color;
 }
 
+/**
+ * Tabs
+ */
+
+.tabbable {
+
+}
+
+.nav-tabs {
+    border-bottom: none;
+}
+
+.nav-tabs .tab__title {
+    width: 33.3333%;
+}
+
+.nav-tabs .tab__title,
+.nav-tabs .tab__title a,
+.nav-tabs .tab__title.tab__title_active_yes a,
+.nav-tabs .tab__title.active a,
+.nav-tabs .tab__title a:hover,
+.nav-tabs .tab__title.tab__title_active_yes a:hover,
+.nav-tabs .tab__title.active a:hover {
+    border:        none;
+    border-radius: 0;
+    background:    transparent;
+    color:         $navbar-default-link-color;
+}
+
+.nav-tabs .tab__title.tab__title_active_yes a,
+.nav-tabs .tab__title.active a,
+.nav-tabs .tab__title.tab__title_active_yes a:hover,
+.nav-tabs .tab__title.active a:hover {
+    background:    rgba(255, 255, 255, .05);
+    border:        none;
+    border-bottom: 2px solid $navbar-default-link-hover-color;
+}
+
+.nav-tabs .tab__title:not(.tab__title_active_yes) a:hover,
+.nav-tabs .tab__title:not(.active) a:hover {
+    color: $navbar-default-link-hover-color;
+}
+
+.tab-content .table {
+    color: $navbar-default-link-color;
+}
+
+.tab-content .table th,
+.tab-content .table td {
+    border:     none;
+    background: rgba(255, 255, 255, .05);
+}
+
+.tab-content .table tr:first-child td {
+    color: $navbar-default-link-active-color;
+}
+
+/**
+ * Contacts
+ */
+
+.contact {
+    overflow:       hidden;
+    position:       relative;
+    vertical-align: middle;
+    padding:        20px 10px;
+
+    background:     rgba(255, 255, 255, .05);
+}
+
+.contact__photo:first-child {
+    display:         inline-block;
+    vertical-align:  middle;
+    margin-right:    20px;
+    width:           80px;
+    height:          80px;
+    background:      transparent url("https://pp.vk.me/c409718/v409718953/4cff/IQsN7usEI1I.jpg") no-repeat;
+    background-size: cover;
+    border-radius:   50%;
+}
+
+.contact:nth-child(2) .contact__photo {
+    background-image: url("https://pp.vk.me/c411317/v411317943/60ed/Lt8L_xHbNcE.jpg");
+}
+
+.contact:nth-child(3) .contact__photo {
+    background-image: url("https://pp.vk.me/c622526/v622526280/5a1/3vNp6c-HAy4.jpg");
+}
+
+.contact:nth-child(4) .contact__photo {
+    background-image: url("https://pp.vk.me/c421430/v421430983/583c/zmQJUCGxaRw.jpg");
+}
+
+.contact:nth-child(5) .contact__photo {
+    background-image: url("https://pp.vk.me/c10290/u337595/a_112b575a.jpg");
+}
+
+.contact__details {
+    display:        inline-block;
+    vertical-align: middle;
+}
+
+.contact__name {
+    font-weight: bold;
+    line-height: 1;
+}
+
+.contact__title {
+    color:         #999;
+    margin-bottom: 5px;
+}
+
+.contact .fa {
+    color: #7f8c8d;
+}
+
 /*------------------------------------*\
                 #TOOLS
 \*------------------------------------*/
@@ -217,6 +339,34 @@ a:focus {
 
 .s_pr_0 {
     padding-right: 0;
+}
+
+.s_mb_10 {
+    margin-bottom: 10px;
+}
+
+.s_mb_20 {
+    margin-bottom: 20px;
+}
+
+.s_mt_10 {
+    margin-top: 10px;
+}
+
+.s_mt_20 {
+    margin-top: 20px;
+}
+
+.text_align_l {
+    text-align: left;
+}
+
+.text_align_c {
+    text-align: center;
+}
+
+.text_align_r {
+    text-align: right;
 }
 
 /**

@@ -1,34 +1,22 @@
-<table class="table table-hover s_m_0">
+<table class="table s_m_0">
     <thead>
     <tr>
-        <th class="col-md-1 text_align_c"></th>
-        <th></th>
-        <th class="col-md-2 text_align_r">Команда</th>
-        <th class="col-md-1 text_align_r">Позиция</th>
-        <th class="col-md-05 text_align_c">И</th>
-        <th class="col-md-05 text_align_c">П</th>
-        <th class="col-md-05 text_align_c">ПЗИ</th>
-        <th class="col-md-05 text_align_c">ПД</th>
-        <th class="col-md-05 text_align_c">ПГ</th>
+        <th class="col-md-2 text_align_r">Место</th>
+        <th class="col-md-8 text_align_c">Игрок</th>
+        <th class="col-md-2 text_align_l">Пасы</th>
     </tr>
     </thead>
 
     <tbody>
     {{#each player_stats.strikers}}
         <tr>
-            <td class="text_align_c">{{number}}
+            <td class="text_align_r">{{number}}
                 <span class="text_color_muted{{#if previous}}{{#lt number previous}} text_color_red{{/lt}}{{#gt number previous}} text_color_green{{/gt}}{{/if}}">
                     ({{#if previous}}{{previous}}{{else}}&mdash;{{/if}})
                 </span>
             </td>
-            <td>{{player}}</td>
-            <td class="text_align_r">{{team}}</td>
-            <td class="text_align_r">{{position}}</td>
-            <td class="text_align_c">{{games}}</td>
-            <td class="text_align_c">{{passes}}</td>
-            <td class="text_align_c">{{perGame}}</td>
-            <td class="text_align_c">{{home}}</td>
-            <td class="text_align_c">{{away}}</td>
+            <td class="text_align_c">{{player}}</td>
+            <td class="text_align_l">{{passes}}</td>
         </tr>
     {{/each}}
     </tbody>
