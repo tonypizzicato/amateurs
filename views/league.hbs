@@ -6,32 +6,22 @@
             <div class="col-md-6 column">
                 <div class="row">
                     <div class="col-md-12 s_mb_20">
-                        <div class="panel s_m_0">
-                            <div class="panel__header">
-                                <i class="fa fa-calendar"></i> Последние матчи
-                            </div>
-                            <div class="panel__body">
-                                {{$ 'fixtures' fixture=globals.recent }}
-                            </div>
-                        </div>
-                        <div class="link_type_full s_mb_10">
-                            <span class="text_color_orange">Календарь</span>
-                            <span class="pull-right">
-                                <a href="/league/{{league.short}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
-                            </span>
-                        </div>
-                        <div class="panel s_m_0">
-                            <div class="panel__header">
-                                <i class="fa fa-calendar"></i> Ближайшие матчи
-                            </div>
-                            <div class="panel__body">
-                                {{$ 'fixtures' fixture=globals.comming }}
+                        <div class="tabbable" id="tabs-992576">
+                            <ul class="nav nav-tabs">
+                                <li class="tab__title tab__title_size_full active">
+                                    <a href="#tab-table" data-toggle="tab">Таблица</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab-table">
+                                    {{$ 'table' this tableFull=false league=league}}
+                                </div>
                             </div>
                         </div>
                         <div class="link_type_full">
-                            <span class="text_color_orange">Календарь</span>
+                            <span class="text_color_orange">Полная таблица</span>
                             <span class="pull-right">
-                                <a href="/league/{{league.short}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
+                                <a href="/league/{{league.short}}/table"><i class="fa fa-arrow-circle-o-right"></i></a>
                             </span>
                         </div>
                     </div>
@@ -68,24 +58,95 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-4 column">
-        <div class="tabbable" id="tabs-992576">
-            <ul class="nav nav-tabs">
-                <li class="tab__title tab__title_size_full active">
-                    <a href="#tab-table" data-toggle="tab">Таблица</a>
-                </li>
-            </ul>
-            <div class="tab-content">
-                <div class="tab-pane active" id="tab-table">
-                    {{$ 'table' this tableFull=false league=league}}
+
+        <div class="row clearfix">
+            <div class="column col-md-12">
+                <div class="match-main">
+                    <div class="match-main_image match-main_image_home" style="background-image: url('http://cs622320.vk.me/v622320626/2ba6/FIwZFevRtV4.jpg');"></div>
+                    <div class="match-main_image match-main_image_away" style="background-image: url('http://cs14115.vk.me/c625329/v625329876/35e5/pkImTBpAwdY.jpg');"></div>
+                    <div class="match-main_info">
+                        <div class="match-main_teams">
+                            <span class="match-main_team match-main_team_home">Вест Хэм Юнайтед</span>
+                            <span class="match-main_vs">vs</span>
+                            <span class="match-main_team match-main_team_away">Ливерпуль</span>
+                        </div>
+                        <div class="match-main_hot">
+                            <i class="flaticon-flaming"></i>
+                        </div>
+                        <div class="match-main_place">
+                            <i class="fa fa-location-arrow"></i>
+                            <span class="match-main_field">Прага</span>
+                            <span class="match-main_time">16:40</span>
+                        </div>
+                    </div>
+
+                    <svg width="0" height="0">
+                        <clipPath id="clip-match-main_image_home">
+                            <polygon points="300 300,360 150,300 0,0 0,0 300">
+                            </polygon>
+                        </clipPath>
+                        <clipPath id="clip-match-main_image_away">
+                            <polygon points="0 150,60 300,360 300,360 0,60 0">
+                            </polygon>
+                        </clipPath>
+                        <clipPath id="clip-match-main_info">
+                            <polygon points="60 150,0 300,200 300,140 150,200 0,0 0">
+                            </polygon>
+                        </clipPath>
+                    </svg>
                 </div>
             </div>
         </div>
-        <div class="link_type_full">
-            <span class="text_color_orange">Полная таблица</span>
+    </div>
+    <div class="col-md-4 column">
+        <div class="panel s_m_0">
+            <div class="panel-body">
+                <form role="form" class="form form_type_signin">
+                    <div class="form-group form-group_icon_left">
+                        <i class="fa fa-user"></i>
+                        <input type="email" class="form-control" id="signin-email" placeholder="myname@amateurs.io">
+                    </div>
+                    <div class="form-group form-group_icon_left">
+                        <i class="fa fa-key"></i>
+                        <input type="password" class="form-control" id="signin-password" placeholder="password">
+                    </div>
+                    <button type="submit" class="btn btn-default">Войти</button>
+                </form>
+            </div>
+        </div>
+        <div class="link_type_full s_mb_20">
+            <span class="text_color_orange">Регистрация</span>
             <span class="pull-right">
-                <a href="/league/{{league.short}}/table"><i class="fa fa-arrow-circle-o-right"></i></a>
+                <a href="/signup"><i class="fa fa-arrow-circle-o-right"></i></a>
+            </span>
+        </div>
+
+        <div class="panel s_m_0">
+            <div class="panel__header">
+                <i class="fa fa-calendar"></i> Последние матчи
+            </div>
+            <div class="panel__body">
+                {{$ 'fixtures' fixture=globals.recent }}
+            </div>
+        </div>
+        <div class="link_type_full s_mb_10">
+            <span class="text_color_orange">Календарь</span>
+            <span class="pull-right">
+                <a href="/league/{{league.short}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
+            </span>
+        </div>
+        <div class="panel s_m_0">
+            <div class="panel__header">
+                <i class="fa fa-calendar"></i> Ближайшие матчи
+            </div>
+            <div class="panel__body">
+                {{$ 'fixtures' fixture=globals.comming }}
+            </div>
+        </div>
+        <div class="link_type_full">
+            <span class="text_color_orange">Календарь</span>
+            <span class="pull-right">
+                <a href="/league/{{league.short}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
             </span>
         </div>
     </div>
@@ -99,7 +160,7 @@
                 <h4 class="media-heading">
                     Nested media heading
                 </h4> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus
-                odio, vestibulum in vulputate at, tempus viverra turpis.
+                      odio, vestibulum in vulputate at, tempus viverra turpis.
                 <div class="media">
                     <a href="#" class="pull-left"><img src="http://lorempixel.com/64/64/" class="media-object" alt=''/></a>
 
@@ -107,7 +168,7 @@
                         <h4 class="media-heading">
                             Nested media heading
                         </h4> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras
-                        purus odio, vestibulum in vulputate at, tempus viverra turpis.
+                              purus odio, vestibulum in vulputate at, tempus viverra turpis.
                     </div>
                 </div>
             </div>

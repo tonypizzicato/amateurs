@@ -112,6 +112,30 @@ var leagues = [
                     away:     0,
                     perGame:  .08,
                     position: 'striker'
+                },
+                {
+                    number:   3,
+                    previous: 2,
+                    team:     'team 1',
+                    player:   'Player One',
+                    games:    12,
+                    goals:    1,
+                    home:     1,
+                    away:     0,
+                    perGame:  .08,
+                    position: 'striker'
+                },
+                {
+                    number:   3,
+                    previous: 2,
+                    team:     'team 1',
+                    player:   'Player One',
+                    games:    12,
+                    goals:    1,
+                    home:     1,
+                    away:     0,
+                    perGame:  .08,
+                    position: 'striker'
                 }
             ],
             assists:          [
