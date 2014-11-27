@@ -1,22 +1,18 @@
 <table class="table s_m_0">
     <thead>
     <tr>
-        <th class="col-md-2 text_align_r">Место</th>
+        <th class="col-md-2 text_align_c">Место</th>
         <th class="col-md-8 text_align_c">Игрок</th>
-        <th class="col-md-2 text_align_l">Пасы</th>
+        <th class="col-md-2 text_align_c">Пасы</th>
     </tr>
     </thead>
 
     <tbody>
     {{#each player_stats.strikers}}
         <tr>
-            <td class="text_align_r">{{number}}
-                <span class="text_color_muted{{#if previous}}{{#lt number previous}} text_color_red{{/lt}}{{#gt number previous}} text_color_green{{/gt}}{{/if}}">
-                    ({{#if previous}}{{previous}}{{else}}&mdash;{{/if}})
-                </span>
-            </td>
+            <td class="text_align_c">{{number}}</td>
             <td class="text_align_c">{{player}}</td>
-            <td class="text_align_l">{{passes}}</td>
+            <td class="text_align_c">{{passes}}</td>
         </tr>
     {{/each}}
     </tbody>

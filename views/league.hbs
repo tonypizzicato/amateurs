@@ -4,38 +4,65 @@
     <div class="col-md-8 column">
         <div class="row clearfix">
             <div class="col-md-6 column">
-
-                <h5>Последние матчи</h5>
-                {{$ 'fixtures' fixture=globals.recent}}
-                <h5>Ближайшие матчи</h5>
-                {{$ 'fixtures' fixture=globals.comming}}
+                <div class="row">
+                    <div class="col-md-12 s_mb_20">
+                        <div class="panel s_m_0">
+                            <div class="panel__header">
+                                <i class="fa fa-calendar"></i> Последние матчи
+                            </div>
+                            <div class="panel__body">
+                                {{$ 'fixtures' fixture=globals.recent }}
+                            </div>
+                        </div>
+                        <div class="link_type_full s_mb_10">
+                            <span class="text_color_orange">Календарь</span>
+                            <span class="pull-right">
+                                <a href="/league/{{league.short}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
+                            </span>
+                        </div>
+                        <div class="panel s_m_0">
+                            <div class="panel__header">
+                                <i class="fa fa-calendar"></i> Ближайшие матчи
+                            </div>
+                            <div class="panel__body">
+                                {{$ 'fixtures' fixture=globals.comming }}
+                            </div>
+                        </div>
+                        <div class="link_type_full">
+                            <span class="text_color_orange">Календарь</span>
+                            <span class="pull-right">
+                                <a href="/league/{{league.short}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-md-6 column">
                 <div class="row clearfix">
                     <div class="col-md-12 column">
                         <div class="tabbable" id="tabs-992576">
                             <ul class="nav nav-tabs">
-                                <li class="tab__title active">
+                                <li class="tab__title tab__title_size_half active">
                                     <a href="#tab-strikers" data-toggle="tab">Бомбардиры</a>
                                 </li>
-                                <li class="tab__title">
+                                <li class="tab__title tab__title_size_half">
                                     <a href="#tab-assists" data-toggle="tab">Ассистенты</a>
                                 </li>
-                            </ul><div class="tab-content">
+                            </ul>
+                            <div class="tab-content">
                                 <div class="tab-pane active" id="tab-strikers">
-                                    <p>
-                                        {{> strikers league}}
-                                    </p>
+                                    {{> strikers league}}
                                 </div>
                                 <div class="tab-pane" id="tab-assists">
-                                    <p>
-                                        {{> assists league}}
-                                    </p>
+                                    {{> assists league}}
                                 </div>
                             </div>
                         </div>
                         <div class="link_type_full">
-                            <a href="/league/{{league.short}}/table">Полная таблица</a>
+                            <span class="text_color_orange">Статистика</span>
+                            <span class="pull-right">
+                                <a href="/league/{{league.short}}/table"><i class="fa fa-arrow-circle-o-right"></i></a>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -45,17 +72,21 @@
     <div class="col-md-4 column">
         <div class="tabbable" id="tabs-992576">
             <ul class="nav nav-tabs">
-                <li class="tab__title active">
+                <li class="tab__title tab__title_size_full active">
                     <a href="#tab-table" data-toggle="tab">Таблица</a>
                 </li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="tab-table">
-                    <p>
-                        {{$ 'table' this tableFull=false league=league}}
-                    </p>
+                    {{$ 'table' this tableFull=false league=league}}
                 </div>
             </div>
+        </div>
+        <div class="link_type_full">
+            <span class="text_color_orange">Полная таблица</span>
+            <span class="pull-right">
+                <a href="/league/{{league.short}}/table"><i class="fa fa-arrow-circle-o-right"></i></a>
+            </span>
         </div>
     </div>
 </div>
@@ -68,7 +99,7 @@
                 <h4 class="media-heading">
                     Nested media heading
                 </h4> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus
-                      odio, vestibulum in vulputate at, tempus viverra turpis.
+                odio, vestibulum in vulputate at, tempus viverra turpis.
                 <div class="media">
                     <a href="#" class="pull-left"><img src="http://lorempixel.com/64/64/" class="media-object" alt=''/></a>
 
@@ -76,7 +107,7 @@
                         <h4 class="media-heading">
                             Nested media heading
                         </h4> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras
-                              purus odio, vestibulum in vulputate at, tempus viverra turpis.
+                        purus odio, vestibulum in vulputate at, tempus viverra turpis.
                     </div>
                 </div>
             </div>

@@ -29,7 +29,7 @@ var fixtures = [
                         pitch: 'Прага'
                     },
                     {
-                        home:  'team 4',
+                        home:  'team22 4',
                         away:  'team 6',
                         date:   '2015-03-17',
                         time:  '12:00',

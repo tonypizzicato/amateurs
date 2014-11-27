@@ -1,7 +1,7 @@
 <table class="table table_type_table s_m_0">
     <thead>
     <tr>
-        <th class="{{#if tableFull}}col-md-05{{else}}col-md-2{{/if}} text_align_c">Место</th>
+        <th class="{{#if tableFull}}col-md-05{{else}}col-md-2{{/if}} text_align_c" colspan="2">Место</th>
         <th class="{{#if tableFull}}col-md-6{{else}}col-md-8{{/if}}">Клуб</th>
         <th class="col-md-1 text_align_c">И</th>
         {{#if tableFull}}
@@ -20,7 +20,15 @@
     <tbody>
     {{#each league.table}}
         <tr class="table__position" data-pos="{{position}}">
-            <td class="text_align_c">{{position}} <span class="text_color_muted">({{#if previous}}{{previous}}{{else}}&mdash;{{/if}})</span></td>
+            <td class="text_align_c">{{position}}</td>
+            <td class="text_align_c movement">
+                <span class="
+                    {{~#gt previous position}} fa fa-angle-up{{/gt~}}
+                    {{~#lt previous position}} fa fa-angle-down{{/lt~}}
+                    {{~#equals previous position}} fa fa-circle{{/equals~}}
+                    ">
+                </span>
+            </td>
             <td>{{team}}</td>
             <td class="text_align_c">{{games}}</td>
             {{#if ../tableFull}}

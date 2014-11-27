@@ -50,9 +50,23 @@ h1, h2, h3,
     font-weight: 300;
 }
 
+h1 {
+    margin-bottom:  20px;
+    letter-spacing: 5px;
+    font-size:      48px;
+}
+
 a:hover,
 a:focus {
     text-decoration: none;
+}
+
+.text_color_orange {
+    color: $navbar-default-link-active-color;
+}
+
+.text_color_muted {
+    color: #555;
 }
 
 /*------------------------------------*\
@@ -60,8 +74,25 @@ a:focus {
 \*------------------------------------*/
 
 .link_type_full {
+    position:   relative;
     padding:    10px 15px;
     background: rgba(255, 255, 255, .05);
+    border-top: 1px solid #060D17;
+}
+
+.link_type_full .pull-right a {
+    position:    absolute;
+    right:       0;
+    top:         0;
+    padding:     0 20px;
+    border-left: 1px solid #060D17;
+    font-size:   26px;
+    color:       #060D17;
+}
+
+.link_type_full .pull-right a:hover {
+    color:             $navbar-default-link-hover-color;
+    border-left-color: $navbar-default-link-hover-color;
 }
 
 /**
@@ -225,8 +256,16 @@ a:focus {
     border-bottom: none;
 }
 
-.nav-tabs .tab__title {
+.nav-tabs .tab__title.tab__title_size_third {
     width: 33.3333%;
+}
+
+.nav-tabs .tab__title.tab__title_size_half {
+    width: 50%;
+}
+
+.nav-tabs .tab__title.tab__title_size_full {
+    width: 100%;
 }
 
 .nav-tabs .tab__title,
@@ -243,12 +282,15 @@ a:focus {
 }
 
 .nav-tabs .tab__title.tab__title_active_yes a,
-.nav-tabs .tab__title.active a,
-.nav-tabs .tab__title.tab__title_active_yes a:hover,
-.nav-tabs .tab__title.active a:hover {
-    background:    rgba(255, 255, 255, .05);
-    border:        none;
-    border-bottom: 2px solid $navbar-default-link-hover-color;
+.nav-tabs .tab__title.active a {
+    &,
+    &:hover,
+    &:focus {
+        color:         $navbar-default-link-color;
+        background:    rgba(255, 255, 255, .05);
+        border:        none;
+        border-bottom: 2px solid $navbar-default-link-hover-color;
+    }
 }
 
 .nav-tabs .tab__title:not(.tab__title_active_yes) a:hover,
@@ -266,8 +308,52 @@ a:focus {
     background: rgba(255, 255, 255, .05);
 }
 
+.panel__body .table th,
+.panel__body .table td {
+    border: none;
+}
+
 .tab-content .table tr:first-child td {
     color: $navbar-default-link-active-color;
+}
+
+.table_type_table .movement {
+    padding-left: 0;
+}
+
+.table_type_table .fa-circle {
+    font-size: 8px;
+    color:     #555;
+}
+
+.table_type_table .fa-angle-up,
+.table_type_table .fa-angle-down {
+    font-size: 20px;
+}
+
+.table_type_table .fa-angle-up {
+    color: #3FA110;
+}
+
+.table_type_table .fa-angle-down {
+    color: #B72824;
+}
+
+.table .col-md-05 {
+    width: 4.16666%;
+}
+
+.table td.s_p_0 {
+    padding-left:  0;
+    padding-right: 0;
+}
+
+.table td.s_pl_0 {
+    padding-left: 0;
+}
+
+.table td.s_pr_0 {
+    padding-right: 0;
 }
 
 /**
@@ -329,6 +415,42 @@ a:focus {
     color: #7f8c8d;
 }
 
+/**
+ * Panels
+ */
+
+.panel {
+    border:        none;
+    border-radius: 0;
+    background:    rgba(255, 255, 255, .05);
+}
+
+.panel__header,
+.panel__body {
+    padding: 15px 10px;
+}
+
+.panel__header {
+    border-bottom: 1px solid #060D17;
+}
+
+.panel .table td {
+    padding-top:    3px;
+    padding-bottom: 3px;
+}
+
+/**
+ * Fixture
+ */
+
+.fixture__winner {
+    color: $navbar-default-link-active-color;
+}
+
+.fixture__looser {
+    color: #555;
+}
+
 /*------------------------------------*\
                 #TOOLS
 \*------------------------------------*/
@@ -339,6 +461,10 @@ a:focus {
 
 .s_pr_0 {
     padding-right: 0;
+}
+
+.s_m_0 {
+    margin: 0;
 }
 
 .s_mb_10 {
