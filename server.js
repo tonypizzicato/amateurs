@@ -109,7 +109,7 @@ app.get('/countries/:country', function (req, res, next) {
     next();
 });
 
-app.get('/leagues/:name', function (req, res, next) {
+app.get('/leagues/:name*', function (req, res, next) {
     var contactsModel = require('./models/contact');
     var fixtureModel = require('./models/fixture');
     var leagueName = req.param('name', req.session.currentLeague),

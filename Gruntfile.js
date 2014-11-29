@@ -21,7 +21,7 @@ module.exports = function (grunt) {
         // Project settings
         yeoman:       {
             // Configurable paths
-            public:    'public',
+            public: 'public',
             dist:   'dist',
             server: '.'
         },
@@ -211,7 +211,7 @@ module.exports = function (grunt) {
             }
         },
 
-        requirejs:     {
+        requirejs: {
             dist: {
                 // Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
                 options: {
@@ -232,6 +232,13 @@ module.exports = function (grunt) {
             }
         },
 
+        cssmin:        {
+            options: {
+                report: 'min',
+                root:   './public'
+            }
+        },
+
 
         // Renames files for browser caching purposes
         rev:           {
@@ -241,6 +248,7 @@ module.exports = function (grunt) {
                         '<%= yeoman.dist %>/scripts/{,*/}*.js',
                         '<%= yeoman.dist %>/styles/**/*.css',
                         '<%= yeoman.dist %>/images/**/*.{gif,jpeg,jpg,png}',
+                        '!<%= yeoman.dist %>/images/logos/*.{gif,jpeg,jpg,png}',
                         '<%= yeoman.dist %>/styles/fonts/{,*/}*.*'
                     ]
                 }
@@ -320,6 +328,7 @@ module.exports = function (grunt) {
                         '*.{ico,png,txt}',
                         '.htaccess',
                         'images/{,*/}*.webp',
+                        'images/logos/*.png',
                         '{,*/}*.html',
                         'styles/fonts/{,*/}*.*',
                         'vendor/bootstrap-sass/vendor/assets/fonts/bootstrap/*.*',

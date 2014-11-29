@@ -112,6 +112,30 @@ var leagues = [
                     away:     0,
                     perGame:  .08,
                     position: 'striker'
+                },
+                {
+                    number:   3,
+                    previous: 2,
+                    team:     'team 1',
+                    player:   'Player One',
+                    games:    12,
+                    goals:    1,
+                    home:     1,
+                    away:     0,
+                    perGame:  .08,
+                    position: 'striker'
+                },
+                {
+                    number:   3,
+                    previous: 2,
+                    team:     'team 1',
+                    player:   'Player One',
+                    games:    12,
+                    goals:    1,
+                    home:     1,
+                    away:     0,
+                    perGame:  .08,
+                    position: 'striker'
                 }
             ],
             assists:          [
@@ -289,6 +313,7 @@ var countries = [
     {
         name:    'Англия',
         short:   'en',
+        vk: 'https://vk.com/amateurenglishleague',
         leagues: _.filter(leagues, function (league) {
             return league.country == 'en';
         })
@@ -296,6 +321,7 @@ var countries = [
     {
         name:    'Испания',
         short:   'es',
+        vk: 'https://vk.com/amateurspanishleague',
         leagues: _.filter(leagues, function (league) {
             return league.country == 'es';
         })
@@ -303,6 +329,7 @@ var countries = [
     {
         name:    'Италия',
         short:   'it',
+        vk: 'https://vk.com/amateurscalcioleague',
         leagues: _.filter(leagues, function (league) {
             return league.country == 'it';
         })
@@ -310,6 +337,7 @@ var countries = [
     {
         name:    'Германия',
         short:   'gr',
+        vk: 'https://vk.com/western_europe',
         leagues: _.filter(leagues, function (league) {
             return league.country == 'gr';
         })
@@ -317,6 +345,7 @@ var countries = [
     {
         name:    'Бельгия',
         short:   'be',
+        vk: 'https://vk.com/amateurnetherlands',
         leagues: _.filter(leagues, function (league) {
             return league.country == 'be';
         })
@@ -324,6 +353,7 @@ var countries = [
     {
         name:    'Бразилия',
         short:   'br',
+        vk: 'https://vk.com/club74883632',
         leagues: _.filter(leagues, function (league) {
             return league.country == 'br';
         })
@@ -331,6 +361,7 @@ var countries = [
     {
         name:    'Нидерланды',
         short:   'nl',
+        vk: 'https://vk.com/amateurnetherlands',
         leagues: _.filter(leagues, function (league) {
             return league.country == 'nl';
         })
@@ -338,6 +369,7 @@ var countries = [
     {
         name:    'Португалия',
         short:   'pr',
+        vk: 'https://vk.com/amateur_portugal',
         leagues: _.filter(leagues, function (league) {
             return league.country == 'pr';
         })
@@ -374,7 +406,7 @@ module.exports = {
      * @returns {Array} Array of countries with leagues
      */
     getCountries: function () {
-        return countries;
+        return _.sortBy(countries, 'name');
     },
 
     /**

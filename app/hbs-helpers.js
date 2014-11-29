@@ -76,6 +76,12 @@ var helpers = {
 
         context = _.extend({}, opts.hash || this, _.omit(opts, 'data', 'context', 'fn', 'inverse'));
         return new hbs.handlebars.SafeString(partial(context));
+    },
+
+    rand: function(min, max) {
+        min = min || 0;
+        max = max || 100;
+        return Math.ceil(min + (max - min) * Math.random());
     }
 };
 
