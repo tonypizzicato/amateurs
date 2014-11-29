@@ -2,10 +2,9 @@
                 #SETTINGS
 \*------------------------------------*/
 
+
 $icon-font-path: "/vendor/bootstrap-sass/vendor/assets/fonts/";
 $fa-font-path: "/vendor/fontawesome/fonts/";
-$flaticon-football-font-path: "/styles/fonts/football";
-$flaticon-font-name: "flaticon";
 
 // Navbar links
 $navbar-default-link-color: #ecf0f1 !default;
@@ -17,8 +16,8 @@ $color-red: #C63C3C !default;
 
 @import 'fontawesome/scss/font-awesome';
 @import 'bootstrap-sass/vendor/assets/stylesheets/bootstrap';
+@import '/styles/fonts/football/flaticon.css';
 @import 'flags';
-@import 'fonts/football/flaticon.css';
 
 /*------------------------------------*\
                 #BASE
@@ -256,6 +255,57 @@ ul, ol {
 .news-preview .news__body {
     background: rgba(43, 48, 59, .5);
     color:      $navbar-default-link-color;
+}
+
+
+/**
+ * Main page features
+ */
+
+.feature {
+    text-align: center;
+}
+
+.feature__icon {
+    display:       inline-block;
+    border:        1px solid $navbar-default-link-active-color;
+    border-radius: 50%;
+    height:        120px;
+    width:         120px;
+    line-height:   120px;
+    font-size:     72px;
+
+    margin-bottom: 20px;
+    color:         $navbar-default-link-hover-color;
+}
+
+.feature__icon:hover {
+    background: $navbar-default-link-active-color;
+    color:      #fff;
+}
+
+.feature__icon[class*="flaticon-"]:before,
+.feature__icon[class*="flaticon-"]:after {
+    margin:    0;
+    font-size: inherit;
+}
+
+.feature__icon.fa.fa-group {
+    font-size: 56px;
+}
+
+.feature__title {
+    display:       block;
+    text-align:    center;
+    margin-bottom: 10px;
+    font-size:     24px;
+    font-weight:   bold;
+}
+
+.feature__description {
+    display:    block;
+    text-align: center;
+    color:      #95a5a6;
 }
 
 /**
@@ -1018,6 +1068,10 @@ $size: 200px;
 
 .s_mb_20 {
     margin-bottom: 20px;
+}
+
+.s_mb_40 {
+    margin-bottom: 40px;
 }
 
 .s_mt_10 {
