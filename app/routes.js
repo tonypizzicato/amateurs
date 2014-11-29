@@ -3,7 +3,8 @@
 var index = require('../controllers/index'),
     leagues = require('../controllers/leagues'),
     countries = require('../controllers/countries'),
-    fields = require('../controllers/fields');
+    fields = require('../controllers/fields'),
+    matches = require('../controllers/matches');
 
 module.exports.initialize = function (app) {
     app.get('/', index.index);
@@ -13,6 +14,7 @@ module.exports.initialize = function (app) {
 
     app.get('/leagues', leagues.leagues);
     app.get('/leagues/:name', leagues.league);
+    app.get('/leagues/:name/match/:home-:away', matches.match);
 
     app.get('/fields', fields.fields);
     app.get('/fields/:name', fields.fields);

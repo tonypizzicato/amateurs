@@ -38,11 +38,11 @@ body {
     color:       $navbar-default-link-color;
     font-family: "Exo 2", "Roboto", "Open Sans", sans-serif;
 
-    background:  -webkit-linear-gradient(90deg, #040C19 10%, #040A16 90%); /* Chrome 10+, Saf5.1+ */
-    background:  -moz-linear-gradient(90deg, #040C19 10%, #040A16 90%); /* FF3.6+ */
-    background:  -ms-linear-gradient(90deg, #040C19 10%, #040A16 90%); /* IE10 */
-    background:  -o-linear-gradient(90deg, #040C19 10%, #040A16 90%); /* Opera 11.10+ */
-    background:  linear-gradient(90deg, #040C19 10%, #040A16 90%); /* W3C */
+    background:  -webkit-linear-gradient(90deg, #101621 10%, #060e18 90%); /* Chrome 10+, Saf5.1+ */
+    background:  -moz-linear-gradient(90deg, #101621 10%, #060e18 90%); /* FF3.6+ */
+    background:  -ms-linear-gradient(90deg, #101621 10%, #060e18 90%); /* IE10 */
+    background:  -o-linear-gradient(90deg, #101621 10%, #060e18 90%); /* Opera 11.10+ */
+    background:  linear-gradient(90deg, #101621 10%, #060e18 90%); /* W3C */
 
 }
 
@@ -72,6 +72,11 @@ a:focus {
 
 footer {
     text-align: center;
+}
+
+ul, ol {
+    list-style: none;
+    padding:    0;
 }
 
 /*------------------------------------*\
@@ -116,7 +121,7 @@ footer {
 }
 
 .nav.navbar-nav.navbar_border_left {
-    border-left: 3px solid #040C19;
+    border-left: 3px solid #101621;
 }
 
 .navbar .navbar__item.navbar__item_active_yes a {
@@ -257,8 +262,10 @@ footer {
  * Tabs
  */
 
-.tabbable {
-
+.tabbable .nav-tabs {
+    position:      relative;
+    z-index:       1;
+    margin-bottom: 2px;
 }
 
 .nav-tabs {
@@ -307,14 +314,17 @@ footer {
     color: $navbar-default-link-hover-color;
 }
 
+.tab-content {
+    //    background: rgba(255, 255, 255, .05);
+}
+
 .tab-content .table {
     color: $navbar-default-link-color;
 }
 
 .tab-content .table th,
 .tab-content .table td {
-    border:     none;
-    background: rgba(255, 255, 255, .05);
+    border: none;
 }
 
 .panel__body .table th,
@@ -444,6 +454,10 @@ footer {
     border:        none;
     border-radius: 0;
     background:    rgba(255, 255, 255, .05);
+}
+
+.panel_type_transparent {
+    background: transparent;
 }
 
 .panel__header,
@@ -675,7 +689,7 @@ footer {
 }
 
 .panel_type_photo .column {
-    padding-left: 5px;
+    padding-left:  5px;
     padding-right: 5px;
 }
 
@@ -816,9 +830,159 @@ ul.social-buttons li:last-child {
     font-size: 18px;
 }
 
+/**
+ * Match
+ */
+
+.match img {
+    margin-top: 60px;
+}
+
+@mixin circle($size) {
+    content:       "";
+    position:      absolute;
+    border-radius: 50%;
+    left:          calc(50% - #{$size/2});
+    top:           calc(50% - #{$size/2});
+    width:         $size;
+    height:        $size;
+}
+
+$size: 200px;
+
+.match__time {
+    display:          inline-block;
+    width:            $size;
+    height:           $size;
+    border-radius:    50%;
+    background-color: #555;
+    position:         relative;
+    &.gt-50 {
+        background-color: $color-red;
+    }
+}
+
+.match__time span:after {
+    content:  "'";
+    position: absolute;
+}
+
+.ppc-progress {
+    @include circle($size);
+    clip: rect(0, $size, $size, #{$size/2});
+    .ppc-progress-fill {
+        @include circle($size);
+        clip:       rect(0, #{$size/2}, $size, 0);
+        background: $color-red;
+        transform:  rotate(60deg);
+    }
+
+    .gt-50 & {
+        clip: rect(0, #{$size/2}, $size, 0);
+        .ppc-progress-fill {
+            clip:       rect(0, $size, $size, #{$size/2});
+            background: #E5E5E5;
+        }
+    }
+}
+
+.ppc-percents {
+    @include circle(#{$size/1.02});
+    background: #08101c;
+    text-align: center;
+    display:    table;
+    span {
+        display:     block;
+        color:       $navbar-default-link-active-color;
+        font-weight: 300;
+        font-size:   38px;
+    }
+}
+
+.pcc-percents-wrapper {
+    display:        table-cell;
+    vertical-align: middle;
+}
+
+.match-events__ {
+    //    margin-bottom: 15px;
+}
+
+.match-events__time,
+.match-events__description,
+.match-lineup__player,
+.match-lineup__number {
+    display:       inline-block;
+    padding:       15px 20px 15px 15px;
+    margin-bottom: 10px;
+    background:    rgba(255, 255, 255, .05);
+}
+
+.match-events__time,
+.match-events__description {
+    width: 100%;
+}
+
+.match-events__time {
+    margin-right: 30px;
+}
+
+.match-events__description {
+    margin-left: 30px;
+}
+
+.match-events__time .icon_type_event {
+    float: left;
+}
+
+.match-lineup__player, .match-lineup__number {
+    padding:       7px 15px;
+    margin-bottom: 1px;
+}
+
+.match-lineup__player {
+    border-left: 5px solid #08101c;
+}
+
+.icon_type_event {
+    display:    inline-block;
+    width:      20px;
+    height:     20px;
+    background: transparent center center no-repeat;
+}
+
+.icon-yellow {
+    background-image: url("../images/icon-yellow.png");
+}
+
+.icon-red {
+    background-image: url("../images/icon-red.png");
+}
+
+.icon-corner {
+    background-image: url("../images/icon-corner.png");
+}
+
+.icon-penalty {
+    background-image: url("../images/icon-penalty.png");
+}
+
+.icon-injury {
+    background-image: url("../images/icon-injury.png");
+}
+
 /*------------------------------------*\
                 #TOOLS
 \*------------------------------------*/
+
+
+.s_m_0 {
+    margin: 0;
+}
+
+.s_p_0 {
+    padding: 0;
+}
 
 .s_pl_0 {
     padding-left: 0;
@@ -836,8 +1000,12 @@ ul.social-buttons li:last-child {
     padding-right: 5px;
 }
 
-.s_m_0 {
-    margin: 0;
+.s_pb_5 {
+    padding-bottom: 5px;
+}
+
+.s_pb_10 {
+    padding-bottom: 10px;
 }
 
 .s_mb_3 {
@@ -876,6 +1044,22 @@ ul.social-buttons li:last-child {
     margin-right: 10px;
 }
 
+.s_mr_20 {
+    margin-right: 20px;
+}
+
+.s_ml_5 {
+    margin-left: 5px;
+}
+
+.s_ml_10 {
+    margin-left: 10px;
+}
+
+.s_ml_20 {
+    margin-left: 20px;
+}
+
 .text_align_l {
     text-align: left;
 }
@@ -886,6 +1070,14 @@ ul.social-buttons li:last-child {
 
 .text_align_r {
     text-align: right;
+}
+
+.text_weight_light {
+    font-weight: 300;
+}
+
+.text_weight_bold {
+    font-weight: 700;
 }
 
 .text_size_10 {
@@ -918,6 +1110,10 @@ ul.social-buttons li:last-child {
 
 .text_size_32 {
     font-size: 32px;
+}
+
+.text_size_48 {
+    font-size: 48px;
 }
 
 /**
