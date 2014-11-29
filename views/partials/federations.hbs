@@ -1,0 +1,23 @@
+<div class="panel">
+    <div class="panel__header"><h4 class="s_m_0"><i class="fa fa-globe s_mr_10"></i> Федерации</h4></div>
+    <div class="panel__body">
+        {{#each globals.leagues}}
+            <div class="federation text_align_c ">
+                <div class='flag__wrapper rotate rotate_deg_0'>
+                    <div class="flag flag_country_{{short}}"></div>
+                </div>
+
+                <h5>{{name}}</h5>
+
+                <div class="socials">
+                    <ul class="socials__buttons">
+                        <li>
+                            <a href="{{vk}}" class="socials__button" target="_blank"><i
+                                    class="fa fa-vk"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</div>

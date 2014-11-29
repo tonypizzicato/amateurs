@@ -2,7 +2,8 @@ node_modules
 dist
 .tmp
 .sass-cache
-app/vendor
+public/vendor
 test/vendor
 .idea
 .tmp_assets
+*.psd

@@ -1,0 +1,30 @@
+<div class="row">
+    {{#each fields}}
+        <div class="col-md-4">
+            <div class="panel panel_type_default">
+                <div class="panel__heading">
+                    <i class="fa fa-map-marker"></i>
+                    <a href="{{coords}}">{{name}}</a>
+                    <span class="text_color_muted">{{address}}</span>
+                    <i class="fa fa-reply-all pull-right"></i>
+                </div>
+                <div class="panel__body text_color_muted">
+                    <i class="fa fa-bus"></i> {{route}}
+                </div>
+
+                <img src="{{coords}}" style="width: 100%; height: auto; display: block; margin-left: auto; margin-right: auto;">
+
+                <div class="panel__footer">
+                    <div class="comment">
+                        <div class="comment__button-add js-button-comment-add fa-comment-o">
+                            <span>Оставить комментарий</span>
+                        </div>
+                        <div class="form comment__form">
+                            <textarea class="form__input"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{/each}}
+</div>
