@@ -1,4 +1,5 @@
-require.config({
+require.config
+    baseUrl: '/scripts'
     paths:
         'jquery':              '../vendor/jquery/jquery.min'
         'underscore':          '../vendor/underscore/underscore'
@@ -35,7 +36,6 @@ require.config({
             deps: ['jquery']
         'bootstrap.tab':
             deps: ['jquery']
-});
 
 require ['app', 'jquery'], (app, $)->
     app.start()

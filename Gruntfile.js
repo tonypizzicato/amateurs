@@ -211,6 +211,12 @@ module.exports = function (grunt) {
             }
         },
 
+        bower: {
+            target: {
+                rjsConfig: '<%= yeoman.public %>/scripts/main.js'
+            }
+        },
+
         requirejs: {
             dist: {
                 // Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
@@ -218,6 +224,8 @@ module.exports = function (grunt) {
                     // `name` and `out` is set by grunt-usemin
                     baseUrl:                 '.tmp/scripts',
                     optimize:                'none',
+                    name:                    'main',
+                    mainConfigFile:          '.tmp/scripts/main.js',
                     // TODO: Figure out how to make sourcemaps work with grunt-usemin
                     // https://github.com/yeoman/grunt-usemin/issues/30
                     //generateSourceMaps: true,
@@ -226,7 +234,8 @@ module.exports = function (grunt) {
                     preserveLicenseComments: false,
                     useStrict:               true,
                     wrap:                    true,
-                    findNestedDependencies:  true
+                    findNestedDependencies:  true,
+                    out:                     '.tmp/concat/scripts/out.js'
                     //uglify2: {} // https://github.com/mishoo/UglifyJS2
                 }
             }
@@ -262,7 +271,7 @@ module.exports = function (grunt) {
             options: {
                 dest: '<%= yeoman.dist %>'
             },
-            html:    ['<%= yeoman.public %>/construct.html', '<%= yeoman.public %>/promo/nationals.html', '<%= yeoman.server %>/views/layout.hbs']
+            html:    ['<%= yeoman.server %>/views/layout.hbs']
         },
 
         // Performs rewrites based on rev and the useminPrepare configuration
@@ -368,14 +377,20 @@ module.exports = function (grunt) {
         // Generates a custom Modernizr build that includes only the tests you
         // reference in your app
         modernizr:     {
-            devFile:    '<%= yeoman.public %>/vendor/modernizr/modernizr.js',
-            outputFile: '<%= yeoman.dist %>/scripts/vendor/modernizr.js',
-            files:      [
-                '<%= yeoman.dist %>/scripts/{,*/}*.js',
-                '<%= yeoman.dist %>/styles/{,*/}*.css',
-                '!<%= yeoman.dist %>/scripts/vendor/*'
-            ],
-            uglify:     true
+            dist: {
+                devFile:    '<%= yeoman.public %>/vendor/modernizr/modernizr.js',
+                outputFile: '<%= yeoman.dist %>/scripts/vendor/modernizr.js',
+                files:      {
+                    src: [
+                        '<%= yeoman.dist %>/scripts/{,*/}*.js',
+                        '<%= yeoman.dist %>/styles/{,*/}*.css'
+                    ]
+                },
+                excludeFiles: [
+                    '!<%= yeoman.dist %>/scripts/vendor/*'
+                ],
+                uglify:     true
+            }
         },
 
 
@@ -498,11 +513,11 @@ module.exports = function (grunt) {
     grunt.registerTask('build', [
         'clean:dist',
         'copy:bodge',
-        'useminPrepare',
         'concurrent:dist',
-        'autoprefixer',
-        'requirejs',
+        'useminPrepare',
         'concat',
+        'autoprefixer',
+        'requirejs:dist',
         'cssmin',
         'uglify',
         'copy:dist',
