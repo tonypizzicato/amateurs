@@ -56,13 +56,13 @@
                                         <div class='flag__wrapper rotate rotate_deg_0'>
                                             <div class="flag flag_country_{{short}}"></div>
                                         </div>
-                                        <a href="/countries/{{short}}"> {{name}}</a>
+                                        <a href="/countries/{{short}}"><span class="s_valign_m">{{name}}</span><i class="fa fa-angle-right text_size_14"></i></a>
                                     </li>
                                 {{/each}}
                             </ul>
                         </li>
-                        <li class="navbar__item navbar__item_active_yes">
-                            <a href="#">Главная</a>
+                        <li class="navbar__item {{#if pageIndex}}navbar__item_active_yes{{/if}}">
+                            <a href="/">Главная</a>
                         </li>
                         <li class="navbar__item">
                             <a href="#">Результаты</a>
@@ -78,6 +78,9 @@
                         </li>
                         <li class="navbar__item">
                             <a href="#">Медиа</a>
+                        </li>
+                        <li class="navbar__item{{#if pageFields}} navbar__item_active_yes{{/if}}">
+                            <a href="/fields">Поля</a>
                         </li>
                     </ul>
                     <ul class="nav nav_type_user navbar-nav navbar-right navbar_border_left">

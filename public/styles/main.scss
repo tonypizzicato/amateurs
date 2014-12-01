@@ -2,7 +2,6 @@
                 #SETTINGS
 \*------------------------------------*/
 
-
 $icon-font-path: "/vendor/bootstrap-sass/vendor/assets/fonts/";
 $fa-font-path: "/vendor/fontawesome/fonts/";
 
@@ -119,6 +118,10 @@ ul, ol {
     margin-top:       20px;
 }
 
+.navbar-collapse {
+    padding-right: 0;
+}
+
 .nav.navbar-nav.navbar_border_left {
     border-left: 3px solid #101621;
 }
@@ -138,6 +141,10 @@ ul, ol {
     font-size: 18px;
 }
 
+.nav_type_user i {
+    //    font-size: 22px;
+}
+
 .navbar .nav i.fa-angle-down {
     font-weight:  bold;
     margin-right: 3px;
@@ -145,8 +152,8 @@ ul, ol {
 
 .nav .flag__wrapper {
     display:      inline-block;
-    height:       32px;
-    width:        32px;
+    height:       24px;
+    width:        24px;
     margin-right: 10px;
     box-shadow:   0px 1px 1px rgba(255, 255, 255, 0.2), 0 0 8px rgba(0, 0, 0, 0.5) inset;
     background:   none;
@@ -169,11 +176,36 @@ ul, ol {
 
 .nav .dropdown.open .dropdown-menu {
     max-height: 1000px;
+    min-width:  200px;
+    padding:    5px 10px;
     transition: max-height .5s ease-out;
 }
 
-.nav_type_user i {
-    font-size: 22px;
+.nav .dropdown .dropdown-menu li {
+    border-bottom: $navbar-default-link-color;
+}
+
+.nav .dropdown .dropdown-menu a,
+.nav .dropdown .dropdown-menu a:hover,
+.nav .dropdown .dropdown-menu a:active,
+.nav .dropdown .dropdown-menu a:focus {
+    display:    inline-block;
+    color:      $navbar-default-link-color;
+    background: none;
+    padding:    3px 0;
+    width:      140px;
+    transition: all .2s;
+}
+
+.nav .dropdown .dropdown-menu a:hover {
+    display: inline-block;
+    color:   $navbar-default-link-hover-color;
+}
+
+.nav .dropdown .dropdown-menu li i {
+    margin-left: 4px;
+    float:       right;
+    line-height: 24px;
 }
 
 /**
@@ -256,7 +288,6 @@ ul, ol {
     background: rgba(43, 48, 59, .5);
     color:      $navbar-default-link-color;
 }
-
 
 /**
  * Main page features
@@ -512,7 +543,9 @@ ul, ol {
 
 .panel__header,
 .panel__body {
-    padding: 15px 10px;
+    padding:  15px 10px;
+    position: relative;
+    overflow: hidden;
 }
 
 .panel__header {
@@ -522,6 +555,10 @@ ul, ol {
 .panel .table td {
     padding-top:    3px;
     padding-bottom: 3px;
+}
+
+.block_padded_yes {
+    padding: 15px 10px;
 }
 
 /**
@@ -1021,10 +1058,42 @@ $size: 200px;
     background-image: url("/images/icon-injury.png");
 }
 
+/**
+ * Fields
+ */
+
+.field__route {
+    height:        220px;
+    overflow:      hidden;
+    text-overflow: ellipsis;
+}
+
+.field__map {
+    width:        100%;
+    height:       auto;
+    display:      block;
+    margin-left:  auto;
+    margin-right: auto;
+}
+
 /*------------------------------------*\
                 #TOOLS
 \*------------------------------------*/
 
+.s_valign_t {
+    position:       relative;
+    vertical-align: top;
+}
+
+.s_valign_m {
+    position:       relative;
+    vertical-align: middle;
+}
+
+.s_valign_b {
+    position:       relative;
+    vertical-align: bottom;
+}
 
 .s_m_0 {
     margin: 0;
@@ -1168,6 +1237,26 @@ $size: 200px;
 
 .text_size_48 {
     font-size: 48px;
+}
+
+.text_line-height_12 {
+    line-height: 12px;
+}
+
+.text_line-height_14 {
+    line-height: 14px;
+}
+
+.text_line-height_16 {
+    line-height: 16px;
+}
+
+.text_line-height_18 {
+    line-height: 18px;
+}
+
+.text_line-height_20 {
+    line-height: 20px;
 }
 
 /**
