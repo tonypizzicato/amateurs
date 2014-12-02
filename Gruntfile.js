@@ -271,7 +271,7 @@ module.exports = function (grunt) {
             options: {
                 dest: '<%= yeoman.dist %>'
             },
-            html:    ['<%= yeoman.server %>/views/layout.hbs']
+            html:    ['<%= yeoman.public %>/promo/nationals.html', '<%= yeoman.server %>/views/layout.hbs']
         },
 
         // Performs rewrites based on rev and the useminPrepare configuration
