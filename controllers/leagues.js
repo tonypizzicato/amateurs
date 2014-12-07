@@ -12,12 +12,14 @@ module.exports = {
         var leagueName = req.param('name'),
             league = leaguesModel.get(leagueName);
 
-        if (!league) {
-            res.status(404).send('Not found League');
+        league.exec(function(err, league) {
+            if (!league) {
+                res.status(404).send('Not found League');
 
-            return;
-        }
+                return;
+            }
 
-        res.render('league', {league: league, tableFull: true});
+            res.render('league', {league: league.pop(), tableFull: true});
+        });
     }
 };

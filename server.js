@@ -4,6 +4,7 @@ var path = require('path');
 var fs = require('fs');
 var hbs = require('hbs');
 var mongoose = require('mongoose');
+var expressMongoose = require('express-mongoose');
 
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -130,32 +131,33 @@ app.get('/countries/:country', function (req, res, next) {
 app.get('/leagues/:name*', function (req, res, next) {
     var contactsModel = require('./models/contact');
     var fixtureModel = require('./models/fixture');
-    var leagueName = req.param('name', req.session.currentLeague),
-        leagues = require('./models/league').find({short: leagueName});
+    var leagueName = req.param('name', req.session.currentLeague);
 
-    if (leagues.length) {
-        var league = leagues.pop();
+    require('./models/league').find({short: leagueName}, function (err, leagues) {
+        if (leagues.length) {
+            var league = leagues.pop();
 
-        res.locals.globals.currentCountry = league.country;
-        res.locals.globals.currentLeague = league.short;
-        req.session.currentCountry = league.country;
-        req.session.currentLeague = league.short;
+            res.locals.globals.currentCountry = league.country;
+            res.locals.globals.currentLeague = league.short;
+            req.session.currentCountry = league.country;
+            req.session.currentLeague = league.short;
 
 
-        contactsModel.find({country: league.country}, function (err, contacts) {
-            res.locals.globals.contactsCountry = contacts;
-        });
-        contactsModel.find({league: league.short}, function (err, contacts) {
-            res.locals.globals.contactsLeague = contacts;
-        });
+            contactsModel.find({country: league.country}, function (err, contacts) {
+                res.locals.globals.contactsCountry = contacts;
+            });
+            contactsModel.find({league: league.short}, function (err, contacts) {
+                res.locals.globals.contactsLeague = contacts;
+            });
 
-        res.locals.globals.recent = fixtureModel.recent(league.short);
-        res.locals.globals.comming = fixtureModel.comming(league.short);
-    } else {
-        res.status(404).send('Not found League');
+            res.locals.globals.recent = fixtureModel.recent(league.short);
+            res.locals.globals.comming = fixtureModel.comming(league.short);
+        } else {
+            res.status(404).send('Not found League');
 
-        return;
-    }
+            return;
+        }
+    });
 
     next();
 });
