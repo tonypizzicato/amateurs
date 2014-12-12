@@ -2,9 +2,10 @@
 
 var _ = require('underscore');
 
-var mongoose = require('mongoose'),
-    Schema   = mongoose.Schema,
-    ObjectId = Schema.ObjectId;
+var mongoose  = require('mongoose'),
+    Aggregate = mongoose.Aggregate,
+    Schema    = mongoose.Schema,
+    ObjectId  = Schema.ObjectId;
 
 var LeagueSchema = new Schema({
     id:           ObjectId,
@@ -27,16 +28,24 @@ var LeagueSchema = new Schema({
 LeagueSchema.statics.get = function (name) {
     var promise;
 
-
     if (name) {
         name = name.toLowerCase();
 
         promise = this.find({short: name});
     } else {
-        promise = this.aggregate.group({_id: "$country"});
+        promise = this.find({}, '_id name short country', {$sort: {country: 1}}, function(err, leagues) {
+            var result = {
+                countries: {}
+            };
+            _.each(leagues, function(league) {
+                result.countries[league.country] = result.countries[league.country] || [];
+                result.countries[league.country].push(league);
+            });
+            return result;
+        });
     }
 
-    return promise;
+    return promise.exec();
 };
 
 /**
