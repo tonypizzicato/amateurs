@@ -39,7 +39,7 @@
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar_border_left">
-                        <li class="dropdown">
+                        <li class="dropdown dropdown_type_leagues">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-angle-down"></i>
                                 {{#if globals.currentCountry}}
 
@@ -50,17 +50,52 @@
                                     Федерация
                                 {{/if}}
                             </a>
-                            <ul class="dropdown-menu">
-                                {{#each globals.leagues}}
-                                    <li>
-                                        <div class='flag__wrapper rotate rotate_deg_0'>
-                                            <div class="flag flag_country_{{short}}"></div>
-                                        </div>
-                                        <a href="/countries/{{short}}"><span class="s_valign_m">{{name}}</span><i class="fa fa-angle-right text_size_14"></i></a>
+
+
+                            <ul class="dropdown-menu dropdown-menu_type_leagues row">
+                                <li class="col-md-3">
+                                    <li class="dropdown-header s_mb_20">
+                                        Турниры
                                     </li>
+                                    <div>
+                                        <img src="http://soccerstl.net/wp-content/uploads/2014/11/winter-soccer.jpg" class="img-responsive" alt="product 1">
+                                        <h4><small>Summer dress floral prints</small></h4>
+                                    </div>
+                                    <ul>
+                                        <li>
+                                            <a href="/leagues/winter"><span class="s_valign_m">Зимний турнир</span></a>
+                                        </li>
+                                        <li>
+                                            <a href="/leagues/winter"><span class="s_valign_m">ЧМ 2014</span></a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                {{#each globals.leagues}}
+                                    {{#menuStartCol @index 3 9}}
+                                    <li class="col-md-3">
+                                        <ul>
+                                    {{/menuStartCol}}
+
+                                        <li class="dropdown-header">
+                                            <a href="/countries/{{short}}"><span class="s_valign_m">{{name}}</span></a>
+                                        </li>
+
+                                        {{#each leagues}}
+                                            <li>
+                                                <a href="/leagues/{{short}}"><span class="s_valign_m">{{name}}</span></a>
+                                            </li>
+                                        {{/each}}
+                                        <li class="divider"></li>
+                                    {{#menuBreakCol @index 3 9}}
+                                        </ul>
+                                    </li>
+                                    {{/menuBreakCol}}
                                 {{/each}}
                             </ul>
                         </li>
+
+                    </ul>
+                    <ul class="nav navbar-nav">
                         <li class="navbar__item {{#if pageIndex}}navbar__item_active_yes{{/if}}">
                             <a href="/">Главная</a>
                         </li>

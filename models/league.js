@@ -33,16 +33,7 @@ LeagueSchema.statics.get = function (name) {
 
         promise = this.find({short: name});
     } else {
-        promise = this.find({}, '_id name short country', {$sort: {country: 1}}, function(err, leagues) {
-            var result = {
-                countries: {}
-            };
-            _.each(leagues, function(league) {
-                result.countries[league.country] = result.countries[league.country] || [];
-                result.countries[league.country].push(league);
-            });
-            return result;
-        });
+        promise = this.find({});
     }
 
     return promise.exec();
@@ -123,6 +114,14 @@ var leagues = model.find()
                 vk:      'https://vk.com/amateur_portugal',
                 leagues: _.filter(leagues, function (league) {
                     return league.country == 'pr';
+                })
+            },
+            {
+                name:    'Франция',
+                short:   'fr',
+                vk:      'https://vk.com/amateur_france',
+                leagues: _.filter(leagues, function (league) {
+                    return league.country == 'fr';
                 })
             }
         ];

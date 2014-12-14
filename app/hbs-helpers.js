@@ -11,7 +11,7 @@ var helpers = {
             return options.fn(this);
         }
     },
-    lt: function (lvalue, rvalue, options) {
+    lt:     function (lvalue, rvalue, options) {
         if (arguments.length < 3)
             throw new Error("hbs Helper lt needs 2 parameters");
         if (lvalue >= rvalue) {
@@ -20,7 +20,7 @@ var helpers = {
             return options.fn(this);
         }
     },
-    gt: function (lvalue, rvalue, options) {
+    gt:     function (lvalue, rvalue, options) {
         if (arguments.length < 3)
             throw new Error("hbs Helper gt needs 2 parameters");
         if (lvalue <= rvalue) {
@@ -78,10 +78,26 @@ var helpers = {
         return new hbs.handlebars.SafeString(partial(context));
     },
 
-    rand: function(min, max) {
+    rand: function (min, max) {
         min = min || 0;
         max = max || 100;
         return Math.ceil(min + (max - min) * Math.random());
+    },
+
+    menuStartCol: function (current, breakOn, total, options) {
+        if (current % breakOn === 0) {
+            return options.fn(this);
+        }
+
+        return options.inverse(this);
+    },
+
+    menuBreakCol: function (current, breakOn, total, options) {
+        if ((current + 1) % breakOn === 0) {
+            return options.fn(this);
+        }
+
+        return options.inverse(this);
     }
 };
 

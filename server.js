@@ -108,12 +108,7 @@ app.get('*', function (req, res, next) {
         return next();
     }
     var leagues = require('./models/league');
-    leagues.get().then(function(leagues) {
-        //console.log(leagues);
-        res.locals.globals.leagues = leagues;
-    });
-
-
+    res.locals.globals.leagues = leagues.getCountries();
 
     next();
 });
