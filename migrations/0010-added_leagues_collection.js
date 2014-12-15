@@ -2,7 +2,7 @@ var mongodb = require('mongodb');
 
 var documents = [
     {
-        name: 'Premier League', short: 'premier-league', country: 'en',
+        name: 'Premier League', slug: 'premier-league', country: 'en',
         table:        [
             { position: 1, previous: 1, team: 'team 1', games: 10, win: 10, draw: 0, loose: 0, for: 32, against: 12, diff: 20, points: 30},
             { position: 2, previous: 5, team: 'team 2', games: 10, win: 10, draw: 0, loose: 0, for: 32, against: 12, diff: 20, points: 30},
@@ -50,46 +50,46 @@ var documents = [
         }
     },
     {
-        name:    'Championship League',short: 'championship',country: 'en'
+        name:    'Championship League',slug: 'championship',country: 'en'
     },
     {
-        name:    'League One',short: 'league-one',country: 'en'
+        name:    'League One',slug: 'league-one',country: 'en'
     },
     {
-        name:    'Primera División',short: 'primera-division',country: 'es'
+        name:    'Primera División',slug: 'primera-division',country: 'es'
     },
     {
-        name:    'Segunda División', short: 'segunda-division',country: 'es'
+        name:    'Segunda División', slug: 'segunda-division',country: 'es'
     },
     {
-        name:    'Tercera División', short: 'tercera-division',country: 'es'
+        name:    'Tercera División', slug: 'tercera-division',country: 'es'
     },
     {
-        name:    'Serie A',short: 'serie-a',country: 'it'
+        name:    'Serie A',slug: 'serie-a',country: 'it'
     },
     {
-        name:    'Serie B',short: 'serie-b',country: 'it'
+        name:    'Serie B',slug: 'serie-b',country: 'it'
     },
     {
-        name:    'Bundesliga',short: 'bundesliga',country: 'gr'
+        name:    'Bundesliga',slug: 'bundesliga',country: 'gr'
     },
     {
-        name:    '2.Bundesliga',short: '2-bundesliga',country: 'gr'
+        name:    '2.Bundesliga',slug: '2-bundesliga',country: 'gr'
     },
     {
-        name:    'Eredivisie',short: 'eredivisie',country: 'nl'
+        name:    'Eredivisie',slug: 'eredivisie',country: 'nl'
     },
     {
-        name:    'Primeira Liga',short: 'portuguese-liga',country: 'pr'
+        name:    'Primeira Liga',slug: 'portuguese-liga',country: 'pr'
     },
     {
-        name:    'Pro League',short: 'pro-league',country: 'be'
+        name:    'Pro League',slug: 'pro-league',country: 'be'
     },
     {
-        name:    'Serie A',short: 'serie-a',country: 'br'
+        name:    'Serie A',slug: 'serie-a',country: 'br'
     },
     {
-        name:    'Ligue 1',short: 'ligue-1',country: 'fr'
+        name:    'Ligue 1',slug: 'ligue-1',country: 'fr'
     }
 ];
 

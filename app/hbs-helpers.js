@@ -2,13 +2,22 @@ var hbs = require('hbs'),
     _   = require('underscore');
 
 var helpers = {
-    equals: function (lvalue, rvalue, options) {
+    eq: function (lvalue, rvalue, options) {
         if (arguments.length < 3)
-            throw new Error("hbs Helper equals needs 2 parameters");
+            throw new Error("hbs Helper eq needs 2 parameters");
         if (lvalue != rvalue) {
             return options.inverse(this);
         } else {
             return options.fn(this);
+        }
+    },
+    ne: function (lvalue, rvalue, options) {
+        if (arguments.length < 3)
+            throw new Error("hbs Helper ne needs 2 parameters");
+        if (lvalue != rvalue) {
+            return options.fn(this);
+        } else {
+            return options.inverse(this);
         }
     },
     lt:     function (lvalue, rvalue, options) {

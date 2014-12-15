@@ -1,0 +1,126 @@
+<nav class="navbar navbar-default" role="navigation">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><span
+                class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span
+                class="icon-bar"></span></button>
+        <a class="navbar-brand" href="/">AFL</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar_border_left">
+            <li class="dropdown dropdown_type_leagues">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-angle-down"></i>
+                    {{#if globals.currentCountry}}
+
+                        {{#each globals.leagues}}
+                            {{#eq slug ../globals.currentCountry}}{{name}}{{/eq}}
+                        {{/each}}
+                    {{else}}
+                        Федерация
+                    {{/if}}
+                </a>
+
+
+                <ul class="dropdown-menu dropdown-menu_type_leagues row">
+                    <li class="col-md-3">
+                        <ul>
+                            <li class="dropdown-header">
+                                <span>Турниры Amateur</span>
+                            </li>
+                            <!--<li>-->
+                            <!--<div>-->
+                            <!--<img src="http://soccerstl.net/wp-content/uploads/2014/11/winter-soccer.jpg" class="img-responsive" alt="product 1">-->
+                            <!--</div>-->
+                            <!--</li>-->
+                            <li>
+                                <a href="/leagues/winter">Зимний турнир</a>
+                            </li>
+                            <li>
+                                <a href="/leagues/winter">Чемпионат Мира</a>
+                            </li>
+                            <li>
+                                <a href="/leagues/winter">Лига Чемпионов</a>
+                            </li>
+                            <li>
+                                <a href="/leagues/winter">Лига Европы</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="col-md-9">
+                        <ul class="row">
+                            <li class="col-md-12">
+                                <span class="dropdown-header">Федерации Amateur</span>
+                            </li>
+                        </ul>
+                        <ul class="row">
+                            {{#each globals.leagues}}
+                                {{#menuStartCol @index 3 9}}
+                                <li class="col-md-4">
+                                <ul>
+                                {{/menuStartCol}}
+
+                                <li class="dropdown-header">
+                                    <a href="/countries/{{slug}}">{{name}}</a>
+                                </li>
+
+                                <ul class="s_mb_10">
+                                    {{#each leagues}}
+                                        <li>
+                                            <a href="/leagues/{{slug}}">{{name}}</a>
+                                        </li>
+                                    {{/each}}
+                                </ul>
+                                {{#menuBreakCol @index 3 9}}
+                                </ul>
+                                </li>
+                                {{/menuBreakCol}}
+                            {{/each}}
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
+        <ul class="nav navbar-nav">
+            <li class="navbar__item {{#if pageIndex}}navbar__item_active_yes{{/if}}">
+                <a href="/">Главная</a>
+            </li>
+            <li class="navbar__item">
+                <a href="#">Результаты</a>
+            </li>
+            <li class="navbar__item">
+                <a href="#">Календарь</a>
+            </li>
+            <li class="navbar__item">
+                <a href="#">Клубы</a>
+            </li>
+            <li class="navbar__item">
+                <a href="#">Игроки</a>
+            </li>
+            <li class="navbar__item">
+                <a href="#">Медиа</a>
+            </li>
+            <li class="navbar__item{{#if pageFields}} navbar__item_active_yes{{/if}}">
+                <a href="/fields">Поля</a>
+            </li>
+        </ul>
+        <ul class="nav nav_type_user navbar-nav navbar-right navbar_border_left">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-angle-down"></i>
+                    <i class="fa fa-user"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Вход</a></li>
+                    <li><a href="#">Регистрация</a></li>
+                </ul>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav pull-right">
+            <li class="navbar__item">
+                <a href="#">Контакты</a>
+            </li>
+        </ul>
+    </div>
+
+</nav>

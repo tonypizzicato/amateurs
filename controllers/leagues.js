@@ -20,8 +20,23 @@ module.exports = {
                 return;
             }
 
+            res.render('league', {league: leagues.pop().toObject(), tableFull: false});
+        });
+    },
 
-            res.render('league', {league: leagues.pop(), tableFull: true});
+    table: function(req, res) {
+        var leagueName = req.param('name'),
+            league = leaguesModel.get(leagueName);
+
+
+        league.then(function(leagues) {
+            if (!leagues.length) {
+                res.status(404).send('Not found League');
+
+                return;
+            }
+
+            res.render('table', {league: leagues.pop().toObject(), tableFull: true});
         });
     }
 };

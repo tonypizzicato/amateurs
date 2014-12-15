@@ -128,30 +128,30 @@ app.get('/countries/:country', function (req, res, next) {
     next();
 });
 
-app.get('/leagues/:name*', function (req, res, next) {
+app.get('/leagues/:name/*', function (req, res, next) {
     var contactsModel = require('./models/contact');
     var fixtureModel = require('./models/fixture');
     var leagueName = req.param('name', req.session.currentLeague);
 
-    require('./models/league').find({short: leagueName}, function (err, leagues) {
+    require('./models/league').find({slug: leagueName}, function (err, leagues) {
         if (leagues.length) {
             var league = leagues.pop();
 
             res.locals.globals.currentCountry = league.country;
-            res.locals.globals.currentLeague = league.short;
+            res.locals.globals.currentLeague = league.slug;
             req.session.currentCountry = league.country;
-            req.session.currentLeague = league.short;
+            req.session.currentLeague = league.slug;
 
 
             contactsModel.find({country: league.country}, function (err, contacts) {
                 res.locals.globals.contactsCountry = contacts;
             });
-            contactsModel.find({league: league.short}, function (err, contacts) {
+            contactsModel.find({league: league.slug}, function (err, contacts) {
                 res.locals.globals.contactsLeague = contacts;
             });
 
-            res.locals.globals.recent = fixtureModel.recent(league.short);
-            res.locals.globals.comming = fixtureModel.comming(league.short);
+            res.locals.globals.recent = fixtureModel.recent(league.slug);
+            res.locals.globals.comming = fixtureModel.comming(league.slug);
         } else {
             res.status(404).send('Not found League');
 
