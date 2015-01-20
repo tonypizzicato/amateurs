@@ -1,6 +1,7 @@
 "use strict";
 
-var index = require('../controllers/index'),
+var auth = require('../controllers/auth'),
+    index = require('../controllers/index'),
     leagues = require('../controllers/leagues'),
     countries = require('../controllers/countries'),
     fields = require('../controllers/fields'),
@@ -8,6 +9,11 @@ var index = require('../controllers/index'),
 
 module.exports.initialize = function (app) {
     app.get('/', index.index);
+
+
+    app.post('/login', auth.login);
+    app.post('/logout', auth.logout);
+
 
     app.get('/construct', index.underConstruction);
     app.get('/nationals/promo', index.nationalsPromo);

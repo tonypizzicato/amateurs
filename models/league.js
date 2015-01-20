@@ -49,7 +49,6 @@ var model = mongoose.model('League', LeagueSchema, 'leagues');
 var countries;
 var leagues = model.find()
     .exec(function (err, leagues) {
-        console.log('in promise resolve function');
         countries = [
             {
                 name:    'Англия',
