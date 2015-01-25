@@ -1,16 +1,39 @@
 "use strict";
 
+var passport       = require('passport'),
+    passportConfig = require('../config/passport');
 
 module.exports = {
-    login: function (req, res, next) {
-        console.log('logged in');
+    loginPage: function (req, res) {
+        console.log('login page');
 
-        next();
+        res.render('login', {user: req.user, message: req.session.message});
     },
 
-    logout: function (req, res, next) {
-        console.log('logged out');
+    login: function (req, res, next) {
+        passport.authenticate('local', function (err, user, info) {
+            if (err) {
+                return next(err);
+            }
+            if (!user) {
+                req.session.messages = [info.message];
+                return res.redirect('/login')
+            }
+            req.logIn(user, function (err) {
+                if (err) {
+                    return next(err);
+                }
+                return res.redirect('/');
+            });
+        })(req, res, next);
+    },
 
-        next();
+    logout: function (req, res) {
+        req.logout();
+        res.redirect(req.get('Referrer'));
+    },
+
+    account: function (req, res) {
+        res.render('account', {user: req.user});
     }
 };

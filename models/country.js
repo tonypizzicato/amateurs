@@ -13,7 +13,7 @@ var countries = [
         url:   'spain',
         short: 'es'
     }
-]
+];
 
 module.exports = {
     get: function (name) {

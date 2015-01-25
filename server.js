@@ -6,6 +6,8 @@ var hbs = require('hbs');
 var mongoose = require('mongoose');
 var expressMongoose = require('express-mongoose');
 
+var passport = require('passport');
+
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var favicon = require('serve-favicon');
@@ -34,12 +36,14 @@ app.use(bodyParser.urlencoded({extended: false}))
 // parse application/json
 app.use(bodyParser.json());
 
-
 app.use(session({
     secret:            'test secret',
     resave:            true,
     saveUninitialized: true
 }));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 // create a write stream (in append mode)
 var accessLogStream = fs.createWriteStream(__dirname + '/access.log', {flags: 'a'});

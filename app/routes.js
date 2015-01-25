@@ -1,16 +1,18 @@
 "use strict";
 
-var auth = require('../controllers/auth'),
-    index = require('../controllers/index'),
-    leagues = require('../controllers/leagues'),
+var auth      = require('../controllers/auth'),
+    index     = require('../controllers/index'),
+    leagues   = require('../controllers/leagues'),
     countries = require('../controllers/countries'),
-    fields = require('../controllers/fields'),
-    matches = require('../controllers/matches');
+    fields    = require('../controllers/fields'),
+    matches   = require('../controllers/matches');
 
 module.exports.initialize = function (app) {
     app.get('/', index.index);
 
 
+    app.get('/login', auth.loginPage);
+    app.get('/account', auth.account);
     app.post('/login', auth.login);
     app.post('/logout', auth.logout);
 
