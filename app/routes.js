@@ -1,11 +1,14 @@
 "use strict";
 
-var auth      = require('../controllers/auth'),
+var express   = require('express'),
+
+    auth      = require('../controllers/auth'),
     index     = require('../controllers/index'),
     leagues   = require('../controllers/leagues'),
     countries = require('../controllers/countries'),
     fields    = require('../controllers/fields'),
-    matches   = require('../controllers/matches');
+    matches   = require('../controllers/matches'),
+    apiNews   = require('../controllers/api/news');
 
 module.exports.initialize = function (app) {
     app.get('/', index.index);
@@ -29,4 +32,23 @@ module.exports.initialize = function (app) {
     app.get('/fields/:name', fields.fields);
 
     app.get('/countries/:country', countries.countries);
+
+
+    var apiRouter = express.Router(),
+        r = express.Router();
+
+
+    r.route('/news')
+        .get(apiNews.list)
+        .post(apiNews.create);
+
+    r.route('/news/:id')
+        .get(apiNews.item)
+        .put(apiNews.save)
+        .delete(apiNews.delete);
+
+    apiRouter.use(r);
+
+    app.use('/api', apiRouter);
+
 };

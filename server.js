@@ -11,9 +11,10 @@ var passport = require('passport');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var favicon = require('serve-favicon');
-var morgan = require('morgan');
 
+var morgan = require('morgan');
 var helpers = require('./app/hbs-helpers');
+
 var routes = require('./app/routes');
 
 var app = express();
@@ -42,6 +43,8 @@ app.use(session({
     saveUninitialized: true
 }));
 
+// Initialize Passport!  Also use passport.session() middleware, to support
+// persistent login sessions (recommended).
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -103,6 +106,16 @@ app.use(function (req, res, next) {
     } else {
         next();
     }
+});
+
+//CORS middleware
+app.use('/api', function(req, res, next) {
+    console.log('allowCrossDomain');
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+    next();
 });
 
 app.get('*', function (req, res, next) {
