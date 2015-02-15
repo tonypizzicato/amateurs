@@ -3,10 +3,21 @@
 var newsModel = require('../../models/news');
 
 var api = {
+
+    /**
+     * Get news item
+     *
+     * /api/news/:id GET call
+     */
     item: function (req, res) {
         console.log('/api/news/:id GET handled');
     },
 
+    /**
+     * Get news items list
+     *
+     * /api/news GET call
+     */
     list: function (req, res) {
         console.log('/api/news GET handled');
         newsModel.find().sort('-dc').exec(function (err, news) {
@@ -18,22 +29,39 @@ var api = {
         });
     },
 
-    create: function (req, res) {
+    /**
+     * Create new news item
+     *
+     * /api/news POST call
+     */
+    create: function (req, res, next) {
         console.log('/api/news POST handled');
 
         newsModel.create(req.body, function (err, article) {
             if (err) {
+                console.log(err);
                 res.status(500).json({error: err});
+                return;
             }
 
+            console.log(arguments);
             res.json(article);
         });
     },
 
+    /**
+     * Update news item
+     *
+     * /api/news/:id PUT call
+     */
     save: function (req, res, next) {
         console.log('/api/news PUT handled');
     },
 
+    /**
+     * Delete news item
+     * /api/news/:id DELETE call
+     */
     delete: function (req, res, next) {
         console.log('/api/news/:id DELETE handled');
 

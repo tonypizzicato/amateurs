@@ -1,14 +1,17 @@
 "use strict";
 
-var express   = require('express'),
+var express        = require('express'),
 
-    auth      = require('../controllers/auth'),
-    index     = require('../controllers/index'),
-    leagues   = require('../controllers/leagues'),
-    countries = require('../controllers/countries'),
-    fields    = require('../controllers/fields'),
-    matches   = require('../controllers/matches'),
-    apiNews   = require('../controllers/api/news');
+    auth           = require('../controllers/auth'),
+    index          = require('../controllers/index'),
+    leagues        = require('../controllers/leagues'),
+    countries      = require('../controllers/countries'),
+    fields         = require('../controllers/fields'),
+    matches        = require('../controllers/matches'),
+
+    apiNews        = require('../controllers/api/news'),
+    apiLeagues     = require('../controllers/api/leagues'),
+    apiTournaments = require('../controllers/api/tournament');
 
 module.exports.initialize = function (app) {
     app.get('/', index.index);
@@ -46,6 +49,24 @@ module.exports.initialize = function (app) {
         .get(apiNews.item)
         .put(apiNews.save)
         .delete(apiNews.delete);
+
+    r.route('/leagues')
+        .get(apiLeagues.list)
+        .post(apiLeagues.create);
+
+    r.route('/leagues/:id')
+        .get(apiLeagues.item)
+        .put(apiLeagues.save)
+        .delete(apiLeagues.delete);
+
+    r.route('/tournaments')
+        .get(apiTournaments.list)
+        .post(apiTournaments.create);
+
+    r.route('/tournaments/:id')
+        .get(apiTournaments.item)
+        .put(apiTournaments.save)
+        .delete(apiTournaments.delete);
 
     apiRouter.use(r);
 
