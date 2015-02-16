@@ -4,6 +4,7 @@ var leaguesModel = require('../../models/league');
 
 var leaguesMock = [
     {
+        _id:         1,
         name:        'Moscow',
         tournaments: [
             {
@@ -27,6 +28,7 @@ var leaguesMock = [
         ]
     },
     {
+        _id:         2,
         name:        'SPB',
         tournaments: [
             {

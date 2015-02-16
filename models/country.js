@@ -19,7 +19,7 @@ var CountrySchema = new Schema({
     slug:     {type: String, required: true, default: ''},
     state:    {type: String, required: true, default: State.CREATED},
     sort:     {type: Number, default: 1},
-    leagueId: {type: ObjectId}
+    leagueId: {type: String} // change to ObjectId
 });
 
 CountrySchema.pre('save', function (next) {
