@@ -61,7 +61,7 @@ var api = {
     /**
      * Update tournament item
      *
-     * /api/tournaments/:id POST call
+     * /api/tournaments/:id PUT call
      */
     save: function (req, res, next) {
         console.log('/api/tournaments/:id PUT handled');

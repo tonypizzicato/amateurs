@@ -1,35 +1,34 @@
 "use strict";
 
-var _ = require('underscore');
+var mongoose = require('mongoose'),
+    Schema   = mongoose.Schema,
+    ObjectId = Schema.ObjectId;
 
-var countries = [
-    {
-        name:  'Англия',
-        url:   'england',
-        short: 'en'
-    },
-    {
-        name:  'Испания',
-        url:   'spain',
-        short: 'es'
+var keymirror = require('keymirror');
+
+var State = keymirror({
+    CREATED:  null,
+    ACTIVE:   null,
+    ARCHIVED: null
+});
+
+var CountrySchema = new Schema({
+    dc:       {type: Date, default: Date.now},
+    du:       {type: Date},
+    name:     {type: String, required: true},
+    slug:     {type: String, required: true, default: ''},
+    state:    {type: String, required: true, default: State.CREATED},
+    sort:     {type: Number, default: 1},
+    leagueId: {type: ObjectId}
+});
+
+CountrySchema.pre('save', function (next) {
+    var now = new Date();
+    this.du = now;
+    if (!this.dc) {
+        this.dc = now;
     }
-];
+    next();
+});
 
-module.exports = {
-    get: function (name) {
-        var result;
-
-        if (name) {
-            name = name.toLowerCase();
-            result = _.findWhere(_.map(countries, function (item) {
-                item.url = item.url.toLowerCase();
-
-                return item;
-            }), {short: name});
-        } else {
-            result = countries;
-        }
-
-        return result;
-    }
-}
+module.exports = mongoose.model('Country', CountrySchema, 'countries');

@@ -17,4 +17,13 @@ var NewsSchema = new Schema({
     author: {type: String, default: ''}
 });
 
+NewsSchema.pre('save', function (next) {
+    var now = new Date();
+    this.du = now;
+    if (!this.dc) {
+        this.dc = now;
+    }
+    next();
+});
+
 module.exports = mongoose.model('News', NewsSchema, 'news');
