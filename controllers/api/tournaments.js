@@ -1,13 +1,28 @@
 "use strict";
 
-var tournamentsModel = require('../../models/tournament');
+var Query            = require('mongoose').Query,
+    tournamentsModel = require('../../models/tournament'),
+    async            = require('async');
 
-var tournamentMock = {
+var tournamentsMock = [{
     name:     'BPL',
     leagueId: 1,
-    state:    {type: 'IN PROGRESS'},
+    id:       1,
+    state:    'IN PROGRESS',
     teams:    [{name: 'West Ham'}, {name: 'Aston Villa'}, {name: 'Chelsea'}]
-};
+}, {
+    name:     'BPL',
+    leagueId: 2,
+    id:       2,
+    state:    'IN PROGRESS',
+    teams:    [{name: 'West Ham'}, {name: 'Aston Villa'}, {name: 'Chelsea'}]
+}, {
+    name:     'BPL',
+    leagueId: 2,
+    id:       3,
+    state:    'IN PROGRESS',
+    teams:    [{name: 'West Ham'}, {name: 'Aston Villa'}, {name: 'Chelsea'}]
+}];
 
 var api = {
 
@@ -18,12 +33,6 @@ var api = {
      */
     item: function (req, res) {
         console.log('/api/tournaments/:id GET handled');
-        /**
-         * if has tournament in db
-         *   continue
-         * else
-         *   external api call
-         */
     },
 
     /**
@@ -33,9 +42,28 @@ var api = {
      */
     list: function (req, res) {
         console.log('/api/tournaments GET handled');
-
-        res.json(tournamentMock);
+        /**
+         * if has tournament in db
+         *   continue
+         * else
+         *   external api call
+         */
         // external api call
+        var queries = [];
+
+        tournamentsMock.forEach(function (item) {
+            item.remoteId = item.id;
+            delete item.id;
+
+            var query = function (cb) {
+                tournamentsModel.findOneAndUpdate({remoteId: item.id}, item, {upsert: true}).exec(cb);
+            }
+            queries.push(query);
+        });
+
+        async.parallel(queries, function (err, models) {
+            res.json(models);
+        });
     },
 
     /**
