@@ -53,7 +53,6 @@ var api = {
 
         tournamentsMock.forEach(function (item) {
             item.remoteId = item.id;
-            delete item.id;
 
             var query = function (cb) {
                 tournamentsModel.findOneAndUpdate({remoteId: item.id}, item, {upsert: true}).exec(cb);
@@ -62,7 +61,15 @@ var api = {
         });
 
         async.parallel(queries, function (err, models) {
-            res.json(models);
+            tournamentsModel.find().populate('country').exec(function (err, docs) {
+                if (err) {
+                    console.log(err);
+                    res.status(500).json({error: err});
+                    return;
+                }
+
+                res.json(docs);
+            });
         });
     },
 

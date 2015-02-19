@@ -6,14 +6,14 @@ var mongoose = require('mongoose'),
 
 
 var TournamentSchema = new Schema({
-    id:        ObjectId,
-    dc:        {type: Date, default: Date.now},
-    du:        {type: Date},
-    name:      {type: String},
-    slug:      {type: String},
-    leagueId:  {type: String}, // change to ObjectId
-    remoteId:  {type: String}, // change to ObjectId
-    countryId: {type: ObjectId}
+    id:       {type: String}, // change to ObjectId,
+    dc:       {type: Date, default: Date.now},
+    du:       {type: Date},
+    name:     {type: String},
+    slug:     {type: String},
+    leagueId: {type: String}, // change to ObjectId
+    remoteId: {type: String}, // change to ObjectId
+    country:  {type: Schema.Types.ObjectId, ref: 'Country'}
 });
 
 module.exports = mongoose.model('Tournament', TournamentSchema, 'tournaments');
