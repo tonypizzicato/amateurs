@@ -1,6 +1,6 @@
 "use strict";
 
-var Query            = require('mongoose').Query,
+var RestClient       = require('node-rest-client').Client,
     tournamentsModel = require('../../models/tournament'),
     async            = require('async');
 
@@ -48,6 +48,22 @@ var api = {
          * else
          *   external api call
          */
+        var options = {
+            proto: 'http://',
+            host:  '82.196.6.26:3001',
+            path:  '/api/tournaments/'
+        };
+
+        //var options_auth={user:"root",password:"horseremorse"};
+        //var client = new RestClient(options_auth);
+
+        //client.get(options.proto + options.host + options.path, function (data, response) {
+        //    // parsed response body as js object
+        //    console.log(data);
+        //    // raw response
+        //    console.log(response);
+        //});
+
         // external api call
         var queries = [];
 
@@ -56,11 +72,11 @@ var api = {
 
             var query = function (cb) {
                 tournamentsModel.findOneAndUpdate({remoteId: item.id}, item, {upsert: true}).exec(cb);
-            }
+            };
             queries.push(query);
         });
 
-        async.parallel(queries, function (err, models) {
+        async.parallel(queries, function () {
             tournamentsModel.find().populate('country').exec(function (err, docs) {
                 if (err) {
                     console.log(err);
@@ -100,6 +116,19 @@ var api = {
      */
     save: function (req, res, next) {
         console.log('/api/tournaments/:id PUT handled');
+        tournamentsModel.update({_id: req.param('id')}, {$set: req.body}, function (err, count) {
+            if (err) {
+                console.log(err);
+                res.status(500).json({error: err});
+                return;
+            }
+
+            if (count) {
+                res.status(200).json({});
+            } else {
+                res.status(404).json({});
+            }
+        });
     },
 
     /**
