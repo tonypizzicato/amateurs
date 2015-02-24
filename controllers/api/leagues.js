@@ -1,45 +1,8 @@
 "use strict";
 
-var leaguesModel = require('../../models/league');
-
-var leaguesMock = [
-    {
-        _id:         1,
-        name:        'Moscow',
-        tournaments: [
-            {
-                name:     'BPL',
-                leagueId: 1,
-                state:    {type: 'IN PROGRESS'},
-                teams:    [{name: 'West Ham'}, {name: 'Aston Villa'}, {name: 'Chelsea'}]
-            },
-            {
-                name:     'Championship',
-                leagueId: 1,
-                state:    {type: 'IN PROGRESS'},
-                teams:    [{name: 'Millwall'}, {name: 'Reading'}, {name: 'QPR'}]
-            },
-            {
-                name:     'Primera',
-                leagueId: 1,
-                state:    {type: 'IN PROGRESS'},
-                teams:    [{name: 'Real Madrid'}, {name: 'Barcelona'}, {name: 'Atletico Madrid'}]
-            }
-        ]
-    },
-    {
-        _id:         2,
-        name:        'SPB',
-        tournaments: [
-            {
-                name:     'BPL',
-                leagueId: 2,
-                state:    {type: 'IN PROGRESS'},
-                teams:    [{name: 'West Ham'}, {name: 'Aston Villa'}, {name: 'Chelsea'}]
-            }
-        ]
-    }
-];
+var async        = require('async'),
+    RestClient   = require('node-rest-client').Client,
+    leaguesModel = require('../../models/league');
 
 var api = {
 
@@ -76,15 +39,34 @@ var api = {
     list: function (req, res) {
         console.log('/api/leagues GET handled');
 
-        leaguesModel.find({}, function (err, leagues) {
-            if (err) {
-                console.log(err);
-                res.status(500).json({error: err});
-                return;
-            }
+        var url = 'http://82.196.6.26:443/api/leagues',
+            options_auth = {user: "root", password: "horseremorse"},
+            client = new RestClient(options_auth);
 
-            res.json(leagues);
+        client.get(url, function (data) {
+            var parsed = JSON.parse(data),
+                queries = [];
+
+            parsed.forEach(function (league) {
+                league.remoteId = league._id;
+                delete league.__v;
+
+                var query = function (cb) {
+                    leaguesModel.findOneAndUpdate({remoteId: league._id}, league, {upsert: true}).exec(cb);
+                };
+                queries.push(query);
+            });
+
+            async.parallel(queries, function (err, docs) {
+                if (err) {
+                    res.status(500).json({error: err});
+                    return;
+                }
+
+                res.json(docs);
+            });
         });
+
     },
 
     /**

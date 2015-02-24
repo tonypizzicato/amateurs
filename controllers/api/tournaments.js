@@ -2,6 +2,7 @@
 
 var RestClient       = require('node-rest-client').Client,
     tournamentsModel = require('../../models/tournament'),
+    countriesModel   = require('../../models/country'),
     leaguesModel     = require('../../models/league'),
     async            = require('async');
 
@@ -105,11 +106,13 @@ var api = {
                 return;
             }
 
-            if (count) {
-                res.status(200).json({});
-            } else {
-                res.status(404).json({});
+            if (req.body.country) {
+                countriesModel.update({tournaments: req.param('id')}, {$pull: {tournaments: req.param('id')}}, {multi: true}).exec(function () {
+                    countriesModel.findOneAndUpdate({_id: req.body.country}, {$addToSet: {tournaments: req.param('id')}}).exec();
+                });
             }
+
+            res.status(200).json({});
         });
     },
 

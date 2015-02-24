@@ -13,13 +13,14 @@ var State = keymirror({
 });
 
 var CountrySchema = new Schema({
-    dc:       {type: Date, default: Date.now},
-    du:       {type: Date},
-    name:     {type: String, required: true},
-    slug:     {type: String, required: true, default: ''},
-    state:    {type: String, required: true, default: State.CREATED},
-    sort:     {type: Number, default: 1},
-    leagueId: {type: String} // change to ObjectId
+    dc:          {type: Date, default: Date.now},
+    du:          {type: Date},
+    name:        {type: String, required: true},
+    slug:        {type: String, required: true, default: ''},
+    state:       {type: String, required: true, default: State.CREATED},
+    sort:        {type: Number, default: 1},
+    leagueId:    {type: String}, // change to ObjectId
+    tournaments: [{type: ObjectId, ref: 'Tournament'}]
 });
 
 CountrySchema.pre('save', function (next) {

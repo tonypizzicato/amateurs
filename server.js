@@ -20,7 +20,7 @@ var routes = require('./app/routes');
 var app = express();
 
 // Configure server
-var port = process.env.NODE_PORT || 3000;
+var port = process.env.NODE_PORT || 9000;
 
 console.log(port);
 

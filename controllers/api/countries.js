@@ -20,7 +20,7 @@ var api = {
      */
     list: function (req, res) {
         console.log('/api/countries GET handled');
-        countriesModel.find(function (err, countries) {
+        countriesModel.find().populate('tournaments').exec(function (err, countries) {
             if (err) {
                 console.log(err);
                 res.status(500).json({error: err});
