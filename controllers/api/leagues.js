@@ -57,7 +57,15 @@ var api = {
          *   external api call
          */
 
-        res.json(leaguesMock);
+        leaguesModel.findOne(req.param('id'), function (err, league) {
+            if (err) {
+                console.log(err);
+                res.status(500).json({error: err});
+                return;
+            }
+
+            res.json(league);
+        });
     },
 
     /**
@@ -68,8 +76,15 @@ var api = {
     list: function (req, res) {
         console.log('/api/leagues GET handled');
 
-        res.json(leaguesMock);
-        // external api call
+        leaguesModel.find({}, function (err, leagues) {
+            if (err) {
+                console.log(err);
+                res.status(500).json({error: err});
+                return;
+            }
+
+            res.json(leagues);
+        });
     },
 
     /**

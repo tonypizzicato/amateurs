@@ -2,19 +2,26 @@
 
 var _ = require('underscore');
 
-var mongoose  = require('mongoose'),
-    Schema    = mongoose.Schema,
-    ObjectId  = Schema.ObjectId;
+var mongoose = require('mongoose'),
+    Schema   = mongoose.Schema,
+    ObjectId = Schema.ObjectId;
 
 var LeagueSchema = new Schema({
-    id:           ObjectId,
-    dc:           {type: Date, default: Date.now},
-    du:           {type: Date},
-    name:         {type: String},
-    slug:         {type: String},
-    country:      {type: String},
-    table:        {type: Array},
-    player_stats: {type: Object}
+    id:       ObjectId,
+    dc:       {type: Date, default: Date.now},
+    du:       {type: Date},
+    name:     {type: String},
+    slug:     {type: String},
+    remoteId: {type: ObjectId}
+});
+
+LeagueSchema.pre('save', function (next) {
+    var now = new Date();
+    this.du = now;
+    if (!this.dc) {
+        this.dc = now;
+    }
+    next();
 });
 
 /**
@@ -52,7 +59,7 @@ var leagues = model.find()
         countries = [
             {
                 name:    'Англия',
-                slug:   'en',
+                slug:    'en',
                 vk:      'https://vk.com/amateurenglishleague',
                 leagues: _.filter(leagues, function (league) {
                     return league.country == 'en';
@@ -60,7 +67,7 @@ var leagues = model.find()
             },
             {
                 name:    'Испания',
-                slug:   'es',
+                slug:    'es',
                 vk:      'https://vk.com/amateurspanishleague',
                 leagues: _.filter(leagues, function (league) {
                     return league.country == 'es';
@@ -68,7 +75,7 @@ var leagues = model.find()
             },
             {
                 name:    'Италия',
-                slug:   'it',
+                slug:    'it',
                 vk:      'https://vk.com/amateurscalcioleague',
                 leagues: _.filter(leagues, function (league) {
                     return league.country == 'it';
@@ -76,7 +83,7 @@ var leagues = model.find()
             },
             {
                 name:    'Германия',
-                slug:   'gr',
+                slug:    'gr',
                 vk:      'https://vk.com/western_europe',
                 leagues: _.filter(leagues, function (league) {
                     return league.country == 'gr';
@@ -84,7 +91,7 @@ var leagues = model.find()
             },
             {
                 name:    'Бельгия',
-                slug:   'be',
+                slug:    'be',
                 vk:      'https://vk.com/amateurnetherlands',
                 leagues: _.filter(leagues, function (league) {
                     return league.country == 'be';
@@ -92,7 +99,7 @@ var leagues = model.find()
             },
             {
                 name:    'Бразилия',
-                slug:   'br',
+                slug:    'br',
                 vk:      'https://vk.com/club74883632',
                 leagues: _.filter(leagues, function (league) {
                     return league.country == 'br';
@@ -100,7 +107,7 @@ var leagues = model.find()
             },
             {
                 name:    'Нидерланды',
-                slug:   'nl',
+                slug:    'nl',
                 vk:      'https://vk.com/amateurnetherlands',
                 leagues: _.filter(leagues, function (league) {
                     return league.country == 'nl';
@@ -108,7 +115,7 @@ var leagues = model.find()
             },
             {
                 name:    'Португалия',
-                slug:   'pr',
+                slug:    'pr',
                 vk:      'https://vk.com/amateur_portugal',
                 leagues: _.filter(leagues, function (league) {
                     return league.country == 'pr';
@@ -116,7 +123,7 @@ var leagues = model.find()
             },
             {
                 name:    'Франция',
-                slug:   'fr',
+                slug:    'fr',
                 vk:      'https://vk.com/amateur_france',
                 leagues: _.filter(leagues, function (league) {
                     return league.country == 'fr';

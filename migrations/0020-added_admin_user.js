@@ -15,8 +15,6 @@ exports.up = function (db, next) {
         if (err) {
             console.log('Could not save new user. Details: ' + err);
         }
-
-        console.dir(user);
         next();
     });
 
