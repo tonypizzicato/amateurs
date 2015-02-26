@@ -10,9 +10,10 @@ var express        = require('express'),
     matches        = require('../controllers/matches'),
 
     apiNews        = require('../controllers/api/news'),
-    apiCountries     = require('../controllers/api/countries'),
+    apiCountries   = require('../controllers/api/countries'),
     apiLeagues     = require('../controllers/api/leagues'),
-    apiTournaments = require('../controllers/api/tournaments');
+    apiTournaments = require('../controllers/api/tournaments'),
+    apiGames       = require('../controllers/api/games');
 
 module.exports.initialize = function (app) {
     app.get('/', index.index);
@@ -77,6 +78,9 @@ module.exports.initialize = function (app) {
         .get(apiCountries.item)
         .put(apiCountries.save)
         .delete(apiCountries.delete);
+
+    r.route('/games')
+        .get(apiGames.list);
 
     apiRouter.use(r);
 
