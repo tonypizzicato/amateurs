@@ -42,8 +42,11 @@ var api = {
 
             var client = new RestClient(options_auth);
 
-            leagues.forEach(function (league) {
+            var _tournaments = [];
+            var pending = 0;
 
+            function getTournaments(league) {
+                pending += 1;
                 client.get(url + '?leagueId=' + league._id, function (data) {
                     var parsed = JSON.parse(data),
                         queries = [];
@@ -58,19 +61,29 @@ var api = {
                         queries.push(query);
                     });
 
-                    async.parallel(queries, function () {
-                        tournamentsModel.find().populate('country').exec(function (err, docs) {
-                            if (err) {
-                                res.status(500).json({error: err});
-                                return;
-                            }
+                    async.parallel(queries, function (err, docs) {
+                        _tournaments = _tournaments.concat(docs);
 
-                            res.json(docs);
-                        });
+                        if (!--pending) {
+                            result(_tournaments);
+                        }
                     });
 
                 });
-            });
+            }
+
+            var result = function () {
+                tournamentsModel.find().populate('country').exec(function (err, docs) {
+                    if (err) {
+                        res.status(500).json({error: err});
+                        return;
+                    }
+
+                    res.json(docs);
+                });
+            }
+
+            leagues.forEach(getTournaments);
         });
 
     },
@@ -107,9 +120,10 @@ var api = {
             }
 
             if (req.body.country) {
-                countriesModel.update({tournaments: req.param('id')}, {$pull: {tournaments: req.param('id')}}, {multi: true}).exec(function () {
-                    countriesModel.findOneAndUpdate({_id: req.body.country}, {$addToSet: {tournaments: req.param('id')}}).exec();
-                });
+                countriesModel.update({tournaments: req.param('id')}, {$pull: {tournaments: req.param('id')}},
+                    {multi: true}).exec(function () {
+                        countriesModel.findOneAndUpdate({_id: req.body.country}, {$addToSet: {tournaments: req.param('id')}}).exec();
+                    });
             }
 
             res.status(200).json({});
