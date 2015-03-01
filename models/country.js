@@ -19,6 +19,7 @@ var CountrySchema = new Schema({
     slug:        {type: String, required: true, default: ''},
     state:       {type: String, required: true, default: State.CREATED},
     sort:        {type: Number, default: 1},
+    show:        {type: Boolean},
     leagueId:    {type: String}, // change to ObjectId
     tournaments: [{type: ObjectId, ref: 'Tournament'}]
 });

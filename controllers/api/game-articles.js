@@ -1,45 +1,34 @@
 "use strict";
 
-var countriesModel = require('../../models/country');
+var articlesModel = require('../../models/game-article');
 
 var api = {
 
     /**
-     * Get country item
+     * Get game articles items list
      *
-     * /api/countries/:id GET call
-     */
-    item: function (req, res) {
-        console.log('/api/countries/:id GET handled');
-    },
-
-    /**
-     * Get countries items list
-     *
-     * /api/countries GET call
+     * /api/game-articles GET call
      */
     list: function (req, res) {
-        console.log('/api/countries GET handled');
-        countriesModel.find().sort({sort: 1}).populate('tournaments').exec(function (err, countries) {
+        console.log('/api/game-articles GET handled');
+        articlesModel.find().sort('-dc').exec(function (err, news) {
             if (err) {
-                console.log(err);
                 res.status(500).json({error: err});
-                return;
             }
 
-            res.json(countries);
+            res.json(news);
         });
     },
 
     /**
-     * Create new country item
+     * Create new game article item
      *
-     * /api/countries POST call
+     * /api/game-articles POST call
      */
     create: function (req, res, next) {
-        console.log('/api/countries POST handled');
+        console.log('/api/game-articles POST handled');
 
-        countriesModel.create(req.body, function (err, country) {
+        articlesModel.create(req.body, function (err, article) {
             if (err) {
                 console.log(err);
                 res.status(500).json({error: err});
@@ -47,18 +36,18 @@ var api = {
             }
 
             console.log(arguments);
-            res.json(country);
+            res.json(article);
         });
     },
 
     /**
-     * Update country item
+     * Update game article item
      *
-     * /api/countries/:id PUT call
+     * /api/game-articles/:id PUT call
      */
     save: function (req, res, next) {
-        console.log('/api/countries/:id PUT handled');
-        countriesModel.update({_id: req.param('id')}, {$set: req.body}, function (err, count) {
+        console.log('/api/game-articles PUT handled');
+        articlesModel.update({_id: req.param('id')}, {$set: req.body}, function (err, count) {
             if (err) {
                 console.log(err);
                 res.status(500).json({error: err});
@@ -74,14 +63,13 @@ var api = {
     },
 
     /**
-     * Delete country item
-     *
-     * /api/countries/:id DELETE call
+     * Delete game article item
+     * /api/game-articles/:id DELETE call
      */
     delete: function (req, res, next) {
-        console.log('/api/countries/:id DELETE handled');
+        console.log('/api/game-articles/:id DELETE handled');
 
-        countriesModel.remove({_id: req.param('id')}, function (err, count) {
+        articlesModel.remove({_id: req.param('id')}, function (err, count) {
             if (err) {
                 res.status(500).json({error: err});
             }

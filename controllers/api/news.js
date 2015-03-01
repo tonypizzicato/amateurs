@@ -56,6 +56,19 @@ var api = {
      */
     save: function (req, res, next) {
         console.log('/api/news PUT handled');
+        newsModel.update({_id: req.param('id')}, {$set: req.body}, function (err, count) {
+            if (err) {
+                console.log(err);
+                res.status(500).json({error: err});
+                return;
+            }
+
+            if (count) {
+                res.status(200).json({});
+            } else {
+                res.status(404).json({});
+            }
+        });
     },
 
     /**

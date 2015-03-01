@@ -73,7 +73,7 @@ var api = {
             }
 
             var result = function () {
-                tournamentsModel.find().populate('country').exec(function (err, docs) {
+                tournamentsModel.find().sort({sort: 1}).populate('country').exec(function (err, docs) {
                     if (err) {
                         res.status(500).json({error: err});
                         return;
@@ -113,6 +113,8 @@ var api = {
      */
     save: function (req, res, next) {
         console.log('/api/tournaments/:id PUT handled');
+        console.log(req.body);
+
         tournamentsModel.update({_id: req.param('id')}, {$set: req.body}, function (err, count) {
             if (err) {
                 res.status(500).json({error: err});

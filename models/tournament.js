@@ -10,7 +10,9 @@ var TournamentSchema = new Schema({
     dc:       {type: Date, default: Date.now},
     du:       {type: Date},
     name:     {type: String},
+    sort:     {type: Number},
     slug:     {type: String},
+    show:     {type: Boolean},
     state:    {type: String, default: 'CREATED'},
     leagueId: {type: String}, // change to ObjectId
     remoteId: {type: String}, // change to ObjectId
