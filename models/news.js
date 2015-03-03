@@ -17,7 +17,8 @@ var NewsSchema = new Schema({
     sort:     {type: Number, default: 1},
     author:   {type: String, default: ''},
     leagueId: {type: ObjectId},
-    country:  {type: ObjectId, ref: 'Country'}
+    country:  {type: ObjectId, ref: 'Country'},
+    image:    {type: String}
 });
 
 NewsSchema.pre('save', function (next) {

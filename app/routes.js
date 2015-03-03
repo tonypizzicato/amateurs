@@ -87,7 +87,7 @@ module.exports.initialize = function (app) {
         .get(articlesGames.list)
         .post(articlesGames.create);
 
-    r.route('/game-articles')
+    r.route('/game-articles/:id')
         .put(articlesGames.save)
         .delete(articlesGames.delete);
 

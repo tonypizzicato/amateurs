@@ -31,11 +31,11 @@ app.set('port', port);
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(cookieParser());
 
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({extended: false}))
-
 // parse application/json
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '5mb'}));
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({limit: '5mb', extended: false}))
 
 app.use(session({
     secret:            'test secret',
@@ -109,7 +109,7 @@ app.use(function (req, res, next) {
 });
 
 //CORS middleware
-app.use('/api', function(req, res, next) {
+app.use('/api', function (req, res, next) {
     console.log('allowCrossDomain');
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
