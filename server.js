@@ -4,11 +4,11 @@ var path = require('path');
 var fs = require('fs');
 var hbs = require('hbs');
 var mongoose = require('mongoose');
-var expressMongoose = require('express-mongoose');
 
 var passport = require('passport');
 
 var bodyParser = require('body-parser');
+var busboy = require('connect-busboy');
 var cookieParser = require('cookie-parser');
 var favicon = require('serve-favicon');
 
@@ -31,6 +31,7 @@ app.set('port', port);
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(cookieParser());
 
+app.use(busboy({ immediate: true }));
 // parse application/json
 app.use(bodyParser.json({limit: '5mb'}));
 
@@ -38,8 +39,8 @@ app.use(bodyParser.json({limit: '5mb'}));
 app.use(bodyParser.urlencoded({limit: '5mb', extended: false}))
 
 app.use(session({
-    secret:            'test secret',
-    resave:            true,
+    secret: 'test secret',
+    resave: true,
     saveUninitialized: true
 }));
 
@@ -69,7 +70,7 @@ if (app.get('env') === 'development') {
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,
-            error:   err
+            error: err
         });
     });
 }
@@ -87,7 +88,7 @@ if (app.get('env') === 'production') {
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,
-            error:   {}
+            error: {}
         });
     });
 }
@@ -112,8 +113,8 @@ app.use(function (req, res, next) {
 app.use('/api', function (req, res, next) {
     console.log('allowCrossDomain');
     res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, Cache-Control');
 
     next();
 });

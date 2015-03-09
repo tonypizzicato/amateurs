@@ -8,3 +8,5 @@ test/vendor
 .tmp_assets
 *.psd
 access.log
+data
+uploads
