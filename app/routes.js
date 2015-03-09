@@ -1,20 +1,21 @@
 "use strict";
 
-var express = require('express'),
+var express          = require('express'),
 
-    auth = require('../controllers/auth'),
-    index = require('../controllers/index'),
-    leagues = require('../controllers/leagues'),
-    countries = require('../controllers/countries'),
-    fields = require('../controllers/fields'),
-    matches = require('../controllers/matches'),
+    auth             = require('../controllers/auth'),
+    index            = require('../controllers/index'),
+    leagues          = require('../controllers/leagues'),
+    countries        = require('../controllers/countries'),
+    fields           = require('../controllers/fields'),
+    matches          = require('../controllers/matches'),
 
-    apiNews = require('../controllers/api/news'),
-    apiCountries = require('../controllers/api/countries'),
-    apiLeagues = require('../controllers/api/leagues'),
-    apiTournaments = require('../controllers/api/tournaments'),
-    apiGames = require('../controllers/api/games'),
-    articlesGames = require('../controllers/api/game-articles');
+    apiNews          = require('../controllers/api/news'),
+    apiCountries     = require('../controllers/api/countries'),
+    apiLeagues       = require('../controllers/api/leagues'),
+    apiTournaments   = require('../controllers/api/tournaments'),
+    apiGames         = require('../controllers/api/games'),
+    apiArticlesGames = require('../controllers/api/game-articles'),
+    apiPhotos        = require('../controllers/api/photos');
 
 module.exports.initialize = function (app) {
     app.get('/', index.index);
@@ -83,16 +84,22 @@ module.exports.initialize = function (app) {
     r.route('/games')
         .get(apiGames.list);
 
+    r.route('/:type/:postId/images')
+        .get(apiPhotos.list)
+        .post(apiPhotos.create);
+
+    r.route('/:type/:postId/images/:id')
+        .get(apiPhotos.list)
+        .put(apiPhotos.save)
+        .delete(apiPhotos.delete);
+
     r.route('/game-articles')
-        .get(articlesGames.list)
-        .post(articlesGames.create);
+        .get(apiArticlesGames.list)
+        .post(apiArticlesGames.create);
 
     r.route('/game-articles/:id')
-        .put(articlesGames.save)
-        .delete(articlesGames.delete);
-
-    r.route('/game-articles/:id/images')
-        .post(articlesGames.images);
+        .put(apiArticlesGames.save)
+        .delete(apiArticlesGames.delete);
 
     apiRouter.use(r);
 

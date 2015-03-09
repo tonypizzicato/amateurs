@@ -11,7 +11,7 @@ var GameArticleSchema = new Schema({
     show:   {type: Boolean},
     type:   {type: String, required: true},
     author: {type: String, default: ''},
-    gameId: {type: String} // change to ObjectId
+    gameId: {type: ObjectId}
 });
 
 GameArticleSchema.pre('save', function (next) {

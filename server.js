@@ -31,7 +31,7 @@ app.set('port', port);
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(cookieParser());
 
-app.use(busboy({ immediate: true }));
+app.use(busboy());
 // parse application/json
 app.use(bodyParser.json({limit: '5mb'}));
 
