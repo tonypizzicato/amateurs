@@ -4,6 +4,15 @@ var fs          = require('fs.extra'),
     Flickr      = require('flickrapi'),
     PhotosModel = require('../../models/photo');
 
+var flickrOptions = {
+    api_key:             "ffd56ffb2631d75166e922ed7b5cc5b6",
+    secret:              "34c94bc92ac6cd39",
+    user_id:             "130112246@N08",
+    access_token:        "72157648906532524-e46b00c69350c43b",
+    access_token_secret: "4a0ee319266c77e2",
+    permissions:         'delete'
+};
+
 var api = {
 
     /**
@@ -33,15 +42,6 @@ var api = {
     create: function (req, res, next) {
         console.log('/api/games/:id/images POST handled');
 
-        var flickrOptions = {
-            api_key:             "ffd56ffb2631d75166e922ed7b5cc5b6",
-            secret:              "34c94bc92ac6cd39",
-            user_id:             "130112246@N08",
-            access_token:        "72157648906532524-e46b00c69350c43b",
-            access_token_secret: "4a0ee319266c77e2",
-            permissions:         'delete'
-        };
-
         var files = [];
         req.busboy.on('file', function (fieldname, file, filename) {
             console.log("Uploading: " + fieldname + ' ' + filename);
@@ -65,58 +65,25 @@ var api = {
             console.log('finish, files uploaded ', files);
 
             var fls = files.slice(0);
+            var docs = []
             fls.forEach(function (item) {
-                PhotosModel.create({
+                docs.push({
                     type:   'games',
                     postId: req.params.postId,
                     thumb:  item.url,
-                    main:   item.url
+                    main:   item.url,
+                    title:  item.title,
+                    local:  item.path
                 });
             });
 
-            Flickr.authenticate(flickrOptions, function (err, flickr) {
-                console.log('flickr authed');
-
-                var options = {
-                    photos:      files,
-                    permissions: 'write'
-                };
-
-                var photosCount = files.length;
-                Flickr.upload(options, flickrOptions, function (err, ids) {
-                    if (err || !ids.length || ids.length != photosCount) {
-                        console.log('Failed uploading photos.');
-
-                        return;
-                    }
-
-                    ids.forEach(function (id, index) {
-                        flickr.photos.getSizes({photo_id: id}, function (err, res) {
-                            var s = res.sizes.size.filter(function (item) {
-                                return item.width == 800 || item.width == 640 || item.width == 150;
-                            });
-
-                            PhotosModel.remove({main: fls[index].url}).exec();
-
-                            PhotosModel.create({
-                                postId:   req.params.postId,
-                                type:     'games',
-                                thumb:    s[0].source,
-                                main:     s[1].source,
-                                optional: s[2].source
-                            });
-                        });
-                    });
-
-                    fls.forEach(function (item) {
-                        console.log('delete ' + item.path);
-                        fs.unlinkSync(item.path);
-                    });
-                });
+            PhotosModel.create(docs, function (err) {
+                var args = Array.prototype.slice.call(arguments, 1);
+                _toFlickr(args);
             });
 
             res.json({});
-        });
+        }.bind(this));
 
         req.pipe(req.busboy);
     },
@@ -168,5 +135,54 @@ var api = {
         });
     }
 };
+
+var _toFlickr = function (docs) {
+    Flickr.authenticate(flickrOptions, function (err, flickr) {
+        console.log('flickr authed');
+
+        var files = docs.map(function (doc) {
+            return {title: doc.title, photo: doc.local, path: doc.local};
+        });
+
+        var fls = files.slice();
+
+        var options = {
+            photos:      files,
+            permissions: 'write'
+        };
+
+        var photosCount = files.length;
+
+        Flickr.upload(options, flickrOptions, function (err, ids) {
+            if (err || !ids.length || ids.length != photosCount) {
+                console.log('Failed uploading photos.');
+
+                return;
+            }
+
+            ids.forEach(function (id, index) {
+                flickr.photos.getSizes({photo_id: id}, function (err, res) {
+                    var s = res.sizes.size.filter(function (item) {
+                        return item.width == 800 || item.width == 640 || item.width == 150;
+                    });
+
+                    var set = {
+                        type:     'games',
+                        thumb:    s[0] ? s[0].source : '',
+                        main:     s[1] ? s[1].source : '',
+                        optional: s[2] ? s[2].source : ''
+                    };
+
+                    PhotosModel.update({main: docs[index].main}, {'$set': set, '$unset': {local: 1}}).exec();
+                });
+            });
+
+            fls.forEach(function (item) {
+                console.log('delete ' + item.path);
+                fs.unlinkSync(item.path);
+            });
+        });
+    });
+}
 
 module.exports = api;

@@ -10,7 +10,9 @@ var PhotoSchema = new Schema({
     optional: {type: String},
     type:     {type: String, enum: ['games', 'news']},
     postId:   {type: ObjectId, required: true},
-    sort:     {type: Number}
+    sort:     {type: Number, default: 9999},
+    title:    {type: String},
+    local:    {type: String}
 });
 
 /**
