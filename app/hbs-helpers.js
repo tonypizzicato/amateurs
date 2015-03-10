@@ -1,5 +1,7 @@
-var hbs = require('hbs'),
-    _   = require('underscore');
+var hbs    = require('hbs'),
+    _      = require('underscore'),
+    moment = require('moment-timezone');
+
 
 var helpers = {
     eq: function (lvalue, rvalue, options) {
@@ -20,7 +22,7 @@ var helpers = {
             return options.inverse(this);
         }
     },
-    lt:     function (lvalue, rvalue, options) {
+    lt: function (lvalue, rvalue, options) {
         if (arguments.length < 3)
             throw new Error("hbs Helper lt needs 2 parameters");
         if (lvalue >= rvalue) {
@@ -29,7 +31,7 @@ var helpers = {
             return options.fn(this);
         }
     },
-    gt:     function (lvalue, rvalue, options) {
+    gt: function (lvalue, rvalue, options) {
         if (arguments.length < 3)
             throw new Error("hbs Helper gt needs 2 parameters");
         if (lvalue <= rvalue) {
@@ -107,7 +109,25 @@ var helpers = {
         }
 
         return options.inverse(this);
+    },
+
+    trunc: function (text, symbolsCount) {
+        return text.slice(0, symbolsCount) + '...';
+    },
+
+    date: function (date) {
+        return dateFn(date, 'L');
+    },
+
+    datefull: function (date) {
+        return dateFn(date, 'LL');
     }
+};
+
+var dateFn = function (date, format) {
+    var tz = 'Europe/Moscow';
+
+    return moment(date).locale('ru').tz(tz).format(format);
 };
 
 module.exports.initialize = function (hbs) {

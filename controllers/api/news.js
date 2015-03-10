@@ -1,6 +1,6 @@
 "use strict";
 
-var fs = require('fs'),
+var fs        = require('fs'),
     newsModel = require('../../models/news');
 
 var api = {
@@ -38,7 +38,10 @@ var api = {
     create: function (req, res, next) {
         console.log('/api/news POST handled');
 
-        newsModel.create(req.body, function (err, article) {
+        var doc = req.body;
+        doc.author = req.user.username;
+
+        newsModel.create(doc, function (err, article) {
             if (err) {
                 console.log(err);
                 res.status(500).json({error: err});
@@ -58,7 +61,10 @@ var api = {
     save: function (req, res, next) {
         console.log('/api/news PUT handled');
 
-        newsModel.update({_id: req.param('id')}, {$set: req.body}, function (err, count) {
+        var doc = req.body;
+        doc.author = doc.author ? doc.author : req.user.username;
+
+        newsModel.update({_id: req.param('id')}, {$set: doc}, function (err, count) {
             if (err) {
                 console.log(err);
                 res.status(500).json({error: err});

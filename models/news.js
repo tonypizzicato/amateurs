@@ -1,8 +1,9 @@
 "use strict";
 
-var mongoose = require('mongoose'),
-    Schema   = mongoose.Schema,
-    ObjectId = Schema.ObjectId;
+var transliteration = require('transliteration'),
+    mongoose        = require('mongoose'),
+    Schema          = mongoose.Schema,
+    ObjectId        = Schema.ObjectId;
 
 var NewsSchema = new Schema({
     dc:       {type: Date, default: Date.now},
@@ -27,6 +28,7 @@ NewsSchema.pre('save', function (next) {
     if (!this.dc) {
         this.dc = now;
     }
+    this.slug = transliteration.slugify(this.title);
     next();
 });
 

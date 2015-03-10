@@ -8,6 +8,7 @@ var express          = require('express'),
     countries        = require('../controllers/countries'),
     fields           = require('../controllers/fields'),
     matches          = require('../controllers/matches'),
+    news             = require('../controllers/news'),
 
     apiNews          = require('../controllers/api/news'),
     apiCountries     = require('../controllers/api/countries'),
@@ -37,6 +38,9 @@ module.exports.initialize = function (app) {
 
     app.get('/fields', fields.fields);
     app.get('/fields/:name', fields.fields);
+
+    app.get('/news', news.list);
+    app.get('/news/:slug', news.item);
 
     app.get('/countries/:country', countries.countries);
 

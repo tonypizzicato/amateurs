@@ -28,7 +28,7 @@ module.exports = (grunt) ->
     # Watches files for changes and runs tasks based on the changed files
         watch:
             options:
-                livereload: true
+                livereload: 35731
 
             coffee:
                 files: ["<%= yeoman.public %>/scripts/**/*.{coffee,litcoffee,coffee.md}"]
@@ -84,7 +84,7 @@ module.exports = (grunt) ->
         connect:
             options:
                 port:       8080
-                livereload: 35729
+                livereload: 35730
 
             # Change this to '0.0.0.0' to access the server from outside
                 hostname:   "localhost"

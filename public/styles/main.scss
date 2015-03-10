@@ -1180,6 +1180,42 @@ $size: 200px;
     vertical-align: bottom;
 }
 
+.s_position_relative {
+  position: relative;
+}
+
+.s_position_absolute {
+  position: absolute;
+}
+
+.s_overflow_hidden {
+  overflow: hidden;
+}
+
+.s_display_block {
+  display: block;
+}
+
+.s_display_inline-block {
+  display: inline-block;
+}
+
+.s_display_none {
+  display: none;
+}
+
+.s_float_r {
+  float: right;
+}
+
+.s_float_l {
+  float: left;
+}
+
+.s_float_n {
+  float: none;
+}
+
 .s_m_0 {
     margin: 0;
 }
