@@ -4,7 +4,8 @@ var RestClient       = require('node-rest-client').Client,
     tournamentsModel = require('../../models/tournament'),
     countriesModel   = require('../../models/country'),
     leaguesModel     = require('../../models/league'),
-    async            = require('async');
+    async            = require('async'),
+    remoteConfig     = require('../../config/tinyapi');
 
 var api = {
 
@@ -24,15 +25,6 @@ var api = {
      */
     list: function (req, res) {
         console.log('/api/tournaments GET handled');
-        /**
-         * if has tournament in db
-         *   continue
-         * else
-         *   external api call
-         */
-        var url = 'http://82.196.6.26:443/api/tournaments/';
-
-        var options_auth = {user: "root", password: "horseremorse"};
 
         leaguesModel.find({}, function (err, leagues) {
             if (err) {
@@ -40,14 +32,14 @@ var api = {
                 return;
             }
 
-            var client = new RestClient(options_auth);
+            var client = new RestClient(remoteConfig.authOptions);
 
             var _tournaments = [];
             var pending = 0;
 
             function getTournaments(league) {
                 pending += 1;
-                client.get(url + '?leagueId=' + league._id, function (data) {
+                client.get(remoteConfig.url + '?leagueId=' + league._id, function (data) {
                     var parsed = JSON.parse(data),
                         queries = [];
 

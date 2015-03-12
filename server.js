@@ -39,8 +39,8 @@ app.use(bodyParser.json({limit: '5mb'}));
 app.use(bodyParser.urlencoded({limit: '5mb', extended: false}))
 
 app.use(session({
-    secret: 'test secret',
-    resave: true,
+    secret:            'test secret',
+    resave:            true,
     saveUninitialized: true
 }));
 
@@ -70,7 +70,7 @@ if (app.get('env') === 'development') {
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,
-            error: err
+            error:   err
         });
     });
 }
@@ -88,7 +88,7 @@ if (app.get('env') === 'production') {
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,
-            error: {}
+            error:   {}
         });
     });
 }
@@ -125,8 +125,15 @@ app.get('*', function (req, res, next) {
     if (req.url === '/api') {
         return next();
     }
-    var leagues = require('./models/league');
-    res.locals.globals.leagues = leagues.getCountries();
+
+    var CountryModel = require('./models/country');
+    CountryModel.find().sort({sort: 1}).populate({path: 'tournaments', options: {sort: {'sort': 1}}}).exec(function (err, countries) {
+        if (err) {
+            return next(err);
+        }
+
+        res.locals.globals.countries = countries;
+    });
 
     next();
 });

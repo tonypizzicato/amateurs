@@ -12,7 +12,8 @@ var LeagueSchema = new Schema({
     du:       {type: Date},
     name:     {type: String},
     slug:     {type: String},
-    remoteId: {type: ObjectId}
+    remoteId: {type: ObjectId},
+    tournaments: []
 });
 
 LeagueSchema.pre('save', function (next) {
@@ -48,8 +49,17 @@ LeagueSchema.statics.get = function (name) {
 /**
  * @returns {Array} Array of countries with leagues
  */
-LeagueSchema.statics.getCountries = function () {
-    return _.sortBy(countries, 'name');
+LeagueSchema.statics.getByCountries = function (res, next) {
+    return this.find({show: true}).populate({}).exec(function(err, docs) {
+        if (err) {
+            return next(err);
+        }
+
+        res = {};
+        docs.forEach(function(item) {
+           res[item]
+        });
+    });
 };
 
 var model = mongoose.model('League', LeagueSchema, 'leagues');

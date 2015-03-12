@@ -4,7 +4,17 @@ var NewsModel = require('../models/news');
 
 var controller = {
     list: function (req, res, next) {
-        NewsModel.find().sort({dc: -1}).exec(function (err, news) {
+        var query = {};
+        if(req.params.league) {
+            query.league = req.params.league;
+        }
+        if(req.params.country) {
+            query.country = req.params.country;
+        }
+        if(req.params.tournament) {
+            query.tournament = req.params.tournament;
+        }
+        NewsModel.find(query).sort({dc: -1}).exec(function (err, news) {
             if (err) {
                 return next(err);
             }
