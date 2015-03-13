@@ -4,6 +4,7 @@ var express          = require('express'),
 
     auth             = require('../controllers/auth'),
     index            = require('../controllers/index'),
+    leagues          = require('../controllers/leagues'),
     tournaments      = require('../controllers/tournaments'),
     countries        = require('../controllers/countries'),
     fields           = require('../controllers/fields'),
@@ -30,6 +31,8 @@ module.exports.initialize = function (app) {
 
     app.get('/construct', index.underConstruction);
     app.get('/nationals/promo', index.nationalsPromo);
+
+    app.get('/:name(moscow|spb)', leagues.item);
 
     app.get('/tournaments', tournaments.list);
     app.get('/tournaments/:name', tournaments.item);

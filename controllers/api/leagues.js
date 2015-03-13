@@ -42,7 +42,7 @@ var api = {
 
         var client = new RestClient(remoteConfig.authOptions);
 
-        client.get(remoteConfig.url, function (data) {
+        client.get(remoteConfig.url + '/leagues', function (data) {
             var parsed = JSON.parse(data),
                 queries = [];
 

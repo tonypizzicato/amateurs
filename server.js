@@ -19,6 +19,11 @@ var routes = require('./app/routes');
 
 var app = express();
 
+var SessionMongoStore = require('connect-mongo')(session);
+
+var LeagueModel = require('./models/league');
+var CountryModel = require('./models/country');
+
 // Configure server
 var port = process.env.NODE_PORT || 9000;
 
@@ -40,8 +45,9 @@ app.use(bodyParser.urlencoded({limit: '5mb', extended: false}))
 
 app.use(session({
     secret:            'test secret',
-    resave:            true,
-    saveUninitialized: true
+    resave:            false,
+    saveUninitialized: true,
+    store:             new SessionMongoStore({mongooseConnection: mongoose.connection})
 }));
 
 // Initialize Passport!  Also use passport.session() middleware, to support
@@ -120,20 +126,60 @@ app.use('/api', function (req, res, next) {
 });
 
 app.get('*', function (req, res, next) {
-    res.locals.globals = res.locals.globals || {};
 
     if (req.url === '/api') {
         return next();
     }
 
-    var CountryModel = require('./models/country');
-    CountryModel.find().sort({sort: 1}).populate({path: 'tournaments', options: {sort: {'sort': 1}}}).exec(function (err, countries) {
+    res.locals.globals = res.locals.globals || {};
+
+    var getCountries = function () {
+        var populateOptions = {path: 'tournaments', options: {sort: {'sort': 1}}};
+        CountryModel.find({leagueId: req.session.league._id}).sort({sort: 1}).populate(populateOptions).exec(function (err, docs) {
+            if (err) {
+                return next(err);
+            }
+            res.locals.globals.countries = docs;
+        });
+    }
+
+    var query = {};
+    console.log(req.params);
+    if (typeof req.params[0] == 'string') {
+        var param = req.params[0].slice(1);
+        if (/^(moscow|spb)$/.test(param)) {
+            query = {slug: param};
+        }
+    }
+
+    console.log(query);
+
+    if (query.slug != 'undefined' || !req.session.league) {
+        LeagueModel.findOne(query).lean().exec(function (err, doc) {
+            if (err) {
+                return next(err);
+            }
+            if (!doc) {
+                res.status(404);
+                return next(null);
+            }
+
+            req.session.league = doc;
+            res.locals.globals.league = req.session.league;
+            getCountries();
+        });
+    } else {
+        getCountries();
+    }
+
+    LeagueModel.find(/*{show: true},*/).lean().exec(function (err, docs) {
         if (err) {
             return next(err);
         }
-
-        res.locals.globals.countries = countries;
+        res.locals.globals.leagues = docs;
     });
+
+    res.locals.globals.league = req.session.league;
 
     next();
 });
@@ -189,6 +235,7 @@ app.get('/leagues/:name/*', function (req, res, next) {
 
 //routes list:
 routes.initialize(app);
+
 
 var server = app.listen(port, function () {
 

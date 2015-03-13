@@ -71,6 +71,7 @@ module.exports = (grunt) ->
                     "<%= yeoman.server %>/server.js"
                     "<%= yeoman.server %>/app/*.js"
                     "<%= yeoman.server %>/controllers/*.js"
+                    "<%= yeoman.server %>/controllers/api/*.js"
                     "<%= yeoman.server %>/models/*.js"
                     "<%= yeoman.server %>/views/**/*.hbs"
                 ]

@@ -168,17 +168,20 @@ ul, ol {
 }
 
 .nav .dropdown .dropdown-menu {
-    max-height: 0;
-    background: rgba(43, 48, 59, .95);
-    transition: max-height .5s ease-in;
+    display:       block;
+    max-height:    0;
+    overflow:      hidden;
+    padding:       5px 10px;
+    margin-top:    20px;
+    border-radius: 0;
+    opacity:       0;
+    background:    rgba(43, 48, 59, .95);
+    transition:    all .16s ease-in;
 }
 
 .nav .dropdown.open .dropdown-menu {
-    margin-top:    20px;
-    max-height:    1000px;
-    padding:       5px 10px;
-    border-radius: 0;
-    transition:    all .5s ease-out;
+    max-height: 1000px;
+    opacity:    1;
 }
 
 .nav .dropdown .dropdown-menu li {
@@ -202,6 +205,10 @@ ul, ol {
     color:   $navbar-default-link-hover-color;
 }
 
+.nav .dropdown .dropdown-menu li {
+    white-space: nowrap;
+}
+
 .nav .dropdown .dropdown-menu li i {
     margin-left: 4px;
     float:       right;
@@ -222,20 +229,39 @@ ul, ol {
     background-color: rgba(23, 28, 39, .5);
 }
 
-.nav .dropdown_type_leagues {
-    position: static !important;
-    width:    100%;
-}
-
 .nav .dropdown-menu_type_leagues {
-    padding:            20px 0px;
-    width:              100%;
-    min-height:         310px;
+    padding:            20px 10px;
+    width:              0;
     box-shadow:         none;
     -webkit-box-shadow: none;
 }
 
-.nav .dropdown-menu_type_leagues:before {
+.nav .dropdown.open .dropdown-menu_type_leagues {
+    width: 300px;
+}
+
+.nav .dropdown-menu_type_leagues .dropdown-header {
+    font-size: 14px;
+    padding:   10px;
+}
+
+.nav .dropdown_type_tournaments {
+    position: static !important;
+    width:    100%;
+}
+
+.nav .dropdown-menu_type_tournaments {
+    padding:            20px 0px;
+    width:              100%;
+    box-shadow:         none;
+    -webkit-box-shadow: none;
+}
+
+.nav .dropdown_type_tournaments.open .dropdown-menu_type_tournaments {
+    min-height: 310px;
+}
+
+.nav .dropdown-menu_type_tournaments:before {
     content:       "";
     border-bottom: 15px solid rgba(43, 48, 59, .95);
     border-right:  17px solid transparent;
@@ -246,7 +272,7 @@ ul, ol {
     z-index:       10;
 }
 
-.nav .dropdown-menu_type_leagues:after {
+.nav .dropdown-menu_type_tournaments:after {
     content:       "";
     border-bottom: 17px solid rgb(43, 48, 59);
     border-right:  19px solid transparent;
@@ -257,17 +283,17 @@ ul, ol {
     z-index:       8;
 }
 
-.nav .dropdown-menu_type_leagues > li > ul {
+.nav .dropdown-menu_type_tournaments > li > ul {
     padding: 0;
     margin:  0;
 }
 
-.nav .dropdown-menu_type_leagues > li > ul > li {
+.nav .dropdown-menu_type_tournaments > li > ul > li {
     list-style: none;
 }
 
-.nav .dropdown-menu_type_leagues > li > ul > li > a,
-.nav .dropdown-menu_type_leagues > li > ul > li > span {
+.nav .dropdown-menu_type_tournaments > li > ul > li > a,
+.nav .dropdown-menu_type_tournaments > li > ul > li > span {
     display:     block;
     padding:     0;
     clear:       both;
@@ -277,8 +303,8 @@ ul, ol {
     white-space: normal;
 }
 
-.nav .dropdown-menu_type_leagues > li ul > li > a:hover,
-.nav .dropdown-menu_type_leagues > li ul > li > a:focus {
+.nav .dropdown-menu_type_tournaments > li ul > li > a:hover,
+.nav .dropdown-menu_type_tournaments > li ul > li > a:focus {
     text-decoration:  none;
     color:            #444;
     background-color: #f5f5f5;
@@ -1181,39 +1207,39 @@ $size: 200px;
 }
 
 .s_position_relative {
-  position: relative;
+    position: relative;
 }
 
 .s_position_absolute {
-  position: absolute;
+    position: absolute;
 }
 
 .s_overflow_hidden {
-  overflow: hidden;
+    overflow: hidden;
 }
 
 .s_display_block {
-  display: block;
+    display: block;
 }
 
 .s_display_inline-block {
-  display: inline-block;
+    display: inline-block;
 }
 
 .s_display_none {
-  display: none;
+    display: none;
 }
 
 .s_float_r {
-  float: right;
+    float: right;
 }
 
 .s_float_l {
-  float: left;
+    float: left;
 }
 
 .s_float_n {
-  float: none;
+    float: none;
 }
 
 .s_m_0 {

@@ -3,77 +3,65 @@
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><span
                 class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span
                 class="icon-bar"></span></button>
-        <a class="navbar-brand" href="/">AFL</a>
+
+        <ul class="nav navbar-nav">
+            <li class="dropdown dropdown_type_leagues">
+
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-angle-down"></i>
+                    {{~globals.league.name~}}
+                </a>
+                <ul class="dropdown-menu dropdown-menu_type_leagues row">
+                    <li>
+                        <ul>
+                            {{#each globals.leagues}}
+                                <li class="dropdown-header">
+                                    <a href="/{{slug}}">{{name}}</a>
+                                </li>
+                            {{/each}}
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar_border_left">
-            <li class="dropdown dropdown_type_leagues">
+            <li class="dropdown dropdown_type_tournaments">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-angle-down"></i>
                     {{#if globals.currentCountry}}
-
                         {{#each globals.countries}}
-                            {{#eq slug ../globals.currentCountry}}{{name}}{{/eq}}
+                            {{#eq slug ../globals.currentCountry}}{{~name~}}{{/eq}}
                         {{/each}}
-                    {{else}}
-                        Федерация
-                    {{/if}}
+                    {{else~}}
+                        Турнир
+                    {{~/if}}
                 </a>
 
-
-                <ul class="dropdown-menu dropdown-menu_type_leagues row">
-                    <li class="col-md-3">
-                        <ul>
-                            <li class="dropdown-header">
-                                <span>Турниры Amateur</span>
-                            </li>
-                            <!--<li>-->
-                            <!--<div>-->
-                            <!--<img src="http://soccerstl.net/wp-content/uploads/2014/11/winter-soccer.jpg" class="img-responsive" alt="product 1">-->
-                            <!--</div>-->
-                            <!--</li>-->
-                            <li>
-                                <a href="/leagues/winter">Зимний турнир</a>
-                            </li>
-                            <li>
-                                <a href="/leagues/winter">Чемпионат Мира</a>
-                            </li>
-                            <li>
-                                <a href="/leagues/winter">Лига Чемпионов</a>
-                            </li>
-                            <li>
-                                <a href="/leagues/winter">Лига Европы</a>
-                            </li>
-                        </ul>
-                    </li>
+                <ul class="dropdown-menu dropdown-menu_type_tournaments row">
                     <li class="col-md-9">
                         <ul class="row">
                             <li class="col-md-12">
-                                <span class="dropdown-header">Федерации Amateur</span>
+                                <span class="dropdown-header">Турниры {{globals.league.name}}</span>
                             </li>
                         </ul>
                         <ul class="row">
                             {{#each globals.countries}}
-                                {{#menuStartCol @index 3 9}}
                                 <li class="col-md-4">
-                                <ul>
-                                {{/menuStartCol}}
-
-                                <li class="dropdown-header">
-                                    <a href="/countries/{{slug}}">{{name}}</a>
-                                </li>
-
-                                <ul class="s_mb_10">
-                                    {{#each tournaments}}
-                                        <li>
-                                            <a href="/tournaments/{{slug}}">{{name}}</a>
+                                    <ul>
+                                        <li class="dropdown-header">
+                                            <a href="/countries/{{slug}}">{{name}}</a>
                                         </li>
-                                    {{/each}}
-                                </ul>
-                                {{#menuBreakCol @index 3 9}}
-                                </ul>
+                                        <ul class="s_mb_10">
+                                            {{#each tournaments}}
+                                                <li>
+                                                    <a href="/tournaments/{{slug}}">{{name}}</a>
+                                                </li>
+                                            {{/each}}
+                                        </ul>
+                                    </ul>
                                 </li>
-                                {{/menuBreakCol}}
                             {{/each}}
                         </ul>
                     </li>
@@ -82,9 +70,6 @@
 
         </ul>
         <ul class="nav navbar-nav">
-            <li class="navbar__item {{#if pageIndex}}navbar__item_active_yes{{/if}}">
-                <a href="/">Главная</a>
-            </li>
             <li class="navbar__item">
                 <a href="#">Результаты</a>
             </li>

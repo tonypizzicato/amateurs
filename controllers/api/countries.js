@@ -1,6 +1,8 @@
 "use strict";
 
-var countriesModel = require('../../models/country');
+var LeagueModel  = require('../../models/league'),
+    CountryModel = require('../../models/country'),
+    TournamentModel = require('../../models/tournament');
 
 var api = {
 
@@ -20,7 +22,7 @@ var api = {
      */
     list: function (req, res) {
         console.log('/api/countries GET handled');
-        countriesModel.find().sort({sort: 1}).populate({path: 'tournaments', options: {sort: {'sort': 1}}}).exec(function (err, countries) {
+        CountryModel.find().sort({sort: 1}).populate({path: 'tournaments', options: {sort: {'sort': 1}}}).exec(function (err, countries) {
             if (err) {
                 console.log(err);
                 res.status(500).json({error: err});
@@ -39,14 +41,15 @@ var api = {
     create: function (req, res, next) {
         console.log('/api/countries POST handled');
 
-        countriesModel.create(req.body, function (err, country) {
+        CountryModel.create(req.body, function (err, country) {
             if (err) {
                 console.log(err);
                 res.status(500).json({error: err});
                 return;
             }
 
-            console.log(arguments);
+            _updateLeague(country._id, req.body.leagueId);
+
             res.json(country);
         });
     },
@@ -58,7 +61,7 @@ var api = {
      */
     save: function (req, res, next) {
         console.log('/api/countries/:id PUT handled');
-        countriesModel.update({_id: req.params.id}, {$set: req.body}, function (err, count) {
+        CountryModel.update({_id: req.params.id}, {$set: req.body}, function (err, count) {
             if (err) {
                 console.log(err);
                 res.status(500).json({error: err});
@@ -66,6 +69,8 @@ var api = {
             }
 
             if (count) {
+                _updateLeague(req.params.id, req.body.leagueId);
+
                 res.status(200).json({});
             } else {
                 res.status(404).json({});
@@ -81,12 +86,14 @@ var api = {
     delete: function (req, res, next) {
         console.log('/api/countries/:id DELETE handled');
 
-        countriesModel.remove({_id: req.params.id}, function (err, count) {
+        CountryModel.remove({_id: req.params.id}, function (err, count) {
             if (err) {
                 res.status(500).json({error: err});
             }
 
             if (count) {
+                LeagueModel.update({countries: req.params.id}, {$pull: {countries: req.params.id}}).exec();
+                TournamentModel.update({country: req.params.id}, {$unset: {country: 1}}).exec();
                 res.status(200).json({});
             } else {
                 res.status(404).json({});
@@ -95,6 +102,12 @@ var api = {
             next();
         });
     }
+};
+
+var _updateLeague = function (countryId, leagueId) {
+    LeagueModel.update({countries: countryId}, {$pull: {countries: countryId}}, {multi: true}).exec(function () {
+        LeagueModel.findOneAndUpdate({_id: leagueId}, {$addToSet: {countries: countryId}}).exec();
+    });
 };
 
 module.exports = api;
