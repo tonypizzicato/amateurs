@@ -2,7 +2,7 @@
 
 var async        = require('async'),
     RestClient   = require('node-rest-client').Client,
-    leaguesModel = require('../../models/league'),
+    LeagueModel  = require('../../models/league'),
     remoteConfig = require('../../config/tinyapi');
 
 var api = {
@@ -21,7 +21,7 @@ var api = {
          *   external api call
          */
 
-        leaguesModel.findOne(req.param('id'), function (err, league) {
+        LeagueModel.findOne(req.params.id, function (err, league) {
             if (err) {
                 console.log(err);
                 res.status(500).json({error: err});
@@ -51,7 +51,7 @@ var api = {
                 delete league.__v;
 
                 var query = function (cb) {
-                    leaguesModel.findOneAndUpdate({remoteId: league._id}, league, {upsert: true}).exec(cb);
+                    LeagueModel.findOneAndUpdate({remoteId: league._id}, league, {upsert: true}).exec(cb);
                 };
                 queries.push(query);
             });
@@ -62,30 +62,12 @@ var api = {
                     return;
                 }
 
-                res.json(docs);
+                res.json(docs.sort(function (a, b) {
+                    return a.sort <= b.sort ? -1 : 1
+                }));
             });
         });
 
-    },
-
-    /**
-     * Create new league item
-     *
-     * /api/leagues POST call
-     */
-    create: function (req, res, next) {
-        console.log('/api/leagues POST handled');
-
-        leaguesModel.create(req.body, function (err, article) {
-            if (err) {
-                console.log(err);
-                res.status(500).json({error: err});
-                return;
-            }
-
-            console.log(arguments);
-            res.json(article);
-        });
     },
 
     /**
@@ -95,28 +77,18 @@ var api = {
      */
     save: function (req, res, next) {
         console.log('/api/leagues/:id PUT handled');
-    },
 
-    /**
-     * Delete league item
-     *
-     * /api/leagues/:id DELETE call
-     */
-    delete: function (req, res) {
-        console.log('/api/leagues/:id DELETE handled');
-
-        leaguesModel.remove({_id: req.param('id')}, function (err, count) {
+        LeagueModel.update({_id: req.params.id}, {$set: req.body}, function (err, count) {
             if (err) {
                 res.status(500).json({error: err});
+                return;
+            }
+            if (!count) {
+                res.status(404);
+                next();
             }
 
-            if (count) {
-                res.status(200).json({});
-            } else {
-                res.status(404).json({});
-            }
-
-            next();
+            res.status(200).json({});
         });
     }
 };

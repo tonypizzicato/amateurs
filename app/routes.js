@@ -32,23 +32,23 @@ module.exports.initialize = function (app) {
     app.get('/construct', index.underConstruction);
     app.get('/nationals/promo', index.nationalsPromo);
 
-    app.get('/:name(moscow|spb)', leagues.item);
+    app.get('/:league(moscow|spb)', leagues.item);
 
-    app.get('/tournaments', tournaments.list);
-    app.get('/tournaments/:name', tournaments.item);
-    app.get('/tournaments/:name/table', tournaments.table);
-    app.get('/tournaments/:name/match/:home-:away', matches.match);
+    app.get('/:league/tournaments', tournaments.list);
+    app.get('/:league/tournaments/:name', tournaments.item);
+    app.get('/:league/tournaments/:name/fixture', tournaments.fixture);
+    app.get('/:league/tournaments/:name/table', tournaments.table);
+    app.get('/:league/tournaments/:name/match/:home-:away', matches.match);
 
-    app.get('/fields', fields.fields);
-    app.get('/fields/:name', fields.fields);
+    app.get('/:league/fields', fields.fields);
+    app.get('/:league/fields/:name', fields.fields);
 
-    app.get('/news', news.list);
     app.get('/:league/news', news.list);
-    app.get('/:league/:country/news', news.list);
-    app.get('/:league/:country/:tournament/news', news.list);
-    app.get('/news/:slug', news.item);
+    app.get('/:league/:countries/news', news.list);
+    app.get('/:league/:countries/:tournament/news', news.list);
+    app.get('/:league/news/:slug', news.item);
 
-    app.get('/countries/:country', countries.item);
+    app.get('/:league/countries/:country', countries.item);
 
 
     var apiRouter = express.Router(),
@@ -65,13 +65,11 @@ module.exports.initialize = function (app) {
         .delete(apiNews.delete);
 
     r.route('/leagues')
-        .get(apiLeagues.list)
-        .post(apiLeagues.create);
+        .get(apiLeagues.list);
 
     r.route('/leagues/:id')
         .get(apiLeagues.item)
-        .put(apiLeagues.save)
-        .delete(apiLeagues.delete);
+        .put(apiLeagues.save);
 
     r.route('/tournaments')
         .get(apiTournaments.list)

@@ -121,6 +121,26 @@ var helpers = {
 
     datefull: function (date) {
         return dateFn(date, 'LL');
+    },
+
+    dateTimeShort: function (date) {
+        return dateFn(date, 'DD.MM HH:mm');
+    },
+
+    contains: function (string, needle) {
+        if (string.toLowerCase().indexOf(needle.toLowerCase()) === -1) {
+            return options.fn(this);
+        }
+
+        return options.inverse(this);
+    },
+
+    notContains: function (string, needle, options) {
+        if (string.toLowerCase().indexOf(needle.toLowerCase()) === -1) {
+            return options.fn(this);
+        }
+
+        return options.inverse(this);
     }
 };
 

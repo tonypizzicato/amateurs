@@ -546,7 +546,8 @@ ul, ol {
 }
 
 .table .col-md-05 {
-    width: 4.16666%;
+    width:   4.16666%;
+    padding: 4px;
 }
 
 .table td.s_p_0 {
@@ -677,6 +678,17 @@ ul, ol {
 
 .fixture__looser {
     color: #555;
+}
+
+.panel_type_fixture .panel__body td {
+    vertical-align: middle;
+}
+
+.col-md-4 .fixture__team {
+    text-overflow: ellipsis;
+    white-space:   nowrap;
+    overflow:      hidden;
+    //    display:       inline-block;
 }
 
 /**
@@ -889,6 +901,21 @@ ul, ol {
 /**
  * Federations
  */
+
+.panel_type_federations .nav.nav-tabs {
+    width:    50%;
+    position: absolute;
+    right:    0;
+    top:      0;
+}
+
+.panel_type_federations .nav.nav-tabs .tab__title {
+    width: 50%;
+}
+
+.panel_type_federations .nav.nav-tabs a {
+    line-height: 2;
+}
 
 .panel_type_federations [class^="col-"] {
     display: inline-block;
@@ -1298,6 +1325,10 @@ $size: 200px;
     margin-top: 20px;
 }
 
+.s_mt_40 {
+    margin-top: 40px;
+}
+
 .s_mt_10 {
     margin-top: 10px;
 }
@@ -1332,6 +1363,14 @@ $size: 200px;
 
 .text_align_l {
     text-align: left;
+}
+
+.s_pt_0 {
+    padding-top: 0;
+}
+
+.s_pb_0 {
+    padding-bottom: 0;
 }
 
 .text_align_c {

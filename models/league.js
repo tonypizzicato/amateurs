@@ -7,13 +7,14 @@ var mongoose = require('mongoose'),
     ObjectId = Schema.ObjectId;
 
 var LeagueSchema = new Schema({
-    id:          ObjectId,
-    dc:          {type: Date, default: Date.now},
-    du:          {type: Date},
-    name:        {type: String},
-    slug:        {type: String},
-    remoteId:    {type: ObjectId},
-    countries:   [{type: ObjectId, ref: 'Country'}]
+    id:        ObjectId,
+    dc:        {type: Date, default: Date.now},
+    du:        {type: Date},
+    name:      {type: String},
+    slug:      {type: String},
+    sort:      {type: Number},
+    remoteId:  {type: ObjectId},
+    countries: [{type: ObjectId, ref: 'Country'}]
 });
 
 LeagueSchema.pre('save', function (next) {

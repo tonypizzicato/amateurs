@@ -127,7 +127,7 @@ app.use('/api', function (req, res, next) {
 
 app.get('*', function (req, res, next) {
 
-    if (req.url === '/api') {
+    if (req.url.indexOf('/api') === 0) {
         return next();
     }
 
@@ -141,10 +141,9 @@ app.get('*', function (req, res, next) {
             }
             res.locals.globals.countries = docs;
         });
-    }
+    };
 
     var query = {};
-    console.log(req.params);
     if (typeof req.params[0] == 'string') {
         var param = req.params[0].slice(1);
         if (/^(moscow|spb)$/.test(param)) {
@@ -152,10 +151,8 @@ app.get('*', function (req, res, next) {
         }
     }
 
-    console.log(query);
-
-    if (query.slug != 'undefined' || !req.session.league) {
-        LeagueModel.findOne(query).lean().exec(function (err, doc) {
+    if (query.slug != undefined || !req.session.league) {
+        LeagueModel.findOne(query).sort({sort: 1}).lean().exec(function (err, doc) {
             if (err) {
                 return next(err);
             }
@@ -172,7 +169,8 @@ app.get('*', function (req, res, next) {
         getCountries();
     }
 
-    LeagueModel.find(/*{show: true},*/).lean().exec(function (err, docs) {
+    var populateOptions = {path: 'countries', options: {sort: {'sort': 1}}};
+    LeagueModel.find(/*{show: true},*/).sort({sort: 1}).populate(populateOptions).lean().exec(function (err, docs) {
         if (err) {
             return next(err);
         }
@@ -244,4 +242,4 @@ var server = app.listen(port, function () {
 
     console.log('Example app listening at http://%s:%s', host, port)
 
-})
+});

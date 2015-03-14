@@ -1,28 +1,24 @@
 <table class="table s_m_0">
     <tbody>
     {{#each fixture}}
-        <tr>
-            <td colspan="7"><span class="fixture__date">{{@key}}</span></td>
-        </tr>
-        {{#each this}}
             <tr>
-                <td class="fixture__time col-md-2{{#if score}} text_color_muted{{/if}}">{{time}}</td>
-                <td class="fixture__team col-md-4 text_align_r s_pr_0{{~#gt score.home score.away}} fixture__winner{{/gt~}}{{~#lt score.home score.away}} fixture__looser{{/lt~}}">
-                    {{~home~}}
-                <td class="text_align_c col-md-05"> v </td>
-                <td class="fixture__team col-md-4 text_align_l s_pl_0{{~#lt score.home score.away}} fixture__winner{{/lt~}} {{~#gt score.home score.away}} fixture__looser{{/gt~}}">
-                    {{~away~}}
+                <td class="fixture__time col-md-3{{#if score}} text_color_muted{{/if}}">{{dateTimeShort dateTime}}</td>
+                <td class="fixture__team col-md-4 text_align_r s_pr_0{{~#gt score.ft.[0] score.ft.[1]}} fixture__winner{{/gt~}}{{~#lt score.ft.[0] score.ft.[1]}} fixture__looser{{/lt~}}">
+                    {{~teams.[0].name~}}
+                </td>
+                <td class="text_align_c col-md-05">v</td>
+                <td class="fixture__team col-md-4 text_align_l s_pl_0{{~#lt score.ft.[0] score.ft.[1]}} fixture__winner{{/lt~}} {{~#gt score.ft.[0] score.ft.[1]}} fixture__looser{{/gt~}}">
+                    {{~teams.[1].name~}}
                 </td>
                 </td>
                 {{#if score}}
-                    <td class="fixture__score col-md-05 s_pr_0 text_align_r">{{score.home}}</td>
+                    <td class="fixture__score col-md-05 s_pr_0 text_align_r">{{score.ft.[0]}}</td>
                     <td class="col-md-05 s_p_0 text_align_c">:</td>
-                    <td class="fixture__score col-md-05 s_pl_0 text_align_l">{{score.away}}</td>
+                    <td class="fixture__score col-md-05 s_pl_0 text_align_l">{{score.ft.[1]}}</td>
                 {{else}}
                     <td colspan="3">:</td>
                 {{/if}}
             </tr>
-        {{/each}}
     {{/each}}
     </tbody>
 </table>

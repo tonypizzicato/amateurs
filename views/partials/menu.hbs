@@ -35,7 +35,7 @@
                             {{#eq slug ../globals.currentCountry}}{{~name~}}{{/eq}}
                         {{/each}}
                     {{else~}}
-                        Турнир
+                        Турниры
                     {{~/if}}
                 </a>
 
@@ -51,12 +51,12 @@
                                 <li class="col-md-4">
                                     <ul>
                                         <li class="dropdown-header">
-                                            <a href="/countries/{{slug}}">{{name}}</a>
+                                            <a href="/{{../globals.league.slug}}/countries/{{slug}}">{{name}}</a>
                                         </li>
                                         <ul class="s_mb_10">
                                             {{#each tournaments}}
                                                 <li>
-                                                    <a href="/tournaments/{{slug}}">{{name}}</a>
+                                                    <a href="/{{../../globals.league.slug}}/tournaments/{{slug}}">{{name}}</a>
                                                 </li>
                                             {{/each}}
                                         </ul>

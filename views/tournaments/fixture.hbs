@@ -1,0 +1,93 @@
+<div class="row clearfix s_mb_20">
+    <div class="col-md-8 column">
+
+        {{#each fixture}}
+            <div id="round-{{@key}}" class="row">
+                <div class="column col-md-12">
+                    <div class="panel panel_type_fixture">
+                        <div class="panel__header">
+                            <i class="fa fa-calendar-o text_size_18 s_mr_10 s_valign_m"></i><span class="text_color_orange s_valign_m">{{@key}} Тур</span>
+                        </div>
+                        <div class="panel__body s_pt_10 s_pl_10 s_pr_10 s_pb_10">
+                            <table class="table s_m_0">
+                                <tbody>
+                                {{#each this}}
+                                    <tr>
+                                        <td class="fixture__time col-md-3{{#if time}} text_color_muted{{/if}}">{{date dateTime}} {{time}}</td>
+                                        <td class="fixture__team col-md-4 text_align_r s_pr_0{{~#gt score.ft.[0] score.ft.[1]}} fixture__winner{{/gt~}}{{~#lt score.ft.[0] score.ft.[1]}} fixture__looser{{/lt~}}">
+                                            {{~teams.[0].name~}}
+                                        <td class="text_align_c col-md-05"> v</td>
+                                        <td class="fixture__team col-md-4 text_align_l s_pl_0{{~#lt score.ft.[0] score.ft.[1]}} fixture__winner{{/lt~}} {{~#gt score.ft.[0] score.ft.[1]}} fixture__looser{{/gt~}}">
+                                            {{~teams.[1].name~}}
+                                        </td>
+                                        </td>
+                                        {{#if score}}
+                                            <td class="fixture__score col-md-05 s_pr_0 text_align_r">{{score.ft.[0]}}</td>
+                                            <td class="col-md-05 s_p_0 text_align_c">:</td>
+                                            <td class="fixture__score col-md-05 s_pl_0 text_align_l">{{score.ft.[1]}}</td>
+                                        {{else}}
+                                            <td colspan="3">&mdash;:&mdash;</td>
+                                        {{/if}}
+                                    </tr>
+                                {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="col-md-4 column">
+        {{#if globals.recent.length}}
+            <div class="panel panel_type_fixture s_m_0">
+                <div class="panel__header">
+                    <i class="fa fa-calendar s_mr_10"></i> Последние матчи
+                </div>
+                <div class="panel__body">
+                    {{$ 'fixtures' fixture=globals.recent }}
+                </div>
+            </div>
+            <div class="link_type_full s_mb_10">
+                <span class="text_color_orange">Календарь</span>
+            <span class="pull-right">
+                <a href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
+            </span>
+            </div>
+        {{/if}}
+        {{#if globals.comming.length}}
+            <div class="panel s_m_0">
+                <div class="panel__header">
+                    <i class="fa fa-calendar s_mr_10"></i> Ближайшие матчи
+                </div>
+                <div class="panel__body">
+                    {{$ 'fixtures' fixture=globals.comming }}
+                </div>
+            </div>
+            <div class="link_type_full s_mb_10">
+                <span class="text_color_orange">Календарь</span>
+            <span class="pull-right">
+                <a href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
+            </span>
+            </div>
+        {{/if}}
+
+
+        <div class="panel s_m_0">
+            <div class="panel__header">
+                <i class="fa fa-phone text_size_16 s_mr_10"></i> Контакты
+            </div>
+            <div class="panel__body">
+                {{> contacts}}
+            </div>
+        </div>
+        <div class="link_type_full s_mb_10">
+            <span class="text_color_orange">Все контакты</span>
+            <span class="pull-right">
+                <a href="/contacts"><i class="fa fa-arrow-circle-o-right"></i></a>
+            </span>
+        </div>
+    </div>
+</div>

@@ -5,7 +5,7 @@ var LeagueModel = require('../models/league');
 module.exports = {
     item: function (req, res) {
         var populateOptions = {path: 'countries', options: {sort: {'sort': 1}}};
-        LeagueModel.findOne({slug: req.params.name}).lean().populate(populateOptions).exec(function (err, doc) {
+        LeagueModel.findOne({slug: req.params.league}).lean().populate(populateOptions).exec(function (err, doc) {
             if (err) {
                 return next(err);
             }
