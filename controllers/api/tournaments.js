@@ -73,7 +73,7 @@ var api = {
 
                     res.json(docs);
                 });
-            }
+            };
 
             leagues.forEach(getTournaments);
         });

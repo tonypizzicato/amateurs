@@ -17,43 +17,12 @@ var express          = require('express'),
     apiTournaments   = require('../controllers/api/tournaments'),
     apiGames         = require('../controllers/api/games'),
     apiArticlesGames = require('../controllers/api/game-articles'),
-    apiPhotos        = require('../controllers/api/photos');
+    apiPhotos        = require('../controllers/api/photos'),
+    apiContacts      = require('../controllers/api/contacts');
 
 module.exports.initialize = function (app) {
-    app.get('/', index.index);
-
-
-    app.get('/login', auth.loginPage);
-    app.get('/account', auth.account);
-    app.post('/login', auth.login);
-    app.post('/logout', auth.logout);
-
-
-    app.get('/construct', index.underConstruction);
-    app.get('/nationals/promo', index.nationalsPromo);
-
-    app.get('/:league(moscow|spb)', leagues.item);
-
-    app.get('/:league/tournaments', tournaments.list);
-    app.get('/:league/tournaments/:name', tournaments.item);
-    app.get('/:league/tournaments/:name/fixture', tournaments.fixture);
-    app.get('/:league/tournaments/:name/table', tournaments.table);
-    app.get('/:league/tournaments/:name/match/:home-:away', matches.match);
-
-    app.get('/:league/fields', fields.fields);
-    app.get('/:league/fields/:name', fields.fields);
-
-    app.get('/:league/news', news.list);
-    app.get('/:league/:countries/news', news.list);
-    app.get('/:league/:countries/:tournament/news', news.list);
-    app.get('/:league/news/:slug', news.item);
-
-    app.get('/:league/countries/:country', countries.item);
-
-
     var apiRouter = express.Router(),
         r = express.Router();
-
 
     r.route('/news')
         .get(apiNews.list)
@@ -109,8 +78,44 @@ module.exports.initialize = function (app) {
         .put(apiArticlesGames.save)
         .delete(apiArticlesGames.delete);
 
+    r.route('/contacts')
+        .get(apiContacts.list)
+        .post(apiContacts.create);
+
+    r.route('/contacts/:id')
+        .put(apiContacts.save)
+        .delete(apiContacts.delete);
+
     apiRouter.use(r);
 
     app.use('/api', apiRouter);
 
+    app.get('/', index.index);
+
+    app.get('/login', auth.loginPage);
+    app.get('/account', auth.account);
+    app.post('/login', auth.login);
+    app.post('/logout', auth.logout);
+
+
+    app.get('/construct', index.underConstruction);
+    app.get('/nationals/promo', index.nationalsPromo);
+
+    app.get('/:league(moscow|spb)', leagues.item);
+
+    app.get('/:league/tournaments', tournaments.list);
+    app.get('/:league/tournaments/:name', tournaments.item);
+    app.get('/:league/tournaments/:name/fixture', tournaments.fixture);
+    app.get('/:league/tournaments/:name/table', tournaments.table);
+    app.get('/:league/tournaments/:name/match/:home-:away', matches.match);
+
+    app.get('/:league/fields', fields.fields);
+    app.get('/:league/fields/:name', fields.fields);
+
+    app.get('/:league/news', news.list);
+    app.get('/:league/:countries/news', news.list);
+    app.get('/:league/:countries/:tournament/news', news.list);
+    app.get('/:league/news/:slug', news.item);
+
+    app.get('/:league/countries/:country', countries.item);
 };

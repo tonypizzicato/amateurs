@@ -14,10 +14,11 @@ var TournamentSchema = new Schema({
     slug:     {type: String},
     show:     {type: Boolean},
     state:    {type: String, default: 'CREATED'},
-    leagueId: {type: String}, // change to ObjectId
+    leagueId: {type: ObjectId},
     remoteId: {type: String}, // change to ObjectId
     country:  {type: ObjectId, ref: 'Country'},
-    settings: {type: Object, default: {}}
+    settings: {type: Object, default: {}},
+    contacts: [{type: ObjectId, ref: 'Contact', default: []}]
 });
 
 TournamentSchema.pre('save', function (next) {

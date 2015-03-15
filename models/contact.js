@@ -3,20 +3,21 @@ var mongoose = require('mongoose'),
     ObjectId = Schema.ObjectId;
 
 var ContactSchema = new Schema({
-    id:      ObjectId,
-    dc:      {type: Date, default: Date.now},
-    du:      {type: Date},
-    title:   {type: String},
-    name:    {type: String},
-    phone:   {type: String},
-    email:   {type: String},
-    vk:      {
+    id:          ObjectId,
+    dc:          {type: Date, default: Date.now},
+    du:          {type: Date},
+    show:        {type: Boolean},
+    name:        {type: String},
+    title:       {type: String},
+    phone:       {type: String},
+    email:       {type: String},
+    vk:          {
         name: {type: String},
         url:  {type: String}
     },
-    photo:   {type: String},
-    country: {type: String},
-    league:  {type: String}
+    image:       {type: String},
+    leagueId:    {type: ObjectId},
+    tournaments: [{type: ObjectId, ref: 'Tournament'}]
 });
 
 module.exports = mongoose.model('Contact', ContactSchema, 'contacts');
