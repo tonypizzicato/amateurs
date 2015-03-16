@@ -547,7 +547,7 @@ ul, ol {
 
 .table .col-md-05 {
     width:   4.16666%;
-    padding: 4px;
+    padding: 8px 4px;
 }
 
 .table td.s_p_0 {
@@ -628,6 +628,7 @@ ul, ol {
 
 .contact .fa {
     color: $navbar-default-link-hover-color;
+    width: 15px;
 }
 
 .contact a {
@@ -656,7 +657,16 @@ ul, ol {
 }
 
 .panel__header {
+    padding:       12px 10px;
     border-bottom: 1px solid #060D17;
+}
+
+.panel__header [class*="flaticon-"] {
+
+}
+
+.panel__header [class*="flaticon-"]:before {
+    margin-left: 0;
 }
 
 .panel .table td {

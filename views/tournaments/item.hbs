@@ -20,13 +20,13 @@
                                         <div class="tab-pane{{#eq 0 @index}} active{{/eq}}" id="tab-table">
                                             <div class="panel s_m_0">
                                                 <div class="panel__body s_p_0 s_pb_5">
-                                                    {{$ 'table' this tableFull=false league=this}}
+                                                    {{$ 'table' table=this.globals.table tableFull=false}}
                                                 </div>
                                             </div>
                                         </div>
                                     {{~/each~}}
                                 </div>
-                                {{~else~}}
+                            {{~else~}}
                                 <ul class="nav nav-tabs">
                                     <li class="tab__title tab__title_size_full active">
                                         <a href="#tab-table" data-toggle="tab">Таблица</a>
@@ -36,7 +36,7 @@
                                     <div class="tab-pane active" id="tab-table">
                                         <div class="panel s_m_0">
                                             <div class="panel__body s_p_0 s_pb_5">
-                                                {{$ 'table' this tableFull=false league=league}}
+                                                {{$ 'table' table=this.globals.table tableFull=false}}
                                             </div>
                                         </div>
                                     </div>
@@ -46,7 +46,7 @@
                         <div class="link_type_full">
                             <span class="text_color_orange">Полная таблица</span>
                             <span class="pull-right">
-                                <a href="/leagues/{{tournament.slug}}/table"><i class="fa fa-arrow-circle-o-right"></i></a>
+                                <a href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/table"><i class="fa fa-arrow-circle-o-right"></i></a>
                             </span>
                         </div>
                     </div>
@@ -68,14 +68,14 @@
                                 <div class="tab-pane active" id="tab-strikers">
                                     <div class="panel s_m_0">
                                         <div class="panel__body s_p_0 s_pb_5">
-                                            {{> strikers league}}
+                                            {{> strikers stats.goals}}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane" id="tab-assists">
                                     <div class="panel s_m_0">
                                         <div class="panel__body s_p_0 s_pb_5">
-                                            {{> assists league}}
+                                            {{> assists stats.assists}}
                                         </div>
                                     </div>
                                 </div>
@@ -84,7 +84,9 @@
                         <div class="link_type_full">
                             <span class="text_color_orange">Статистика</span>
                             <span class="pull-right">
-                                <a href="/leagues/{{tournament.slug}}/table"><i class="fa fa-arrow-circle-o-right"></i></a>
+                                <a href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/stats">
+                                    <i class="fa fa-arrow-circle-o-right"></i>
+                                </a>
                             </span>
                         </div>
                     </div>
@@ -196,71 +198,80 @@
         </div>
     </div>
     <div class="col-md-4 column">
-        <div class="panel s_m_0">
-            <div class="panel-body">
-                <form role="form" class="form form_type_signin" action="/login" method="post">
-                    <div class="form-group form-group_icon_left">
-                        <i class="fa fa-user"></i>
-                        <input type="email" class="form-control" id="signin-email" placeholder="myname@amateurs.io">
-                    </div>
-                    <div class="form-group form-group_icon_left">
-                        <i class="fa fa-key"></i>
-                        <input type="password" class="form-control" id="signin-password" placeholder="password">
-                    </div>
-                    <button type="submit" class="btn btn-default">Войти</button>
-                </form>
-            </div>
-        </div>
-        <div class="link_type_full s_mb_20">
-            <span class="text_color_orange">Регистрация</span>
-            <span class="pull-right">
-                <a href="/signup"><i class="fa fa-arrow-circle-o-right"></i></a>
-            </span>
-        </div>
-
-        <div class="panel s_m_0">
-            <div class="panel__header">
-                <i class="fa fa-calendar s_mr_10"></i> Последние матчи
-            </div>
-            <div class="panel__body">
-                {{$ 'fixtures' fixture=globals.recent }}
-            </div>
-        </div>
-        <div class="link_type_full s_mb_10">
-            <span class="text_color_orange">Календарь</span>
-            <span class="pull-right">
-                <a href="/leagues/{{tournament.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
-            </span>
-        </div>
-        <div class="panel s_m_0">
-            <div class="panel__header">
-                <i class="fa fa-calendar s_mr_10"></i> Ближайшие матчи
-            </div>
-            <div class="panel__body">
-                {{$ 'fixtures' fixture=globals.comming }}
-            </div>
-        </div>
-        <div class="link_type_full s_mb_10">
-            <span class="text_color_orange">Календарь</span>
-            <span class="pull-right">
-                <a href="/leagues/{{tournament.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
-            </span>
-        </div>
+        <!--<div class="panel s_m_0">-->
+        <!--<div class="panel-body">-->
+        <!--<form role="form" class="form form_type_signin" action="/login" method="post">-->
+        <!--<div class="form-group form-group_icon_left">-->
+        <!--<i class="fa fa-user"></i>-->
+        <!--<input type="email" class="form-control" id="signin-email" placeholder="myname@amateurs.io">-->
+        <!--</div>-->
+        <!--<div class="form-group form-group_icon_left">-->
+        <!--<i class="fa fa-key"></i>-->
+        <!--<input type="password" class="form-control" id="signin-password" placeholder="password">-->
+        <!--</div>-->
+        <!--<button type="submit" class="btn btn-default">Войти</button>-->
+        <!--</form>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="link_type_full s_mb_20">-->
+        <!--<span class="text_color_orange">Регистрация</span>-->
+        <!--<span class="pull-right">-->
+        <!--<a href="/signup"><i class="fa fa-arrow-circle-o-right"></i></a>-->
+        <!--</span>-->
+        <!--</div>-->
 
 
-        <div class="panel s_m_0">
-            <div class="panel__header">
-                <i class="fa fa-phone text_size_16 s_mr_10"></i> Контакты
+        {{#if globals.recent.length}}
+            <div class="panel s_m_0">
+                <div class="panel__header">
+                    <i class="fa fa-calendar s_mr_10"></i> Последние матчи
+                </div>
+                <div class="panel__body">
+                    {{$ 'fixtures' fixture=globals.recent }}
+                </div>
             </div>
-            <div class="panel__body">
-                {{> contacts}}
+            <div class="link_type_full s_mb_10">
+                <span class="text_color_orange">Календарь</span>
+                <span class="pull-right">
+                    <a href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/fixture">
+                        <i class="fa fa-arrow-circle-o-right"></i></a>
+                </span>
             </div>
-        </div>
-        <div class="link_type_full s_mb_10">
-            <span class="text_color_orange">Все контакты</span>
-            <span class="pull-right">
-                <a href="/contacts"><i class="fa fa-arrow-circle-o-right"></i></a>
-            </span>
-        </div>
+        {{/if}}
+        {{#if globals.comming.length}}
+            <div class="panel s_m_0">
+                <div class="panel__header">
+                    <i class="fa fa-calendar s_mr_10"></i> Ближайшие матчи
+                </div>
+                <div class="panel__body">
+                    {{$ 'fixtures' fixture=globals.comming }}
+                </div>
+            </div>
+            <div class="link_type_full s_mb_10">
+                <span class="text_color_orange">Календарь</span>
+                <span class="pull-right">
+                    <a href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/fixture">
+                        <i class="fa fa-arrow-circle-o-right"></i></a>
+                </span>
+            </div>
+        {{/if}}
+
+
+        {{#if globals.contacts.length}}
+            <div class="panel s_m_0">
+                <div class="panel__header">
+                    <i class="fa fa-phone text_size_16 s_mr_10"></i> Контакты
+                </div>
+                <div class="panel__body">
+                    {{> contacts}}
+                </div>
+            </div>
+            <div class="link_type_full s_mb_10">
+                <span class="text_color_orange">Все контакты</span>
+                <span class="pull-right">
+                    <a href="/{{globals.league.slug}}/contacts"><i class="fa fa-arrow-circle-o-right"></i></a>
+                </span>
+            </div>
+        {{/if}}
     </div>
 </div>

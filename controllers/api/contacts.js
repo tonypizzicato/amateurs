@@ -32,6 +32,10 @@ var api = {
         console.log('/api/contacts POST handled');
 
         var contact = req.body;
+        contact.vk = {
+            name: contact['vk[name]'],
+            url:  contact['vk[url]']
+        }
         contact.tournaments = contact['tournaments[]'] ? contact['tournaments[]'] : [];
         ContactModel.create(contact, function (err, contact) {
             if (err) {
@@ -54,6 +58,12 @@ var api = {
         console.log('/api/contacts/:id PUT handled');
 
         var contact = req.body;
+        if (contact['vk[name]'] || contact['vk[url]']) {
+            contact.vk = {
+                name: contact['vk[name]'],
+                url:  contact['vk[url]']
+            }
+        }
         contact.tournaments = contact['tournaments[]'] ? contact['tournaments[]'] : [];
         ContactModel.update({_id: req.params.id}, {$set: contact}, function (err, count) {
             if (err) {

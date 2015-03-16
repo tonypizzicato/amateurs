@@ -1,8 +1,8 @@
 <table class="table table_type_table s_m_0">
     <thead>
     <tr>
-        <th class="{{#if tableFull}}col-md-05{{else}}col-md-2{{/if}} text_align_c" colspan="2">Место</th>
-        <th class="{{#if tableFull}}col-md-6{{else}}col-md-8{{/if}}">Клуб</th>
+        <th class="{{#if tableFull}}col-md-1{{else}}col-md-2{{/if}} text_align_c">Место</th>
+        <th class="{{#if tableFull}}col-md-5{{else}}col-md-8{{/if}}">Клуб</th>
         <th class="col-md-1 text_align_c">И</th>
         {{#if tableFull}}
             <th class="col-md-05 text_align_c">В</th>
@@ -11,36 +11,36 @@
             <th class="col-md-05 text_align_c">ГЗ</th>
             <th class="col-md-05 text_align_c">ГП</th>
             <th class="col-md-05 text_align_c">ГР</th>
-            <th class="col-md-2 text_align_r">Форма</th>
+            <th class="col-md-3 text_align_r">Форма</th>
         {{/if}}
         <th class="col-md-1 text_align_c">О</th>
     </tr>
     </thead>
 
     <tbody>
-    {{#each league.table}}
+    {{#each table.teams}}
         <tr class="table__position" data-pos="{{position}}">
             <td class="text_align_c">{{position}}</td>
-            <td class="text_align_c movement">
-                <span class="
-                    {{~#gt previous position}} fa fa-angle-up{{/gt~}}
-                    {{~#lt previous position}} fa fa-angle-down{{/lt~}}
-                    {{~#eq previous position}} fa fa-circle{{/eq~}}
-                    ">
-                </span>
-            </td>
-            <td>{{team}}</td>
-            <td class="text_align_c">{{games}}</td>
+            <!--<td class="text_align_c movement">-->
+                <!--<span class="-->
+                    <!--{{~#gt previous position}} fa fa-angle-up{{/gt~}}-->
+                    <!--{{~#lt previous position}} fa fa-angle-down{{/lt~}}-->
+                    <!--{{~#eq previous position}} fa fa-circle{{/eq~}}-->
+                    <!--">-->
+                <!--</span>-->
+            <!--</td>-->
+            <td>{{name}}</td>
+            <td class="text_align_c">{{played}}</td>
             {{#if ../tableFull}}
-                <td class="text_align_c">{{win}}</td>
+                <td class="text_align_c">{{won}}</td>
                 <td class="text_align_c">{{draw}}</td>
-                <td class="text_align_c">{{loose}}</td>
-                <td class="text_align_c">{{for}}</td>
-                <td class="text_align_c">{{against}}</td>
-                <td class="text_align_c">{{diff}}</td>
+                <td class="text_align_c">{{lost}}</td>
+                <td class="text_align_c">{{scored}}</td>
+                <td class="text_align_c">{{conceded}}</td>
+                <td class="text_align_c">{{sub scored conceded}}</td>
                 <td class="text_align_r">dot dot dot</td>
             {{/if}}
-            <td class="text_align_c">{{points}}</td>
+            <td class="text_align_c">{{score}}</td>
         </tr>
     {{/each}}
     </tbody>

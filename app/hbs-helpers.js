@@ -141,6 +141,14 @@ var helpers = {
         }
 
         return options.inverse(this);
+    },
+
+    inc: function (value, options) {
+        return parseInt(value) + 1;
+    },
+
+    sub: function (value, sub) {
+        return value - sub;
     }
 };
 

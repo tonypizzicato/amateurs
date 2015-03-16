@@ -1,55 +1,5 @@
-<h1>{{league.name}}</h1>
-
 <div class="row clearfix s_mb_20">
     <div class="col-md-8 column">
-        <div class="row clearfix s_mb_20">
-            <div class="col-md-12 column">
-                <div class="tabbable">
-                    {{~#if league.groupsCount ~}}
-                        <ul class="nav nav-tabs">
-                            {{~# each league.groups~}}
-                                <li class="tab__title tab__title_size_{{../league.groupsCount}}{{#eq 0 @index}} active{{/eq}}">
-                                    <a href="#tab-table" data-toggle="tab">Группа {{name}}</a>
-                                </li>
-                            {{~/each~}}
-                        </ul>
-                        <div class="tab-content">
-                            {{~# each league.groups~}}
-                                <div class="tab-pane{{#eq 0 @index}} active{{/eq}}" id="tab-table">
-                                    <div class="panel s_m_0">
-                                        <div class="panel__body s_p_0 s_pb_5">
-                                            {{$ 'table' this tableFull=true league=this}}
-                                        </div>
-                                    </div>
-                                </div>
-                            {{~/each~}}
-                        </div>
-                    {{~else~}}
-                        <ul class="nav nav-tabs">
-                            <li class="tab__title tab__title_size_full active">
-                                <a href="#tab-table" data-toggle="tab">Таблица</a>
-                            </li>
-                        </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="tab-table">
-                                <div class="panel s_m_0">
-                                    <div class="panel__body s_p_0 s_pb_5">
-                                        {{$ 'table' this tableFull=false league=league}}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    {{~/if~}}
-                </div>
-                <div class="link_type_full">
-                    <span class="text_color_orange">Полная таблица</span>
-                            <span class="pull-right">
-                                <a href="/leagues/{{league.slug}}/table"><i class="fa fa-arrow-circle-o-right"></i></a>
-                            </span>
-                </div>
-            </div>
-        </div>
-
 
         <div class="row clearfix s_mb_20">
             <div class="col-md-12 column">
@@ -73,17 +23,17 @@
                                 </div>
                             {{~/each~}}
                         </div>
-                        {{~else~}}
+                    {{~else~}}
                         <ul class="nav nav-tabs">
                             <li class="tab__title tab__title_size_full active">
-                                <a href="#tab-table" data-toggle="tab">Таблица</a>
+                                <a href="#tab-table" data-toggle="tab">{{tournament.name}}</a>
                             </li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="tab-table">
                                 <div class="panel s_m_0">
                                     <div class="panel__body s_p_0 s_pb_5">
-                                        {{$ 'chess' this tableFull=true league=league}}
+                                        {{$ 'table' this tableFull=true table=globals.table}}
                                     </div>
                                 </div>
                             </div>
@@ -162,28 +112,6 @@
     </div>
     <div class="col-md-4 column">
         <div class="panel s_m_0">
-            <div class="panel-body">
-                <form role="form" class="form form_type_signin">
-                    <div class="form-group form-group_icon_left">
-                        <i class="fa fa-user"></i>
-                        <input type="email" class="form-control" id="signin-email" placeholder="myname@amateurs.io">
-                    </div>
-                    <div class="form-group form-group_icon_left">
-                        <i class="fa fa-key"></i>
-                        <input type="password" class="form-control" id="signin-password" placeholder="password">
-                    </div>
-                    <button type="submit" class="btn btn-default">Войти</button>
-                </form>
-            </div>
-        </div>
-        <div class="link_type_full s_mb_20">
-            <span class="text_color_orange">Регистрация</span>
-            <span class="pull-right">
-                <a href="/signup"><i class="fa fa-arrow-circle-o-right"></i></a>
-            </span>
-        </div>
-
-        <div class="panel s_m_0">
             <div class="panel__header">
                 <i class="fa fa-calendar s_mr_10"></i> Последние матчи
             </div>
@@ -220,12 +148,6 @@
             <div class="panel__body">
                 {{> contacts}}
             </div>
-        </div>
-        <div class="link_type_full s_mb_10">
-            <span class="text_color_orange">Все контакты</span>
-            <span class="pull-right">
-                <a href="/contacts"><i class="fa fa-arrow-circle-o-right"></i></a>
-            </span>
         </div>
     </div>
 </div>

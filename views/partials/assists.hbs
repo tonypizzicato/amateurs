@@ -8,11 +8,11 @@
     </thead>
 
     <tbody>
-    {{#each player_stats.assists}}
+    {{#each this}}
         <tr>
-            <td class="text_align_c">{{number}}</td>
-            <td class="text_align_c">{{player}}</td>
-            <td class="text_align_c">{{passes}}</td>
+            <td class="text_align_c">{{inc @index}}</td>
+            <td class="text_align_c">{{name}}</td>
+            <td class="text_align_c">{{assists}}</td>
         </tr>
     {{/each}}
     </tbody>
