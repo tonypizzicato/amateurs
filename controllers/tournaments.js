@@ -136,7 +136,7 @@ module.exports = {
                 if (err) {
                     return next();
                 }
-                console.log(req.params.name);
+                console.log('contacts', req.params.name);
 
                 res.locals.globals.contacts = docs;
 
@@ -179,10 +179,10 @@ module.exports = {
                 });
 
                 var recent = games.filter(function (item) {
-                    return item.dateTime.isBefore(moment()) && item.state == 'CLOSED';
+                    return item.dateTime && item.dateTime.isBefore(moment()) && item.state == 'CLOSED';
                 });
                 var comming = games.filter(function (item) {
-                    return (item.dateTime.isAfter(moment()) || item.dateTime.isSame(moment())) && item.state != 'CLOSED';
+                    return item.dateTime && (item.dateTime.isAfter(moment()) || item.dateTime.isSame(moment())) && item.state != 'CLOSED';
                 });
 
                 recent = recent.slice(-7);

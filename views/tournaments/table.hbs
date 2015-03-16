@@ -111,43 +111,56 @@
         </div>
     </div>
     <div class="col-md-4 column">
-        <div class="panel s_m_0">
-            <div class="panel__header">
-                <i class="fa fa-calendar s_mr_10"></i> Последние матчи
+
+        {{#if globals.recent.length}}
+            <div class="panel panel_type_fixture s_m_0">
+                <div class="panel__header">
+                    <i class="fa fa-calendar s_mr_10"></i> Последние матчи
+                </div>
+                <div class="panel__body">
+                    {{$ 'fixtures' fixture=globals.recent }}
+                </div>
             </div>
-            <div class="panel__body">
-                {{$ 'fixtures' fixture=globals.recent }}
-            </div>
-        </div>
-        <div class="link_type_full s_mb_10">
-            <span class="text_color_orange">Календарь</span>
+            <div class="link_type_full s_mb_10">
+                <span class="text_color_orange">Календарь</span>
             <span class="pull-right">
-                <a href="/leagues/{{league.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
+                <a href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
             </span>
-        </div>
-        <div class="panel s_m_0">
-            <div class="panel__header">
-                <i class="fa fa-calendar s_mr_10"></i> Ближайшие матчи
             </div>
-            <div class="panel__body">
-                {{$ 'fixtures' fixture=globals.comming }}
+        {{/if}}
+        {{#if globals.comming.length}}
+            <div class="panel s_m_0">
+                <div class="panel__header">
+                    <i class="fa fa-calendar s_mr_10"></i> Ближайшие матчи
+                </div>
+                <div class="panel__body">
+                    {{$ 'fixtures' fixture=globals.comming }}
+                </div>
             </div>
-        </div>
-        <div class="link_type_full s_mb_10">
-            <span class="text_color_orange">Календарь</span>
+            <div class="link_type_full s_mb_10">
+                <span class="text_color_orange">Календарь</span>
             <span class="pull-right">
-                <a href="/leagues/{{league.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
+                <a href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
             </span>
-        </div>
+            </div>
+        {{/if}}
 
 
-        <div class="panel s_m_0">
-            <div class="panel__header">
-                <i class="fa fa-phone text_size_16 s_mr_10"></i> Контакты
+        {{#if globals.contacts.length}}
+            <div class="panel s_m_0">
+                <div class="panel__header">
+                    <i class="fa fa-phone text_size_16 s_mr_10"></i> Контакты
+                </div>
+                <div class="panel__body">
+                    {{> contacts}}
+                </div>
             </div>
-            <div class="panel__body">
-                {{> contacts}}
+            <div class="link_type_full s_mb_10">
+                <span class="text_color_orange">Все контакты</span>
+                <span class="pull-right">
+                    <a href="/contacts"><i class="fa fa-arrow-circle-o-right"></i></a>
+                </span>
             </div>
-        </div>
+        {{/if}}
     </div>
 </div>
