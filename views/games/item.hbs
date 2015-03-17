@@ -1,0 +1,344 @@
+<div class="row clearfix s_mb_20">
+    <div class="col-md-8 column">
+
+        <div class="row">
+            <div class="column col-md-12">
+                <div class="panel panel_type_transparent">
+                    <div class="panel__body s_p_0">
+                        <div class="row match">
+                            <div class="col-md-4 text_align_r">
+                                <img class="pull-left" src="http://amateurs.io/api/img/teams/{{game.teams.[0].name}}.png" width="64">
+
+                                <p class="text_size_32 text_weight_light s_mb_20">{{game.score.ft.[0]}}</p>
+
+                                <p class="text_color_orange text_size_16">{{game.teams.[0].name}}</p>
+
+                                <ul>
+                                    {{#each game.events}}
+                                        {{#eq type 'SCORED_H'}}
+                                            <li class="text_size_12 text_color_light text_align_r">{{firstField.name}} {{minute}}'</li>
+                                        {{/eq}}
+                                    {{/each}}
+                                </ul>
+                            </div>
+                            <div class="col-md-4 text_align_c">
+                                <div class="match__time s_mb_10{{#gt game.time 40}} gt-50{{/gt}}">
+                                    <div class="ppc-progress">
+                                        <div class="ppc-progress-fill"
+                                             style="transform:  rotate({{game.timeGoneDegrees}}deg); -webkit-transform: rotate({{game.timeGoneDegrees}}deg);"></div>
+                                    </div>
+                                    <div class="ppc-percents">
+                                        <div class="pcc-percents-wrapper">
+                                            {{#eq game.state 'CLOSED'}}
+                                                <span class="match__time_value match__time_value_finished">
+                                                    <i class="flaticon flaticon-black188"></i><br>Матч завершен
+                                                </span>
+                                            {{else}}
+                                                {{#if game.timeGone}}
+                                                    <span class="match__time_value match__time_value_minutes">{{game.timeGone}}</span>
+                                                {{else}}
+                                                    <span class="match__time_value">&mdash;</span>
+                                                {{/if}}
+                                            {{/eq}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="s_m_0 text_color_muted">{{dateTimeFull game.dateTime}}</p>
+
+                                <p class="s_m_0 text_color_muted">Стадион: {{game.placeName}}</p>
+
+                                <p class="text_color_muted">Судья: {{game.refereeName}}</p>
+                            </div>
+                            <div class="col-md-4 text_align_l">
+                                <img class="pull-right" src="http://amateurs.io/api/img/teams/{{game.teams.[1].name}}.png" width="64">
+
+                                <p class="text_size_32 text_weight_light s_mb_20">{{game.score.ft.[1]}}</p>
+
+                                <p class="text_color_orange text_size_16">{{game.teams.[1].name}}</p>
+
+                                <ul>
+                                    {{#each game.events}}
+                                        {{#eq type 'SCORED_A'}}
+                                            <li class="text_size_12 text_color_light text_align_l">{{minute}}' {{firstField.name}}</li>
+                                        {{/eq}}
+                                    {{/each}}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row s_mb_20">
+            <div class="column col-md-12">
+                <div class="tabbable" id="tabs-992576">
+                    <ul class="nav nav-tabs">
+                        <li class="tab__title tab__title_size_half active">
+                            <a href="#tab-lineups" data-toggle="tab">Составы</a>
+                        </li>
+                        <li class="tab__title tab__title_size_half">
+                            <a href="#tab-events" data-toggle="tab">События</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab-lineups">
+                            <div class="row">
+                                <div class="column col-md-6">
+                                    {{#each game.players.[0]}}
+                                        <div class="row">
+                                            <div class="column col-md-12 s_pr_0">
+                                                <div class="match-lineup__number column col-md-2 text_color_orange">
+                                                    {{#if number}}{{~number~}}{{else}}&mdash;{{/if}}
+                                                </div>
+                                                <div class="match-lineup__player column col-md-8">
+                                                    {{~name~}}
+                                                </div>
+                                                <div class="match-lineup__player column col-md-2 text_align_c">
+                                                    {{~position~}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {{/each}}
+                                </div>
+                                <div class="column col-md-6">
+                                    {{#each game.players.[1]}}
+                                        <div class="row">
+                                            <div class="column col-md-12 s_pr_0">
+                                                <div class="match-lineup__number column col-md-2 text_color_orange">
+                                                     {{#if number}}{{~number~}}{{else}}&mdash;{{/if}}
+                                                </div>
+                                                <div class="match-lineup__player column col-md-8">
+                                                    {{~name~}}
+                                                </div>
+                                                <div class="match-lineup__player column col-md-2 text_align_c">
+                                                    {{~position~}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {{/each}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-events">
+                            {{#each game.events}}
+                                <div class="row">
+                                    <div class="column col-md-2">
+                                        <div class="match-events__time text_align_r">
+                                            {{#eq type 'SCORED_H'}}
+                                                <span class="icon_type_event text_color_orange">Гол!</span>
+                                            {{/eq}}
+                                            {{#eq type 'SCORED_A'}}
+                                                <span class="icon_type_event text_color_orange">Гол!</span>
+                                            {{/eq}}
+                                            {{#eq type 'YELLOW_H'}}
+                                                <i class="icon_type_event icon-yellow"></i>
+                                            {{/eq}}
+                                            {{#eq type 'YELLOW_A'}}
+                                                <i class="icon_type_event icon-yellow"></i>
+                                            {{/eq}}
+                                            {{#eq type 'RED_H'}}
+                                                <i class="icon_type_event icon-red"></i>
+                                            {{/eq}}
+                                            {{#eq type 'RED_A'}}
+                                                <i class="icon_type_event icon-red"></i>
+                                            {{/eq}}
+                                            {{#eq type 'pen'}}
+                                                <i class="icon_type_event icon-penalty"></i>
+                                            {{/eq}}
+                                            {{#eq type 'cor'}}
+                                                <i class="icon_type_event icon-corner"></i>
+                                            {{/eq}}
+                                            {{#eq type 'inj'}}
+                                                <i class="icon_type_event icon-injury"></i>
+                                            {{/eq}}
+                                            {{minute}}'
+                                        </div>
+                                    </div>
+                                    <div class="column col-md-10">
+                                        <div class="match-events__description pull-right">
+                                            {{#if firstField.number}}<span class="text_color_orange">{{firstField.number}}</span>.{{/if}}
+                                            {{firstField.name}}
+                                        </div>
+                                    </div>
+                                </div>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row s_mb_20">
+            <div class="column col-md-12">
+                <div class="tabbable" id="tabs-992576">
+                    <ul class="nav nav-tabs">
+                        <li class="tab__title tab__title_size_half active">
+                            <a href="#tab-photo" data-toggle="tab">Фотоотчет</a>
+                        </li>
+                        <li class="tab__title tab__title_size_half">
+                            <a href="#tab-review" data-toggle="tab">Обзор матча</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab-photo">
+
+                            <div class="panel panel_type_photo s_m_0">
+                                <div class="panel__body">
+                                    <div class="row s_mb_10">
+                                        <div class="column col-md-2"><img
+                                                src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
+                                        <div class="column col-md-2"><img
+                                                src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
+                                        <div class="column col-md-2"><img
+                                                src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
+                                        <div class="column col-md-2"><img
+                                                src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
+                                        <div class="column col-md-2"><img
+                                                src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
+                                        <div class="column col-md-2"><img
+                                                src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="column col-md-2"><img
+                                                src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
+                                        <div class="column col-md-2"><img
+                                                src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
+                                        <div class="column col-md-2"><img
+                                                src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
+                                        <div class="column col-md-2"><img
+                                                src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
+                                        <div class="column col-md-2"><img
+                                                src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
+                                        <div class="column col-md-2"><img
+                                                src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="link_type_full">
+                                <span class="text_color_orange">Смотреть все</span>
+                                    <span class="pull-right">
+                                        <a href="/league/{{league.short}}/photo"><i class="fa fa-arrow-circle-o-right"></i></a>
+                                    </span>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-review">
+
+                            <div class="panel panel_type_media s_m_0">
+                                <div class="panel__body">
+                                    <div class="row">
+                                        <div class="col-md-7">
+                                            <div class="media__item-wrapper">
+                                                <img class="media__item" alt="400x300"
+                                                     src="https://pp.vk.me/c619622/v619622188/4f4b/ChZYfzg9uZA.jpg"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5 s_pl_0">
+                                            <h4>Вест Хэм Юнайтед <span class="text_color_orange pull-right">4</span></h4>
+                                            <h4>Вульверхэмптон <span class="text_color_orange pull-right">3</span></h4>
+
+                                            <p class="text_size_11 s_mb_3"><i class="fa fa-calendar s_mr_5"></i> 03.11.2014 15:40</p>
+
+                                            <p class="text_size_11"><i class="fa fa-location-arrow s_mr_5"></i> Прага</p>
+
+                                            <p>
+                                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                                                been
+                                                the industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                                                galley
+                                                of type and scrambled it to make a type specimen book. It has survived not only five
+                                                centuries,
+                                                but also the leap into electronic typesetting, remaining essentially unchanged.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="link_type_full">
+                                <span class="text_color_orange">Читать полностью</span>
+                                <span class="pull-right">
+                                    <a href="/league/{{league.short}}/table"><i class="fa fa-arrow-circle-o-right"></i></a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SIDEBAR -->
+
+    <div class="col-md-4 column">
+
+        {{#if globals.table}}
+            <div class="panel s_m_0">
+                <div class="panel__header">
+                    <i class="fa fa-list-ol s_mr_10"></i> Таблица
+                </div>
+                <div class="panel__body">
+                    {{> 'table' table=globals.table tableFull=false}}
+                </div>
+            </div>
+            <div class="link_type_full s_mb_10">
+                <span class="text_color_orange">Полная таблица</span>
+                <span class="pull-right">
+                    <a href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/table">
+                        <i class="fa fa-arrow-circle-o-right"></i>
+                    </a>
+                </span>
+            </div>
+        {{/if}}
+        {{#if globals.recent.length}}
+            <div class="panel panel_type_fixture s_m_0">
+                <div class="panel__header">
+                    <i class="fa fa-calendar s_mr_10"></i> Последние матчи
+                </div>
+                <div class="panel__body">
+                    {{$ 'fixtures' fixture=globals.recent }}
+                </div>
+            </div>
+            <div class="link_type_full s_mb_10">
+                <span class="text_color_orange">Календарь</span>
+            <span class="pull-right">
+                <a href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
+            </span>
+            </div>
+        {{/if}}
+        {{#if globals.comming.length}}
+            <div class="panel s_m_0">
+                <div class="panel__header">
+                    <i class="fa fa-calendar s_mr_10"></i> Ближайшие матчи
+                </div>
+                <div class="panel__body">
+                    {{$ 'fixtures' fixture=globals.comming }}
+                </div>
+            </div>
+            <div class="link_type_full s_mb_10">
+                <span class="text_color_orange">Календарь</span>
+            <span class="pull-right">
+                <a href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
+            </span>
+            </div>
+        {{/if}}
+
+
+        {{#if globals.contacts.length}}
+            <div class="panel s_m_0">
+                <div class="panel__header">
+                    <i class="fa fa-phone text_size_16 s_mr_10"></i> Контакты
+                </div>
+                <div class="panel__body">
+                    {{> contacts}}
+                </div>
+            </div>
+            <div class="link_type_full s_mb_10">
+                <span class="text_color_orange">Все контакты</span>
+                <span class="pull-right">
+                    <a href="/contacts"><i class="fa fa-arrow-circle-o-right"></i></a>
+                </span>
+            </div>
+        {{/if}}
+    </div>
+</div>

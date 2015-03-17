@@ -6,6 +6,7 @@ var express          = require('express'),
     index            = require('../controllers/index'),
     leagues          = require('../controllers/leagues'),
     tournaments      = require('../controllers/tournaments'),
+    games            = require('../controllers/games'),
     countries        = require('../controllers/countries'),
     fields           = require('../controllers/fields'),
     matches          = require('../controllers/matches'),
@@ -107,7 +108,7 @@ module.exports.initialize = function (app) {
     app.get('/:league/tournaments/:name', tournaments.globals, tournaments.item);
     app.get('/:league/tournaments/:name/fixture', tournaments.globals, tournaments.fixture);
     app.get('/:league/tournaments/:name/table', tournaments.globals, tournaments.table);
-    app.get('/:league/tournaments/:name/match/:home-:away', tournaments.globals, matches.match);
+    app.get('/:league/tournaments/:name/matches/:id', tournaments.globals, games.item);
 
     app.get('/:league/fields', fields.fields);
     app.get('/:league/fields/:name', fields.fields);

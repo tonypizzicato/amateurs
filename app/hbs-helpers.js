@@ -1,6 +1,7 @@
-var hbs    = require('hbs'),
-    _      = require('underscore'),
-    moment = require('moment-timezone');
+var hbs     = require('hbs'),
+    _       = require('underscore'),
+    moment  = require('moment-timezone'),
+    slugify = require('transliteration').slugify;
 
 
 var helpers = {
@@ -127,6 +128,10 @@ var helpers = {
         return dateFn(date, 'DD.MM HH:mm');
     },
 
+    dateTimeFull: function (date) {
+        return dateFn(date, 'LLLL');
+    },
+
     contains: function (string, needle) {
         if (string.toLowerCase().indexOf(needle.toLowerCase()) === -1) {
             return options.fn(this);
@@ -149,6 +154,10 @@ var helpers = {
 
     sub: function (value, sub) {
         return value - sub;
+    },
+
+    slug: function (value) {
+        return slugify(value);
     }
 };
 

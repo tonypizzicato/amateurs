@@ -17,7 +17,6 @@ module.exports = {
     },
 
     item: function (req, res, next) {
-        console.log('item');
         TournamentModel.findOne({slug: req.params.name}, function (err, doc) {
             if (err) {
                 return next(err);
@@ -31,9 +30,6 @@ module.exports = {
             var client = new RestClient(remoteConfig.authOptions);
             client.get(remoteConfig.url + '/stats/players_stats?tournamentId=' + doc.remoteId, function (stats) {
                 stats = JSON.parse(stats);
-                console.dir(stats);
-
-                console.log('render');
 
                 var stat = {
                     goals:   [],
@@ -50,15 +46,12 @@ module.exports = {
                 });
                 stat.assists = stats.slice(0, 10);
 
-                console.dir(stat.assists);
-
                 res.render('tournaments/item', {tournament: doc, stats: stat});
             });
         });
     },
 
     table: function (req, res) {
-        console.log('table');
         TournamentModel.findOne({slug: req.params.name}, function (err, doc) {
             if (err) {
                 return next(err);
@@ -73,7 +66,6 @@ module.exports = {
     },
 
     fixture: function (req, res) {
-        console.log('fixture');
         TournamentModel.findOne({slug: req.params.name}, function (err, doc) {
             if (err) {
                 return next(err);

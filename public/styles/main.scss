@@ -68,6 +68,10 @@ a:focus {
     color: #555;
 }
 
+.text_color_light {
+    color: #95a5a6;
+}
+
 footer {
     text-align: center;
 }
@@ -1097,7 +1101,23 @@ $size: 200px;
     }
 }
 
-.match__time span:after {
+.match__time .match__time_value.match__time_value_finished {
+    font-size: 18px;
+}
+
+.match__time .match__time_value.match__time_value_finished i:before {
+    font-size:   96px;
+    margin-left: 0;
+    line-height: .1;
+    position:    relative;
+    top:         10px;
+}
+
+.match__time .match__time_value.match__time_value_minutes {
+    font-size: 36px;
+}
+
+.match__time .match__time_value.match__time_value_minutes:after {
     content:  "'";
     position: absolute;
 }
