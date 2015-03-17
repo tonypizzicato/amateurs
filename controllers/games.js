@@ -48,7 +48,7 @@ module.exports = {
                     });
 
                     return item;
-                })
+                });
                 res.render('games/item', {tournament: doc, game: game});
             });
         });

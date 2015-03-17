@@ -13,15 +13,13 @@
                 </span>
             </td>
             </td>
-            <td class="col-md-2 text_align_c">
-                {{#if score}}
-                    <a class="" href="/{{../../globals.league.slug}}/tournaments/{{../../tournament.slug}}/matches/{{_id}}">
-                        <span class="fixture__score">{{score.ft.[0]}}</span> : <span class="fixture__score">{{score.ft.[1]}}</span>
-                    </a>
-                {{else}}
-                    <span>&mdash;:&mdash;</span>
-                {{/if}}
-            </td>
+            {{#if score}}
+                <td class="fixture__score col-md-1 s_pr_0 text_align_c">
+                    <a href="/{{../../globals.league.slug}}/tournaments/{{../../globals.tournament.slug}}/matches/{{_id}}">{{score.ft.[0]}}:{{score.ft.[1]}}</a>
+                </td>
+            {{else}}
+                <td colspan="3">&mdash;:&mdash;</td>
+            {{/if}}
         </tr>
     {{/each}}
     </tbody>

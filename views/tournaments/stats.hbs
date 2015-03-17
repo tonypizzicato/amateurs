@@ -1,57 +1,37 @@
 <div class="row clearfix s_mb_20">
     <div class="col-md-8 column">
-
-        {{#each fixture}}
-            <div id="round-{{@key}}" class="row">
-                <div class="column col-md-12">
-                    <div class="panel panel_type_fixture">
-                        <div class="panel__header">
-                            <i class="fa fa-calendar-o text_size_18 s_mr_10 s_valign_m"></i><span class="s_valign_m">{{@key}} Тур</span>
-                        </div>
-                        <div class="panel__body s_pt_10 s_pl_10 s_pr_10 s_pb_10">
-                            <table class="table s_m_0">
-                                <tbody>
-                                {{#each this}}
-                                    <tr>
-                                        <td class="fixture__time col-md-3{{#if time}} text_color_muted{{/if}}">{{date dateTime}} {{time}}</td>
-                                        <td class="fixture__team col-md-4 text_align_r s_pr_0{{~#gt score.ft.[0] score.ft.[1]}} fixture__winner{{/gt~}}{{~#lt score.ft.[0] score.ft.[1]}} fixture__looser{{/lt~}}">
-                                            {{~teams.[0].name~}}
-                                        <td class="text_align_c col-md-05"> v</td>
-                                        <td class="fixture__team col-md-4 text_align_l s_pl_0{{~#lt score.ft.[0] score.ft.[1]}} fixture__winner{{/lt~}} {{~#gt score.ft.[0] score.ft.[1]}} fixture__looser{{/gt~}}">
-                                            {{~teams.[1].name~}}
-                                        </td>
-                                        </td>
-                                        {{#if score}}
-                                            <td class="fixture__score col-md-2 s_pr_0 text_align_c">
-                                                <a href="/{{../../../globals.league.slug}}/tournaments/{{../../../globals.tournament.slug}}/matches/{{_id}}">
-                                                    {{score.ft.[0]}}:{{score.ft.[1]}}
-                                                </a>
-                                            </td>
-                                        {{else}}
-                                            <td colspan="3">&mdash;:&mdash;</td>
-                                        {{/if}}
-                                    </tr>
-                                {{/each}}
-                                </tbody>
-                            </table>
+        <div class="row clearfix s_mb_20">
+            <div class="col-md-12 column">
+                <div class="tabbable">
+                    <ul class="nav nav-tabs">
+                        <li class="tab__title tab__title_size_full active">
+                            <a href="#tab-table" data-toggle="tab">{{tournament.name}}</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab-table">
+                            <div class="panel s_m_0">
+                                <div class="panel__body s_p_0 s_pb_5">
+                                    {{$ 'stats' stats=stats}}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        {{/each}}
+        </div>
     </div>
 
     <!-- SIDEBAR -->
 
     <div class="col-md-4 column">
-
         {{#if globals.table}}
             <div class="panel s_m_0">
                 <div class="panel__header">
                     <i class="fa fa-list-ol s_mr_10"></i> Таблица
                 </div>
                 <div class="panel__body">
-                    {{> 'table' table=globals.table tableFull=false hideHeader=true}}
+                    {{$ 'table' table=globals.table tableFull=false hideHeader=true}}
                 </div>
             </div>
             <div class="link_type_full s_mb_10">
@@ -61,7 +41,6 @@
                 </span>
             </div>
         {{/if}}
-
         {{#if globals.recent.length}}
             <div class="panel panel_type_fixture s_m_0">
                 <div class="panel__header">
@@ -94,8 +73,6 @@
             </span>
             </div>
         {{/if}}
-
-
         {{#if globals.contacts.length}}
             <div class="panel s_m_0">
                 <div class="panel__header">

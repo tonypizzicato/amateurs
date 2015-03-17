@@ -156,8 +156,12 @@ var helpers = {
         return value - sub;
     },
 
-    slug: function (value) {
+    slugify: function (value) {
         return slugify(value);
+    },
+
+    add: function (value, add) {
+        return value + add;
     }
 };
 

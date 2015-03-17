@@ -4,7 +4,8 @@ var moment          = require('moment'),
     RestClient      = require('node-rest-client').Client,
     TournamentModel = require('../models/tournament'),
     ContactModel    = require('../models/contact'),
-    remoteConfig    = require('../config/tinyapi');
+    remoteConfig    = require('../config/tinyapi'),
+    Promise         = require('promise');
 
 module.exports = {
     list: function (req, res, next) {
@@ -65,6 +66,30 @@ module.exports = {
         });
     },
 
+    stats: function (req, res) {
+        console.log('stats start');
+        TournamentModel.findOne({slug: req.params.name}, function (err, doc) {
+            if (err) {
+                return next(err);
+            }
+            if (!doc) {
+                res.status(404);
+                return next(null);
+            }
+
+            var client = new RestClient(remoteConfig.authOptions);
+            client.get(remoteConfig.url + '/stats/players_stats?tournamentId=' + doc.remoteId, function (stats) {
+                stats = JSON.parse(stats);
+
+                stats = stats.sort(function (a, b) {
+                    return a.points >= b.points ? -1 : 1;
+                });
+                console.log('stats end');
+                res.render('tournaments/stats', {tournament: doc, stats: stats});
+            });
+        });
+    },
+
     fixture: function (req, res) {
         TournamentModel.findOne({slug: req.params.name}, function (err, doc) {
             if (err) {
@@ -115,74 +140,90 @@ module.exports = {
     },
 
     globals: function (req, res, next) {
-        console.log('all');
+        var tournament;
         TournamentModel.findOne({slug: req.params.name}, function (err, doc) {
             if (err) {
                 return next(err);
             }
+            tournament = doc;
             var client = new RestClient(remoteConfig.authOptions);
 
-
             /* Contacts widget data */
-            ContactModel.find({tournaments: doc._id}).sort({sort: 1}).lean().exec(function (err, docs) {
-                if (err) {
-                    return next();
-                }
-                console.log('contacts', req.params.name);
+            var contacts = new Promise(function (resolve, reject) {
+                ContactModel.find({tournaments: doc._id}).sort({sort: 1}).lean().exec(function (err, docs) {
+                    if (err) {
+                        return reject(err);
+                    }
 
-                res.locals.globals.contacts = docs;
-
+                    resolve(docs);
+                });
             });
 
             /* Table */
-            client.get(remoteConfig.url + '/stats/table?tournamentId=' + doc.remoteId, function (table) {
-                table = JSON.parse(table);
-                res.locals.globals.table = table;
+            var table = new Promise(function (resolve, reject) {
+                client.get(remoteConfig.url + '/stats/table?tournamentId=' + doc.remoteId, function (table) {
+                    table = JSON.parse(table);
+                    table.temas = table.teams.map(function (item) {
+                        item.form = item.form.slice(-5);
+                        return item;
+                    });
+
+                    resolve(table);
+                });
             });
 
-            client.get(remoteConfig.url + '/games?tournamentId=' + doc.remoteId, function (games) {
+            /* Recent/comming games widget */
+            var games = new Promise(function (resolve, reject) {
+                client.get(remoteConfig.url + '/games?tournamentId=' + doc.remoteId, function (games) {
+                    games = JSON.parse(games);
 
-                /* Recent/comming games widget */
-                games = JSON.parse(games);
+                    games = games.map(function (item) {
+                        item.dateTime = item.date ? moment(item.date + ' ' + item.time, 'DD/MM/YYYY HH:mm') : null;
+                        return item;
+                    });
 
-                games = games.map(function (item) {
-                    item.dateTime = item.date ? moment(item.date + ' ' + item.time, 'DD/MM/YYYY HH:mm') : null;
-                    return item;
+                    // TODO: replace with dateTime
+                    games.sort(function (a, b) {
+                        if (a.dateTime && a.dateTime.isBefore(b.dateTime)) {
+                            return -1;
+                        } else {
+                            return 1;
+                        }
+                    });
+
+                    var sortedGames = games.slice(0);
+                    sortedGames.sort(function (a, b) {
+                        if (a.tourNumber < b.tourNumber) {
+                            return -1;
+                        } else if (a.dateTime && a.dateTime.isBefore(b.dateTime)) {
+                            return -1;
+                        } else {
+                            return 1;
+                        }
+                    });
+
+                    var recent = games.filter(function (item) {
+                        return item.dateTime && item.dateTime.isBefore(moment()) && item.state == 'CLOSED';
+                    });
+                    var comming = games.filter(function (item) {
+                        return item.dateTime && (item.dateTime.isAfter(moment()) || item.dateTime.isSame(moment())) && item.state != 'CLOSED';
+                    });
+
+                    recent = recent.slice(-7);
+                    comming = comming.slice(0, 7);
+
+                    resolve({recent: recent, comming: comming});
                 });
+            });
 
-                // TODO: replace with dateTime
-                games.sort(function (a, b) {
-                    if (a.dateTime && a.dateTime.isBefore(b.dateTime)) {
-                        return -1;
-                    } else {
-                        return 1;
-                    }
-                });
+            Promise.all([games, table, contacts]).then(function (result) {
+                res.locals.globals.tournament = tournament;
+                res.locals.globals.recent = result[0].recent;
+                res.locals.globals.comming = result[0].comming;
+                res.locals.globals.table = result[1];
+                res.locals.globals.contacts = result[2];
 
-                var sortedGames = games.slice(0);
-                sortedGames.sort(function (a, b) {
-                    if (a.tourNumber < b.tourNumber) {
-                        return -1;
-                    } else if (a.dateTime && a.dateTime.isBefore(b.dateTime)) {
-                        return -1;
-                    } else {
-                        return 1;
-                    }
-                });
-
-                var recent = games.filter(function (item) {
-                    return item.dateTime && item.dateTime.isBefore(moment()) && item.state == 'CLOSED';
-                });
-                var comming = games.filter(function (item) {
-                    return item.dateTime && (item.dateTime.isAfter(moment()) || item.dateTime.isSame(moment())) && item.state != 'CLOSED';
-                });
-
-                recent = recent.slice(-7);
-                comming = comming.slice(0, 7);
-                res.locals.globals.recent = recent;
-                res.locals.globals.comming = comming;
-
-
+                console.log('globals end');
                 next();
             });
         });

@@ -10,6 +10,7 @@ var express          = require('express'),
     countries        = require('../controllers/countries'),
     fields           = require('../controllers/fields'),
     matches          = require('../controllers/matches'),
+    teams            = require('../controllers/teams'),
     news             = require('../controllers/news'),
 
     apiNews          = require('../controllers/api/news'),
@@ -109,6 +110,7 @@ module.exports.initialize = function (app) {
     app.get('/:league/tournaments/:name/fixture', tournaments.globals, tournaments.fixture);
     app.get('/:league/tournaments/:name/table', tournaments.globals, tournaments.table);
     app.get('/:league/tournaments/:name/matches/:id', tournaments.globals, games.item);
+    app.get('/:league/tournaments/:name/stats', tournaments.globals, tournaments.stats);
 
     app.get('/:league/fields', fields.fields);
     app.get('/:league/fields/:name', fields.fields);
