@@ -64,7 +64,7 @@ var api = {
         var doc = req.body;
         doc.author = doc.author ? doc.author : req.user.username;
 
-        newsModel.update({_id: req.param('id')}, {$set: doc}, function (err, count) {
+        newsModel.update({_id: req.params.id}, {$set: doc}, function (err, count) {
             if (err) {
                 console.log(err);
                 res.status(500).json({error: err});
@@ -86,7 +86,7 @@ var api = {
     delete: function (req, res, next) {
         console.log('/api/news/:id DELETE handled');
 
-        newsModel.remove({_id: req.param('id')}, function (err, count) {
+        newsModel.remove({_id: req.params.id}, function (err, count) {
             if (err) {
                 res.status(500).json({error: err});
             }
