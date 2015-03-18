@@ -1,0 +1,12 @@
+{{#each globals.contacts}}
+    <div class="contact">
+        <div class="contact__photo" style="background-image: url('{{image}}')"></div>
+        <div class="contact__details">
+            <div class="contact__name">{{name}}</div>
+            <div class="contact__title">{{title}}</div>
+            <div class="contact__phone"><i class="fa fa-inbox text_color_orange s_mr_10"></i>{{email}}</div>
+            <div class="contact__phone"><i class="fa fa-phone text_color_orange s_mr_10"></i>{{phone}}</div>
+            <div class="contact__vk"><i class="fa fa-vk text_color_orange s_mr_10"></i><a href="{{vk.url}}" target="_blank">{{vk.name}}</a></div>
+        </div>
+    </div>
+{{/each}}

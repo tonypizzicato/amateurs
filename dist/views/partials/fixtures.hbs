@@ -1,0 +1,26 @@
+<table class="table s_m_0">
+    <tbody>
+    {{#each fixture}}
+        <tr>
+            <td class="fixture__time col-md-3 text_size_12{{#if score}} text_color_muted{{/if}}">{{dateTimeShort dateTime}}</td>
+            <td class="col-md-7 text_align_l ">
+                <span class="fixture__team s_pr_0{{~#gt score.ft.[0] score.ft.[1]}} fixture__winner{{/gt~}}{{~#lt score.ft.[0] score.ft.[1]}} fixture__looser{{/lt~}}">
+                    {{~teams.[0].name~}}
+                </span>
+                v
+                <span class="fixture__team s_pl_0{{~#lt score.ft.[0] score.ft.[1]}} fixture__winner{{/lt~}} {{~#gt score.ft.[0] score.ft.[1]}} fixture__looser{{/gt~}}">
+                    {{~teams.[1].name~}}
+                </span>
+            </td>
+            </td>
+            {{#if score}}
+                <td class="fixture__score col-md-1 s_pr_0 text_align_c">
+                    <a href="/{{../../globals.league.slug}}/tournaments/{{../../globals.tournament.slug}}/matches/{{_id}}">{{score.ft.[0]}}:{{score.ft.[1]}}</a>
+                </td>
+            {{else}}
+                <td colspan="3">&mdash;:&mdash;</td>
+            {{/if}}
+        </tr>
+    {{/each}}
+    </tbody>
+</table>
