@@ -90,7 +90,7 @@ module.exports.initialize = function (app) {
 
     apiRouter.use(r);
 
-    app.use('/api/site', apiRouter);
+    app.use('/api', apiRouter);
 
     app.get('/', index.index);
 
