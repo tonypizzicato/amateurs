@@ -106,16 +106,16 @@ var api = {
     save: function (req, res, next) {
         console.log('/api/tournaments/:id PUT handled');
 
-        TournamentModel.update({_id: req.param('id')}, {$set: req.body}, function (err, count) {
+        TournamentModel.update({_id: req.params.id}, {$set: req.body}, function (err, count) {
             if (err) {
                 res.status(500).json({error: err});
                 return;
             }
 
             if (req.body.country) {
-                CountryModel.update({tournaments: req.param('id')}, {$pull: {tournaments: req.param('id')}},
+                CountryModel.update({tournaments: req.params.id}, {$pull: {tournaments: req.params.id}},
                     {multi: true}).exec(function () {
-                        CountryModel.findOneAndUpdate({_id: req.body.country}, {$addToSet: {tournaments: req.param('id')}}).exec();
+                        CountryModel.findOneAndUpdate({_id: req.body.country}, {$addToSet: {tournaments: req.params.id}}).exec();
                     });
             }
 
@@ -131,7 +131,7 @@ var api = {
     delete: function (req, res) {
         console.log('/api/tournaments/:id DELETE handled');
 
-        TournamentModel.remove({_id: req.param('id')}, function (err, count) {
+        TournamentModel.remove({_id: req.params.id}, function (err, count) {
             if (err) {
                 res.status(500).json({error: err});
             }
