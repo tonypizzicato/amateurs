@@ -237,9 +237,14 @@ module.exports = (grunt) ->
 
     #uglify2: {} // https://github.com/mishoo/UglifyJS2
         cssmin:
-            options:
-                report: "min"
-                root:   "./public"
+            target:
+                files: [{
+                    expand: true
+                    cwd: '<%= yeoman.tmp %>/styles'
+                    src: ['*.css', '!*.min.css']
+                    dest: '<%= yeoman.dist %>/styles'
+                    ext: '.min.css'
+                }]
 
 
     # Renames files for browser caching purposes
@@ -332,6 +337,15 @@ module.exports = (grunt) ->
                             "images/logos/*.png"
                             "{,*/}*.html"
                             "styles/fonts/{,*/}*.*"
+                        ]
+                    }
+                    {
+                    # server app files
+                        expand: true
+                        dot:    true
+                        cwd:    "<%= yeoman.public %>"
+                        dest:   "<%= yeoman.dist %>"
+                        src:    [
                             "vendor/bootstrap-sass/vendor/assets/fonts/bootstrap/*.*"
                             "vendor/fontawesome/fonts/*.*"
                         ]
@@ -428,9 +442,8 @@ module.exports = (grunt) ->
             dist: [
                 "coffee"
                 "compass"
+                "copy:bodge"
                 "copy:styles"
-                "imagemin"
-                "svgmin"
             ]
 
         "mongo-migrate": # mongo-migrate:create --name some_name
@@ -505,6 +518,8 @@ module.exports = (grunt) ->
         "uglify"
         "copy:dist"
         "modernizr"
+        "imagemin"
+        "svgmin"
         "rev"
         "usemin"
         "htmlmin"
