@@ -5,7 +5,7 @@ var _      = require('underscore'),
 
 var fixtures = [
     {
-        league:  'bpl',
+        league:  'premier-league',
         fixture: [
             {
                 round: 1,
@@ -13,7 +13,7 @@ var fixtures = [
                     {
                         home:  'team 1',
                         away:  'team 3',
-                        date:   '2015-03-17',
+                        date:  '2015-03-17',
                         time:  '12:00',
                         pitch: 'Прага',
                         score: {
@@ -24,14 +24,14 @@ var fixtures = [
                     {
                         home:  'team 2',
                         away:  'team 5',
-                        date:   '2015-03-17',
+                        date:  '2015-03-17',
                         time:  '13:40',
                         pitch: 'Прага'
                     },
                     {
                         home:  'team22 4',
                         away:  'team 6',
-                        date:   '2015-03-17',
+                        date:  '2015-03-17',
                         time:  '12:00',
                         pitch: 'Анохина',
                         score: {
@@ -47,14 +47,14 @@ var fixtures = [
                     {
                         home:  'team 1',
                         away:  'team 6',
-                        date:   '2015-03-24',
+                        date:  '2015-03-24',
                         time:  '12:00',
                         pitch: 'Анохина'
                     },
                     {
                         home:  'team 2',
                         away:  'team 4',
-                        date:   '2015-03-17',
+                        date:  '2015-03-17',
                         time:  '13:40',
                         pitch: 'Прага',
                         score: {
@@ -65,7 +65,7 @@ var fixtures = [
                     {
                         home:  'team 3',
                         away:  'team 5',
-                        date:   '2015-03-24',
+                        date:  '2015-03-24',
                         time:  '12:00',
                         pitch: 'Прага'
                     }
@@ -77,21 +77,21 @@ var fixtures = [
                     {
                         home:  'team 1',
                         away:  'team 2',
-                        date:   '2015-04-01',
+                        date:  '2015-04-01',
                         time:  '12:00',
                         pitch: 'Анохина'
                     },
                     {
                         home:  'team 3',
                         away:  'team 4',
-                        date:   '2015-04-01',
+                        date:  '2015-04-01',
                         time:  '10:40',
                         pitch: 'Прага'
                     },
                     {
                         home:  'team 5',
                         away:  'team 6',
-                        date:   '2015-04-01',
+                        date:  '2015-04-01',
                         time:  '12:20',
                         pitch: 'Прага'
                     }
@@ -102,12 +102,17 @@ var fixtures = [
 ];
 
 function prepare(league) {
-    var games = _.flatten(_.pluck(_.findWhere(fixtures, {league: league}).fixture, 'games'));
+    var league = _.findWhere(fixtures, {league: league});
+    if (league) {
+        var games = _.flatten(_.pluck(league.fixture, 'games'));
 
-    var sorted = _.sortBy(games, function (game) {
-        return moment(game.date + ' ' + game.time).unix();
-    });
-    return sorted;
+        var sorted = _.sortBy(games, function (game) {
+            return moment(game.date + ' ' + game.time).unix();
+        });
+        return sorted;
+    }
+
+    return null;
 };
 
 module.exports = {
@@ -116,13 +121,17 @@ module.exports = {
         var now = moment();
         var sorted = prepare(league);
 
+        if (!sorted) {
+            return null;
+        }
+
         var recent = _.filter(sorted, function (game) {
             var gameTime = moment(game.date + ' ' + game.time);
 
             return (now.isAfter(game.date + ' ' + game.time) || now.isBefore(gameTime.add(80, 'minutes'))) && game.score;
         });
 
-        return _.groupBy(_.last(recent, 5), function(game) {
+        return _.groupBy(_.last(recent, 5), function (game) {
             return game.date;
         });
     },
@@ -130,6 +139,10 @@ module.exports = {
     live: function (league) {
         var now = moment();
         var sorted = prepare(league);
+
+        if (!sorted) {
+            return null;
+        }
 
         var live = _.filter(sorted, function (game) {
             var gameTime = moment(game.date + ' ' + game.time);
@@ -144,13 +157,17 @@ module.exports = {
         var now = moment();
         var sorted = prepare(league);
 
+        if (!sorted) {
+            return null;
+        }
+
         var comming = _.filter(sorted, function (game) {
             var gameTime = moment(game.date + ' ' + game.time);
 
             return now.isBefore(gameTime) && !game.score;
         });
 
-        return _.groupBy(_.last(comming, 5), function(game) {
+        return _.groupBy(_.last(comming, 5), function (game) {
             return game.date;
         });
     }

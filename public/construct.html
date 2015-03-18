@@ -88,8 +88,12 @@
         <p>Разработано <span class="text_color_muted">tony.pizzicato</span> специально для <em>AFL Россия</em></p>
     </footer>
 
+    <!-- build:js({public,.tmp}) /scripts/vendor.js -->
+    <script src="/vendor/requirejs/require.js"></script>
+    <!-- endbuild -->
+
     <!-- build:js({public,.tmp}) /scripts/main.js -->
-    <script data-main="/scripts/main" src="/vendor/requirejs/require.js"></script>
+    <script src="/scripts/main.js"></script>
     <!-- endbuild -->
     <script>
         (function (i, s, o, g, r, a, m) {

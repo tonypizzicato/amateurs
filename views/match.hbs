@@ -15,11 +15,11 @@
 
                                 <ul>
                                     {{#each match.events}}
-                                        {{#equals team ../match.home.short}}
-                                            {{#equals 'goal' ../type}}
+                                        {{#eq team ../match.home.short}}
+                                            {{#eq 'goal' ../type}}
                                                 <li class="text_size_12">{{../time}}' {{../player}}</li>
-                                            {{/equals}}
-                                        {{/equals}}
+                                            {{/eq}}
+                                        {{/eq}}
                                     {{/each}}
                                 </ul>
                             </div>
@@ -50,11 +50,11 @@
 
                                 <ul>
                                     {{#each match.events}}
-                                        {{#equals team ../match.away.short}}
-                                            {{#equals 'goal' ../type}}
+                                        {{#eq team ../match.away.short}}
+                                            {{#eq 'goal' ../type}}
                                                 <li class="text_size_12">{{../time}}' {{../player}}</li>
-                                            {{/equals}}
-                                        {{/equals}}
+                                            {{/eq}}
+                                        {{/eq}}
                                     {{/each}}
                                 </ul>
                             </div>
@@ -119,24 +119,24 @@
                                 <div class="row">
                                     <div class="column col-md-2">
                                         <div class="match-events__time text_align_r">
-                                            {{#equals type 'goal'}}
+                                            {{#eq type 'goal'}}
                                                 <span class="icon_type_event text_color_orange">Гол!</span>
-                                            {{/equals}}
-                                            {{#equals type 'yc'}}
+                                            {{/eq}}
+                                            {{#eq type 'yc'}}
                                                 <i class="icon_type_event icon-yellow"></i>
-                                            {{/equals}}
-                                            {{#equals type 'rc'}}
+                                            {{/eq}}
+                                            {{#eq type 'rc'}}
                                                 <i class="icon_type_event icon-red"></i>
-                                            {{/equals}}
-                                            {{#equals type 'pen'}}
+                                            {{/eq}}
+                                            {{#eq type 'pen'}}
                                                 <i class="icon_type_event icon-penalty"></i>
-                                            {{/equals}}
-                                            {{#equals type 'cor'}}
+                                            {{/eq}}
+                                            {{#eq type 'cor'}}
                                                 <i class="icon_type_event icon-corner"></i>
-                                            {{/equals}}
-                                            {{#equals type 'inj'}}
+                                            {{/eq}}
+                                            {{#eq type 'inj'}}
                                                 <i class="icon_type_event icon-injury"></i>
-                                            {{/equals}}
+                                            {{/eq}}
                                             {{time}}'
                                         </div>
                                     </div>

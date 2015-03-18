@@ -2,7 +2,6 @@
                 #SETTINGS
 \*------------------------------------*/
 
-
 $icon-font-path: "/vendor/bootstrap-sass/vendor/assets/fonts/";
 $fa-font-path: "/vendor/fontawesome/fonts/";
 
@@ -69,6 +68,10 @@ a:focus {
     color: #555;
 }
 
+.text_color_light {
+    color: #95a5a6;
+}
+
 footer {
     text-align: center;
 }
@@ -119,6 +122,10 @@ ul, ol {
     margin-top:       20px;
 }
 
+.navbar-collapse {
+    padding-right: 0;
+}
+
 .nav.navbar-nav.navbar_border_left {
     border-left: 3px solid #101621;
 }
@@ -138,6 +145,10 @@ ul, ol {
     font-size: 18px;
 }
 
+.nav_type_user i {
+    //    font-size: 22px;
+}
+
 .navbar .nav i.fa-angle-down {
     font-weight:  bold;
     margin-right: 3px;
@@ -145,8 +156,8 @@ ul, ol {
 
 .nav .flag__wrapper {
     display:      inline-block;
-    height:       32px;
-    width:        32px;
+    height:       24px;
+    width:        24px;
     margin-right: 10px;
     box-shadow:   0px 1px 1px rgba(255, 255, 255, 0.2), 0 0 8px rgba(0, 0, 0, 0.5) inset;
     background:   none;
@@ -161,19 +172,146 @@ ul, ol {
 }
 
 .nav .dropdown .dropdown-menu {
-    max-height: 0;
-    overflow:   hidden;
-    background: rgba(43, 48, 59, .9);
-    transition: max-height .5s ease-in;
+    display:       block;
+    max-height:    0;
+    overflow:      hidden;
+    padding:       5px 10px;
+    margin-top:    20px;
+    border-radius: 0;
+    opacity:       0;
+    background:    rgba(43, 48, 59, .95);
+    transition:    all .16s ease-in;
 }
 
 .nav .dropdown.open .dropdown-menu {
     max-height: 1000px;
-    transition: max-height .5s ease-out;
+    opacity:    1;
 }
 
-.nav_type_user i {
-    font-size: 22px;
+.nav .dropdown .dropdown-menu li {
+    border-bottom: $navbar-default-link-color;
+}
+
+.nav .dropdown .dropdown-menu a,
+.nav .dropdown .dropdown-menu a:hover,
+.nav .dropdown .dropdown-menu a:active,
+.nav .dropdown .dropdown-menu a:focus {
+    display:    inline-block;
+    color:      $navbar-default-link-color;
+    background: none;
+    padding:    0;
+    width:      auto;
+    transition: all .2s;
+}
+
+.nav .dropdown .dropdown-menu a:hover {
+    display: inline-block;
+    color:   $navbar-default-link-hover-color;
+}
+
+.nav .dropdown .dropdown-menu li {
+    white-space: nowrap;
+}
+
+.nav .dropdown .dropdown-menu li i {
+    margin-left: 4px;
+    float:       right;
+    line-height: 24px;
+}
+
+.nav .dropdown-menu .dropdown-header {
+    color:     $navbar-default-link-active-color;
+    font-size: 18px;
+    padding:   0;
+}
+
+.nav .dropdown-menu .dropdown-header a {
+    color: $navbar-default-link-active-color;
+}
+
+.nav .dropdown .dropdown-menu .divider {
+    background-color: rgba(23, 28, 39, .5);
+}
+
+.nav .dropdown-menu_type_leagues {
+    padding:            20px 10px;
+    width:              0;
+    box-shadow:         none;
+    -webkit-box-shadow: none;
+}
+
+.nav .dropdown.open .dropdown-menu_type_leagues {
+    width: 300px;
+}
+
+.nav .dropdown-menu_type_leagues .dropdown-header {
+    font-size: 14px;
+    padding:   10px;
+}
+
+.nav .dropdown_type_tournaments {
+    position: static !important;
+    width:    100%;
+}
+
+.nav .dropdown-menu_type_tournaments {
+    padding:            20px 0px;
+    width:              100%;
+    box-shadow:         none;
+    -webkit-box-shadow: none;
+}
+
+.nav .dropdown_type_tournaments.open .dropdown-menu_type_tournaments {
+    min-height: 310px;
+}
+
+.nav .dropdown-menu_type_tournaments:before {
+    content:       "";
+    border-bottom: 15px solid rgba(43, 48, 59, .95);
+    border-right:  17px solid transparent;
+    border-left:   17px solid transparent;
+    position:      absolute;
+    top:           -15px;
+    left:          62px;
+    z-index:       10;
+}
+
+.nav .dropdown-menu_type_tournaments:after {
+    content:       "";
+    border-bottom: 17px solid rgb(43, 48, 59);
+    border-right:  19px solid transparent;
+    border-left:   19px solid transparent;
+    position:      absolute;
+    top:           -17px;
+    left:          62px;
+    z-index:       8;
+}
+
+.nav .dropdown-menu_type_tournaments > li > ul {
+    padding: 0;
+    margin:  0;
+}
+
+.nav .dropdown-menu_type_tournaments > li > ul > li {
+    list-style: none;
+}
+
+.nav .dropdown-menu_type_tournaments > li > ul > li > a,
+.nav .dropdown-menu_type_tournaments > li > ul > li > span {
+    display:     block;
+    padding:     0;
+    clear:       both;
+    font-weight: normal;
+    line-height: 1.6em;
+    color:       $navbar-default-link-active-color;
+    white-space: normal;
+}
+
+.nav .dropdown-menu_type_tournaments > li ul > li > a:hover,
+.nav .dropdown-menu_type_tournaments > li ul > li > a:focus {
+    text-decoration:  none;
+    color:            #444;
+    background-color: #f5f5f5;
 }
 
 /**
@@ -181,7 +319,6 @@ ul, ol {
  */
 
 .news {
-    margin-top:    20px;
     margin-bottom: 10px;
     overflow:      hidden;
 }
@@ -256,7 +393,6 @@ ul, ol {
     background: rgba(43, 48, 59, .5);
     color:      $navbar-default-link-color;
 }
-
 
 /**
  * Main page features
@@ -334,6 +470,10 @@ ul, ol {
     width: 100%;
 }
 
+.nav-tabs .tab__title.tab__title_size_4 {
+    width: 25%;
+}
+
 .nav-tabs .tab__title,
 .nav-tabs .tab__title a,
 .nav-tabs .tab__title.tab__title_active_yes a,
@@ -343,6 +483,7 @@ ul, ol {
 .nav-tabs .tab__title.active a:hover {
     border:        none;
     border-radius: 0;
+    margin-right:  0;
     background:    transparent;
     color:         $navbar-default-link-color;
 }
@@ -386,6 +527,10 @@ ul, ol {
     color: $navbar-default-link-active-color;
 }
 
+.table_layout_fixed {
+    table-layout: fixed;
+}
+
 .table_type_table .movement {
     padding-left: 0;
 }
@@ -408,8 +553,29 @@ ul, ol {
     color: #B72824;
 }
 
+.table_type_table .table__form {
+    display:       inline-block;
+    width:         9px;
+    height:        9px;
+    border-radius: 2px;
+    margin-left:   2px;
+}
+
+.table_type_table .table__form.table__form_w {
+    background-color: #2DA6E4;
+}
+
+.table_type_table .table__form.table__form_l {
+    background-color: #C63C3C;
+}
+
+.table_type_table .table__form.table__form_d {
+    background-color: #F5B367;
+}
+
 .table .col-md-05 {
-    width: 4.16666%;
+    width:   4.16666%;
+    padding: 8px 4px;
 }
 
 .table td.s_p_0 {
@@ -490,6 +656,7 @@ ul, ol {
 
 .contact .fa {
     color: $navbar-default-link-hover-color;
+    width: 15px;
 }
 
 .contact a {
@@ -512,16 +679,31 @@ ul, ol {
 
 .panel__header,
 .panel__body {
-    padding: 15px 10px;
+    padding:  15px 10px;
+    position: relative;
+    overflow: hidden;
 }
 
 .panel__header {
+    padding:       12px 10px;
     border-bottom: 1px solid #060D17;
+}
+
+.panel__header [class*="flaticon-"] {
+
+}
+
+.panel__header [class*="flaticon-"]:before {
+    margin-left: 0;
 }
 
 .panel .table td {
     padding-top:    3px;
     padding-bottom: 3px;
+}
+
+.block_padded_yes {
+    padding: 15px 10px;
 }
 
 /**
@@ -534,6 +716,17 @@ ul, ol {
 
 .fixture__looser {
     color: #555;
+}
+
+.panel_type_fixture .panel__body td {
+    vertical-align: middle;
+}
+
+.col-md-4 .fixture__team {
+    text-overflow: ellipsis;
+    white-space:   nowrap;
+    overflow:      hidden;
+    //    display:       inline-block;
 }
 
 /**
@@ -747,6 +940,26 @@ ul, ol {
  * Federations
  */
 
+.panel_type_federations .nav.nav-tabs {
+    width:    50%;
+    position: absolute;
+    right:    0;
+    top:      0;
+}
+
+.panel_type_federations .nav.nav-tabs .tab__title {
+    width: 50%;
+}
+
+.panel_type_federations .nav.nav-tabs a {
+    line-height: 2;
+}
+
+.panel_type_federations [class^="col-"] {
+    display: inline-block;
+    float:   none;
+}
+
 .federation {
     display: inline-block;
     margin:  0 20px;
@@ -912,7 +1125,23 @@ $size: 200px;
     }
 }
 
-.match__time span:after {
+.match__time .match__time_value.match__time_value_finished {
+    font-size: 18px;
+}
+
+.match__time .match__time_value.match__time_value_finished i:before {
+    font-size:   96px;
+    margin-left: 0;
+    line-height: .1;
+    position:    relative;
+    top:         10px;
+}
+
+.match__time .match__time_value.match__time_value_minutes {
+    font-size: 36px;
+}
+
+.match__time .match__time_value.match__time_value_minutes:after {
     content:  "'";
     position: absolute;
 }
@@ -1002,29 +1231,97 @@ $size: 200px;
 }
 
 .icon-yellow {
-    background-image: url("../images/icon-yellow.png");
+    background-image: url("/images/icon-yellow.png");
 }
 
 .icon-red {
-    background-image: url("../images/icon-red.png");
+    background-image: url("/images/icon-red.png");
 }
 
 .icon-corner {
-    background-image: url("../images/icon-corner.png");
+    background-image: url("/images/icon-corner.png");
 }
 
 .icon-penalty {
-    background-image: url("../images/icon-penalty.png");
+    background-image: url("/images/icon-penalty.png");
 }
 
 .icon-injury {
-    background-image: url("../images/icon-injury.png");
+    background-image: url("/images/icon-injury.png");
+}
+
+/**
+ * Fields
+ */
+
+.field__route {
+    height:        220px;
+    overflow:      hidden;
+    text-overflow: ellipsis;
+}
+
+.field__map {
+    width:        100%;
+    height:       auto;
+    display:      block;
+    margin-left:  auto;
+    margin-right: auto;
 }
 
 /*------------------------------------*\
                 #TOOLS
 \*------------------------------------*/
 
+.s_valign_t {
+    position:       relative;
+    vertical-align: top;
+}
+
+.s_valign_m {
+    position:       relative;
+    vertical-align: middle;
+}
+
+.s_valign_b {
+    position:       relative;
+    vertical-align: bottom;
+}
+
+.s_position_relative {
+    position: relative;
+}
+
+.s_position_absolute {
+    position: absolute;
+}
+
+.s_overflow_hidden {
+    overflow: hidden;
+}
+
+.s_display_block {
+    display: block;
+}
+
+.s_display_inline-block {
+    display: inline-block;
+}
+
+.s_display_none {
+    display: none;
+}
+
+.s_float_r {
+    float: right;
+}
+
+.s_float_l {
+    float: left;
+}
+
+.s_float_n {
+    float: none;
+}
 
 .s_m_0 {
     margin: 0;
@@ -1082,6 +1379,10 @@ $size: 200px;
     margin-top: 20px;
 }
 
+.s_mt_40 {
+    margin-top: 40px;
+}
+
 .s_mt_10 {
     margin-top: 10px;
 }
@@ -1112,6 +1413,14 @@ $size: 200px;
 
 .s_ml_20 {
     margin-left: 20px;
+}
+
+.s_pt_0 {
+    padding-top: 0;
+}
+
+.s_pb_0 {
+    padding-bottom: 0;
 }
 
 .text_align_l {
@@ -1168,6 +1477,32 @@ $size: 200px;
 
 .text_size_48 {
     font-size: 48px;
+}
+
+.text_line-height_12 {
+    line-height: 12px;
+}
+
+.text_line-height_14 {
+    line-height: 14px;
+}
+
+.text_line-height_16 {
+    line-height: 16px;
+}
+
+.text_line-height_18 {
+    line-height: 18px;
+}
+
+.text_line-height_20 {
+    line-height: 20px;
+}
+
+.text_overflow_ellipsis {
+    text-overflow: ellipsis;
+    white-space:   nowrap;
+    overflow:      hidden;
 }
 
 /**

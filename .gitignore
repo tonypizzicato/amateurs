@@ -7,3 +7,6 @@ test/vendor
 .idea
 .tmp_assets
 *.psd
+access.log
+data
+uploads

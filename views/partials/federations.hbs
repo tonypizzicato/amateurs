@@ -1,23 +1,44 @@
-<div class="panel">
-    <div class="panel__header"><h4 class="s_m_0"><i class="fa fa-globe s_mr_10"></i> Федерации</h4></div>
-    <div class="panel__body">
-        {{#each globals.leagues}}
-            <div class="federation text_align_c ">
-                <div class='flag__wrapper rotate rotate_deg_0'>
-                    <div class="flag flag_country_{{short}}"></div>
-                </div>
+<div class="panel panel_type_federations tabbable">
+    <div class="panel__header">
+        <h4 class="s_m_0"><i class="fa fa-globe s_mr_10"></i> Федерации</h4>
 
-                <h5>{{name}}</h5>
+        <ul class="nav nav-tabs">
+            {{#each globals.leagues}}
+                <li class="tab__title{{#eq 0 @index}} active{{/eq}}">
+                    <a href="#tab-federations-{{slug}}" data-toggle="tab">{{name}}</a>
+                </li>
+            {{/each}}
+        </ul>
+    </div>
+    <div class="panel__body s_pt_0">
+        <div class="row clearfix text_align_c">
+            <div class="tab-content s_mt_40">
+                {{#each globals.leagues}}
+                    <div class="tab-pane{{#eq 0 @index}} active{{/eq}}" id="tab-federations-{{slug}}">
+                        {{#each countries}}
+                            {{#notContains slug 'world'}}
+                                <div class="col-md-2" style="float: none; display: inline-block;">
+                                    <div class="federation">
+                                        <div class='flag__wrapper rotate rotate_deg_0'>
+                                            <div class="flag flag_country_{{slug}}"></div>
+                                        </div>
 
-                <div class="socials">
-                    <ul class="socials__buttons">
-                        <li>
-                            <a href="{{vk}}" class="socials__button" target="_blank"><i
-                                    class="fa fa-vk"></i></a>
-                        </li>
-                    </ul>
-                </div>
+                                        <h5>{{name}}</h5>
+
+                                        <div class="socials">
+                                            <ul class="socials__buttons">
+                                                <li>
+                                                    <a href="{{vk}}" class="socials__button" target="_blank"><i class="fa fa-vk"></i></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            {{/notContains}}
+                        {{/each}}
+                    </div>
+                {{/each}}
             </div>
-        {{/each}}
+        </div>
     </div>
 </div>

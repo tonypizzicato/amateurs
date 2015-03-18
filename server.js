@@ -1,15 +1,31 @@
 var express = require('express');
 var session = require('express-session');
 var path = require('path');
+var fs = require('fs');
 var hbs = require('hbs');
-var helpers = require('./app/hbs-helpers');
-var routes = require('./app/routes');
 var mongoose = require('mongoose');
+
+var passport = require('passport');
+
+var bodyParser = require('body-parser');
+var busboy = require('connect-busboy');
+var cookieParser = require('cookie-parser');
+var favicon = require('serve-favicon');
+
+var morgan = require('morgan');
+var helpers = require('./app/hbs-helpers');
+
+var routes = require('./app/routes');
 
 var app = express();
 
+var SessionMongoStore = require('connect-mongo')(session);
+
+var LeagueModel = require('./models/league');
+var CountryModel = require('./models/country');
+
 // Configure server
-var port = process.env.NODE_PORT || 3000;
+var port = process.env.NODE_PORT || 9000;
 
 console.log(port);
 
@@ -17,11 +33,33 @@ console.log(port);
 mongoose.connect('mongodb://localhost/amateur');
 
 app.set('port', port);
-app.use(express.favicon());
-app.use(express.cookieParser());
-app.use(express.bodyParser());
-app.use(express.session({secret: 'keyboard cat'}));
+app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(cookieParser());
 
+app.use(busboy());
+// parse application/json
+app.use(bodyParser.json({limit: '5mb'}));
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({limit: '5mb', extended: false}))
+
+app.use(session({
+    secret:            'test secret',
+    resave:            false,
+    saveUninitialized: true,
+    store:             new SessionMongoStore({mongooseConnection: mongoose.connection})
+}));
+
+// Initialize Passport!  Also use passport.session() middleware, to support
+// persistent login sessions (recommended).
+app.use(passport.initialize());
+app.use(passport.session());
+
+// create a write stream (in append mode)
+var accessLogStream = fs.createWriteStream(__dirname + '/access.log', {flags: 'a'});
+
+// setup the logger
+app.use(morgan('combined', {stream: accessLogStream}));
 
 var clientDir, viewsDir;
 /**
@@ -68,11 +106,6 @@ app.set('public', __dirname + clientDir);
 helpers.initialize(hbs);
 hbs.registerPartials(__dirname + viewsDir + '/partials');
 
-app.use(session({
-    secret:            'test secret',
-    resave:            true,
-    saveUninitialized: true
-}));
 
 app.use(function (req, res, next) {
     if (req.url.substr(-1) == '/' && req.url.length > 1) {
@@ -82,14 +115,69 @@ app.use(function (req, res, next) {
     }
 });
 
-app.get('*', function (req, res, next) {
-    res.locals.globals = res.locals.globals || {};
+//CORS middleware
+app.use('/api', function (req, res, next) {
+    console.log('allowCrossDomain');
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, Cache-Control');
 
-    if (req.url === '/api') {
+    next();
+});
+
+app.get('*', function (req, res, next) {
+
+    if (req.url.indexOf('/api') === 0) {
         return next();
     }
-    var leagues = require('./models/league');
-    res.locals.globals.leagues = leagues.getCountries();
+
+    res.locals.globals = res.locals.globals || {};
+
+    var getCountries = function () {
+        var populateOptions = {path: 'tournaments', options: {sort: {'sort': 1}}};
+        CountryModel.find({leagueId: req.session.league._id}).sort({sort: 1}).populate(populateOptions).exec(function (err, docs) {
+            if (err) {
+                return next(err);
+            }
+            res.locals.globals.countries = docs;
+        });
+    };
+
+    var query = {};
+    if (typeof req.params[0] == 'string') {
+        var param = req.params[0].slice(1);
+        if (/^(moscow|spb)$/.test(param)) {
+            query = {slug: param};
+        }
+    }
+
+    if (query.slug != undefined || !req.session.league) {
+        LeagueModel.findOne(query).sort({sort: 1}).lean().exec(function (err, doc) {
+            if (err) {
+                return next(err);
+            }
+            if (!doc) {
+                res.status(404);
+                return next(null);
+            }
+
+            req.session.league = doc;
+            res.locals.globals.league = req.session.league;
+            getCountries();
+        });
+    } else {
+        getCountries();
+    }
+
+    var populateOptions = {path: 'countries', options: {sort: {'sort': 1}}};
+    LeagueModel.find(/*{show: true},*/).sort({sort: 1}).populate(populateOptions).lean().exec(function (err, docs) {
+        if (err) {
+            return next(err);
+        }
+        res.locals.globals.leagues = docs;
+    });
+
+    res.locals.globals.league = req.session.league;
 
     next();
 });
@@ -109,35 +197,36 @@ app.get('/countries/:country', function (req, res, next) {
     next();
 });
 
-app.get('/leagues/:name*', function (req, res, next) {
+app.get('/leagues/:name/*', function (req, res, next) {
     var contactsModel = require('./models/contact');
     var fixtureModel = require('./models/fixture');
-    var leagueName = req.param('name', req.session.currentLeague),
-        leagues = require('./models/league').find({short: leagueName});
+    var leagueName = req.param('name', req.session.currentLeague);
 
-    if (leagues.length) {
-        var league = leagues.pop();
+    require('./models/league').find({slug: leagueName}, function (err, leagues) {
+        if (leagues.length) {
+            var league = leagues.pop();
 
-        res.locals.globals.currentCountry = league.country;
-        res.locals.globals.currentLeague = league.short;
-        req.session.currentCountry = league.country;
-        req.session.currentLeague = league.short;
+            res.locals.globals.currentCountry = league.country;
+            res.locals.globals.currentLeague = league.slug;
+            req.session.currentCountry = league.country;
+            req.session.currentLeague = league.slug;
 
 
-        contactsModel.find({country: league.country}, function (err, contacts) {
-            res.locals.globals.contactsCountry = contacts;
-        });
-        contactsModel.find({league: league.short}, function (err, contacts) {
-            res.locals.globals.contactsLeague = contacts;
-        });
+            contactsModel.find({country: league.country}, function (err, contacts) {
+                res.locals.globals.contactsCountry = contacts;
+            });
+            contactsModel.find({league: league.slug}, function (err, contacts) {
+                res.locals.globals.contactsLeague = contacts;
+            });
 
-        res.locals.globals.recent = fixtureModel.recent(league.short);
-        res.locals.globals.comming = fixtureModel.comming(league.short);
-    } else {
-        res.status(404).send('Not found League');
+            res.locals.globals.recent = fixtureModel.recent(league.slug);
+            res.locals.globals.comming = fixtureModel.comming(league.slug);
+        } else {
+            res.status(404).send('Not found League');
 
-        return;
-    }
+            return;
+        }
+    });
 
     next();
 });
@@ -145,7 +234,6 @@ app.get('/leagues/:name*', function (req, res, next) {
 //routes list:
 routes.initialize(app);
 
-app.use(app.router);
 
 var server = app.listen(port, function () {
 
@@ -154,4 +242,4 @@ var server = app.listen(port, function () {
 
     console.log('Example app listening at http://%s:%s', host, port)
 
-})
+});

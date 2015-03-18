@@ -1,18 +1,20 @@
-<table class="table s_m_0">
+<table class="table table_layout_fixed s_m_0">
     <thead>
     <tr>
         <th class="col-md-2 text_align_c">Место</th>
-        <th class="col-md-8 text_align_c">Игрок</th>
+        <th class="col-md-5 text_align_l">Игрок</th>
+        <th class="col-md-3 text_align_c">Позиция</th>
         <th class="col-md-2 text_align_c">Пасы</th>
     </tr>
     </thead>
 
     <tbody>
-    {{#each player_stats.assists}}
+    {{#each this}}
         <tr>
-            <td class="text_align_c">{{number}}</td>
-            <td class="text_align_c">{{player}}</td>
-            <td class="text_align_c">{{passes}}</td>
+            <td class="text_align_c">{{inc @index}}</td>
+            <td class="text_align_l text_overflow_ellipsis">{{name}}</td>
+            <td class="text_align_c">{{position}}</td>
+            <td class="text_align_c">{{assists}}</td>
         </tr>
     {{/each}}
     </tbody>

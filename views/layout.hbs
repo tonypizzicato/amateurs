@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="/styles/main.css">
     <!-- endbuild -->
 
-    <!-- build:js /scripts/vendor/modernizr.js -->
+    <!-- build:js({public,.tmp}) /scripts/vendor/modernizr.js -->
     <script src="/vendor/modernizr/modernizr.js"></script>
     <!-- endbuild -->
 
@@ -29,77 +29,7 @@
 <div class="container">
     <div class="row clearfix">
         <div class="col-md-12 column">
-            <nav class="navbar navbar-default" role="navigation">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><span
-                            class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span
-                            class="icon-bar"></span></button>
-                    <a class="navbar-brand" href="/">AFL</a>
-                </div>
-
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav navbar_border_left">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-angle-down"></i>
-                                {{#if globals.currentCountry}}
-
-                                    {{#each globals.leagues}}
-                                        {{#equals short ../globals.currentCountry}}{{name}}{{/equals}}
-                                    {{/each}}
-                                {{else}}
-                                    Федерация
-                                {{/if}}
-                            </a>
-                            <ul class="dropdown-menu">
-                                {{#each globals.leagues}}
-                                    <li>
-                                        <div class='flag__wrapper rotate rotate_deg_0'>
-                                            <div class="flag flag_country_{{short}}"></div>
-                                        </div>
-                                        <a href="/countries/{{short}}"> {{name}}</a>
-                                    </li>
-                                {{/each}}
-                            </ul>
-                        </li>
-                        <li class="navbar__item navbar__item_active_yes">
-                            <a href="#">Главная</a>
-                        </li>
-                        <li class="navbar__item">
-                            <a href="#">Результаты</a>
-                        </li>
-                        <li class="navbar__item">
-                            <a href="#">Календарь</a>
-                        </li>
-                        <li class="navbar__item">
-                            <a href="#">Клубы</a>
-                        </li>
-                        <li class="navbar__item">
-                            <a href="#">Игроки</a>
-                        </li>
-                        <li class="navbar__item">
-                            <a href="#">Медиа</a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav_type_user navbar-nav navbar-right navbar_border_left">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-angle-down"></i>
-                                <i class="fa fa-user"></i>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Вход</a></li>
-                                <li><a href="#">Регистрация</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="nav navbar-nav pull-right">
-                        <li class="navbar__item">
-                            <a href="#">Контакты</a>
-                        </li>
-                    </ul>
-                </div>
-
-            </nav>
+            {{> menu this}}
         </div>
     </div>
     <div class="row clearfix news">
@@ -193,8 +123,12 @@
 
 </div>
 
-<!-- build:js({public,.tmp}) /scripts/main.js -->
-<script data-main="/scripts/main" src="/vendor/requirejs/require.js"></script>
+<!-- build:js({public,.tmp}) /scripts/vendor.js -->
+<script src="/vendor/requirejs/require.js"></script>
+<!-- endbuild -->
+
+<!-- build:js({public,.tmp}) /scripts/out.js -->
+<script src="/scripts/main.js"></script>
 <!-- endbuild -->
 <script>
     (function (i, s, o, g, r, a, m) {

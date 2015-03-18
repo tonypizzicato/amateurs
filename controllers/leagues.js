@@ -1,23 +1,23 @@
 'use strict';
 
-var leaguesModel = require('../models/league');
+var LeagueModel = require('../models/league');
 
 module.exports = {
-    leagues: function (req, res) {
-        console.log('leagues called');
-        res.render('leagues', {leagues: leaguesModel.get(req.param('name')), pageLeagues: true});
-    },
+    item: function (req, res) {
+        var populateOptions = {path: 'countries', options: {sort: {'sort': 1}}};
+        LeagueModel.findOne({slug: req.params.league}).lean().populate(populateOptions).exec(function (err, doc) {
+            if (err) {
+                return next(err);
+            }
+            if (!doc) {
+                res.status(404);
+                return next(null);
+            }
 
-    league: function (req, res) {
-        var leagueName = req.param('name'),
-            league = leaguesModel.get(leagueName);
-
-        if (!league) {
-            res.status(404).send('Not found League');
-
-            return;
-        }
-
-        res.render('league', {league: league, tableFull: true});
+            populateOptions = {path: 'countries.tournaments', options: {sort: {'sort': 1}}};
+            LeagueModel.populate(doc, populateOptions, function (err, doc) {
+                res.render('leagues/item', {league: doc, tableFull: false});
+            });
+        });
     }
 };

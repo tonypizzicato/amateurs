@@ -6,26 +6,47 @@
             <div class="col-md-6 column">
                 <div class="row">
                     <div class="col-md-12 s_mb_20">
-                        <div class="tabbable" id="tabs-992576">
-                            <ul class="nav nav-tabs">
-                                <li class="tab__title tab__title_size_full active">
-                                    <a href="#tab-table" data-toggle="tab">Таблица</a>
-                                </li>
-                            </ul>
-                            <div class="tab-content">
-                                <div class="tab-pane active" id="tab-table">
-                                    <div class="panel s_m_0">
-                                        <div class="panel__body s_p_0 s_pb_5">
-                                            {{$ 'table' this tableFull=false league=league}}
+                        <div class="tabbable">
+                            {{~#if league.groupsCount ~}}
+                                <ul class="nav nav-tabs">
+                                    {{~# each league.groups~}}
+                                        <li class="tab__title tab__title_size_{{../league.groupsCount}}{{#eq 0 @index}} active{{/eq}}">
+                                            <a href="#tab-table" data-toggle="tab">Группа {{name}}</a>
+                                        </li>
+                                    {{~/each~}}
+                                </ul>
+                                <div class="tab-content">
+                                    {{~# each league.groups~}}
+                                        <div class="tab-pane{{#eq 0 @index}} active{{/eq}}" id="tab-table">
+                                            <div class="panel s_m_0">
+                                                <div class="panel__body s_p_0 s_pb_5">
+                                                    {{$ 'table' this tableFull=false league=this}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {{~/each~}}
+                                </div>
+                                {{~else~}}
+                                <ul class="nav nav-tabs">
+                                    <li class="tab__title tab__title_size_full active">
+                                        <a href="#tab-table" data-toggle="tab">Таблица</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="tab-table">
+                                        <div class="panel s_m_0">
+                                            <div class="panel__body s_p_0 s_pb_5">
+                                                {{$ 'table' this tableFull=false league=league}}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            {{~/if~}}
                         </div>
                         <div class="link_type_full">
                             <span class="text_color_orange">Полная таблица</span>
                             <span class="pull-right">
-                                <a href="/league/{{league.short}}/table"><i class="fa fa-arrow-circle-o-right"></i></a>
+                                <a href="/leagues/{{league.slug}}/table"><i class="fa fa-arrow-circle-o-right"></i></a>
                             </span>
                         </div>
                     </div>
@@ -34,7 +55,7 @@
             <div class="col-md-6 column">
                 <div class="row clearfix">
                     <div class="col-md-12 column">
-                        <div class="tabbable" id="tabs-992576">
+                        <div class="tabbable">
                             <ul class="nav nav-tabs">
                                 <li class="tab__title tab__title_size_half active">
                                     <a href="#tab-strikers" data-toggle="tab">Бомбардиры</a>
@@ -63,7 +84,7 @@
                         <div class="link_type_full">
                             <span class="text_color_orange">Статистика</span>
                             <span class="pull-right">
-                                <a href="/league/{{league.short}}/table"><i class="fa fa-arrow-circle-o-right"></i></a>
+                                <a href="/leagues/{{league.slug}}/table"><i class="fa fa-arrow-circle-o-right"></i></a>
                             </span>
                         </div>
                     </div>
@@ -95,20 +116,20 @@
                         </div>
                     </div>
 
-                    <svg width="0" height="0">
-                        <clipPath id="clip-match-main_image_home">
-                            <polygon points="300 300,360 150,300 0,0 0,0 300">
-                            </polygon>
-                        </clipPath>
-                        <clipPath id="clip-match-main_image_away">
-                            <polygon points="0 150,60 300,360 300,360 0,60 0">
-                            </polygon>
-                        </clipPath>
-                        <clipPath id="clip-match-main_info">
-                            <polygon points="60 150,0 300,200 300,140 150,200 0,0 0">
-                            </polygon>
-                        </clipPath>
-                    </svg>
+                    <!--<svg width="0" height="0">-->
+                    <!--<clipPath id="clip-match-main_image_home">-->
+                    <!--<polygon points="300 300,360 150,300 0,0 0,0 300">-->
+                    <!--</polygon>-->
+                    <!--</clipPath>-->
+                    <!--<clipPath id="clip-match-main_image_away">-->
+                    <!--<polygon points="0 150,60 300,360 300,360 0,60 0">-->
+                    <!--</polygon>-->
+                    <!--</clipPath>-->
+                    <!--<clipPath id="clip-match-main_info">-->
+                    <!--<polygon points="60 150,0 300,200 300,140 150,200 0,0 0">-->
+                    <!--</polygon>-->
+                    <!--</clipPath>-->
+                    <!--</svg>-->
                 </div>
             </div>
         </div>
@@ -149,7 +170,7 @@
                 <div class="link_type_full">
                     <span class="text_color_orange">Все обзоры</span>
                     <span class="pull-right">
-                        <a href="/league/{{league.short}}/table"><i class="fa fa-arrow-circle-o-right"></i></a>
+                        <a href="/leagues/{{league.slug}}/table"><i class="fa fa-arrow-circle-o-right"></i></a>
                     </span>
                 </div>
             </div>
@@ -162,29 +183,13 @@
                         <h4 class="s_m_0"><i class="fa fa-play-circle s_mr_5"></i> Последние фотографии</h4>
                     </div>
                     <div class="panel__body">
-                        <div class="row s_mb_10">
-                            <div class="column col-md-2"><img src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
-                            <div class="column col-md-2"><img src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
-                            <div class="column col-md-2"><img src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
-                            <div class="column col-md-2"><img src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
-                            <div class="column col-md-2"><img src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
-                            <div class="column col-md-2"><img src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
-                        </div>
-                        <div class="row">
-                            <div class="column col-md-2"><img src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
-                            <div class="column col-md-2"><img src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
-                            <div class="column col-md-2"><img src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
-                            <div class="column col-md-2"><img src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
-                            <div class="column col-md-2"><img src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
-                            <div class="column col-md-2"><img src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
-                        </div>
                     </div>
                 </div>
 
                 <div class="link_type_full">
                     <span class="text_color_orange">Все фотографии</span>
                     <span class="pull-right">
-                        <a href="/league/{{league.short}}/photo"><i class="fa fa-arrow-circle-o-right"></i></a>
+                        <a href="/leagues/{{league.slug}}/photo"><i class="fa fa-arrow-circle-o-right"></i></a>
                     </span>
                 </div>
             </div>
@@ -193,7 +198,7 @@
     <div class="col-md-4 column">
         <div class="panel s_m_0">
             <div class="panel-body">
-                <form role="form" class="form form_type_signin">
+                <form role="form" class="form form_type_signin" action="/login" method="post">
                     <div class="form-group form-group_icon_left">
                         <i class="fa fa-user"></i>
                         <input type="email" class="form-control" id="signin-email" placeholder="myname@amateurs.io">
@@ -224,7 +229,7 @@
         <div class="link_type_full s_mb_10">
             <span class="text_color_orange">Календарь</span>
             <span class="pull-right">
-                <a href="/league/{{league.short}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
+                <a href="/leagues/{{league.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
             </span>
         </div>
         <div class="panel s_m_0">
@@ -238,7 +243,7 @@
         <div class="link_type_full s_mb_10">
             <span class="text_color_orange">Календарь</span>
             <span class="pull-right">
-                <a href="/league/{{league.short}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
+                <a href="/leagues/{{league.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
             </span>
         </div>
 

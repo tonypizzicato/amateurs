@@ -1,0 +1,46 @@
+<div class="block_type_news row clearfix s_mb_20">
+    <div class="column col-md-8">
+        <div class="news-item s_mb_20">
+            <div class="panel s_m_0">
+                <div class="panel__header">
+                    <i class="fa fa-calendar s_mr_10"></i> <strong>{{article.title}}</strong>
+                    <span class="s_float_r">{{datefull article.dc}}</span>
+                </div>
+                <div class="panel__body">
+                    {{{ article.body }}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="column col-md-4">
+        <div class="panel s_m_0">
+            <div class="panel__header">
+                <i class="fa fa-calendar s_mr_10"></i> Последние матчи
+            </div>
+            <div class="panel__body">
+                {{$ 'fixtures' fixture=globals.recent }}
+            </div>
+        </div>
+        <div class="link_type_full s_mb_10">
+            <span class="text_color_orange">Календарь</span>
+            <span class="pull-right">
+                <a href="/league/{{league.short}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
+            </span>
+        </div>
+        <div class="panel s_m_0">
+            <div class="panel__header">
+                <i class="fa fa-calendar s_mr_10"></i> Ближайшие матчи
+            </div>
+            <div class="panel__body">
+                {{$ 'fixtures' fixture=globals.comming }}
+            </div>
+        </div>
+        <div class="link_type_full s_mb_10">
+            <span class="text_color_orange">Календарь</span>
+            <span class="pull-right">
+                <a href="/league/{{league.short}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
+            </span>
+        </div>
+    </div>
+</div>
