@@ -89,13 +89,13 @@
                                         <div class="row">
                                             <div class="column col-md-12 s_pr_0">
                                                 <div class="match-lineup__number column col-md-2 text_color_orange">
-                                                    {{#if number}}{{~number~}}{{else}}&mdash;{{/if}}
+                                                            {{#if number}}{{~number~}}{{else}}&mdash;{{/if}}
                                                 </div>
                                                 <div class="match-lineup__player column col-md-8">
                                                     {{~name~}}
                                                 </div>
                                                 <div class="match-lineup__player column col-md-2 text_align_c">
-                                                    {{~position~}}
+                                                            {{#if position}}{{~position~}}{{else}}&mdash;{{/if}}
                                                 </div>
                                             </div>
                                         </div>
@@ -106,13 +106,13 @@
                                         <div class="row">
                                             <div class="column col-md-12 s_pr_0">
                                                 <div class="match-lineup__number column col-md-2 text_color_orange">
-                                                     {{#if number}}{{~number~}}{{else}}&mdash;{{/if}}
+                                                            {{#if number}}{{~number~}}{{else}}&mdash;{{/if}}
                                                 </div>
                                                 <div class="match-lineup__player column col-md-8">
                                                     {{~name~}}
                                                 </div>
                                                 <div class="match-lineup__player column col-md-2 text_align_c">
-                                                    {{~position~}}
+                                                            {{#if position}}{{~position~}}{{else}}&mdash;{{/if}}
                                                 </div>
                                             </div>
                                         </div>
@@ -123,7 +123,7 @@
                         <div class="tab-pane" id="tab-events">
                             {{#each game.events}}
                                 <div class="row">
-                                    <div class="column col-md-2">
+                                    <div class="column col-md-2{{#endsWith type '_A'}} s_float_r{{/endsWith}}">
                                         <div class="match-events__time text_align_r">
                                             {{#eq type 'SCORED_H'}}
                                                 <span class="icon_type_event text_color_orange">Гол!</span>
@@ -156,9 +156,17 @@
                                         </div>
                                     </div>
                                     <div class="column col-md-10">
-                                        <div class="match-events__description pull-right">
-                                            {{#if firstField.number}}<span class="text_color_orange">{{firstField.number}}</span>.{{/if}}
-                                            {{firstField.name}}
+                                        <div class="match-events__description pull-right {{#endsWith type '_A'}} text_align_r{{/endsWith~}}
+                                            {{~#if secondField}} match-events__description_double{{/if}}">
+
+                                            {{~#if firstField.number}}<span class="text_color_orange">{{firstField.number}}.</span> {{/if~}}
+                                            {{~firstField.name~}}
+                                            {{~#if secondField~}}
+                                                <br>
+                                                {{~#if secondField.number~}}
+                                                    <span class="text_color_light">{{secondField.number}}. {{secondField.name}}</span>
+                                                {{~/if~}}
+                                            {{~/if~}}
                                         </div>
                                     </div>
                                 </div>

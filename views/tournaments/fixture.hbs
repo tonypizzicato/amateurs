@@ -13,11 +13,13 @@
                                 <tbody>
                                 {{#each this}}
                                     <tr>
-                                        <td class="fixture__time col-md-3{{#if time}} text_color_muted{{/if}}">{{date dateTime}} {{time}}</td>
-                                        <td class="fixture__team col-md-4 text_align_r s_pr_0{{~#gt score.ft.[0] score.ft.[1]}} fixture__winner{{/gt~}}{{~#lt score.ft.[0] score.ft.[1]}} fixture__looser{{/lt~}}">
+                                        <td class="fixture__time col-md-2 text_size_12{{#unless time}} col-md-3 text_color_light{{/unless}}">
+                                            {{~#if dateTime}}{{date dateTime}} {{time}}{{else}}Время не назначено{{/if~}}
+                                        </td>
+                                        <td class="fixture__team col-md-4 text_align_r s_pr_0{{#if teams.[0].win}} fixture__winner{{/if}}{{#if teams.[0].loose}} fixture__looser{{/if}}">
                                             {{~teams.[0].name~}}
-                                        <td class="text_align_c col-md-05"> v</td>
-                                        <td class="fixture__team col-md-4 text_align_l s_pl_0{{~#lt score.ft.[0] score.ft.[1]}} fixture__winner{{/lt~}} {{~#gt score.ft.[0] score.ft.[1]}} fixture__looser{{/gt~}}">
+                                        <td class="text_align_c col-md-05">v</td>
+                                        <td class="fixture__team col-md-4 text_align_l s_pl_0{{#if teams.[0].loose}} fixture__winner{{/if}}{{#if teams.[0].win}} fixture__looser{{/if}}">
                                             {{~teams.[1].name~}}
                                         </td>
                                         </td>
@@ -28,7 +30,7 @@
                                                 </a>
                                             </td>
                                         {{else}}
-                                            <td colspan="3">&mdash;:&mdash;</td>
+                                            <td colspan="3">-:-</td>
                                         {{/if}}
                                     </tr>
                                 {{/each}}

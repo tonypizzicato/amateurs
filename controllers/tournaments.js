@@ -7,6 +7,8 @@ var moment          = require('moment'),
     remoteConfig    = require('../config/tinyapi'),
     Promise         = require('promise');
 
+var client = new RestClient(remoteConfig.authOptions);
+
 module.exports = {
     list: function (req, res, next) {
         TournamentModel.find({slug: req.params.name}, function (err, docs) {
@@ -27,8 +29,6 @@ module.exports = {
                 return next(null);
             }
 
-
-            var client = new RestClient(remoteConfig.authOptions);
             client.get(remoteConfig.url + '/stats/players_stats?tournamentId=' + doc.remoteId, function (stats) {
                 stats = JSON.parse(stats);
 
@@ -77,7 +77,6 @@ module.exports = {
                 return next(null);
             }
 
-            var client = new RestClient(remoteConfig.authOptions);
             client.get(remoteConfig.url + '/stats/players_stats?tournamentId=' + doc.remoteId, function (stats) {
                 stats = JSON.parse(stats);
 
@@ -100,11 +99,25 @@ module.exports = {
                 return next(null);
             }
 
-            var client = new RestClient(remoteConfig.authOptions);
             client.get(remoteConfig.url + '/games?tournamentId=' + doc.remoteId, function (games) {
                 games = JSON.parse(games);
 
                 games = games.map(function (item) {
+                    if (item.state == 'CLOSED' && item.score) {
+                        if (item.score.ft[0] > item.score.ft[1]) {
+                            item.teams[0].win = true;
+                            item.teams[0].loose = false;
+                            item.teams[0].draw = false;
+                        } else if (item.score.ft[0] < item.score.ft[1]) {
+                            item.teams[0].win = false;
+                            item.teams[0].loose = true;
+                            item.teams[0].draw = false;
+                        } else {
+                            item.teams[0].win = false;
+                            item.teams[0].loose = false;
+                            item.teams[0].draw = true;
+                        }
+                    }
                     item.dateTime = item.date ? moment(item.date + ' ' + item.time, 'DD/MM/YYYY HH:mm') : null;
                     return item;
                 });
@@ -146,7 +159,6 @@ module.exports = {
                 return next(err);
             }
             tournament = doc;
-            var client = new RestClient(remoteConfig.authOptions);
 
             /* Contacts widget data */
             var contacts = new Promise(function (resolve, reject) {

@@ -148,7 +148,7 @@ var helpers = {
         return options.inverse(this);
     },
 
-    inc: function (value, options) {
+    inc: function (value) {
         return parseInt(value) + 1;
     },
 
@@ -162,6 +162,15 @@ var helpers = {
 
     add: function (value, add) {
         return value + add;
+    },
+
+    endsWith: function (str, suffix, options) {
+        console.log(str, suffix, str.toLowerCase().indexOf(suffix.toLowerCase(), str.length - suffix.length));
+        if (str.toLowerCase().indexOf(suffix.toLowerCase(), str.length - suffix.length) !== -1) {
+            return options.fn(this);
+        }
+
+        return options.inverse(this);
     }
 };
 
