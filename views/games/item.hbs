@@ -43,11 +43,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <p class="s_m_0 text_color_muted">{{dateTimeFull game.dateTime}}</p>
-
-                                <p class="s_m_0 text_color_muted">Стадион: {{game.placeName}}</p>
-
-                                <p class="text_color_muted">Судья: {{game.refereeName}}</p>
+                                <p class="s_m_0 text_color_light">
+                                    {{#if game.dateTime}}{{ucfirst (dateTimeFull game.dateTime)}}{{else}}Время не определено{{/if}}
+                                </p>
+                                <p class="s_m_0 text_color_light">Стадион: {{game.placeName}}</p>
+                                <p class="text_color_light">Судья: {{game.refereeName}}</p>
                             </div>
                             <div class="col-md-4 text_align_l">
                                 <img class="pull-right" src="http://amateurs.io/api/img/teams/{{game.teams.[1].name}}.png" width="64">
@@ -298,39 +298,35 @@
                 </span>
             </div>
         {{/if}}
-        {{#if globals.recent.length}}
-            <div class="panel panel_type_fixture s_m_0">
-                <div class="panel__header">
-                    <i class="fa fa-calendar s_mr_10"></i> Последние матчи
-                </div>
-                <div class="panel__body">
-                    {{> 'fixtures' fixture=globals.recent }}
-                </div>
-            </div>
-            <div class="link_type_full s_mb_10">
-                <span class="text_color_orange">Календарь</span>
-            <span class="pull-right">
-                <a href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
-            </span>
-            </div>
-        {{/if}}
-        {{#if globals.comming.length}}
-            <div class="panel s_m_0">
-                <div class="panel__header">
-                    <i class="fa fa-calendar s_mr_10"></i> Ближайшие матчи
-                </div>
-                <div class="panel__body">
-                    {{> 'fixtures' fixture=globals.comming }}
-                </div>
-            </div>
-            <div class="link_type_full s_mb_10">
-                <span class="text_color_orange">Календарь</span>
-            <span class="pull-right">
-                <a href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
-            </span>
-            </div>
-        {{/if}}
 
+        <div class="panel panel_type_fixture s_m_0">
+            <div class="panel__header">
+                <i class="fa fa-calendar s_mr_10"></i> Последние матчи
+            </div>
+            <div class="panel__body">
+                {{> 'fixture' fixture=globals.recent emptyText='Ещё нет сыгранных матчей' }}
+            </div>
+        </div>
+        <div class="link_type_full s_mb_10">
+            <span class="text_color_orange">Календарь</span>
+            <span class="pull-right">
+                <a href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
+            </span>
+        </div>
+        <div class="panel panel_type_fixture s_m_0">
+            <div class="panel__header">
+                <i class="fa fa-calendar s_mr_10"></i> Ближайшие матчи
+            </div>
+            <div class="panel__body">
+                {{> 'fixture' fixture=globals.comming emptyText='Нет запланированных матчей' }}
+            </div>
+        </div>
+        <div class="link_type_full s_mb_10">
+            <span class="text_color_orange">Календарь</span>
+            <span class="pull-right">
+                <a href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
+            </span>
+        </div>
 
         {{#if globals.contacts.length}}
             <div class="panel s_m_0">

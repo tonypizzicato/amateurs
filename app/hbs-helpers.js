@@ -50,6 +50,13 @@ var helpers = {
         return str.toUpperCase();
     },
 
+    ucfirst: function (str) {
+        str += '';
+        var f = str.charAt(0)
+            .toUpperCase();
+        return f + str.substr(1);
+    },
+
     debug: function (optionalValue) {
         console.log("Current Context");
         console.log("====================");
@@ -129,7 +136,7 @@ var helpers = {
     },
 
     dateTimeFull: function (date) {
-        return dateFn(date, 'LLLL');
+        return dateFn(date, 'dddd, Do MMMM YYYY HH:mm');
     },
 
     contains: function (string, needle) {
@@ -165,7 +172,6 @@ var helpers = {
     },
 
     endsWith: function (str, suffix, options) {
-        console.log(str, suffix, str.toLowerCase().indexOf(suffix.toLowerCase(), str.length - suffix.length));
         if (str.toLowerCase().indexOf(suffix.toLowerCase(), str.length - suffix.length) !== -1) {
             return options.fn(this);
         }

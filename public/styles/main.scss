@@ -718,8 +718,14 @@ ul, ol {
     color: #555;
 }
 
+.panel__body .fixture__time {
+    line-height:    20px;
+    vertical-align: bottom;
+}
+
 .panel_type_fixture .panel__body td {
     vertical-align: middle;
+    white-space:    nowrap;
 }
 
 .col-md-4 .fixture__team {
@@ -952,12 +958,13 @@ ul, ol {
 }
 
 .panel_type_federations .nav.nav-tabs a {
-    line-height: 2;
+    line-height: 1.5;
 }
 
 .panel_type_federations [class^="col-"] {
-    display: inline-block;
-    float:   none;
+    display:        inline-block;
+    float:          none;
+    vertical-align: top;
 }
 
 .federation {
@@ -1276,6 +1283,10 @@ $size: 200px;
                 #TOOLS
 \*------------------------------------*/
 
+.s_whitespace_no-wrap {
+    white-space: nowrap;
+}
+
 .s_valign_t {
     position:       relative;
     vertical-align: top;
@@ -1423,8 +1434,24 @@ $size: 200px;
     padding-top: 0;
 }
 
+.s_pt_10 {
+    padding-top: 10px;
+}
+
+.s_pt_20 {
+    padding-top: 20px;
+}
+
 .s_pb_0 {
     padding-bottom: 0;
+}
+
+.s_pb_10 {
+    padding-bottom: 10px;
+}
+
+.s_pb_20 {
+    padding-bottom: 20px;
 }
 
 .text_align_l {

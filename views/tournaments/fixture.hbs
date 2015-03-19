@@ -18,7 +18,7 @@
                                         </td>
                                         <td class="fixture__team col-md-4 text_align_r s_pr_0{{#if teams.[0].win}} fixture__winner{{/if}}{{#if teams.[0].loose}} fixture__looser{{/if}}">
                                             {{~teams.[0].name~}}
-                                        <td class="text_align_c col-md-05">v</td>
+                                        <td class="text_align_c col-md-1">v</td>
                                         <td class="fixture__team col-md-4 text_align_l s_pl_0{{#if teams.[0].loose}} fixture__winner{{/if}}{{#if teams.[0].win}} fixture__looser{{/if}}">
                                             {{~teams.[1].name~}}
                                         </td>
@@ -30,7 +30,7 @@
                                                 </a>
                                             </td>
                                         {{else}}
-                                            <td colspan="3">-:-</td>
+                                            <td class="col-md-1">&mdash;:&mdash;</td>
                                         {{/if}}
                                     </tr>
                                 {{/each}}
@@ -64,38 +64,34 @@
             </div>
         {{/if}}
 
-        {{#if globals.recent.length}}
-            <div class="panel panel_type_fixture s_m_0">
-                <div class="panel__header">
-                    <i class="fa fa-calendar s_mr_10"></i> Последние матчи
-                </div>
-                <div class="panel__body">
-                    {{> 'fixtures' fixture=globals.recent }}
-                </div>
+        <div class="panel panel_type_fixture s_m_0">
+            <div class="panel__header">
+                <i class="fa fa-calendar s_mr_10"></i> Последние матчи
             </div>
-            <div class="link_type_full s_mb_10">
-                <span class="text_color_orange">Календарь</span>
+            <div class="panel__body">
+                {{> 'fixture' fixture=globals.recent emptyText='Ещё нет сыгранных матчей' }}
+            </div>
+        </div>
+        <div class="link_type_full s_mb_10">
+            <span class="text_color_orange">Календарь</span>
             <span class="pull-right">
                 <a href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
             </span>
+        </div>
+        <div class="panel panel_type_fixture s_m_0">
+            <div class="panel__header">
+                <i class="fa fa-calendar s_mr_10"></i> Ближайшие матчи
             </div>
-        {{/if}}
-        {{#if globals.comming.length}}
-            <div class="panel s_m_0">
-                <div class="panel__header">
-                    <i class="fa fa-calendar s_mr_10"></i> Ближайшие матчи
-                </div>
-                <div class="panel__body">
-                    {{> 'fixtures' fixture=globals.comming }}
-                </div>
+            <div class="panel__body">
+                {{> 'fixture' fixture=globals.comming emptyText='Нет запланированных матчей' }}
             </div>
-            <div class="link_type_full s_mb_10">
-                <span class="text_color_orange">Календарь</span>
+        </div>
+        <div class="link_type_full s_mb_10">
+            <span class="text_color_orange">Календарь</span>
             <span class="pull-right">
                 <a href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
             </span>
-            </div>
-        {{/if}}
+        </div>
 
 
         {{#if globals.contacts.length}}

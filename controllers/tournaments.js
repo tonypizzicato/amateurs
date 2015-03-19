@@ -190,6 +190,23 @@ module.exports = {
                     games = JSON.parse(games);
 
                     games = games.map(function (item) {
+
+                        if (item.state == 'CLOSED' && item.score) {
+                            if (item.score.ft[0] > item.score.ft[1]) {
+                                item.teams[0].win = true;
+                                item.teams[0].loose = false;
+                                item.teams[0].draw = false;
+                            } else if (item.score.ft[0] < item.score.ft[1]) {
+                                item.teams[0].win = false;
+                                item.teams[0].loose = true;
+                                item.teams[0].draw = false;
+                            } else {
+                                item.teams[0].win = false;
+                                item.teams[0].loose = false;
+                                item.teams[0].draw = true;
+                            }
+                        }
+
                         item.dateTime = item.date ? moment(item.date + ' ' + item.time, 'DD/MM/YYYY HH:mm') : null;
                         return item;
                     });
@@ -218,7 +235,7 @@ module.exports = {
                         return item.dateTime && item.dateTime.isBefore(moment()) && item.state == 'CLOSED';
                     });
                     var comming = games.filter(function (item) {
-                        return item.dateTime && (item.dateTime.isAfter(moment()) || item.dateTime.isSame(moment())) && item.state != 'CLOSED';
+                        return !item.dateTime || (item.dateTime && (item.dateTime.isAfter(moment()) || item.dateTime.isSame(moment())) && item.state != 'CLOSED');
                     });
 
                     recent = recent.slice(-7);

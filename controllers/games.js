@@ -21,6 +21,10 @@ module.exports = {
             }
             client.get(remoteConfig.url + '/games/' + req.params.id, function (game) {
                 game = JSON.parse(game);
+
+                game.dateTime = game.date ? moment(game.date + ' ' + game.time, 'DD/MM/YYYY HH:mm') : null;
+                console.log(game.dateTime);
+
                 var gameLength = doc.settings ? doc.settings.gameLength : undefined;
                 if (game.state.toLowerCase() == 'closed') {
                     game.timeGone = gameLength;
@@ -43,11 +47,9 @@ module.exports = {
                 game.players = game.players.map(function (item) {
                     item = item.sort(function (a, b) {
                         if (!a.position) {
-                            console.log(a._id);
                             return 1;
                         }
                         if (!b.position) {
-                            console.log(b._id);
                             return -1;
                         }
                         if (a.position.toLowerCase() == 'gk') {

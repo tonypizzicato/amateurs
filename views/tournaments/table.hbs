@@ -23,7 +23,7 @@
                                 </div>
                             {{~/each~}}
                         </div>
-                    {{~else~}}
+                        {{~else~}}
                         <ul class="nav nav-tabs">
                             <li class="tab__title tab__title_size_full active">
                                 <a href="#tab-table" data-toggle="tab">{{tournament.name}}</a>
@@ -106,38 +106,34 @@
     </div>
     <div class="col-md-4 column">
 
-        {{#if globals.recent.length}}
-            <div class="panel panel_type_fixture s_m_0">
-                <div class="panel__header">
-                    <i class="fa fa-calendar s_mr_10"></i> Последние матчи
-                </div>
-                <div class="panel__body">
-                    {{> 'fixtures' fixture=globals.recent }}
-                </div>
+        <div class="panel panel_type_fixture s_m_0">
+            <div class="panel__header">
+                <i class="fa fa-calendar s_mr_10"></i> Последние матчи
             </div>
-            <div class="link_type_full s_mb_10">
-                <span class="text_color_orange">Календарь</span>
+            <div class="panel__body">
+                {{> 'fixture' fixture=globals.recent emptyText='Ещё нет сыгранных матчей' }}
+            </div>
+        </div>
+        <div class="link_type_full s_mb_10">
+            <span class="text_color_orange">Календарь</span>
             <span class="pull-right">
                 <a href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
             </span>
+        </div>
+        <div class="panel panel_type_fixture s_m_0">
+            <div class="panel__header">
+                <i class="fa fa-calendar s_mr_10"></i> Ближайшие матчи
             </div>
-        {{/if}}
-        {{#if globals.comming.length}}
-            <div class="panel s_m_0">
-                <div class="panel__header">
-                    <i class="fa fa-calendar s_mr_10"></i> Ближайшие матчи
-                </div>
-                <div class="panel__body">
-                    {{> 'fixtures' fixture=globals.comming }}
-                </div>
+            <div class="panel__body">
+                {{> 'fixture' fixture=globals.comming emptyText='Нет запланированных матчей' }}
             </div>
-            <div class="link_type_full s_mb_10">
-                <span class="text_color_orange">Календарь</span>
+        </div>
+        <div class="link_type_full s_mb_10">
+            <span class="text_color_orange">Календарь</span>
             <span class="pull-right">
                 <a href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
             </span>
-            </div>
-        {{/if}}
+        </div>
 
 
         {{#if globals.contacts.length}}
