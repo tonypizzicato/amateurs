@@ -1,10 +1,11 @@
 "use strict";
 
-var moment          = require('moment'),
-    RestClient      = require('node-rest-client').Client,
-    TournamentModel = require('../models/tournament'),
-    ContactModel    = require('../models/contact'),
-    remoteConfig    = require('../config/tinyapi');
+var _                = require('underscore'),
+    moment           = require('moment'),
+    RestClient       = require('node-rest-client').Client,
+    TournamentModel  = require('../models/tournament'),
+    GameArticleModel = require('../models/game-article'),
+    remoteConfig     = require('../config/tinyapi');
 
 
 var client = new RestClient(remoteConfig.authOptions);
@@ -66,7 +67,16 @@ module.exports = {
 
                     return item;
                 });
-                res.render('games/item', {tournament: doc, game: game});
+
+                GameArticleModel.find({gameId: req.params.id}).exec(function (err, docs) {
+                    if (err) {
+                        return next(err);
+                    }
+
+                    var preview = _.findWhere(docs, {type: 'preview'});
+                    var review = _.findWhere(docs, {type: 'review'});
+                    res.render('games/item', {tournament: doc, game: game, media: {preview: preview, review: review}});
+                });
             });
         });
     }

@@ -39,7 +39,6 @@ var api = {
         console.log('/api/news POST handled');
 
         var doc = req.body;
-        doc.author = req.user.username;
 
         newsModel.create(doc, function (err, article) {
             if (err) {
@@ -62,7 +61,6 @@ var api = {
         console.log('/api/news PUT handled');
 
         var doc = req.body;
-        doc.author = doc.author ? doc.author : req.user.username;
 
         newsModel.update({_id: req.params.id}, {$set: doc}, function (err, count) {
             if (err) {

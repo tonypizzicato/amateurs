@@ -213,10 +213,15 @@ module.exports = {
 
                     // TODO: replace with dateTime
                     games.sort(function (a, b) {
-                        if (a.dateTime && a.dateTime.isBefore(b.dateTime)) {
-                            return -1;
+
+                        if (a.dateTime) {
+                            if (a.dateTime.isBefore(b.dateTime)) {
+                                return -1;
+                            } else {
+                                return 1;
+                            }
                         } else {
-                            return 1;
+                            return a.tourNumber < b.tourNumber ? -1 : 1;
                         }
                     });
 
@@ -238,8 +243,8 @@ module.exports = {
                         return !item.dateTime || (item.dateTime && (item.dateTime.isAfter(moment()) || item.dateTime.isSame(moment())) && item.state != 'CLOSED');
                     });
 
-                    recent = recent.slice(-7);
-                    comming = comming.slice(0, 7);
+                    recent = recent.slice(-8);
+                    comming = comming.slice(0, 10);
 
                     resolve({recent: recent, comming: comming});
                 });

@@ -50,9 +50,9 @@ h1, h2, h3,
 }
 
 h1 {
-    margin-bottom:  20px;
+    margin-bottom:  40px;
+    font-size:      36px;
     letter-spacing: 5px;
-    font-size:      48px;
 }
 
 a:hover,
@@ -256,7 +256,7 @@ ul, ol {
 
 .nav .dropdown-menu_type_tournaments {
     padding:            20px 0px;
-    width:              100%;
+    width:              75.7%;
     box-shadow:         none;
     -webkit-box-shadow: none;
 }
@@ -1132,16 +1132,23 @@ $size: 200px;
     }
 }
 
-.match__time .match__time_value.match__time_value_finished {
+.match__time .match__time_value.match__time_value_finished,
+.match__time .match__time_value.match__time_value_not-started {
     font-size: 18px;
 }
 
-.match__time .match__time_value.match__time_value_finished i:before {
+.match__time .match__time_value.match__time_value_finished i:before,
+.match__time .match__time_value.match__time_value_not-started i:before {
     font-size:   96px;
     margin-left: 0;
     line-height: .1;
     position:    relative;
     top:         10px;
+}
+
+.match__time .match__time_value.match__time_value_not-started i:before {
+    line-height: .7;
+    top:         -10px;
 }
 
 .match__time .match__time_value.match__time_value_minutes {
@@ -1372,6 +1379,10 @@ $size: 200px;
 
 .s_mb_3 {
     margin-bottom: 3px;
+}
+
+.s_mb_5 {
+    margin-bottom: 5px;
 }
 
 .s_mb_10 {

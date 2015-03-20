@@ -43,22 +43,17 @@
                 </a>
 
                 <ul class="dropdown-menu dropdown-menu_type_tournaments row">
-                    <li class="col-md-9">
-                        <ul class="row">
-                            <li class="col-md-12">
-                                <span class="dropdown-header">Турниры {{globals.league.name}}</span>
-                            </li>
-                        </ul>
+                    <li class="col-md-12 s_pt_20">
                         <ul class="row">
                             {{#each globals.countries}}
                                 <li class="col-md-4">
                                     <ul>
-                                        <li class="dropdown-header">
+                                        <li class="dropdown-header s_mb_10">
                                             {{name}}
                                         </li>
                                         <ul class="s_mb_10">
                                             {{#each tournaments}}
-                                                <li>
+                                                <li class="s_mb_5">
                                                     <a href="/{{../../globals.league.slug}}/tournaments/{{slug}}">{{name}}</a>
                                                 </li>
                                             {{/each}}

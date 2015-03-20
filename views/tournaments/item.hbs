@@ -6,42 +6,13 @@
             <div class="col-md-6 column">
                 <div class="row">
                     <div class="col-md-12 s_mb_20">
-                        <div class="tabbable">
-                            {{~#if tournament.groupsCount ~}}
-                                <ul class="nav nav-tabs">
-                                    {{~# each tournament.groups~}}
-                                        <li class="tab__title tab__title_size_{{../tournament.groupsCount}}{{#eq 0 @index}} active{{/eq}}">
-                                            <a href="#tab-table" data-toggle="tab">Группа {{name}}</a>
-                                        </li>
-                                    {{~/each~}}
-                                </ul>
-                                <div class="tab-content">
-                                    {{~# each tournament.groups~}}
-                                        <div class="tab-pane{{#eq 0 @index}} active{{/eq}}" id="tab-table">
-                                            <div class="panel s_m_0">
-                                                <div class="panel__body s_p_0 s_pb_5">
-                                                    {{$ 'table' table=this.globals.table tableFull=false}}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    {{~/each~}}
-                                </div>
-                            {{~else~}}
-                                <ul class="nav nav-tabs">
-                                    <li class="tab__title tab__title_size_full active">
-                                        <a href="#tab-table" data-toggle="tab">Таблица</a>
-                                    </li>
-                                </ul>
-                                <div class="tab-content">
-                                    <div class="tab-pane active" id="tab-table">
-                                        <div class="panel s_m_0">
-                                            <div class="panel__body s_p_0 s_pb_5">
-                                                {{$ 'table' table=this.globals.table tableFull=false}}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            {{~/if~}}
+                        <div class="panel s_m_0">
+                            <div class="panel__header">
+                                <i class="fa fa-list-ol s_mr_10"></i> Таблица
+                            </div>
+                            <div class="panel__body s_p_0 s_pb_5">
+                                {{$ 'table' table=this.globals.table tableFull=false}}
+                            </div>
                         </div>
                         <div class="link_type_full">
                             <span class="text_color_orange">Полная таблица</span>
