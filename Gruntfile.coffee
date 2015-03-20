@@ -257,6 +257,7 @@ module.exports = (grunt) ->
                         "<%= yeoman.dist %>/images/**/*.{gif,jpeg,jpg,png}"
                         "!<%= yeoman.dist %>/images/logos/*.{gif,jpeg,jpg,png}"
                         "<%= yeoman.dist %>/styles/fonts/{,*/}*.*"
+                        "!<%= yeoman.dist %>/styles/fonts/football/*.{woff,eot,svg,ttf}"
                     ]
 
 
