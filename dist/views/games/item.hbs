@@ -9,7 +9,7 @@
                             <div class="col-md-4 text_align_r">
                                 <img class="pull-left" src="http://amateurs.io/api/img/teams/{{game.teams.[0].name}}.png" width="64">
 
-                                <p class="text_size_32 text_weight_light s_mb_20">{{game.score.ft.[0]}}</p>
+                                <p class="text_size_32 text_weight_light s_mb_20">{{#if game.score.ft.[0]}}{{game.score.ft.[0]}}{{else}}0{{/if}}</p>
 
                                 <p class="text_color_orange text_size_16">{{game.teams.[0].name}}</p>
 
@@ -37,22 +37,29 @@
                                                 {{#if game.timeGone}}
                                                     <span class="match__time_value match__time_value_minutes">{{game.timeGone}}</span>
                                                 {{else}}
-                                                    <span class="match__time_value">&mdash;</span>
+                                                    <span class="match__time_value match__time_value_not-started">
+                                                        <i class="flaticon flaticon-timer20"></i><br>Матч не начался
+                                                    </span>
+
                                                 {{/if}}
                                             {{/eq}}
                                         </div>
                                     </div>
                                 </div>
-                                <p class="s_m_0 text_color_muted">{{dateTimeFull game.dateTime}}</p>
-
-                                <p class="s_m_0 text_color_muted">Стадион: {{game.placeName}}</p>
-
-                                <p class="text_color_muted">Судья: {{game.refereeName}}</p>
+                                <p class="s_m_0 text_color_light">
+                                    {{#if game.dateTime}}{{ucfirst (dateTimeFull game.dateTime)}}{{else}}Время не определено{{/if}}
+                                </p>
+                                {{#if game.placeName}}
+                                    <p class="s_m_0 text_color_light">Стадион: {{game.placeName}}</p>
+                                {{/if}}
+                                {{#if game.refereeName}}
+                                    <p class="text_color_light">Судья: {{game.refereeName}}</p>
+                                {{/if}}
                             </div>
                             <div class="col-md-4 text_align_l">
                                 <img class="pull-right" src="http://amateurs.io/api/img/teams/{{game.teams.[1].name}}.png" width="64">
 
-                                <p class="text_size_32 text_weight_light s_mb_20">{{game.score.ft.[1]}}</p>
+                                <p class="text_size_32 text_weight_light s_mb_20">{{#if game.score.ft.[1]}}{{game.score.ft.[1]}}{{else}}0{{/if}}</p>
 
                                 <p class="text_color_orange text_size_16">{{game.teams.[1].name}}</p>
 
@@ -70,7 +77,7 @@
             </div>
         </div>
 
-        <div class="row s_mb_20">
+        <div class="row s_mb_40">
             <div class="column col-md-12">
                 <div class="tabbable" id="tabs-992576">
                     <ul class="nav nav-tabs">
@@ -83,86 +90,110 @@
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab-lineups">
-                            <div class="row">
-                                <div class="column col-md-6">
-                                    {{#each game.players.[0]}}
-                                        <div class="row">
-                                            <div class="column col-md-12 s_pr_0">
-                                                <div class="match-lineup__number column col-md-2 text_color_orange">
-                                                    {{#if number}}{{~number~}}{{else}}&mdash;{{/if}}
+                            <div class="panel">
+                                <div class="row">
+                                    <div class="column col-md-6">
+                                        {{#if game.players.[0]}}
+                                            {{#each game.players.[0]}}
+                                                <div class="row">
+                                                    <div class="column col-md-12 s_pr_0">
+                                                        <div class="match-lineup__number column col-md-2 text_color_orange">
+                                                                    {{#if number}}{{~number~}}{{else}}&mdash;{{/if}}
+                                                        </div>
+                                                        <div class="match-lineup__player column col-md-8">
+                                                            {{~name~}}
+                                                        </div>
+                                                        <div class="match-lineup__player column col-md-2 text_align_c">
+                                                                    {{#if position}}{{~position~}}{{else}}&mdash;{{/if}}
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="match-lineup__player column col-md-8">
-                                                    {{~name~}}
+                                            {{/each}}
+                                        {{else}}
+                                            <p class="text_align_c s_pt_20 s_pb_10">Состав не определен</p>
+                                        {{/if}}
+                                    </div>
+                                    <div class="column col-md-6">
+                                        {{#if game.players.[1]}}
+                                            {{#each game.players.[1]}}
+                                                <div class="row">
+                                                    <div class="column col-md-12 s_pr_0">
+                                                        <div class="match-lineup__number column col-md-2 text_color_orange">
+                                                                    {{#if number}}{{~number~}}{{else}}&mdash;{{/if}}
+                                                        </div>
+                                                        <div class="match-lineup__player column col-md-8">
+                                                            {{~name~}}
+                                                        </div>
+                                                        <div class="match-lineup__player column col-md-2 text_align_c">
+                                                                    {{#if position}}{{~position~}}{{else}}&mdash;{{/if}}
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="match-lineup__player column col-md-2 text_align_c">
-                                                    {{~position~}}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    {{/each}}
-                                </div>
-                                <div class="column col-md-6">
-                                    {{#each game.players.[1]}}
-                                        <div class="row">
-                                            <div class="column col-md-12 s_pr_0">
-                                                <div class="match-lineup__number column col-md-2 text_color_orange">
-                                                     {{#if number}}{{~number~}}{{else}}&mdash;{{/if}}
-                                                </div>
-                                                <div class="match-lineup__player column col-md-8">
-                                                    {{~name~}}
-                                                </div>
-                                                <div class="match-lineup__player column col-md-2 text_align_c">
-                                                    {{~position~}}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    {{/each}}
+                                            {{/each}}
+                                        {{else}}
+                                            <p class="text_align_c s_pt_20 s_pb_10">Состав не определен</p>
+                                        {{/if}}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="tab-pane" id="tab-events">
-                            {{#each game.events}}
-                                <div class="row">
-                                    <div class="column col-md-2">
-                                        <div class="match-events__time text_align_r">
-                                            {{#eq type 'SCORED_H'}}
-                                                <span class="icon_type_event text_color_orange">Гол!</span>
-                                            {{/eq}}
-                                            {{#eq type 'SCORED_A'}}
-                                                <span class="icon_type_event text_color_orange">Гол!</span>
-                                            {{/eq}}
-                                            {{#eq type 'YELLOW_H'}}
-                                                <i class="icon_type_event icon-yellow"></i>
-                                            {{/eq}}
-                                            {{#eq type 'YELLOW_A'}}
-                                                <i class="icon_type_event icon-yellow"></i>
-                                            {{/eq}}
-                                            {{#eq type 'RED_H'}}
-                                                <i class="icon_type_event icon-red"></i>
-                                            {{/eq}}
-                                            {{#eq type 'RED_A'}}
-                                                <i class="icon_type_event icon-red"></i>
-                                            {{/eq}}
-                                            {{#eq type 'pen'}}
-                                                <i class="icon_type_event icon-penalty"></i>
-                                            {{/eq}}
-                                            {{#eq type 'cor'}}
-                                                <i class="icon_type_event icon-corner"></i>
-                                            {{/eq}}
-                                            {{#eq type 'inj'}}
-                                                <i class="icon_type_event icon-injury"></i>
-                                            {{/eq}}
-                                            {{minute}}'
+                            <div class="panel">
+                                {{#if game.events.length}}
+                                    {{#each game.events}}
+                                        <div class="row">
+                                            <div class="column col-md-2{{#endsWith type '_A'}} s_float_r{{/endsWith}}">
+                                                <div class="match-events__time text_align_r">
+                                                    {{#eq type 'SCORED_H'}}
+                                                        <span class="icon_type_event text_color_orange">Гол!</span>
+                                                    {{/eq}}
+                                                    {{#eq type 'SCORED_A'}}
+                                                        <span class="icon_type_event text_color_orange">Гол!</span>
+                                                    {{/eq}}
+                                                    {{#eq type 'YELLOW_H'}}
+                                                        <i class="icon_type_event icon-yellow"></i>
+                                                    {{/eq}}
+                                                    {{#eq type 'YELLOW_A'}}
+                                                        <i class="icon_type_event icon-yellow"></i>
+                                                    {{/eq}}
+                                                    {{#eq type 'RED_H'}}
+                                                        <i class="icon_type_event icon-red"></i>
+                                                    {{/eq}}
+                                                    {{#eq type 'RED_A'}}
+                                                        <i class="icon_type_event icon-red"></i>
+                                                    {{/eq}}
+                                                    {{#eq type 'pen'}}
+                                                        <i class="icon_type_event icon-penalty"></i>
+                                                    {{/eq}}
+                                                    {{#eq type 'cor'}}
+                                                        <i class="icon_type_event icon-corner"></i>
+                                                    {{/eq}}
+                                                    {{#eq type 'inj'}}
+                                                        <i class="icon_type_event icon-injury"></i>
+                                                    {{/eq}}
+                                                    {{minute}}'
+                                                </div>
+                                            </div>
+                                            <div class="column col-md-10">
+                                                <div class="match-events__description pull-right {{#endsWith type '_A'}} text_align_r{{/endsWith~}}
+                                                    {{~#if secondField}} match-events__description_double{{/if}}">
+
+                                                    {{~#if firstField.number}}<span class="text_color_orange">{{firstField.number}}.</span> {{/if~}}
+                                                    {{~firstField.name~}}
+                                                    {{~#if secondField~}}
+                                                        <br>
+                                                        {{~#if secondField.number~}}
+                                                            <span class="text_color_light">{{secondField.number}}. {{secondField.name}}</span>
+                                                        {{~/if~}}
+                                                    {{~/if~}}
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="column col-md-10">
-                                        <div class="match-events__description pull-right">
-                                            {{#if firstField.number}}<span class="text_color_orange">{{firstField.number}}</span>.{{/if}}
-                                            {{firstField.name}}
-                                        </div>
-                                    </div>
-                                </div>
-                            {{/each}}
+                                    {{/each}}
+                                {{else}}
+                                    <p class="text_align_c s_pt_20 s_pb_20">Нет событий</p>
+                                {{/if}}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -173,15 +204,45 @@
             <div class="column col-md-12">
                 <div class="tabbable" id="tabs-992576">
                     <ul class="nav nav-tabs">
-                        <li class="tab__title tab__title_size_half active">
-                            <a href="#tab-photo" data-toggle="tab">Фотоотчет</a>
+                        <li class="tab__title tab__title_size_third active">
+                            <a href="#tab-preview" data-toggle="tab">Превью</a>
                         </li>
-                        <li class="tab__title tab__title_size_half">
+                        <li class="tab__title tab__title_size_third">
                             <a href="#tab-review" data-toggle="tab">Обзор матча</a>
+                        </li>
+                        <li class="tab__title tab__title_size_third">
+                            <a href="#tab-photo" data-toggle="tab">Фотоотчет</a>
                         </li>
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane active" id="tab-photo">
+                        <div class="tab-pane active" id="tab-preview">
+
+                            <div class="panel panel_type_media s_m_0">
+                                <div class="panel__body">
+                                    <div class="s_pl_0">
+                                        <h4>{{game.teams.[0].name}} v {{game.teams.[1].name}}</h4>
+
+                                        <div>{{{media.preview.body}}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="tab-review">
+
+                            <div class="panel panel_type_media s_m_0">
+                                <div class="panel__body">
+                                    <div class="s_pl_0">
+                                        <h4>{{game.teams.[0].name}} <span class="text_color_orange pull-right">{{game.score.ft.[0]}}</span></h4>
+                                        <h4>{{game.teams.[1].name}} <span class="text_color_orange pull-right">{{game.score.ft.[1]}}</span></h4>
+
+                                        <div>{{{media.review.body}}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="tab-photo">
 
                             <div class="panel panel_type_photo s_m_0">
                                 <div class="panel__body">
@@ -215,52 +276,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="link_type_full">
-                                <span class="text_color_orange">Смотреть все</span>
-                                    <span class="pull-right">
-                                        <a href="/league/{{league.short}}/photo"><i class="fa fa-arrow-circle-o-right"></i></a>
-                                    </span>
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="tab-review">
-
-                            <div class="panel panel_type_media s_m_0">
-                                <div class="panel__body">
-                                    <div class="row">
-                                        <div class="col-md-7">
-                                            <div class="media__item-wrapper">
-                                                <img class="media__item" alt="400x300"
-                                                     src="https://pp.vk.me/c619622/v619622188/4f4b/ChZYfzg9uZA.jpg"/>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-5 s_pl_0">
-                                            <h4>Вест Хэм Юнайтед <span class="text_color_orange pull-right">4</span></h4>
-                                            <h4>Вульверхэмптон <span class="text_color_orange pull-right">3</span></h4>
-
-                                            <p class="text_size_11 s_mb_3"><i class="fa fa-calendar s_mr_5"></i> 03.11.2014 15:40</p>
-
-                                            <p class="text_size_11"><i class="fa fa-location-arrow s_mr_5"></i> Прага</p>
-
-                                            <p>
-                                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-                                                been
-                                                the industry's standard dummy text ever since the 1500s, when an unknown printer took a
-                                                galley
-                                                of type and scrambled it to make a type specimen book. It has survived not only five
-                                                centuries,
-                                                but also the leap into electronic typesetting, remaining essentially unchanged.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="link_type_full">
-                                <span class="text_color_orange">Читать полностью</span>
-                                <span class="pull-right">
-                                    <a href="/league/{{league.short}}/table"><i class="fa fa-arrow-circle-o-right"></i></a>
-                                </span>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -290,39 +305,35 @@
                 </span>
             </div>
         {{/if}}
-        {{#if globals.recent.length}}
-            <div class="panel panel_type_fixture s_m_0">
-                <div class="panel__header">
-                    <i class="fa fa-calendar s_mr_10"></i> Последние матчи
-                </div>
-                <div class="panel__body">
-                    {{> 'fixtures' fixture=globals.recent }}
-                </div>
-            </div>
-            <div class="link_type_full s_mb_10">
-                <span class="text_color_orange">Календарь</span>
-            <span class="pull-right">
-                <a href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
-            </span>
-            </div>
-        {{/if}}
-        {{#if globals.comming.length}}
-            <div class="panel s_m_0">
-                <div class="panel__header">
-                    <i class="fa fa-calendar s_mr_10"></i> Ближайшие матчи
-                </div>
-                <div class="panel__body">
-                    {{> 'fixtures' fixture=globals.comming }}
-                </div>
-            </div>
-            <div class="link_type_full s_mb_10">
-                <span class="text_color_orange">Календарь</span>
-            <span class="pull-right">
-                <a href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
-            </span>
-            </div>
-        {{/if}}
 
+        <div class="panel panel_type_fixture s_m_0">
+            <div class="panel__header">
+                <i class="fa fa-calendar s_mr_10"></i> Последние матчи
+            </div>
+            <div class="panel__body">
+                {{> 'fixture' fixture=globals.recent emptyText='Ещё нет сыгранных матчей' }}
+            </div>
+        </div>
+        <div class="link_type_full s_mb_10">
+            <span class="text_color_orange">Календарь</span>
+            <span class="pull-right">
+                <a href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
+            </span>
+        </div>
+        <div class="panel panel_type_fixture s_m_0">
+            <div class="panel__header">
+                <i class="fa fa-calendar s_mr_10"></i> Ближайшие матчи
+            </div>
+            <div class="panel__body">
+                {{> 'fixture' fixture=globals.comming emptyText='Нет запланированных матчей' }}
+            </div>
+        </div>
+        <div class="link_type_full s_mb_10">
+            <span class="text_color_orange">Календарь</span>
+            <span class="pull-right">
+                <a href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
+            </span>
+        </div>
 
         {{#if globals.contacts.length}}
             <div class="panel s_m_0">
