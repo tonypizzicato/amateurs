@@ -15,7 +15,6 @@ $color-red: #C63C3C !default;
 
 @import 'fontawesome/scss/font-awesome';
 @import 'bootstrap-sass/vendor/assets/stylesheets/bootstrap';
-@import '/styles/fonts/football/flaticon.css';
 @import 'flags';
 
 /*------------------------------------*\
@@ -50,9 +49,9 @@ h1, h2, h3,
 }
 
 h1 {
-    margin-bottom:  20px;
+    margin-bottom:  40px;
+    font-size:      36px;
     letter-spacing: 5px;
-    font-size:      48px;
 }
 
 a:hover,
@@ -256,7 +255,7 @@ ul, ol {
 
 .nav .dropdown-menu_type_tournaments {
     padding:            20px 0px;
-    width:              100%;
+    width:              75.7%;
     box-shadow:         none;
     -webkit-box-shadow: none;
 }
@@ -718,8 +717,14 @@ ul, ol {
     color: #555;
 }
 
+.panel__body .fixture__time {
+    line-height:    20px;
+    vertical-align: bottom;
+}
+
 .panel_type_fixture .panel__body td {
     vertical-align: middle;
+    white-space:    nowrap;
 }
 
 .col-md-4 .fixture__team {
@@ -952,12 +957,13 @@ ul, ol {
 }
 
 .panel_type_federations .nav.nav-tabs a {
-    line-height: 2;
+    line-height: 1.5;
 }
 
 .panel_type_federations [class^="col-"] {
-    display: inline-block;
-    float:   none;
+    display:        inline-block;
+    float:          none;
+    vertical-align: top;
 }
 
 .federation {
@@ -1125,16 +1131,23 @@ $size: 200px;
     }
 }
 
-.match__time .match__time_value.match__time_value_finished {
+.match__time .match__time_value.match__time_value_finished,
+.match__time .match__time_value.match__time_value_not-started {
     font-size: 18px;
 }
 
-.match__time .match__time_value.match__time_value_finished i:before {
+.match__time .match__time_value.match__time_value_finished i:before,
+.match__time .match__time_value.match__time_value_not-started i:before {
     font-size:   96px;
     margin-left: 0;
     line-height: .1;
     position:    relative;
     top:         10px;
+}
+
+.match__time .match__time_value.match__time_value_not-started i:before {
+    line-height: .7;
+    top:         -10px;
 }
 
 .match__time .match__time_value.match__time_value_minutes {
@@ -1200,6 +1213,10 @@ $size: 200px;
 .match-events__time,
 .match-events__description {
     width: 100%;
+}
+
+.match-events__description.match-events__description_double {
+    padding: 6px 20px 6px 15px;
 }
 
 .match-events__time {
@@ -1271,6 +1288,10 @@ $size: 200px;
 /*------------------------------------*\
                 #TOOLS
 \*------------------------------------*/
+
+.s_whitespace_no-wrap {
+    white-space: nowrap;
+}
 
 .s_valign_t {
     position:       relative;
@@ -1359,6 +1380,10 @@ $size: 200px;
     margin-bottom: 3px;
 }
 
+.s_mb_5 {
+    margin-bottom: 5px;
+}
+
 .s_mb_10 {
     margin-bottom: 10px;
 }
@@ -1419,8 +1444,24 @@ $size: 200px;
     padding-top: 0;
 }
 
+.s_pt_10 {
+    padding-top: 10px;
+}
+
+.s_pt_20 {
+    padding-top: 20px;
+}
+
 .s_pb_0 {
     padding-bottom: 0;
+}
+
+.s_pb_10 {
+    padding-bottom: 10px;
+}
+
+.s_pb_20 {
+    padding-bottom: 20px;
 }
 
 .text_align_l {

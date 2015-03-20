@@ -169,13 +169,15 @@ app.get('*', function (req, res, next) {
         getCountries();
     }
 
-    var populateOptions = {path: 'countries', options: {sort: {'sort': 1}}};
-    LeagueModel.find(/*{show: true},*/).sort({sort: 1}).populate(populateOptions).lean().exec(function (err, docs) {
-        if (err) {
-            return next(err);
-        }
-        res.locals.globals.leagues = docs;
-    });
+    if (req.url !== '/') {
+        var populateOptions = {path: 'countries', options: {sort: {'sort': 1}}};
+        LeagueModel.find(/*{show: true},*/).sort({sort: 1}).populate(populateOptions).lean().exec(function (err, docs) {
+            if (err) {
+                return next(err);
+            }
+            res.locals.globals.leagues = docs;
+        });
+    }
 
     res.locals.globals.league = req.session.league;
 

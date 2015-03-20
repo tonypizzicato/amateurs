@@ -7,6 +7,8 @@ var moment          = require('moment'),
     remoteConfig    = require('../config/tinyapi'),
     Promise         = require('promise');
 
+var client = new RestClient(remoteConfig.authOptions);
+
 module.exports = {
     list: function (req, res, next) {
         TournamentModel.find({slug: req.params.name}, function (err, docs) {
@@ -27,8 +29,6 @@ module.exports = {
                 return next(null);
             }
 
-
-            var client = new RestClient(remoteConfig.authOptions);
             client.get(remoteConfig.url + '/stats/players_stats?tournamentId=' + doc.remoteId, function (stats) {
                 stats = JSON.parse(stats);
 
@@ -77,7 +77,6 @@ module.exports = {
                 return next(null);
             }
 
-            var client = new RestClient(remoteConfig.authOptions);
             client.get(remoteConfig.url + '/stats/players_stats?tournamentId=' + doc.remoteId, function (stats) {
                 stats = JSON.parse(stats);
 
@@ -100,11 +99,25 @@ module.exports = {
                 return next(null);
             }
 
-            var client = new RestClient(remoteConfig.authOptions);
             client.get(remoteConfig.url + '/games?tournamentId=' + doc.remoteId, function (games) {
                 games = JSON.parse(games);
 
                 games = games.map(function (item) {
+                    if (item.state == 'CLOSED' && item.score) {
+                        if (item.score.ft[0] > item.score.ft[1]) {
+                            item.teams[0].win = true;
+                            item.teams[0].loose = false;
+                            item.teams[0].draw = false;
+                        } else if (item.score.ft[0] < item.score.ft[1]) {
+                            item.teams[0].win = false;
+                            item.teams[0].loose = true;
+                            item.teams[0].draw = false;
+                        } else {
+                            item.teams[0].win = false;
+                            item.teams[0].loose = false;
+                            item.teams[0].draw = true;
+                        }
+                    }
                     item.dateTime = item.date ? moment(item.date + ' ' + item.time, 'DD/MM/YYYY HH:mm') : null;
                     return item;
                 });
@@ -146,7 +159,6 @@ module.exports = {
                 return next(err);
             }
             tournament = doc;
-            var client = new RestClient(remoteConfig.authOptions);
 
             /* Contacts widget data */
             var contacts = new Promise(function (resolve, reject) {
@@ -178,16 +190,38 @@ module.exports = {
                     games = JSON.parse(games);
 
                     games = games.map(function (item) {
+
+                        if (item.state == 'CLOSED' && item.score) {
+                            if (item.score.ft[0] > item.score.ft[1]) {
+                                item.teams[0].win = true;
+                                item.teams[0].loose = false;
+                                item.teams[0].draw = false;
+                            } else if (item.score.ft[0] < item.score.ft[1]) {
+                                item.teams[0].win = false;
+                                item.teams[0].loose = true;
+                                item.teams[0].draw = false;
+                            } else {
+                                item.teams[0].win = false;
+                                item.teams[0].loose = false;
+                                item.teams[0].draw = true;
+                            }
+                        }
+
                         item.dateTime = item.date ? moment(item.date + ' ' + item.time, 'DD/MM/YYYY HH:mm') : null;
                         return item;
                     });
 
                     // TODO: replace with dateTime
                     games.sort(function (a, b) {
-                        if (a.dateTime && a.dateTime.isBefore(b.dateTime)) {
-                            return -1;
+
+                        if (a.dateTime) {
+                            if (a.dateTime.isBefore(b.dateTime)) {
+                                return -1;
+                            } else {
+                                return 1;
+                            }
                         } else {
-                            return 1;
+                            return a.tourNumber < b.tourNumber ? -1 : 1;
                         }
                     });
 
@@ -206,11 +240,11 @@ module.exports = {
                         return item.dateTime && item.dateTime.isBefore(moment()) && item.state == 'CLOSED';
                     });
                     var comming = games.filter(function (item) {
-                        return item.dateTime && (item.dateTime.isAfter(moment()) || item.dateTime.isSame(moment())) && item.state != 'CLOSED';
+                        return !item.dateTime || (item.dateTime && (item.dateTime.isAfter(moment()) || item.dateTime.isSame(moment())) && item.state != 'CLOSED');
                     });
 
-                    recent = recent.slice(-7);
-                    comming = comming.slice(0, 7);
+                    recent = recent.slice(-8);
+                    comming = comming.slice(0, 10);
 
                     resolve({recent: recent, comming: comming});
                 });

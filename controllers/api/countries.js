@@ -105,6 +105,7 @@ var api = {
 };
 
 var _updateLeague = function (countryId, leagueId) {
+    console.log('update leagues', countryId, leagueId);
     LeagueModel.update({countries: countryId}, {$pull: {countries: countryId}}, {multi: true}).exec(function () {
         LeagueModel.findOneAndUpdate({_id: leagueId}, {$addToSet: {countries: countryId}}).exec();
     });

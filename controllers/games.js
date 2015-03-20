@@ -1,10 +1,14 @@
 "use strict";
 
-var moment          = require('moment'),
-    RestClient      = require('node-rest-client').Client,
-    TournamentModel = require('../models/tournament'),
-    ContactModel    = require('../models/contact'),
-    remoteConfig    = require('../config/tinyapi');
+var _                = require('underscore'),
+    moment           = require('moment'),
+    RestClient       = require('node-rest-client').Client,
+    TournamentModel  = require('../models/tournament'),
+    GameArticleModel = require('../models/game-article'),
+    remoteConfig     = require('../config/tinyapi');
+
+
+var client = new RestClient(remoteConfig.authOptions);
 
 module.exports = {
     item: function (req, res, next) {
@@ -16,10 +20,12 @@ module.exports = {
                 res.status(404);
                 return next();
             }
-
-            var client = new RestClient(remoteConfig.authOptions);
             client.get(remoteConfig.url + '/games/' + req.params.id, function (game) {
                 game = JSON.parse(game);
+
+                game.dateTime = game.date ? moment(game.date + ' ' + game.time, 'DD/MM/YYYY HH:mm') : null;
+                console.log(game.dateTime);
+
                 var gameLength = doc.settings ? doc.settings.gameLength : undefined;
                 if (game.state.toLowerCase() == 'closed') {
                     game.timeGone = gameLength;
@@ -33,8 +39,20 @@ module.exports = {
                 game.timeGonePercent = gameLength ? game.timeGone / gameLength * 100 : 100;
                 game.timeGoneDegrees = gameLength ? game.timeGone / gameLength * 360 : 360;
 
+                if (game.events) {
+                    game.events = game.events.sort(function (a, b) {
+                        return a.minute < b.minute ? -1 : 1;
+                    });
+                }
+
                 game.players = game.players.map(function (item) {
                     item = item.sort(function (a, b) {
+                        if (!a.position) {
+                            return 1;
+                        }
+                        if (!b.position) {
+                            return -1;
+                        }
                         if (a.position.toLowerCase() == 'gk') {
                             return -1;
                         }
@@ -49,7 +67,16 @@ module.exports = {
 
                     return item;
                 });
-                res.render('games/item', {tournament: doc, game: game});
+
+                GameArticleModel.find({gameId: req.params.id}).exec(function (err, docs) {
+                    if (err) {
+                        return next(err);
+                    }
+
+                    var preview = _.findWhere(docs, {type: 'preview'});
+                    var review = _.findWhere(docs, {type: 'review'});
+                    res.render('games/item', {tournament: doc, game: game, media: {preview: preview, review: review}});
+                });
             });
         });
     }

@@ -18,7 +18,8 @@ var TournamentSchema = new Schema({
     remoteId: {type: String}, // change to ObjectId
     country:  {type: ObjectId, ref: 'Country'},
     settings: {type: Object, default: {}},
-    contacts: [{type: ObjectId, ref: 'Contact', default: []}]
+    contacts: [{type: ObjectId, ref: 'Contact', default: []}],
+    vk:       {type: String}
 });
 
 TournamentSchema.pre('save', function (next) {
