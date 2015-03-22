@@ -177,6 +177,30 @@ var helpers = {
         }
 
         return options.inverse(this);
+    },
+
+    gameResTeam: function (team, game) {
+        if (!game.score) {
+            return false;
+        }
+        var score = game.score.ft;
+        if (game.teams[0]._id == team._id) {
+            return score[0] > score[1] ? 'w' : (score[0] == score[1] ? 'd' : 'l');
+        } else {
+            return score[1] > score[0] ? 'w' : (score[0] == score[1] ? 'd' : 'l');
+        }
+
+    },
+
+    notEmptyObject: function (obj, options) {
+        console.log(obj);
+        for (var prop in obj) {
+            if (Object.prototype.hasOwnProperty.call(obj, prop)) {
+                return options.fn(this);
+            }
+        }
+
+        return options.inverse(this);
     }
 };
 
@@ -187,9 +211,7 @@ var dateFn = function (date, format) {
 };
 
 module.exports.initialize = function (hbs) {
-    console.log('starting registering helpers');
     for (var helper in helpers) {
         hbs.registerHelper(helper, helpers[helper]);
-        console.log('helper "' + helper + '" registered');
     }
 };

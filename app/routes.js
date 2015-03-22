@@ -105,12 +105,12 @@ module.exports.initialize = function (app) {
 
     app.get('/:league(moscow|spb)', leagues.item);
 
-    app.get('/:league/tournaments', tournaments.list);
     app.get('/:league/tournaments/:name', tournaments.globals, tournaments.item);
     app.get('/:league/tournaments/:name/fixture', tournaments.globals, tournaments.fixture);
     app.get('/:league/tournaments/:name/table', tournaments.globals, tournaments.table);
     app.get('/:league/tournaments/:name/matches/:id', tournaments.globals, games.item);
     app.get('/:league/tournaments/:name/stats', tournaments.globals, tournaments.stats);
+    app.get('/:league/tournaments/:name/teams/:id', tournaments.globals, teams.item);
 
     app.get('/:league/fields', fields.fields);
     app.get('/:league/fields/:name', fields.fields);

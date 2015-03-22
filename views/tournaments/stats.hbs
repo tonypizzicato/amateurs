@@ -5,7 +5,7 @@
                 <i class="fa fa-list-ol s_mr_10"></i> {{tournament.name}}
             </div>
             <div class="panel__body s_p_0 s_pb_5">
-                {{$ 'stats' stats=stats}}
+                {{> 'stats' stats=stats}}
             </div>
         </div>
     </div>
@@ -19,7 +19,7 @@
                     <i class="fa fa-list-ol s_mr_10"></i> Таблица
                 </div>
                 <div class="panel__body">
-                    {{$ 'table' table=globals.table tableFull=false hideHeader=true}}
+                    {{> 'table' table=globals.table tableFull=false hideHeader=true}}
                 </div>
             </div>
             <div class="link_type_full s_mb_10">

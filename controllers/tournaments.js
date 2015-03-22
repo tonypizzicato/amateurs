@@ -1,7 +1,9 @@
 'use strict';
 
-var moment          = require('moment'),
+var _               = require('underscore'),
+    moment          = require('moment'),
     RestClient      = require('node-rest-client').Client,
+    LeagueModel     = require('../models/league'),
     TournamentModel = require('../models/tournament'),
     ContactModel    = require('../models/contact'),
     remoteConfig    = require('../config/tinyapi'),
@@ -103,21 +105,6 @@ module.exports = {
                 games = JSON.parse(games);
 
                 games = games.map(function (item) {
-                    if (item.state == 'CLOSED' && item.score) {
-                        if (item.score.ft[0] > item.score.ft[1]) {
-                            item.teams[0].win = true;
-                            item.teams[0].loose = false;
-                            item.teams[0].draw = false;
-                        } else if (item.score.ft[0] < item.score.ft[1]) {
-                            item.teams[0].win = false;
-                            item.teams[0].loose = true;
-                            item.teams[0].draw = false;
-                        } else {
-                            item.teams[0].win = false;
-                            item.teams[0].loose = false;
-                            item.teams[0].draw = true;
-                        }
-                    }
                     item.dateTime = item.date ? moment(item.date + ' ' + item.time, 'DD/MM/YYYY HH:mm') : null;
                     return item;
                 });
@@ -163,6 +150,18 @@ module.exports = {
             /* Contacts widget data */
             var contacts = new Promise(function (resolve, reject) {
                 ContactModel.find({tournaments: doc._id}).sort({sort: 1}).lean().exec(function (err, docs) {
+                    if (err) {
+                        return reject(err);
+                    }
+
+                    resolve(docs);
+                });
+            });
+
+            /* Table */
+            var leagues = new Promise(function (resolve, reject) {
+                var populateOptions = {path: 'countries', options: {sort: {'sort': 1}}};
+                LeagueModel.find().sort({sort: 1}).populate(populateOptions).exec(function (err, docs) {
                     if (err) {
                         return reject(err);
                     }
@@ -243,19 +242,19 @@ module.exports = {
                         return !item.dateTime || (item.dateTime && (item.dateTime.isAfter(moment()) || item.dateTime.isSame(moment())) && item.state != 'CLOSED');
                     });
 
-                    recent = recent.slice(-8);
-                    comming = comming.slice(0, 10);
-
+                    recent = _.groupBy(recent.slice(-8), 'tourNumber');
+                    comming = _.groupBy(comming.slice(0, 10), 'tourNumber');
                     resolve({recent: recent, comming: comming});
                 });
             });
 
-            Promise.all([games, table, contacts]).then(function (result) {
+            Promise.all([leagues, games, table, contacts]).then(function (result) {
                 res.locals.globals.tournament = tournament;
-                res.locals.globals.recent = result[0].recent;
-                res.locals.globals.comming = result[0].comming;
-                res.locals.globals.table = result[1];
-                res.locals.globals.contacts = result[2];
+                res.locals.globals.leagues = result[0];
+                res.locals.globals.recent = result[1].recent;
+                res.locals.globals.comming = result[1].comming;
+                res.locals.globals.table = result[2];
+                res.locals.globals.contacts = result[3];
 
                 console.log('globals end');
                 next();

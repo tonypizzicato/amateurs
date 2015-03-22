@@ -16,11 +16,17 @@
                                         <td class="fixture__time col-md-2 text_size_12{{#unless time}} col-md-3 text_color_light{{/unless}}">
                                             {{~#if dateTime}}{{date dateTime}} {{time}}{{else}}Время не назначено{{/if~}}
                                         </td>
-                                        <td class="fixture__team col-md-4 text_align_r s_pr_0{{#if teams.[0].win}} fixture__winner{{/if}}{{#if teams.[0].loose}} fixture__looser{{/if}}">
-                                            {{~teams.[0].name~}}
+                                        <td class="fixture__team col-md-4 text_align_r s_pr_0
+                                            {{~#eq (gameResTeam teams.[0] this) 'w'}} fixture__winner{{/eq~}}
+                                            {{~#eq (gameResTeam teams.[0] this) 'l'}} fixture__looser{{/eq~}}
+                                            ">
+                                            <a href="/{{../../globals.league.slug}}/tournaments/{{../../globals.tournament.slug}}/teams/{{teams.[0]._id}}">{{~teams.[0].name~}}</a>
                                         <td class="text_align_c col-md-1">v</td>
-                                        <td class="fixture__team col-md-4 text_align_l s_pl_0{{#if teams.[0].loose}} fixture__winner{{/if}}{{#if teams.[0].win}} fixture__looser{{/if}}">
-                                            {{~teams.[1].name~}}
+                                        <td class="fixture__team col-md-4 text_align_l s_pl_0
+                                            {{~#eq (gameResTeam teams.[0] this) 'l'}} fixture__winner{{/eq~}}
+                                            {{~#eq (gameResTeam teams.[0] this) 'w'}} fixture__looser{{/eq~}}
+                                            ">
+                                            <a href="/{{../../globals.league.slug}}/tournaments/{{../../globals.tournament.slug}}/teams/{{teams.[1]._id}}">{{~teams.[1].name~}}</a>
                                         </td>
                                         </td>
                                         {{#if score}}

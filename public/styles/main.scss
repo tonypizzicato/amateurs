@@ -59,6 +59,18 @@ a:focus {
     text-decoration: none;
 }
 
+a,
+a:hover,
+a:active,
+a:focus {
+    color:      $navbar-default-link-color;
+    transition: color .2s;
+}
+
+a:hover {
+    color: $navbar-default-link-hover-color !important;
+}
+
 .text_color_orange {
     color: $navbar-default-link-active-color;
 }
@@ -523,7 +535,7 @@ ul, ol {
 }
 
 .tab-content .table tr:first-child td {
-    color: $navbar-default-link-active-color;
+    //    color: $navbar-default-link-active-color;
 }
 
 .table_layout_fixed {
@@ -552,7 +564,7 @@ ul, ol {
     color: #B72824;
 }
 
-.table_type_table .table__form {
+.table__form {
     display:       inline-block;
     width:         9px;
     height:        9px;
@@ -560,15 +572,15 @@ ul, ol {
     margin-left:   2px;
 }
 
-.table_type_table .table__form.table__form_w {
+.table__form.table__form_w {
     background-color: #2DA6E4;
 }
 
-.table_type_table .table__form.table__form_l {
+.table__form.table__form_l {
     background-color: #C63C3C;
 }
 
-.table_type_table .table__form.table__form_d {
+.table__form.table__form_d {
     background-color: #F5B367;
 }
 
@@ -709,11 +721,11 @@ ul, ol {
  * Fixture
  */
 
-.fixture__winner {
+.fixture__winner a {
     color: $navbar-default-link-active-color;
 }
 
-.fixture__looser {
+.fixture__looser a {
     color: #555;
 }
 
@@ -725,13 +737,38 @@ ul, ol {
 .panel_type_fixture .panel__body td {
     vertical-align: middle;
     white-space:    nowrap;
+    text-overflow:  ellipsis;
+    overflow:       hidden;
 }
 
-.col-md-4 .fixture__team {
+.panel_type_fixture .fixture__time {
+    line-height: 1.2;
+}
+
+.fixture__team {
     text-overflow: ellipsis;
     white-space:   nowrap;
     overflow:      hidden;
     //    display:       inline-block;
+}
+
+.panel_type_form .panel__body {
+    padding-top:    29px;
+    padding-bottom: 29px;
+}
+
+.panel_type_form .table__form {
+    width:       32px;
+    height:      32px;
+    line-height: 32px;
+    font-size:   16px;
+    font-weight: bold;
+    color:       #ecf0f1;
+}
+
+.panel_type_squads .match-lineup__player,
+.panel_type_squads .match-lineup__number {
+    padding: 15px;
 }
 
 /**
