@@ -36,43 +36,66 @@
         </div>
     </div>
     <div class="row clearfix news">
-        <div class="column col-md-9 s_pr_0">
-            <div class="news__image">
-                <img src="https://pp.vk.me/c625724/v625724943/b541/XOSppT0DJhI.jpg">
+        <div class="column col-md-12">
+            <div class="news__list">
+                <ul class="news__headlines">
+                    {{#each globals.news}}
+                        {{#if stick}}
+                            {{#if image}}
+                                <li class="{{#eq 0 @index}}selected{{/eq}}">
+                                    <span class="news__time">{{dateTimeShort dc}}</span>
+                                    {{#if ../../../globals.tournament._id}}
+                                        <a class="news__title" href="/{{../../../../globals.league.slug}}/tournaments/{{../../../../globals.tournament.slug}}/news/{{slug}}">{{title}}</a>
+                                    {{else}}
+                                        {{#if ../../../../globals.league._id}}
+                                            <a class="news__title" href="/{{../../../../../globals.league.slug}}/news/{{slug}}">{{title}}</a>
+                                        {{else}}
+                                            <a class="news__title" href="/news/{{slug}}">{{title}}</a>
+                                        {{/if}}
+                                    {{/if}}
+                                </li>
+                            {{/if}}
+                        {{/if}}
+                    {{/each}}
+                </ul>
+                <div class="news__preview">
+                    {{#each globals.news}}
+                        {{#if stick}}
+                            {{#if image}}
+                                <div class="news__content">
+                                    <div class="news__image" style="background-image: url({{image}}); background-size: cover; background-position: 50% 50%;"></div>
+
+                                    <div class="news__resume">
+                                        {{#if ../../../globals.tournament._id}}
+                                            <a class="news__title" href="/{{../../../../globals.league.slug}}/tournaments/{{../../../../globals.tournament.slug}}/news/{{slug}}">{{title}}</a>
+                                        {{else}}
+                                            {{#if ../../../../globals.league._id}}
+                                                <a class="news__title" href="/{{../../../../../globals.league.slug}}/news/{{slug}}">{{title}}</a>
+                                            {{else}}
+                                                <a class="news__title" href="/news/{{slug}}">{{title}}</a>
+                                            {{/if}}
+                                        {{/if}}
+
+                                        <p class="news__description">{{teaser}}</p>
+                                    </div>
+                                </div>
+                            {{/if}}
+                        {{/if}}
+                    {{/each}}
+                    <!-- .news-content -->
+                </div>
+                <!-- .news-preview -->
             </div>
-        </div>
-        <div class="column col-md-3 s_pl_0">
-            <ul class="news__list">
-                <li class="news__item">
-                    <span class="news__time">01.12.2014</span>
-                    <span class="news__title"><a href="#">Cras sit amet nibh libero, in gravida nulla.</a></span>
-                </li>
-                <li class="news__item">
-                    <span class="news__time">01.12.2014</span>
-                    <span class="news__title"><a href="#">Nulla vel metus scelerisque ante sollicitudin commodo.</a></span>
-                </li>
-                <li class="news__item">
-                    <span class="news__time">01.12.2014</span>
-                    <span class="news__title"><a href="#">Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</a></span>
-                </li>
-                <li class="news__item">
-                    <span class="news__time">01.12.2014</span>
-                    <span class="news__title"><a href="#">Nulla vel metus scelerisque ante sollicitudin commodo.</a></span>
-                </li>
-                <li class="news__item">
-                    <span class="news__time">01.12.2014</span>
-                    <span class="news__title"><a href="#">Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</a></span>
-                </li>
-            </ul>
+            <!-- .news-holder -->
         </div>
     </div>
     <!--<div class="row clearfix news-preview s_mb_20">-->
-        <!--<div class="column col-md-4 s_pr_0">-->
-            <!--<div class="news__title">Cras purus odio, vestibulum in vulputate at, tempus viverra turpis:</div>-->
-        <!--</div>-->
-        <!--<div class="column col-md-8 s_pl_0">-->
-            <!--<div class="news__body">A small collection of various hover tooltip styles and effects for your inspiration.</div>-->
-        <!--</div>-->
+    <!--<div class="column col-md-4 s_pr_0">-->
+    <!--<div class="news__title">Cras purus odio, vestibulum in vulputate at, tempus viverra turpis:</div>-->
+    <!--</div>-->
+    <!--<div class="column col-md-8 s_pl_0">-->
+    <!--<div class="news__body">A small collection of various hover tooltip styles and effects for your inspiration.</div>-->
+    <!--</div>-->
     <!--</div>-->
     {{{body}}}
     <div class="row clearfix animated fadeInUp delay-1s">

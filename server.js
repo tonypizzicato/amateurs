@@ -140,6 +140,10 @@ app.get('*', function (req, res, next) {
                 return next(err);
             }
             res.locals.globals.countries = docs;
+            res.locals.globals.league = req.session.league;
+
+            console.log('countries received');
+            next();
         });
     };
 
@@ -168,10 +172,6 @@ app.get('*', function (req, res, next) {
     } else {
         getCountries();
     }
-
-    res.locals.globals.league = req.session.league;
-
-    next();
 });
 
 app.get('/countries/:country', function (req, res, next) {

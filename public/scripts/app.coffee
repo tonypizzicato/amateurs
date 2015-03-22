@@ -1,4 +1,4 @@
-define ['marionette', 'bootstrap.dropdown', 'bootstrap.tab'], (Marionette) ->
+define ['marionette', 'bootstrap.dropdown', 'bootstrap.tab', 'news'], (Marionette) ->
     App = new Marionette.Application()
 
     App.navigate = (route, options)->
@@ -20,6 +20,10 @@ define ['marionette', 'bootstrap.dropdown', 'bootstrap.tab'], (Marionette) ->
             $('.img-holder').imageScroll
                 holderClass: 'cover'
                 extraHeight: 500
+
+        $('.js-country-link').click (e)->
+            e.preventDefault()
+            $(@).parent().toggleClass 'country_active_yes'
 
         $('.js-country-link').click (e)->
             e.preventDefault()
