@@ -193,7 +193,6 @@ var helpers = {
     },
 
     notEmptyObject: function (obj, options) {
-        console.log(obj);
         for (var prop in obj) {
             if (Object.prototype.hasOwnProperty.call(obj, prop)) {
                 return options.fn(this);

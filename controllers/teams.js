@@ -3,6 +3,7 @@
 var moment          = require('moment'),
     RestClient      = require('node-rest-client').Client,
     TournamentModel = require('../models/tournament'),
+    LeagueModel     = require('../models/league'),
     remoteConfig    = require('../config/tinyapi'),
     Promise         = require('promise');
 
@@ -43,7 +44,7 @@ module.exports = {
                 client.get(remoteConfig.url + '/teams/' + req.params.id, function (team) {
                     team = JSON.parse(team);
 
-                    var numSort = function(a, b) {
+                    var numSort = function (a, b) {
                         return a.number < b.number ? -1 : 1;
                     };
                     team.players = team.players.sort(function (a, b) {
@@ -112,8 +113,51 @@ module.exports = {
             });
 
             Promise.all([table, team, games]).then(function (result) {
-                console.log(result[2].form);
                 res.render('teams/item', {tournament: doc, table: result[0], team: result[1], games: result[2]});
+            });
+        });
+    },
+
+    list: function (req, res, next) {
+        console.log(req.params.league);
+        LeagueModel.findOne({slug: req.params.league}).lean().exec(function (err, doc) {
+            if (err) {
+                return next(err);
+            }
+            if (!doc) {
+                return res.send(404);
+            }
+
+            /* Teams list */
+            var teams = new Promise(function (resolve, reject) {
+                client.get(remoteConfig.url + '/teams?leagueId=' + doc.remoteId, function (teams) {
+                    teams = JSON.parse(teams);
+
+                    resolve(teams);
+                });
+            });
+
+            TournamentModel.findOne({slug: req.params.name, show: true}).lean().exec(function (err, doc) {
+
+                /* Table */
+                var table = new Promise(function (resolve, reject) {
+                    client.get(remoteConfig.url + '/stats/table?tournamentId=' + doc.remoteId, function (table) {
+                        table = JSON.parse(table);
+
+                        resolve(table);
+                    });
+                });
+
+                Promise.all([table, teams]).then(function (result) {
+                    var teams = [];
+                    result[0].teams.forEach(function (item) {
+                        teams.push(result[1].filter(function (team) {
+                            return team._id == item._id;
+                        }).pop());
+                    });
+
+                    res.render('teams/list', {league: doc, teams: teams});
+                });
             });
         });
     }

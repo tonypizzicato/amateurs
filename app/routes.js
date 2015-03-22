@@ -110,6 +110,7 @@ module.exports.initialize = function (app) {
     app.get('/:league/tournaments/:name/table', tournaments.globals, tournaments.table);
     app.get('/:league/tournaments/:name/matches/:id', tournaments.globals, games.item);
     app.get('/:league/tournaments/:name/stats', tournaments.globals, tournaments.stats);
+    app.get('/:league/tournaments/:name/teams/', tournaments.globals, teams.list);
     app.get('/:league/tournaments/:name/teams/:id', tournaments.globals, teams.item);
 
     app.get('/:league/fields', fields.fields);
