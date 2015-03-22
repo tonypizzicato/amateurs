@@ -17,7 +17,7 @@
                                 <div class="tab-pane{{#eq 0 @index}} active{{/eq}}" id="tab-table">
                                     <div class="panel s_m_0">
                                         <div class="panel__body s_p_0 s_pb_5">
-                                            {{$ 'chess' this tableFull=true league=this}}
+                                            {{> 'chess' this tableFull=true league=this}}
                                         </div>
                                     </div>
                                 </div>
@@ -33,7 +33,7 @@
                             <div class="tab-pane active" id="tab-table">
                                 <div class="panel s_m_0">
                                     <div class="panel__body s_p_0 s_pb_5">
-                                        {{$ 'table' this tableFull=true table=globals.table}}
+                                        {{> 'table' table=globals.table tableFull=true showLogo=true}}
                                     </div>
                                 </div>
                             </div>
