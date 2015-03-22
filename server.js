@@ -140,6 +140,10 @@ app.get('*', function (req, res, next) {
                 return next(err);
             }
             res.locals.globals.countries = docs;
+            res.locals.globals.league = req.session.league;
+
+            console.log('countries received');
+            next();
         });
     };
 
@@ -168,20 +172,6 @@ app.get('*', function (req, res, next) {
     } else {
         getCountries();
     }
-
-    if (req.url !== '/') {
-        var populateOptions = {path: 'countries', options: {sort: {'sort': 1}}};
-        LeagueModel.find(/*{show: true},*/).sort({sort: 1}).populate(populateOptions).lean().exec(function (err, docs) {
-            if (err) {
-                return next(err);
-            }
-            res.locals.globals.leagues = docs;
-        });
-    }
-
-    res.locals.globals.league = req.session.league;
-
-    next();
 });
 
 app.get('/countries/:country', function (req, res, next) {

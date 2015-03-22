@@ -15,7 +15,7 @@ module.exports = {
             if (err) {
                 return next(err);
             }
-console.log(doc);
+
             res.render('countries/item', {country: doc, pageCountry: true});
         });
     }

@@ -1,31 +1,39 @@
 <div class="row clearfix s_mb_20">
     <div class="col-md-8 column">
-        <div class="panel s_m_0">
-            <div class="panel__header">
-                <i class="fa fa-list-ol s_mr_10"></i> {{tournament.name}}
-            </div>
-            <div class="panel__body s_p_0 s_pb_5">
-                {{> 'stats' stats=stats}}
+
+        <div class="row s_mb_40 s_mt_20">
+            <div class="column col-md-12">
+                {{#each teams}}
+                    <div class="col-md-3 s_mb_40 text_align_c">
+                        <img class="s_mb_10" src="http://amateurs.io/api/img/teams/{{name}}.png" width="96" height="96"/>
+                        <br>
+                        <a href="/{{../globals.league.slug}}/tournaments/{{../globals.tournament.slug}}/teams/{{_id}}">{{name}}</a>
+                    </div>
+                {{/each}}
             </div>
         </div>
+
     </div>
 
     <!-- SIDEBAR -->
 
     <div class="col-md-4 column">
+
         {{#if globals.table}}
             <div class="panel s_m_0">
                 <div class="panel__header">
                     <i class="fa fa-list-ol s_mr_10"></i> Таблица
                 </div>
                 <div class="panel__body">
-                    {{> 'table' table=globals.table tableFull=false hideHeader=true}}
+                    {{> 'table' table=globals.table tableFull=false}}
                 </div>
             </div>
             <div class="link_type_full s_mb_10">
                 <span class="text_color_orange">Полная таблица</span>
                 <span class="pull-right">
-                    <a href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/table"><i class="fa fa-arrow-circle-o-right"></i></a>
+                    <a href="/{{globals.league.slug}}/tournaments/{{../globals.tournament.slug}}/table">
+                        <i class="fa fa-arrow-circle-o-right"></i>
+                    </a>
                 </span>
             </div>
         {{/if}}
@@ -41,7 +49,7 @@
         <div class="link_type_full s_mb_10">
             <span class="text_color_orange">Календарь</span>
             <span class="pull-right">
-                <a href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
+                <a href="/{{globals.league.slug}}/tournaments/{{globals.tournament.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
             </span>
         </div>
         <div class="panel panel_type_fixture s_m_0">
@@ -55,9 +63,10 @@
         <div class="link_type_full s_mb_10">
             <span class="text_color_orange">Календарь</span>
             <span class="pull-right">
-                <a href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
+                <a href="/{{globals.league.slug}}/tournaments/{{globals.tournament.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
             </span>
         </div>
+
         {{#if globals.contacts.length}}
             <div class="panel s_m_0">
                 <div class="panel__header">

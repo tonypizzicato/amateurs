@@ -20,7 +20,7 @@
                                         <div class="tab-pane{{#eq 0 @index}} active{{/eq}}" id="tab-table">
                                             <div class="panel s_m_0">
                                                 <div class="panel__body s_p_0 s_pb_5">
-                                                    {{$ 'table' this tableFull=false league=this}}
+                                                    {{> 'table' this tableFull=false league=this}}
                                                 </div>
                                             </div>
                                         </div>
@@ -36,7 +36,7 @@
                                     <div class="tab-pane active" id="tab-table">
                                         <div class="panel s_m_0">
                                             <div class="panel__body s_p_0 s_pb_5">
-                                                {{$ 'table' this tableFull=false league=league}}
+                                                {{> 'table' this tableFull=false league=league}}
                                             </div>
                                         </div>
                                     </div>
@@ -223,7 +223,7 @@
                 <i class="fa fa-calendar s_mr_10"></i> Последние матчи
             </div>
             <div class="panel__body">
-                {{$ 'fixture' fixture=globals.recent }}
+                {{> 'fixture' fixture=globals.recent }}
             </div>
         </div>
         <div class="link_type_full s_mb_10">
@@ -237,7 +237,7 @@
                 <i class="fa fa-calendar s_mr_10"></i> Ближайшие матчи
             </div>
             <div class="panel__body">
-                {{$ 'fixture' fixture=globals.comming }}
+                {{> 'fixture' fixture=globals.comming }}
             </div>
         </div>
         <div class="link_type_full s_mb_10">
