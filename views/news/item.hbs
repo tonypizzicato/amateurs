@@ -7,6 +7,9 @@
                     <span class="s_float_r">{{datefull article.dc}}</span>
                 </div>
                 <div class="panel__body">
+                    {{#if article.image}}
+                        <img class="s_mb_20" style="width: 100%;" src="{{article.image}}">
+                    {{/if}}
                     {{{ article.body }}}
                 </div>
             </div>

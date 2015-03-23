@@ -12,6 +12,7 @@ var LeagueSchema = new Schema({
     du:        {type: Date},
     name:      {type: String},
     slug:      {type: String},
+    show:      {type: Boolean, default: false},
     sort:      {type: Number},
     remoteId:  {type: ObjectId},
     countries: [{type: ObjectId, ref: 'Country'}]

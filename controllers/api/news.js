@@ -113,7 +113,15 @@ var saveArticle = function (req, save) {
     var doc = req.body;
 
     if (doc.image) {
-        var base64Data = doc.image.replace(/^data:image\/png;base64,/, "");
+        var reg = /^data:image\/(.+);base64,/;
+        var format = doc.image.match(reg);
+        if (format.length) {
+            format = format[1];
+        }
+
+        console.log(format);
+
+        var base64Data = doc.image.replace(/^data:image\/(.+);base64,/, "");
 
         var dir = __dirname + '/../../public',
             path = '/uploads/' + doc.country + '/';
@@ -124,7 +132,7 @@ var saveArticle = function (req, save) {
             fs.mkdirRecursiveSync(dir);
         }
 
-        var filename = transliteration.slugify(doc.title) + ".png";
+        var filename = transliteration.slugify(doc.title) + "." + format;
         require("fs").writeFile(dir + filename, base64Data, 'base64', function (err) {
 
             if (err) {
@@ -160,7 +168,7 @@ var saveArticle = function (req, save) {
                                 return item.label.toLowerCase() == 'large';
                             });
 
-                            if(!s.length) {
+                            if (!s.length) {
                                 s = res.sizes.size.filter(function (item) {
                                     return item.label.toLowerCase() == 'original';
                                 });

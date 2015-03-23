@@ -25,6 +25,8 @@ var controller = {
 
                 findNews({leagueId: doc.league});
             });
+        } else {
+            findNews({});
         }
 
         function findNews() {

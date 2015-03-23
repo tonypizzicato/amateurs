@@ -92,17 +92,13 @@ module.exports.initialize = function (app) {
 
     app.use('/api', apiRouter);
 
-    app.get('/', index.index);
-
     app.get('/login', auth.loginPage);
     app.get('/account', auth.account);
     app.post('/login', auth.login);
     app.post('/logout', auth.logout);
 
 
-    app.get('/construct', index.underConstruction);
-    app.get('/nationals/promo', index.nationalsPromo);
-
+    app.get('/', news.pre, index.index);
 
     app.get('/:league/tournaments/:name/news/:slug', news.pre, tournaments.globals, news.item);
     app.get('/:league/tournaments/:name/fixture', news.pre, tournaments.globals, tournaments.fixture);
@@ -118,10 +114,10 @@ module.exports.initialize = function (app) {
     app.get('/:league/fields', fields.fields);
     app.get('/:league/fields/:name', fields.fields);
 
-    app.get('/:league/news', news.list);
-    app.get('/:league/:countries/news', news.list);
-    app.get('/:league/:countries/:tournament/news', news.list);
-    app.get('/:league/news/:slug', news.item);
+    app.get('/:league/news', news.pre, news.list);
+    app.get('/:league/:countries/news', news.pre, news.list);
+    app.get('/:league/:countries/:tournament/news', news.pre, news.list);
+    app.get('/:league/news/:slug', news.pre, news.item);
 
     app.get('/:league/countries/:country', countries.item);
 };

@@ -19,7 +19,7 @@ module.exports = {
             }
 
             var populateOptions = {path: 'countries', options: {sort: {'sort': 1}}};
-            LeagueModel.find(/*{show: true},*/).sort({sort: 1}).populate(populateOptions).lean().exec(function (err, docsLeagues) {
+            LeagueModel.find({show: true}).sort({sort: 1}).populate(populateOptions).lean().exec(function (err, docsLeagues) {
                 res.locals.globals.leagues = docsLeagues;
                 res.render('tournaments/list', {tournaments: docs, pageTournaments: true});
             });
@@ -164,10 +164,10 @@ module.exports = {
                 });
             });
 
-            /* Table */
+            /* Leagues */
             var leagues = new Promise(function (resolve, reject) {
                 var populateOptions = {path: 'countries', options: {sort: {'sort': 1}}};
-                LeagueModel.find().sort({sort: 1}).populate(populateOptions).exec(function (err, docs) {
+                LeagueModel.find({show: true}).sort({sort: 1}).populate(populateOptions).exec(function (err, docs) {
                     if (err) {
                         return reject(err);
                     }
@@ -186,17 +186,6 @@ module.exports = {
                     });
 
                     resolve(table);
-                });
-            });
-
-            /* Table */
-            var leagues = new Promise(function (resolve, reject) {
-                var populateOptions = {path: 'countries', options: {sort: {'sort': 1}}};
-                LeagueModel.find(/*{show: true},*/).sort({sort: 1}).populate(populateOptions).lean().exec(function (err, docs) {
-                    if (err) {
-                        return reject(err);
-                    }
-                    resolve(docs);
                 });
             });
 
