@@ -115,11 +115,13 @@ var saveArticle = function (req, save) {
     if (doc.image) {
         var reg = /^data:image\/(.+);base64,/;
         var format = doc.image.match(reg);
-        if (format.length) {
-            format = format[1];
-        }
 
-        console.log(format);
+        if (format && format.length >= 2) {
+            format = format[1];
+        } else {
+            save(doc);
+            return;
+        }
 
         var base64Data = doc.image.replace(/^data:image\/(.+);base64,/, "");
 
@@ -195,6 +197,6 @@ var saveArticle = function (req, save) {
     } else {
         save(doc);
     }
-}
+};
 
 module.exports = api;
