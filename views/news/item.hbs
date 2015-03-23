@@ -1,0 +1,87 @@
+<div class="block_type_news row clearfix s_mb_20">
+    <div class="column col-md-8">
+        <div class="news-item s_mb_20">
+            <div class="panel s_m_0">
+                <div class="panel__header">
+                    <i class="fa fa-calendar s_mr_10"></i> <strong>{{article.title}}</strong>
+                    <span class="s_float_r">{{datefull article.dc}}</span>
+                </div>
+                <div class="panel__body">
+                    {{#if article.image}}
+                        <img class="s_mb_20" style="width: 100%;" src="{{article.image}}">
+                    {{/if}}
+                    {{{ article.body }}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SIDEBAR -->
+
+    <div class="col-md-4 column">
+
+        {{#if globals.table}}
+            <div class="panel s_m_0">
+                <div class="panel__header">
+                    <i class="fa fa-list-ol s_mr_10"></i> Таблица
+                </div>
+                <div class="panel__body">
+                    {{> 'table' table=globals.table tableFull=false hideHeader=true}}
+                </div>
+            </div>
+            <div class="link_type_full s_mb_10">
+                <span class="text_color_orange">Полная таблица</span>
+                <span class="pull-right">
+                    <a href="/{{globals.league.slug}}/tournaments/{{globals.tournament.slug}}/table"><i class="fa fa-arrow-circle-o-right"></i></a>
+                </span>
+            </div>
+        {{/if}}
+
+        <div class="panel panel_type_fixture s_m_0">
+            <div class="panel__header">
+                <i class="fa fa-calendar s_mr_10"></i> Последние матчи
+            </div>
+            <div class="panel__body">
+                {{> 'fixture' fixture=globals.recent emptyText='Ещё нет сыгранных матчей' }}
+            </div>
+        </div>
+        <div class="link_type_full s_mb_10">
+            <span class="text_color_orange">Календарь</span>
+            <span class="pull-right">
+                <a href="/{{globals.league.slug}}/tournaments/{{globals.tournament.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
+            </span>
+        </div>
+        <div class="panel panel_type_fixture s_m_0">
+            <div class="panel__header">
+                <i class="fa fa-calendar s_mr_10"></i> Ближайшие матчи
+            </div>
+            <div class="panel__body">
+                {{> 'fixture' fixture=globals.comming emptyText='Нет запланированных матчей' }}
+            </div>
+        </div>
+        <div class="link_type_full s_mb_10">
+            <span class="text_color_orange">Календарь</span>
+            <span class="pull-right">
+                <a href="/{{globals.league.slug}}/tournaments/{{globals.tournament.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
+            </span>
+        </div>
+
+
+        {{#if globals.contacts.length}}
+            <div class="panel s_m_0">
+                <div class="panel__header">
+                    <i class="fa fa-phone text_size_16 s_mr_10"></i> Контакты
+                </div>
+                <div class="panel__body">
+                    {{> contacts}}
+                </div>
+            </div>
+            <div class="link_type_full s_mb_10">
+                <span class="text_color_orange">Все контакты</span>
+                <span class="pull-right">
+                    <a href="/contacts"><i class="fa fa-arrow-circle-o-right"></i></a>
+                </span>
+            </div>
+        {{/if}}
+    </div>
+</div>

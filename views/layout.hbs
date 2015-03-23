@@ -35,60 +35,66 @@
             {{> menu this}}
         </div>
     </div>
-    <div class="row clearfix news">
-        <div class="column col-md-12">
-            <div class="news__list">
-                <ul class="news__headlines">
-                    {{#each globals.news}}
-                        {{#if stick}}
-                            {{#if image}}
-                                <li class="{{#eq 0 @index}}selected{{/eq}}">
-                                    <span class="news__time">{{dateTimeShort dc}}</span>
-                                    {{#if ../../../globals.tournament._id}}
-                                        <a class="news__title" href="/{{../../../../globals.league.slug}}/tournaments/{{../../../../globals.tournament.slug}}/news/{{slug}}">{{title}}</a>
-                                    {{else}}
-                                        {{#if ../../../../globals.league._id}}
-                                            <a class="news__title" href="/{{../../../../../globals.league.slug}}/news/{{slug}}">{{title}}</a>
-                                        {{else}}
-                                            <a class="news__title" href="/news/{{slug}}">{{title}}</a>
-                                        {{/if}}
-                                    {{/if}}
-                                </li>
-                            {{/if}}
-                        {{/if}}
-                    {{/each}}
-                </ul>
-                <div class="news__preview">
-                    {{#each globals.news}}
-                        {{#if stick}}
-                            {{#if image}}
-                                <div class="news__content">
-                                    <div class="news__image" style="background-image: url({{image}}); background-size: cover; background-position: 50% 50%;"></div>
-
-                                    <div class="news__resume">
+    {{#if globals.newsSticked.length}}
+        <div class="row clearfix news s_mb_20">
+            <div class="column col-md-12">
+                <div class="news__list">
+                    <ul class="news__headlines">
+                        {{#each globals.newsSticked}}
+                            {{#if stick}}
+                                {{#if image}}
+                                    <li class="{{#eq 0 @index}}selected{{/eq}}">
+                                        <span class="news__time">{{dateTimeShort dc}}</span>
                                         {{#if ../../../globals.tournament._id}}
-                                            <a class="news__title" href="/{{../../../../globals.league.slug}}/tournaments/{{../../../../globals.tournament.slug}}/news/{{slug}}">{{title}}</a>
+                                            <a class="news__title"
+                                               href="/{{../../../../globals.league.slug}}/tournaments/{{../../../../globals.tournament.slug}}/news/{{slug}}">{{title}}</a>
                                         {{else}}
                                             {{#if ../../../../globals.league._id}}
-                                                <a class="news__title" href="/{{../../../../../globals.league.slug}}/news/{{slug}}">{{title}}</a>
+                                                <a class="news__title"
+                                                   href="/{{../../../../../globals.league.slug}}/news/{{slug}}">{{title}}</a>
                                             {{else}}
                                                 <a class="news__title" href="/news/{{slug}}">{{title}}</a>
                                             {{/if}}
                                         {{/if}}
-
-                                        <p class="news__description">{{teaser}}</p>
-                                    </div>
-                                </div>
+                                    </li>
+                                {{/if}}
                             {{/if}}
-                        {{/if}}
-                    {{/each}}
-                    <!-- .news-content -->
+                        {{/each}}
+                    </ul>
+                    <div class="news__preview">
+                        {{#each globals.newsSticked}}
+                            {{#if stick}}
+                                {{#if image}}
+                                    <div class="news__content">
+                                        <div class="news__image" style="background-image: url({{image}}); background-size: cover; background-position: 50% 50%;"></div>
+
+                                        <div class="news__resume">
+                                            {{#if ../../../globals.tournament._id}}
+                                                <a class="news__title"
+                                                   href="/{{../../../../globals.league.slug}}/tournaments/{{../../../../globals.tournament.slug}}/news/{{slug}}">{{title}}</a>
+                                            {{else}}
+                                                {{#if ../../../../globals.league._id}}
+                                                    <a class="news__title"
+                                                       href="/{{../../../../../globals.league.slug}}/news/{{slug}}">{{title}}</a>
+                                                {{else}}
+                                                    <a class="news__title" href="/news/{{slug}}">{{title}}</a>
+                                                {{/if}}
+                                            {{/if}}
+
+                                            <p class="news__description">{{teaser}}</p>
+                                        </div>
+                                    </div>
+                                {{/if}}
+                            {{/if}}
+                        {{/each}}
+                        <!-- .news-content -->
+                    </div>
+                    <!-- .news-preview -->
                 </div>
-                <!-- .news-preview -->
+                <!-- .news-holder -->
             </div>
-            <!-- .news-holder -->
         </div>
-    </div>
+    {{/if}}
     <!--<div class="row clearfix news-preview s_mb_20">-->
     <!--<div class="column col-md-4 s_pr_0">-->
     <!--<div class="news__title">Cras purus odio, vestibulum in vulputate at, tempus viverra turpis:</div>-->

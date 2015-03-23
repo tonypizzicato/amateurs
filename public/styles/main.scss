@@ -100,7 +100,7 @@ ul, ol {
 .link_type_full {
     position:   relative;
     padding:    10px 15px;
-    background: rgba(255, 255, 255, .05);
+    background: #131A23;
     border-top: 1px solid #060D17;
 }
 
@@ -128,7 +128,7 @@ ul, ol {
  */
 
 .navbar {
-    background-color: rgba(43, 48, 59, .5);
+    background-color: #131A23;
     border:           none;
     border-radius:    0;
     margin-top:       20px;
@@ -267,8 +267,8 @@ ul, ol {
 }
 
 .nav .dropdown-menu_type_tournaments {
-    padding:            20px 0px;
-    width:              75.7%;
+    padding:            20px 0;
+    width:              66.667%;
     box-shadow:         none;
     -webkit-box-shadow: none;
 }
@@ -324,86 +324,6 @@ ul, ol {
     text-decoration:  none;
     color:            #444;
     background-color: #f5f5f5;
-}
-
-/**
- * News
- */
-
-.news {
-    margin-bottom: 10px;
-    overflow:      hidden;
-}
-
-.news__image {
-    height:     308px;
-    background: $navbar-default-link-active-color;
-    position:   relative;
-    overflow:   hidden;
-}
-
-.news__image img {
-    /* Set rules to fill background */
-    min-height: 100%;
-    min-width:  1024px;
-
-    /* Set up proportionate scaling */
-    width:      100%;
-    height:     auto;
-}
-
-.news__list {
-    list-style: none;
-    padding:    0;
-}
-
-.news__item {
-    height:        60px;
-    overflow:      hidden;
-    background:    rgba(43, 48, 59, .5);
-    margin-bottom: 2px;
-    padding:       10px 15px;
-    color:         $navbar-default-link-color;
-}
-
-.news__item a {
-    color: $navbar-default-link-color;
-}
-
-.news__item a:hover {
-    color: $navbar-default-link-hover-color;
-}
-
-.news__time {
-    font-size: 11px;
-    color:     #95a5a6;
-}
-
-.news__item:last-child {
-    margin-bottom: 0;
-}
-
-.news-preview {
-    position:       relative;
-    vertical-align: middle;
-}
-
-.news-preview .news__title,
-.news-preview .news__body {
-    padding:        10px 15px;
-    height:         50px;
-    vertical-align: middle;
-    position:       relative;
-}
-
-.news-preview .news__title {
-    background: rgba(6, 9, 14, .9);
-    color:      $navbar-default-link-active-color;
-}
-
-.news-preview .news__body {
-    background: rgba(43, 48, 59, .5);
-    color:      $navbar-default-link-color;
 }
 
 /**
@@ -506,7 +426,7 @@ ul, ol {
     &:hover,
     &:focus {
         color:         $navbar-default-link-color;
-        background:    rgba(255, 255, 255, .05);
+        background:    #131A23;
         border:        none;
         border-bottom: 2px solid $navbar-default-link-hover-color;
     }
@@ -518,7 +438,7 @@ ul, ol {
 }
 
 .tab-content {
-    //    background: rgba(255, 255, 255, .05);
+    //    background: #131A23;
 }
 
 .tab-content .table {
@@ -682,7 +602,7 @@ ul, ol {
 .panel {
     border:        none;
     border-radius: 0;
-    background:    rgba(255, 255, 255, .05);
+    background:    #131A23;
 }
 
 .panel_type_transparent {
@@ -990,7 +910,11 @@ ul, ol {
     top:      0;
 }
 
-.panel_type_federations .nav.nav-tabs .tab__title {
+.panel_type_federations .nav.nav-tabs .tab__title.federations_count_1 {
+    width: 100%;
+}
+
+.panel_type_federations .nav.nav-tabs .tab__title.federations_count_2 {
     width: 50%;
 }
 
@@ -1245,7 +1169,7 @@ $size: 200px;
     display:       inline-block;
     padding:       15px 20px 15px 15px;
     margin-bottom: 10px;
-    background:    rgba(255, 255, 255, .05);
+    background:    #131A23;
 }
 
 .match-events__time,
@@ -1472,6 +1396,10 @@ $size: 200px;
 
 .s_ml_10 {
     margin-left: 10px;
+}
+
+.s_ml_12 {
+    margin-left: 12px;
 }
 
 .s_ml_20 {

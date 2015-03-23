@@ -5,24 +5,32 @@
                 class="icon-bar"></span></button>
 
         <ul class="nav navbar-nav">
-            <li class="dropdown dropdown_type_leagues">
+            {{#gt globals.leagues.length 1}}
+                <li class="dropdown dropdown_type_leagues">
 
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <i class="fa fa-angle-down"></i>
-                    {{~globals.league.name~}}
-                </a>
-                <ul class="dropdown-menu dropdown-menu_type_leagues row">
-                    <li>
-                        <ul>
-                            {{#each globals.leagues}}
-                                <li class="dropdown-header">
-                                    <a href="/{{slug}}">{{name}}</a>
-                                </li>
-                            {{/each}}
-                        </ul>
-                    </li>
-                </ul>
-            </li>
+
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-angle-down"></i>
+                        {{~globals.league.name~}}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu_type_leagues row">
+                        <li>
+                            <ul>
+                                {{~#each globals.leagues~}}
+                                    <li class="dropdown-header">
+                                        <a href="/{{slug}}">{{name}}</a>
+                                    </li>
+                                {{~/each~}}
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            {{else}}
+                <li class="navbar__item">
+                    <a href="/{{globals.league.slug}}">{{~globals.league.name~}}</a>
+                </li>
+
+            {{/gt}}
         </ul>
     </div>
 
@@ -37,7 +45,7 @@
                                 <span class="text_color_orange">{{#eq slug ../../../globals.tournament.slug}}{{~name~}}{{/eq}}</span>
                             {{/each}}
                         {{/each}}
-                    {{else~}}
+                        {{else~}}
                         Турниры
                     {{~/if}}
                 </a>
@@ -84,16 +92,16 @@
             </ul>
         {{~/if}}
         <!--<ul class="nav nav_type_user navbar-nav navbar-right navbar_border_left">-->
-            <!--<li class="dropdown">-->
-                <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">-->
-                    <!--<i class="fa fa-angle-down"></i>-->
-                    <!--<i class="fa fa-user"></i>-->
-                <!--</a>-->
-                <!--<ul class="dropdown-menu">-->
-                    <!--<li><a href="#">Вход</a></li>-->
-                    <!--<li><a href="#">Регистрация</a></li>-->
-                <!--</ul>-->
-            <!--</li>-->
+        <!--<li class="dropdown">-->
+        <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">-->
+        <!--<i class="fa fa-angle-down"></i>-->
+        <!--<i class="fa fa-user"></i>-->
+        <!--</a>-->
+        <!--<ul class="dropdown-menu">-->
+        <!--<li><a href="#">Вход</a></li>-->
+        <!--<li><a href="#">Регистрация</a></li>-->
+        <!--</ul>-->
+        <!--</li>-->
         <!--</ul>-->
         <ul class="nav navbar-nav pull-right">
             <li class="navbar__item">

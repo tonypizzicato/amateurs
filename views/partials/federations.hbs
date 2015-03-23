@@ -4,7 +4,7 @@
 
         <ul class="nav nav-tabs">
             {{#each globals.leagues}}
-                <li class="tab__title{{#eq ../globals.league.slug slug}} active{{/eq}}">
+                <li class="tab__title{{#eq ../globals.league.slug slug}} active{{/eq}} federations_count_{{../globals.leagues.length}}">
                     <a href="#tab-federations-{{slug}}" data-toggle="tab">{{name}}</a>
                 </li>
             {{/each}}

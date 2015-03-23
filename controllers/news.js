@@ -25,6 +25,8 @@ var controller = {
 
                 findNews({leagueId: doc.league});
             });
+        } else {
+            findNews({});
         }
 
         function findNews() {
@@ -33,9 +35,11 @@ var controller = {
                     return next();
                 }
                 res.locals.globals.news = docs;
+                res.locals.globals.newsSticked = Array.prototype.slice.call(docs.filter(function (item) {
+                    return item.stick == true;
+                }), 0, 5);
 
-
-                console.log('news received + ' + docs.length);
+                console.log('news received + ' + res.locals.globals.news.length);
 
                 next();
             });
@@ -69,7 +73,7 @@ var controller = {
                 return next(err);
             }
 
-            res.render('article', {article: article});
+            res.render('news/item', {article: article});
         })
     }
 };
