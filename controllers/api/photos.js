@@ -53,7 +53,8 @@ var api = {
             if (!fs.existsSync(dir)) {
                 fs.mkdirRecursiveSync(dir);
             }
-            var url = 'http://localhost:9009' + path + filename,
+
+            var url = req.protocol + '://' + req.headers.host + path + filename,
                 path = dir + filename,
                 local = dir + filename;
 

@@ -5,6 +5,9 @@ var async        = require('async'),
     LeagueModel  = require('../../models/league'),
     remoteConfig = require('../../config/tinyapi');
 
+
+var client = new RestClient(remoteConfig.authOptions);
+
 var api = {
 
     /**
@@ -39,8 +42,6 @@ var api = {
      */
     list: function (req, res) {
         console.log('/api/leagues GET handled');
-
-        var client = new RestClient(remoteConfig.authOptions);
 
         client.get(remoteConfig.url + '/leagues', function (data) {
             var parsed = JSON.parse(data),

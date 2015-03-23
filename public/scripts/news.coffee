@@ -6,6 +6,9 @@ define ['jquery'], ($)->
   firstNewsItem = $('.news__headlines li:nth-child(1)')
   newsPreview = $('.news__preview')
   elCount = $('.news__headlines').children(':not(.highlight)').last().index()
+
+  if elCount == -1
+      return
   vPadding = parseInt(firstNewsItem.css('padding-top').replace('px', ''), 10) + parseInt(firstNewsItem.css('padding-bottom').replace('px', ''), 10)
   vMargin = parseInt(firstNewsItem.css('margin-top').replace('px', ''), 10) + parseInt(firstNewsItem.css('margin-bottom').replace('px', ''), 10)
   cPadding = parseInt($('.news__content').css('padding-top').replace('px', ''), 10) + parseInt($('.news__content').css('padding-bottom').replace('px', ''), 10)

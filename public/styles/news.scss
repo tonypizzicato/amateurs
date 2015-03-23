@@ -37,7 +37,7 @@ $navbar-default-link-active-color: #F5B367 !default;
 
 .news__headlines li:hover,
 .news__headlines li.selected {
-    background: rgba(255, 255, 255, 0.05);
+    background: #131A23;
 }
 
 .news__headlines .news__title {
@@ -96,7 +96,7 @@ $navbar-default-link-active-color: #F5B367 !default;
 
 .news__content {
     position:   absolute;
-    background: rgba(255, 255, 255, 0.05);
+    background: #131A23;
     z-index:    10;
     padding:    5px;
     top:        0;
