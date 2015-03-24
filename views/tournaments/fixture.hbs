@@ -1,5 +1,5 @@
 <div class="row clearfix s_mb_20">
-    <div class="col-md-8 column">
+    <div class="col-md-8">
 
         {{#each fixture}}
             <div id="round-{{@key}}" class="row">
@@ -53,6 +53,7 @@
 
     <div class="col-md-4 column">
 
+        <!-- TABLE -->
         {{#if globals.table}}
             <div class="panel s_m_0">
                 <div class="panel__header">
@@ -70,6 +71,7 @@
             </div>
         {{/if}}
 
+        <!-- RECENT -->
         <div class="panel panel_type_fixture s_m_0">
             <div class="panel__header">
                 <i class="fa fa-calendar s_mr_10"></i> Последние матчи
@@ -84,6 +86,8 @@
                 <a href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
             </span>
         </div>
+
+        <!-- COMMING -->
         <div class="panel panel_type_fixture s_m_0">
             <div class="panel__header">
                 <i class="fa fa-calendar s_mr_10"></i> Ближайшие матчи
@@ -99,6 +103,27 @@
             </span>
         </div>
 
+        <!-- NEWS -->
+
+        {{#notEmptyObject globals.news}}
+            <div class="panel s_m_0">
+                <div class="panel__header">
+                    <i class="fa fa-quote-right text_size_16 s_mr_10"></i> Новости
+                </div>
+                <div class="panel__body">
+                    {{> news news=globals.news}}
+                </div>
+            </div>
+            <div class="link_type_full s_mb_10">
+                <span class="text_color_orange">Все новости</span>
+                <span class="pull-right">
+                    <a href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/news"><i class="fa fa-arrow-circle-o-right"></i></a>
+                </span>
+            </div>
+        {{/notEmptyObject}}
+
+
+        <!-- CONTACTS -->
 
         {{#if globals.contacts.length}}
             <div class="panel s_m_0">

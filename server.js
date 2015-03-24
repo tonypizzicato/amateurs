@@ -23,6 +23,7 @@ var SessionMongoStore = require('connect-mongo')(session);
 
 var LeagueModel = require('./models/league');
 var CountryModel = require('./models/country');
+var TournamentModel = require('./models/tournament');
 
 // Configure server
 var port = process.env.NODE_PORT || 9000;
@@ -125,6 +126,12 @@ app.use('/api', function (req, res, next) {
     next();
 });
 
+
+app.get('/', function (req, res) {
+    //var slug = req.session.league ? req.session.league.slug : null;
+    res.redirect('/moscow');
+});
+
 app.get('*', function (req, res, next) {
 
     if (req.url.indexOf('/api') === 0) {
@@ -133,94 +140,36 @@ app.get('*', function (req, res, next) {
 
     res.locals.globals = res.locals.globals || {};
 
-    var getCountries = function () {
-        var populateOptions = {path: 'tournaments', options: {sort: {'sort': 1}}};
-        CountryModel.find({leagueId: req.session.league._id}).sort({sort: 1}).populate(populateOptions).exec(function (err, docs) {
-            if (err) {
-                return next(err);
-            }
-            res.locals.globals.countries = docs;
-            res.locals.globals.league = req.session.league;
-
-            console.log('countries received');
-            next();
-        });
-    };
-
     var query = {};
     if (typeof req.params[0] == 'string') {
         var param = req.params[0].slice(1);
-        if (/^(moscow|spb)$/.test(param)) {
-            query = {slug: param};
+        var match = param.match(/^(moscow|spb)/);
+
+        if (match && match.length >= 1) {
+            query = {slug: match[1]};
         }
     }
 
-    if (query.slug != undefined || !req.session.league) {
-        LeagueModel.findOne(query).sort({sort: 1}).lean().exec(function (err, doc) {
-            if (err) {
-                return next(err);
-            }
-            if (!doc) {
-                res.status(404);
-                return next(null);
-            }
+    console.log(query);
 
+    var populateOptions = {path: 'countries', options: {sort: {'sort': 1}}};
+    LeagueModel.findOne(query).lean().populate(populateOptions).exec(function (err, doc) {
+        if (err) {
+            return next(err);
+        }
+        if (!doc) {
+            res.status(404);
+            return next(null);
+        }
+
+        populateOptions = {path: 'countries.tournaments', model: 'Tournament', options: {sort: {'sort': 1}}};
+        LeagueModel.populate(doc, populateOptions, function (err, doc) {
             req.session.league = doc;
-            res.locals.globals.league = req.session.league;
-            getCountries();
+            res.locals.globals.league = doc;
+
+            next();
         });
-    } else {
-        getCountries();
-    }
-});
-
-app.get('/countries/:country', function (req, res, next) {
-    var contactsModel = require('./models/contact');
-    var country = req.param('country', req.session.currentCountry);
-
-    res.locals.globals.currentCountry = country;
-
-    contactsModel.find({country: country}, function (err, contacts) {
-        res.locals.globals.contactsCountry = contacts;
     });
-
-    req.session.currentCountry = country;
-
-    next();
-});
-
-app.get('/leagues/:name/*', function (req, res, next) {
-    var contactsModel = require('./models/contact');
-    var fixtureModel = require('./models/fixture');
-    var leagueName = req.param('name', req.session.currentLeague);
-
-    require('./models/league').find({slug: leagueName}, function (err, leagues) {
-        if (leagues.length) {
-            var league = leagues.pop();
-
-            res.locals.globals.currentCountry = league.country;
-            res.locals.globals.currentLeague = league.slug;
-            req.session.currentCountry = league.country;
-            req.session.currentLeague = league.slug;
-
-
-            contactsModel.find({country: league.country}, function (err, contacts) {
-                res.locals.globals.contactsCountry = contacts;
-            });
-            contactsModel.find({league: league.slug}, function (err, contacts) {
-                res.locals.globals.contactsLeague = contacts;
-            });
-
-            res.locals.globals.recent = fixtureModel.recent(league.slug);
-            res.locals.globals.comming = fixtureModel.comming(league.slug);
-        } else {
-            res.status(404).send('Not found League');
-
-            return;
-        }
-    });
-
-    next();
 });
 
 //routes list:

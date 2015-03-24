@@ -1,6 +1,8 @@
 'use strict';
 
-var LeagueModel      = require('../models/league'),
+var _                = require('underscore'),
+    moment           = require('moment'),
+    LeagueModel      = require('../models/league'),
     TournamentLeague = require('../models/tournament'),
     RestClient       = require('node-rest-client').Client,
     remoteConfig     = require('../config/tinyapi'),
@@ -9,7 +11,9 @@ var LeagueModel      = require('../models/league'),
 var client = new RestClient(remoteConfig.authOptions);
 
 module.exports = {
-    item: function (req, res) {
+    item: function (req, res, next) {
+
+
         /* Leagues */
         var leagues = new Promise(function (resolve, reject) {
             var populateOptions = {path: 'countries', options: {sort: {'sort': 1}}};
@@ -25,7 +29,7 @@ module.exports = {
         /* League */
         var league = new Promise(function (resolve, reject) {
             var populateOptions = {path: 'countries', options: {sort: {'sort': 1}}};
-            LeagueModel.findOne({slug: req.params.league}).lean().populate(populateOptions).exec(function (err, doc) {
+            LeagueModel.findOne({slug: req.params.league}).populate(populateOptions).lean().exec(function (err, doc) {
                 if (err) {
                     return next(err);
                 }
@@ -34,21 +38,48 @@ module.exports = {
                     return next(null);
                 }
 
-                TournamentLeague.find({leagueId: doc._id}).lean().exec(function (err, docs) {
-
-                    var tournaments = {};
-                    docs.forEach(function (item) {
-                        tournaments[item.remoteId] = {};
-                        client.get(remoteConfig.url + '/stats/table?tournamentId=' + item.remoteId, function (table) {
-                            tournaments[item.remoteId].table = table;
-                        });
-
-                        client.get(remoteConfig.url + '/stats/table?tournamentId=' + item.remoteId, function (table) {
-                            tournaments[item.remoteId].fixture = table;
-                        });
+                TournamentLeague.find({leagueId: doc._id, show: true}).sort({sort: 1}).lean().exec(function (err, docs) {
+                    var ids = docs.map(function (item) {
+                        return item._id;
                     });
 
-                    resolve({league: doc, tournaments: tournaments});
+                    var query = [];
+                    ids.forEach(function (item) {
+                        query.push('tournamentId[]=' + item);
+                    });
+
+                    client.get(remoteConfig.url + '/stats/table?' + query.join('&'), function (tables) {
+                        var format = 'DD/MM/YYYY';
+                        tables = JSON.parse(tables);
+
+                        tables = _.groupBy(tables, function (item) {
+                            return item.tournamentId;
+                        });
+
+                        for (var id in tables) {
+                            if (tables[id].length > 1) {
+                                tables[id] = tables[id].sort(function (a, b) {
+                                    return moment(a.date, format).isBefore(moment(b.date, format)) ? 1 : -1;
+                                });
+                            }
+                        }
+
+                        docs.map(function (item) {
+                            item.table = tables[item.remoteId] ? tables[item.remoteId][0] : null;
+                            item.table.teams = item.table.teams.map(function (item) {
+                                item.form = item.form.slice(-5);
+                                return item;
+                            });
+                        });
+
+                        doc.countries.forEach(function (country) {
+                            country.tournaments = docs.filter(function (item) {
+                                return item.country.toString() == country._id.toString();
+                            })
+                        });
+
+                        resolve(doc);
+                    });
                 });
 
             });
@@ -57,12 +88,9 @@ module.exports = {
 
         Promise.all([leagues, league]).then(function (result) {
             res.locals.globals.leagues = result[0];
-            res.locals.globals.league = result[1].league;
+            res.locals.globals.league = result[1];
 
-            var populateOptions = {path: 'countries.tournaments', options: {sort: {'sort': 1}}};
-            LeagueModel.populate(result[1], populateOptions, function (err, doc) {
-                res.render('leagues/item', {league: doc, tournaments: result[1].tournaments});
-            });
+            res.render('leagues/item', {league: result[1]});
         });
 
     }

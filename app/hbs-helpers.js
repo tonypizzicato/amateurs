@@ -139,6 +139,10 @@ var helpers = {
         return dateFn(date, 'dddd, Do MMMM YYYY HH:mm');
     },
 
+    time: function (date) {
+        return dateFn(date, 'HH:mm');
+    },
+
     contains: function (string, needle) {
         if (string.toLowerCase().indexOf(needle.toLowerCase()) === -1) {
             return options.fn(this);

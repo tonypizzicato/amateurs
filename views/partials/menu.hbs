@@ -40,12 +40,8 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <i class="fa fa-angle-down{{#if globals.tournament}} text_color_orange{{/if}}"></i>
                     {{#if globals.tournament}}
-                        {{#each globals.countries}}
-                            {{#each tournaments}}
-                                <span class="text_color_orange">{{#eq slug ../../../globals.tournament.slug}}{{~name~}}{{/eq}}</span>
-                            {{/each}}
-                        {{/each}}
-                        {{else~}}
+                        <span class="text_color_orange">{{~globals.tournament.name~}}</span>
+                    {{else~}}
                         Турниры
                     {{~/if}}
                 </a>
@@ -53,14 +49,14 @@
                 <ul class="dropdown-menu dropdown-menu_type_tournaments row">
                     <li class="col-md-12 s_pt_20">
                         <ul class="row">
-                            {{#each globals.countries}}
+                            {{#each globals.league.countries}}
                                 <li class="col-md-4">
                                     <ul>
                                         <li class="dropdown-header s_mb_10">
                                             {{name}}
                                         </li>
                                         <ul class="s_mb_10">
-                                            {{#each tournaments}}
+                                            {{#each this.tournaments}}
                                                 <li class="s_mb_5">
                                                     <a href="/{{../../globals.league.slug}}/tournaments/{{slug}}">{{name}}</a>
                                                 </li>
@@ -78,6 +74,9 @@
         {{#if globals.tournament}}
             <ul class="nav navbar-nav">
                 <li class="navbar__item">
+                    <a href="/{{../globals.league.slug}}/tournaments/{{globals.tournament.slug}}/news">Новости</a>
+                </li>
+                <li class="navbar__item">
                     <a href="/{{../globals.league.slug}}/tournaments/{{globals.tournament.slug}}/fixture">Календарь</a>
                 </li>
                 <li class="navbar__item">
@@ -88,6 +87,12 @@
                 </li>
                 <li class="navbar__item{{#if pageFields}} navbar__item_active_yes{{/if}}">
                     <a href="/{{../globals.league.slug}}/tournaments/{{globals.tournament.slug}}/fields">Поля</a>
+                </li>
+            </ul>
+            {{~else~}}
+            <ul class="nav navbar-nav">
+                <li class="navbar__item">
+                    <a href="/{{globals.league.slug}}/news">Новости</a>
                 </li>
             </ul>
         {{~/if}}
