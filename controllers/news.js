@@ -68,7 +68,8 @@ var controller = {
 
     item: function (req, res, next) {
         console.log('getting news');
-        NewsModel.findOne({slug: req.params.slug}, function (err, article) {
+        var populateOptions = {path: 'country'};
+        NewsModel.findOne({slug: req.params.slug}).populate(populateOptions).exec(function (err, article) {
             if (err) {
                 return next(err);
             }
