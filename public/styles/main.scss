@@ -390,6 +390,10 @@ ul, ol {
     border-bottom: none;
 }
 
+.nav-tabs .tab__title.tab__title_size_quarter {
+    width: 25%;
+}
+
 .nav-tabs .tab__title.tab__title_size_third {
     width: 33.3333%;
 }
@@ -404,6 +408,18 @@ ul, ol {
 
 .nav-tabs .tab__title.tab__title_size_4 {
     width: 25%;
+}
+
+.nav-tabs .tab__title.tab__title_size_3 {
+    width: 33.3333%;
+}
+
+.nav-tabs .tab__title.tab__title_size_2 {
+    width: 50%;
+}
+
+.nav-tabs .tab__title.tab__title_size_1 {
+    width: 100%;
 }
 
 .nav-tabs .tab__title,
@@ -1405,6 +1421,10 @@ $size: 200px;
 
 .s_mb_40 {
     margin-bottom: 40px;
+}
+
+.s_mt_0 {
+    margin-top: 0;
 }
 
 .s_mt_10 {

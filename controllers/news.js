@@ -5,6 +5,8 @@ var _               = require('underscore'),
     LeagueModel     = require('../models/league'),
     TournamentModel = require('../models/tournament'),
     NewsModel       = require('../models/news'),
+    Promise         = require('promise'),
+
     tz              = 'Europe/Moscow';
 
 var controller = {
@@ -52,6 +54,28 @@ var controller = {
 
             res.render('news/item', {article: article});
         })
+    },
+
+    globals: function (req, res, next) {
+
+        /* Leagues */
+        var leagues = new Promise(function (resolve, reject) {
+            var populateOptions = {path: 'countries', options: {sort: {'sort': 1}}};
+            LeagueModel.find({show: true}).sort({sort: 1}).populate(populateOptions).exec(function (err, docs) {
+                if (err) {
+                    return reject(err);
+                }
+
+                resolve(docs);
+            });
+        });
+
+        Promise.all([leagues]).then(function (result) {
+            res.locals.globals.leagues = result[0];
+
+            console.log('globals end');
+            next();
+        });
     }
 };
 

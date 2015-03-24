@@ -125,7 +125,7 @@ var saveArticle = function (req, save) {
 
         var base64Data = doc.image.replace(/^data:image\/(.+);base64,/, "");
 
-        var dir = __dirname + '/../../public',
+        var dir = __dirname + '/../../' + process.env.NODE_ENV == 'production' ? 'dist' : 'public',
             path = '/uploads/' + doc.country + '/';
 
         dir = dir + path;
