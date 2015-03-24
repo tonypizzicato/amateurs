@@ -147,7 +147,8 @@ module.exports = {
 
     globals: function (req, res, next) {
         var tournament;
-        TournamentModel.findOne({slug: req.params.name}, function (err, doc) {
+        var populateOptions = {path: 'country'};
+        TournamentModel.findOne({slug: req.params.name}).lean().populate(populateOptions).exec(function (err, doc) {
             if (err) {
                 return next(err);
             }

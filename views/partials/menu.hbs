@@ -78,6 +78,9 @@
         {{#if globals.tournament}}
             <ul class="nav navbar-nav">
                 <li class="navbar__item">
+                    <a href="/{{../globals.league.slug}}/tournaments/{{globals.tournament.slug}}/news">Новости</a>
+                </li>
+                <li class="navbar__item">
                     <a href="/{{../globals.league.slug}}/tournaments/{{globals.tournament.slug}}/fixture">Календарь</a>
                 </li>
                 <li class="navbar__item">
@@ -88,6 +91,12 @@
                 </li>
                 <li class="navbar__item{{#if pageFields}} navbar__item_active_yes{{/if}}">
                     <a href="/{{../globals.league.slug}}/tournaments/{{globals.tournament.slug}}/fields">Поля</a>
+                </li>
+            </ul>
+        {{~else~}}
+            <ul class="nav navbar-nav">
+                <li class="navbar__item">
+                    <a href="/{{globals.league.slug}}/news">Новости</a>
                 </li>
             </ul>
         {{~/if}}
