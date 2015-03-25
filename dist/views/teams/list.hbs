@@ -88,19 +88,19 @@
 
         <!-- CONTACTS -->
 
-        {{#if globals.contacts.length}}
+        {{#if globals.tournament.contacts.length}}
             <div class="panel s_m_0">
                 <div class="panel__header">
                     <i class="fa fa-phone text_size_16 s_mr_10"></i> Контакты
                 </div>
                 <div class="panel__body">
-                    {{> contacts}}
+                    {{> contacts contacts=globals.tournament.contacts}}
                 </div>
             </div>
             <div class="link_type_full s_mb_10">
                 <span class="text_color_orange">Все контакты</span>
                 <span class="pull-right">
-                    <a href="/contacts"><i class="fa fa-arrow-circle-o-right"></i></a>
+                    <a href="/{{globals.league.slug}}/contacts"><i class="fa fa-arrow-circle-o-right"></i></a>
                 </span>
             </div>
         {{/if}}
