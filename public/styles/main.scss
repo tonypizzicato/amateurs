@@ -611,6 +611,10 @@ ul, ol {
     color: $navbar-default-link-active-color;
 }
 
+.panel_type_contact {
+    padding: 0;
+}
+
 /**
  * Panels
  */
@@ -676,6 +680,7 @@ ul, ol {
     white-space:    nowrap;
     text-overflow:  ellipsis;
     overflow:       hidden;
+    padding:        3px 0;
 }
 
 .panel_type_fixture .fixture__time {
@@ -778,16 +783,15 @@ ul, ol {
 }
 
 .match-main_image {
-    position:        absolute;
-    top:             0;
-    width:           48%;
-    height:          100%;
-    background:      #00b3ee;
-    background-size: cover;
+    position:   absolute;
+    top:        0;
+    width:      48%;
+    height:     100%;
+    background: #2c3e50 center center no-repeat;
 
-    -webkit-filter:  sepia(.53);
-    filter:          sepia(.53);
-    box-shadow:      inset 0px 0px 10px rgba(0, 0, 0, 0.9);
+    //    -webkit-filter:  sepia(.53);
+    //    filter:          sepia(.53);
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.9);
 }
 
 .match-main_image_home {

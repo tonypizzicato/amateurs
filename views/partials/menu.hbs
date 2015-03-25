@@ -29,7 +29,6 @@
                 <li class="navbar__item">
                     <a href="/{{globals.league.slug}}">{{~globals.league.name~}}</a>
                 </li>
-
             {{/gt}}
         </ul>
     </div>
@@ -41,7 +40,7 @@
                     <i class="fa fa-angle-down{{#if globals.tournament}} text_color_orange{{/if}}"></i>
                     {{#if globals.tournament}}
                         <span class="text_color_orange">{{~globals.tournament.name~}}</span>
-                    {{else~}}
+                        {{else~}}
                         Турниры
                     {{~/if}}
                 </a>
@@ -73,7 +72,7 @@
         </ul>
         {{#if globals.tournament}}
             <ul class="nav navbar-nav">
-                <li class="navbar__item">
+                <li class="navbar__item{{#if pageNews}} navbar__item_active_yes{{/if}}">
                     <a href="/{{../globals.league.slug}}/tournaments/{{globals.tournament.slug}}/news">Новости</a>
                 </li>
                 <li class="navbar__item">
@@ -86,13 +85,17 @@
                     <a href="/{{../globals.league.slug}}/tournaments/{{globals.tournament.slug}}/teams">Клубы</a>
                 </li>
                 <li class="navbar__item{{#if pageFields}} navbar__item_active_yes{{/if}}">
-                    <a href="/{{../globals.league.slug}}/tournaments/{{globals.tournament.slug}}/fields">Поля</a>
+                    <a href="/{{globals.league.slug}}/fields">Поля</a>
                 </li>
             </ul>
             {{~else~}}
             <ul class="nav navbar-nav">
-                <li class="navbar__item">
+                <li class="navbar__item{{#if pageNews}} navbar__item_active_yes{{/if}}">
                     <a href="/{{globals.league.slug}}/news">Новости</a>
+                </li>
+
+                <li class="navbar__item{{#if pageFields}} navbar__item_active_yes{{/if}}">
+                    <a href="/{{globals.league.slug}}/fields">Поля</a>
                 </li>
             </ul>
         {{~/if}}
@@ -109,8 +112,8 @@
         <!--</li>-->
         <!--</ul>-->
         <ul class="nav navbar-nav pull-right">
-            <li class="navbar__item">
-                <a href="/{{../../globals.league.slug}}/tournaments/{{slug}}/contacts">Контакты</a>
+            <li class="navbar__item{{#if pageContacts}} navbar__item_active_yes{{/if}}">
+                <a href="/{{globals.league.slug}}/contacts">Контакты</a>
             </li>
         </ul>
     </div>

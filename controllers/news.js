@@ -4,6 +4,7 @@ var _               = require('underscore'),
     moment          = require('moment-timezone'),
     LeagueModel     = require('../models/league'),
     TournamentModel = require('../models/tournament'),
+    ContactModel    = require('../models/contact'),
     NewsModel       = require('../models/news'),
     Promise         = require('promise'),
 
@@ -18,7 +19,7 @@ var controller = {
             }
 
             res.locals.globals.news = _.groupBy(docs.slice(0, 15), function (item) {
-                return moment(item.dc).locale('ru').tz(tz).format('DD MMMM YYYY');
+                return moment(item.dc).locale('ru').format('DD MMMM YYYY');
             });
 
             res.locals.globals.newsSticked = Array.prototype.slice.call(docs.filter(function (item) {
@@ -38,10 +39,10 @@ var controller = {
             }
 
             docs = _.groupBy(docs, function (item) {
-                return moment(item.dc).locale('ru').tz(tz).format('Do MMMM YYYY, dddd');
+                return moment(item.dc).locale('ru').format('Do MMMM YYYY, dddd');
             });
 
-            res.render('news/list', {news: docs});
+            res.render('news/list', {news: docs, pageNews: true});
         });
     },
 
@@ -52,7 +53,7 @@ var controller = {
                 return next(err);
             }
 
-            res.render('news/item', {article: article});
+            res.render('news/item', {article: article, pageNews: true});
         })
     },
 
@@ -60,7 +61,7 @@ var controller = {
 
         /* Leagues */
         var leagues = new Promise(function (resolve, reject) {
-            var populateOptions = {path: 'countries', options: {sort: {'sort': 1}}};
+            var populateOptions = {path: 'countries', match: {show: true}, options: {sort: {'sort': 1}}};
             LeagueModel.find({show: true}).sort({sort: 1}).populate(populateOptions).exec(function (err, docs) {
                 if (err) {
                     return reject(err);
@@ -70,8 +71,20 @@ var controller = {
             });
         });
 
-        Promise.all([leagues]).then(function (result) {
+        /* Contacts */
+        var contacts = new Promise(function (resolve, reject) {
+            ContactModel.find({show: true, tournaments: []}).sort({sort: 1}).exec(function (err, docs) {
+                if (err) {
+                    reject(err);
+                }
+
+                resolve(docs);
+            });
+        });
+
+        Promise.all([leagues, contacts]).then(function (result) {
             res.locals.globals.leagues = result[0];
+            res.locals.globals.contacts = result[1];
 
             console.log('globals end');
             next();

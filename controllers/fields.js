@@ -3,8 +3,8 @@
 var fields = require('../models/fields');
 
 module.exports = {
-    fields: function (req, res) {
+    list: function (req, res) {
         console.log('fields called');
-        res.render('fields', {fields: fields.get(req.params.name), pageFields: true});
+        res.render('fields/list', {fields: [], pageFields: true});
     }
 };

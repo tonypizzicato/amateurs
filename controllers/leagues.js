@@ -1,12 +1,13 @@
 'use strict';
 
-var _                = require('underscore'),
-    moment           = require('moment'),
-    LeagueModel      = require('../models/league'),
-    TournamentLeague = require('../models/tournament'),
-    RestClient       = require('node-rest-client').Client,
-    remoteConfig     = require('../config/tinyapi'),
-    Promise          = require('promise');
+var _               = require('underscore'),
+    moment          = require('moment'),
+    LeagueModel     = require('../models/league'),
+    TournamentModel = require('../models/tournament'),
+    ContactModel    = require('../models/contact'),
+    RestClient      = require('node-rest-client').Client,
+    remoteConfig    = require('../config/tinyapi'),
+    Promise         = require('promise');
 
 var client = new RestClient(remoteConfig.authOptions);
 
@@ -16,7 +17,7 @@ module.exports = {
 
         /* Leagues */
         var leagues = new Promise(function (resolve, reject) {
-            var populateOptions = {path: 'countries', options: {sort: {'sort': 1}}};
+            var populateOptions = {path: 'countries', match: {show: true}, options: {sort: {'sort': 1}}};
             LeagueModel.find({show: true}).sort({sort: 1}).populate(populateOptions).exec(function (err, docs) {
                 if (err) {
                     reject(err);
@@ -28,7 +29,7 @@ module.exports = {
 
         /* League */
         var league = new Promise(function (resolve, reject) {
-            var populateOptions = {path: 'countries', options: {sort: {'sort': 1}}};
+            var populateOptions = {path: 'countries', match: {show: true}, options: {sort: {'sort': 1}}};
             LeagueModel.findOne({slug: req.params.league}).populate(populateOptions).lean().exec(function (err, doc) {
                 if (err) {
                     return next(err);
@@ -38,7 +39,7 @@ module.exports = {
                     return next(null);
                 }
 
-                TournamentLeague.find({leagueId: doc._id, show: true}).sort({sort: 1}).lean().exec(function (err, docs) {
+                TournamentModel.find({leagueId: doc._id, show: true}).sort({sort: 1}).lean().exec(function (err, docs) {
                     var ids = docs.map(function (item) {
                         return item._id;
                     });
@@ -85,10 +86,21 @@ module.exports = {
             });
         });
 
+        /* Contacts */
+        var contacts = new Promise(function (resolve, reject) {
+            ContactModel.find({show: true, tournaments: []}).sort({sort: 1}).exec(function (err, docs) {
+                if (err) {
+                    reject(err);
+                }
 
-        Promise.all([leagues, league]).then(function (result) {
+                resolve(docs);
+            });
+        });
+
+        Promise.all([leagues, league, contacts]).then(function (result) {
             res.locals.globals.leagues = result[0];
             res.locals.globals.league = result[1];
+            res.locals.globals.contacts = result[2];
 
             res.render('leagues/item', {league: result[1]});
         });
