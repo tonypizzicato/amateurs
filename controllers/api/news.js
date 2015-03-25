@@ -125,7 +125,7 @@ var saveArticle = function (req, save) {
 
         var base64Data = doc.image.replace(/^data:image\/(.+);base64,/, "");
 
-        var dir = __dirname + '/../../' + process.env.NODE_ENV == 'production' ? 'dist' : 'public',
+        var dir = __dirname + '/../../' + (process.env == 'production' ? 'dist' : 'public'),
             path = '/uploads/' + doc.country + '/';
 
         dir = dir + path;
@@ -150,7 +150,7 @@ var saveArticle = function (req, save) {
             Flickr.authenticate(flickrOptions, function (err, flickr) {
                 console.log('flickr authed');
 
-                var file = {title: doc.title, photo: dir + filename};
+                var file = {title: transliteration.slugify(doc.title), photo: dir + filename};
 
                 var options = {
                     photos:      [file],

@@ -152,8 +152,8 @@ app.get('*', function (req, res, next) {
 
     console.log(query);
 
-    var populateOptions = {path: 'countries', options: {sort: {'sort': 1}}};
-    LeagueModel.findOne(query).lean().populate(populateOptions).exec(function (err, doc) {
+    var populateOptions = {path: 'countries', match: {show: true}, options: {sort: {'sort': 1}}};
+    LeagueModel.findOne(query).populate(populateOptions).exec(function (err, doc) {
         if (err) {
             return next(err);
         }
@@ -162,7 +162,7 @@ app.get('*', function (req, res, next) {
             return next(null);
         }
 
-        populateOptions = {path: 'countries.tournaments', model: 'Tournament', options: {sort: {'sort': 1}}};
+        populateOptions = {path: 'countries.tournaments', model: 'Tournament', match: {show: true}, options: {sort: {'sort': 1}}};
         LeagueModel.populate(doc, populateOptions, function (err, doc) {
             req.session.league = doc;
             res.locals.globals.league = doc;

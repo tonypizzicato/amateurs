@@ -1,16 +1,14 @@
 {{#notEmptyObject fixture}}
-    <table class="table s_m_0">
-        <tbody>
-        {{#each fixture}}
-            <tr>
-                <td class="text_color_orange" colspan="3">Тур {{@key}}</td>
-            </tr>
+    {{#each fixture}}
+        <h5 class="text_color_orange s_mt_0">{{@key}} Тур</h5>
+        <table class="table table_layout_fixed s_mb_10">
+            <tbody>
             {{#each this}}
                 <tr>
                     <td class="fixture__time text_size_12 text_color_muted{{#if time}} col-md-3{{else}} col-md-1{{/if}}">
-                        {{~#if dateTime}}{{dateTimeShort dateTime}}{{else}}&mdash;{{/if~}}
+                                {{~#if dateTime}}{{dateTimeShort dateTime}}{{else}}&mdash;{{/if~}}
                     </td>
-                    <td class="text_align_l {{#if time}} col-md-7{{else}} col-md-10{{/if}}">
+                    <td class="text_align_l{{#if time}} col-md-8{{else}} col-md-10{{/if}}">
                         <span class="fixture__team s_pr_0
                             {{~#eq (gameResTeam teams.[0] this) 'w'}} fixture__winner{{/eq~}}
                             {{~#eq (gameResTeam teams.[0] this) 'l'}} fixture__looser{{/eq~}}
@@ -26,16 +24,16 @@
                         </span>
                     </td>
                     </td>
-                    <td class="fixture__score col-md-1 s_pr_0 text_align_c">
+                    <td class="fixture__score s_pr_0 text_align_r{{#if time}} col-md-2{{else}} col-md-1{{/if}}">
                         <a href="/{{../../globals.league.slug}}/tournaments/{{../../globals.tournament.slug}}/matches/{{_id}}">
                             {{#if score}}{{~score.ft.[0]}}:{{score.ft.[1]~}}{{else}}-:-{{/if}}
                         </a>
                     </td>
                 </tr>
             {{/each}}
-        {{/each}}
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    {{/each}}
 {{else}}
     <p class="text_align_c s_pt_10">{{emptyText}}</p>
 {{/notEmptyObject}}

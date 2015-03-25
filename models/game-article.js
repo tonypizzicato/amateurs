@@ -5,13 +5,15 @@ var mongoose = require('mongoose'),
     ObjectId = Schema.ObjectId;
 
 var GameArticleSchema = new Schema({
-    dc:     {type: Date, default: Date.now},
-    du:     {type: Date},
-    body:   {type: String},
-    show:   {type: Boolean},
-    type:   {type: String, required: true},
-    author: {type: String, default: ''},
-    gameId: {type: ObjectId}
+    dc:          {type: Date, default: Date.now},
+    du:          {type: Date},
+    body:        {type: String},
+    show:        {type: Boolean},
+    type:        {type: String, required: true},
+    author:      {type: String, default: ''},
+    centralGame: {type: Boolean, default: false},
+    gameId:      {type: ObjectId},
+    tournament:  {type: ObjectId}
 });
 
 GameArticleSchema.pre('save', function (next) {

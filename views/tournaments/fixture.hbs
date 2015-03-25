@@ -13,8 +13,8 @@
                                 <tbody>
                                 {{#each this}}
                                     <tr>
-                                        <td class="fixture__time col-md-2 text_size_12{{#unless time}} col-md-3 text_color_light{{/unless}}">
-                                            {{~#if dateTime}}{{date dateTime}} {{time}}{{else}}Время не назначено{{/if~}}
+                                        <td class="fixture__time col-md-3 text_size_12{{#unless time}} text_color_light{{/unless}}">
+                                            {{~#if dateTime}}{{datetime dateTime}}{{else}}Время не назначено{{/if~}}
                                         </td>
                                         <td class="fixture__team col-md-4 text_align_r s_pr_0
                                             {{~#eq (gameResTeam teams.[0] this) 'w'}} fixture__winner{{/eq~}}
@@ -29,15 +29,12 @@
                                             <a href="/{{../../globals.league.slug}}/tournaments/{{../../globals.tournament.slug}}/teams/{{teams.[1]._id}}">{{~teams.[1].name~}}</a>
                                         </td>
                                         </td>
-                                        {{#if score}}
-                                            <td class="fixture__score col-md-2 s_pr_0 text_align_c">
-                                                <a href="/{{../../../globals.league.slug}}/tournaments/{{../../../globals.tournament.slug}}/matches/{{_id}}">
-                                                    {{score.ft.[0]}}:{{score.ft.[1]}}
-                                                </a>
-                                            </td>
-                                        {{else}}
-                                            <td class="col-md-1">&mdash;:&mdash;</td>
-                                        {{/if}}
+
+                                        <td class="col-md-1">
+                                            <a href="/{{../../globals.league.slug}}/tournaments/{{../../globals.tournament.slug}}/matches/{{_id}}">
+                                                {{#if score}}{{~score.ft.[0]}}:{{score.ft.[1]~}}{{else}}-:-{{/if}}
+                                            </a>
+                                        </td>
                                     </tr>
                                 {{/each}}
                                 </tbody>
@@ -122,22 +119,21 @@
             </div>
         {{/notEmptyObject}}
 
-
         <!-- CONTACTS -->
 
-        {{#if globals.contacts.length}}
+        {{#if globals.tournament.contacts.length}}
             <div class="panel s_m_0">
                 <div class="panel__header">
                     <i class="fa fa-phone text_size_16 s_mr_10"></i> Контакты
                 </div>
                 <div class="panel__body">
-                    {{> contacts}}
+                    {{> contacts contacts=globals.tournament.contacts}}
                 </div>
             </div>
             <div class="link_type_full s_mb_10">
                 <span class="text_color_orange">Все контакты</span>
                 <span class="pull-right">
-                    <a href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/contacts"><i class="fa fa-arrow-circle-o-right"></i></a>
+                    <a href="/{{globals.league.slug}}/contacts"><i class="fa fa-arrow-circle-o-right"></i></a>
                 </span>
             </div>
         {{/if}}

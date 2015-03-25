@@ -127,6 +127,10 @@ var helpers = {
         return dateFn(date, 'L');
     },
 
+    datetime: function (date) {
+        return dateFn(date, 'L LT');
+    },
+
     datefull: function (date) {
         return dateFn(date, 'LL');
     },
@@ -210,7 +214,7 @@ var helpers = {
 var dateFn = function (date, format) {
     var tz = 'Europe/Moscow';
 
-    return moment(date).locale('ru').tz(tz).format(format);
+    return moment(date).locale('ru').format(format);
 };
 
 module.exports.initialize = function (hbs) {
