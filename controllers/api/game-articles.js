@@ -1,6 +1,18 @@
 "use strict";
 
-var articlesModel = require('../../models/game-article');
+var fs              = require('fs.extra'),
+    transliteration = require('transliteration'),
+    ArticleModel    = require('../../models/game-article'),
+    Flickr          = require('flickrapi');
+
+var flickrOptions = {
+    api_key:             "ffd56ffb2631d75166e922ed7b5cc5b6",
+    secret:              "34c94bc92ac6cd39",
+    user_id:             "130112246@N08",
+    access_token:        "72157648906532524-e46b00c69350c43b",
+    access_token_secret: "4a0ee319266c77e2",
+    permissions:         'delete'
+};
 
 var api = {
 
@@ -11,7 +23,7 @@ var api = {
      */
     list: function (req, res) {
         console.log('/api/game-articles GET handled');
-        articlesModel.find().sort('-dc').exec(function (err, news) {
+        ArticleModel.find().sort('-dc').exec(function (err, news) {
             if (err) {
                 res.status(500).json({error: err});
             }
@@ -28,15 +40,16 @@ var api = {
     create: function (req, res, next) {
         console.log('/api/game-articles POST handled');
 
-        articlesModel.create(req.body, function (err, article) {
-            if (err) {
-                console.log(err);
-                res.status(500).json({error: err});
-                return;
-            }
+        saveArticle(req, function (doc) {
+            ArticleModel.create(doc, function (err, article) {
+                if (err) {
+                    console.log(err);
+                    res.status(500).json({error: err});
+                    return next();
+                }
 
-            console.log(arguments);
-            res.json(article);
+                res.json(article);
+            });
         });
     },
 
@@ -47,18 +60,21 @@ var api = {
      */
     save: function (req, res, next) {
         console.log('/api/game-articles PUT handled');
-        articlesModel.update({_id: req.params.id}, {$set: req.body}, function (err, count) {
-            if (err) {
-                console.log(err);
-                res.status(500).json({error: err});
-                return;
-            }
 
-            if (count) {
-                res.status(200).json({});
-            } else {
-                res.status(404).json({});
-            }
+        saveArticle(req, function (doc) {
+            ArticleModel.update({_id: req.params.id}, {$set: doc}, function (err, count) {
+                if (err) {
+                    console.log(err);
+                    res.status(500).json({error: err});
+                    return;
+                }
+
+                if (count) {
+                    res.status(200).json({});
+                } else {
+                    res.status(404).json({});
+                }
+            });
         });
     },
 
@@ -70,7 +86,7 @@ var api = {
     delete: function (req, res, next) {
         console.log('/api/game-articles/:id DELETE handled');
 
-        articlesModel.remove({_id: req.params.id}, function (err, count) {
+        ArticleModel.remove({_id: req.params.id}, function (err, count) {
             if (err) {
                 res.status(500).json({error: err});
             }
@@ -84,6 +100,103 @@ var api = {
             next();
         });
     }
+};
+
+var saveArticle = function (req, save) {
+    var doc = req.body;
+
+    var images = [];
+
+    if (doc.imageHome) {
+        images.push({image: doc.imageHome, title: 'imageHome'});
+    }
+    if (doc.imageAway) {
+        images.push({image: doc.imageAway, title: 'imageAway'});
+    }
+
+    if (images.length) {
+        images.forEach(function (image, index) {
+            var reg = /^data:image\/(.+);base64,/;
+            var format = image.image.match(reg);
+
+            if (format && format.length >= 2) {
+                format = format[1];
+            } else {
+                return;
+            }
+
+            var base64Data = image.image.replace(/^data:image\/(.+);base64,/, "");
+
+            var dir = __dirname + '/../../' + (process.env == 'production' ? 'dist' : 'public'),
+                path = '/uploads/' + doc.tournament + '/';
+
+            dir = dir + path;
+
+            if (!fs.existsSync(dir)) {
+                fs.mkdirRecursiveSync(dir);
+            }
+
+            var filename = transliteration.slugify(doc.gameId + image.title) + "." + format;
+            require("fs").writeFileSync(dir + filename, base64Data, 'base64');
+
+            var imageUrl = req.protocol + '://' + req.headers.host + path + filename;
+            doc[image.title] = imageUrl;
+
+            Flickr.authenticate(flickrOptions, function (err, flickr) {
+                console.log('flickr authed');
+
+                var file = {title: transliteration.slugify(doc.gameId + image.title), photo: dir + filename};
+
+                var options = {
+                    photos:      [file],
+                    permissions: 'write'
+                };
+
+                Flickr.upload(options, flickrOptions, function (err, ids) {
+                    if (err) {
+                        console.log('Failed uploading news image to flickr.');
+
+                        return;
+                    }
+
+                    ids.forEach(function (id) {
+                        flickr.photos.getSizes({photo_id: id}, function (err, res) {
+                            var s = res.sizes.size.filter(function (item) {
+                                return item.label.toLowerCase() == 'medium';
+                            });
+
+                            if (!s.length) {
+                                s = res.sizes.size.filter(function (item) {
+                                    return item.label.toLowerCase() == 'original';
+                                });
+                            }
+
+                            if (s.length) {
+                                console.log('flickr uploaded');
+
+                                doc[image.title] = s[0].source;
+
+                                var m = {}, set = {};
+                                m.gameId = doc.gameId;
+                                m.type = 'preview';
+                                set[image.title] = s[0].source;
+
+                                ArticleModel.update(m, {'$set': set}).exec();
+                            } else {
+                                console.log('no size found', res.sizes);
+                            }
+                        });
+                    });
+
+                    // TODO: clear with cron (?)
+                    //fs.unlinkSync(dir + filename);
+                    //fs.unlinkSync(dir);
+                });
+            });
+        });
+    }
+
+    save(doc);
 };
 
 module.exports = api;

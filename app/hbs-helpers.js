@@ -3,8 +3,18 @@ var hbs     = require('hbs'),
     moment  = require('moment-timezone'),
     slugify = require('transliteration').slugify;
 
+var linkRoutes = {
+    table: {}
+};
 
 var helpers = {
+    link: function (href, options) {
+        console.log(options);
+        return new hbs.handlebars.SafeString(
+            href
+        );
+    },
+
     eq: function (lvalue, rvalue, options) {
         if (arguments.length < 3)
             throw new Error("hbs Helper eq needs 2 parameters");
@@ -127,6 +137,10 @@ var helpers = {
         return dateFn(date, 'L');
     },
 
+    dateShort: function (date) {
+        return dateFn(date, 'DD.MM');
+    },
+
     datetime: function (date) {
         return dateFn(date, 'L LT');
     },
@@ -208,6 +222,30 @@ var helpers = {
         }
 
         return options.inverse(this);
+    },
+
+    ifCond: function (v1, operator, v2, options) {
+
+        switch (operator) {
+            case '==':
+                return (v1 == v2) ? options.fn(this) : options.inverse(this);
+            case '===':
+                return (v1 === v2) ? options.fn(this) : options.inverse(this);
+            case '<':
+                return (v1 < v2) ? options.fn(this) : options.inverse(this);
+            case '<=':
+                return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+            case '>':
+                return (v1 > v2) ? options.fn(this) : options.inverse(this);
+            case '>=':
+                return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+            case '&&':
+                return (v1 && v2) ? options.fn(this) : options.inverse(this);
+            case '||':
+                return (v1 || v2) ? options.fn(this) : options.inverse(this);
+            default:
+                return options.inverse(this);
+        }
     }
 };
 

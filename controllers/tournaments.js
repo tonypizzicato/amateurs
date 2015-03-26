@@ -60,9 +60,12 @@ module.exports = {
                 });
 
                 var central = new Promise(function (resolve, reject) {
-                    GameArticleModel.findOne({tournament: doc.remoteId, type: 'preview'}).lean().exec(function (err, doc) {
+                    GameArticleModel.findOne({tournament: doc.remoteId, type: 'preview', show: true}).lean().exec(function (err, doc) {
                         if (err) {
-                            reject(err);
+                            return reject(err);
+                        }
+                        if (!doc) {
+                            return resolve(null);
                         }
 
                         client.get(remoteConfig.url + '/games/' + doc.gameId, function (game) {
@@ -93,7 +96,7 @@ module.exports = {
                 return next(null);
             }
 
-            res.render('tournaments/table', {tournament: doc});
+            res.render('tournaments/table', {tournament: doc, pageTable: true});
         });
     },
 
@@ -115,7 +118,7 @@ module.exports = {
                     return a.points >= b.points ? -1 : 1;
                 });
                 console.log('stats end');
-                res.render('tournaments/stats', {tournament: doc, stats: stats});
+                res.render('tournaments/stats', {tournament: doc, stats: stats, pageStats: true});
             });
         });
     },
@@ -160,10 +163,7 @@ module.exports = {
                     fixture[item.tourNumber].push(item);
                 });
 
-                res.render('tournaments/fixture', {
-                    tournament: doc,
-                    fixture:    fixture
-                });
+                res.render('tournaments/fixture', {tournament: doc, fixture: fixture, pageFixture: true});
             });
         });
     },

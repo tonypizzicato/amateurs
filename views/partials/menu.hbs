@@ -75,13 +75,16 @@
                 <li class="navbar__item{{#if pageNews}} navbar__item_active_yes{{/if}}">
                     <a href="/{{../globals.league.slug}}/tournaments/{{globals.tournament.slug}}/news">Новости</a>
                 </li>
-                <li class="navbar__item">
+                <li class="navbar__item{{#if pageTable}} navbar__item_active_yes{{/if}}">
+                    <a href="/{{../globals.league.slug}}/tournaments/{{globals.tournament.slug}}/table">Таблица</a>
+                </li>
+                <li class="navbar__item{{#if pageFixture}} navbar__item_active_yes{{/if}}">
                     <a href="/{{../globals.league.slug}}/tournaments/{{globals.tournament.slug}}/fixture">Календарь</a>
                 </li>
-                <li class="navbar__item">
+                <li class="navbar__item{{#if pageStats}} navbar__item_active_yes{{/if}}">
                     <a href="/{{../globals.league.slug}}/tournaments/{{globals.tournament.slug}}/stats">Статистика</a>
                 </li>
-                <li class="navbar__item">
+                <li class="navbar__item{{#if pageTeams}} navbar__item_active_yes{{/if}}">
                     <a href="/{{../globals.league.slug}}/tournaments/{{globals.tournament.slug}}/teams">Клубы</a>
                 </li>
                 <li class="navbar__item{{#if pageFields}} navbar__item_active_yes{{/if}}">

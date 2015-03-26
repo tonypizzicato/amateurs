@@ -156,9 +156,7 @@ var saveContact = function (req, save) {
         require("fs").writeFile(dir + filename, base64Data, 'base64', function (err) {
 
             if (err) {
-                console.log(err);
-                save(doc);
-                next();
+                return save(doc);
             }
 
             var imageUrl = req.protocol + '://' + req.headers.host + path + filename;
@@ -185,7 +183,7 @@ var saveContact = function (req, save) {
                     ids.forEach(function (id) {
                         flickr.photos.getSizes({photo_id: id}, function (err, res) {
                             var s = res.sizes.size.filter(function (item) {
-                                return item.label.toLowerCase() == 'large';
+                                return item.label.toLowerCase() == 'small';
                             });
 
                             if (!s.length) {

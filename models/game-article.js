@@ -13,7 +13,9 @@ var GameArticleSchema = new Schema({
     author:      {type: String, default: ''},
     centralGame: {type: Boolean, default: false},
     gameId:      {type: ObjectId},
-    tournament:  {type: ObjectId}
+    tournament:  {type: ObjectId},
+    imageHome:   {type: String},
+    imageAway:   {type: String}
 });
 
 GameArticleSchema.pre('save', function (next) {

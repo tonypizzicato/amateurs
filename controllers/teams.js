@@ -80,20 +80,18 @@ module.exports = {
                     });
 
                     games = games.map(function (item) {
-                        item.dateTime = item.dateTime ? moment(item.dateTime) : (item.date ? moment(item.date + ' ' + item.time, 'DD/MM/YYYY HH:mm') : null);
+                        item.dateTime = item.date ? moment(item.date + ' ' + item.time, 'DD/MM/YYYY HH:mm') : null;
                         return item;
                     });
 
                     // TODO: replace with dateTime
                     games.sort(function (a, b) {
-                        if (a.dateTime) {
-                            if (a.dateTime.isBefore(b.dateTime)) {
-                                return -1;
-                            } else {
-                                return 1;
-                            }
+                        if (a.tourNumber < b.tourNumber) {
+                            return -1;
+                        } else if ((a.dateTime && !b.dateTime) || (a.dateTime && b.dateTime && a.dateTime.isBefore(b.dateTime))) {
+                            return -1;
                         } else {
-                            return a.tourNumber < b.tourNumber ? -1 : 1;
+                            return 1;
                         }
                     });
 
@@ -106,14 +104,14 @@ module.exports = {
 
                     var form = recent.slice(-9);
                     recent = recent.slice(-6);
-                    comming = comming.slice(0, 9);
+                    comming = comming.slice(0, 6);
 
                     resolve({recent: recent, comming: comming, form: form});
                 });
             });
 
             Promise.all([table, team, games]).then(function (result) {
-                res.render('teams/item', {tournament: doc, table: result[0], team: result[1], games: result[2]});
+                res.render('teams/item', {tournament: doc, table: result[0], team: result[1], games: result[2], pageTeams: true});
             });
         });
     },
@@ -156,7 +154,7 @@ module.exports = {
                         }).pop());
                     });
 
-                    res.render('teams/list', {league: doc, teams: teams});
+                    res.render('teams/list', {league: doc, teams: teams, pageTeams: true});
                 });
             });
         });
