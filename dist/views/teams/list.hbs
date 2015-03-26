@@ -17,7 +17,7 @@
 
     <!-- SIDEBAR -->
 
-    <div class="col-md-4 column">
+    <div class="col-md-4 column sidebar">
 
         {{#if globals.table}}
             <div class="panel s_m_0">
@@ -25,13 +25,13 @@
                     <i class="fa fa-list-ol s_mr_10"></i> Таблица
                 </div>
                 <div class="panel__body">
-                    {{> 'table' table=globals.table tableFull=false}}
+                    {{> table table=globals.table league=globals.league tournament=globals.tournament tableFull=false}}
                 </div>
             </div>
             <div class="link_type_full s_mb_10">
                 <span class="text_color_orange">Полная таблица</span>
                 <span class="pull-right">
-                    <a href="/{{globals.league.slug}}/tournaments/{{../globals.tournament.slug}}/table">
+                    <a href="/{{globals.league.slug}}/tournaments/{{globals.tournament.slug}}/table">
                         <i class="fa fa-arrow-circle-o-right"></i>
                     </a>
                 </span>
