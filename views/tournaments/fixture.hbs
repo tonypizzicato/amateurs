@@ -48,7 +48,7 @@
 
     <!-- SIDEBAR -->
 
-    <div class="col-md-4 column">
+    <div class="col-md-4 column sidebar">
 
         <!-- TABLE -->
         {{#if globals.table}}
@@ -57,7 +57,7 @@
                     <i class="fa fa-list-ol s_mr_10"></i> Таблица
                 </div>
                 <div class="panel__body">
-                    {{> 'table' table=globals.table tableFull=false hideHeader=true}}
+                    {{> table table=globals.table league=globals.league tournament=tournament tableFull=false}}
                 </div>
             </div>
             <div class="link_type_full s_mb_10">

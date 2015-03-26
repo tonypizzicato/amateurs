@@ -81,7 +81,7 @@ a:hover {
 }
 
 .text_color_light {
-    color: #95a5a6;
+    color: #B6B6B6;
 }
 
 footer {
@@ -564,11 +564,16 @@ ul, ol {
     display:         inline-block;
     vertical-align:  middle;
     margin-right:    20px;
-    width:           80px;
-    height:          80px;
+    width:           100px;
+    height:          100px;
     background:      transparent url("https://pp.vk.me/c409718/v409718953/4cff/IQsN7usEI1I.jpg") no-repeat;
     background-size: cover;
     border-radius:   50%;
+}
+
+.sidebar .contact__photo {
+    width:  80px;
+    height: 80px;
 }
 
 .contact:nth-child(2) .contact__photo {
@@ -667,7 +672,7 @@ ul, ol {
 }
 
 .fixture__looser a {
-    color: #555;
+    color: #B6B6B6;
 }
 
 .panel__body .fixture__time {
@@ -783,15 +788,16 @@ ul, ol {
 }
 
 .match-main_image {
-    position:   absolute;
-    top:        0;
-    width:      48%;
-    height:     100%;
-    background: #2c3e50 center center no-repeat;
+    position:        absolute;
+    top:             0;
+    width:           48%;
+    height:          100%;
+    background:      #060D17;
+    background-size: cover;
 
-    //    -webkit-filter:  sepia(.53);
-    //    filter:          sepia(.53);
-    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.9);
+    -webkit-filter:  sepia(.53);
+    filter:          sepia(.53);
+    box-shadow:      inset 0px 0px 10px rgba(0, 0, 0, 0.9);
 }
 
 .match-main_image_home {
@@ -823,7 +829,7 @@ ul, ol {
     margin:       0 auto;
     z-index:      10;
     text-align:   center;
-    background:   rgba(26, 26, 26, .5);
+    background:   #060D17;
 
     /*Chrome,Safari*/
     //    -webkit-clip-path: polygon(60px 150px, 0px 300px, 200px 300px, 140px 150px, 200px 0px, 0px 0px);

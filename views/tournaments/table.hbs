@@ -33,7 +33,7 @@
                             <div class="tab-pane active" id="tab-table">
                                 <div class="panel s_m_0">
                                     <div class="panel__body s_p_0 s_pb_5">
-                                        {{> 'table' table=globals.table tableFull=true showLogo=true}}
+                                        {{> table table=globals.table league=globals.league tournament=tournament tableFull=true showLogo=true}}
                                     </div>
                                 </div>
                             </div>
@@ -43,68 +43,8 @@
             </div>
         </div>
 
-        <div class="row clearfix s_mb_20">
-            <div class="col-md-12 column">
-                <div class="panel panel_type_media s_m_0">
-                    <div class="panel__header">
-                        <h4 class="s_m_0"><i class="fa fa-play-circle s_mr_5"></i> Последние обзоры</h4>
-                    </div>
-                    <div class="panel__body">
-                        <div class="row">
-                            <div class="col-md-7">
-                                <div class="media__item-wrapper">
-                                    <img class="media__item" alt="400x300"
-                                         src="https://pp.vk.me/c619622/v619622188/4f4b/ChZYfzg9uZA.jpg"/>
-                                </div>
-                            </div>
-                            <div class="col-md-5 s_pl_0">
-                                <h4>Вест Хэм Юнайтед <span class="text_color_orange pull-right">4</span></h4>
-                                <h4>Вульверхэмптон <span class="text_color_orange pull-right">3</span></h4>
-
-                                <p class="text_size_11 s_mb_3"><i class="fa fa-calendar s_mr_5"></i> 03.11.2014 15:40</p>
-
-                                <p class="text_size_11"><i class="fa fa-location-arrow s_mr_5"></i> Прага</p>
-
-                                <p>
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                                    the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
-                                    of type and scrambled it to make a type specimen book. It has survived not only five centuries,
-                                    but also the leap into electronic typesetting, remaining essentially unchanged.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="link_type_full">
-                    <span class="text_color_orange">Все обзоры</span>
-                    <span class="pull-right">
-                        <a href="/leagues/{{league.slug}}/table"><i class="fa fa-arrow-circle-o-right"></i></a>
-                    </span>
-                </div>
-            </div>
-        </div>
-
-        <div class="row clearfix s_mb_20">
-            <div class="col-md-12 column">
-                <div class="panel panel_type_photo s_m_0">
-                    <div class="panel__header">
-                        <h4 class="s_m_0"><i class="fa fa-play-circle s_mr_5"></i> Последние фотографии</h4>
-                    </div>
-                    <div class="panel__body">
-                    </div>
-                </div>
-
-                <div class="link_type_full">
-                    <span class="text_color_orange">Все фотографии</span>
-                    <span class="pull-right">
-                        <a href="/leagues/{{league.slug}}/photo"><i class="fa fa-arrow-circle-o-right"></i></a>
-                    </span>
-                </div>
-            </div>
-        </div>
     </div>
-    <div class="col-md-4 column">
+    <div class="col-md-4 column sidebar">
 
         <div class="panel panel_type_fixture s_m_0">
             <div class="panel__header">

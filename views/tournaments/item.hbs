@@ -11,7 +11,7 @@
                                 <i class="fa fa-list-ol s_mr_10"></i> Таблица
                             </div>
                             <div class="panel__body s_p_0 s_pb_5">
-                                {{> 'table' table=this.globals.table tableFull=false showLogo=true}}
+                                {{> table table=this.globals.table league=globals.league tournament=tournament tableFull=false showLogo=true}}
                             </div>
                         </div>
                         <div class="link_type_full">
@@ -68,10 +68,19 @@
             <div class="row clearfix s_mb_20">
                 <div class="column col-md-12">
                     <div class="match-main">
-                        <div class="match-main_image match-main_image_home"
-                             style="background-image: url('http://amateurs.io/api/img/teams/{{central.game.teams.[0].name}}.png');"></div>
-                        <div class="match-main_image match-main_image_away"
-                             style="background-image: url('http://amateurs.io/api/img/teams/{{central.game.teams.[1].name}}.png');"></div>
+
+                        {{#ifCond central.imageHome '&&' central.imageAway}}
+                            <div class="match-main_image match-main_image_home"
+                                 style="background-image: url('{{central.imageHome}}');"></div>
+                            <div class="match-main_image match-main_image_away"
+                                 style="background-image: url('{{central.imageAway}}');"></div>
+                        {{else}}
+                            <div class="match-main_image match-main_image_home"
+                                 style="background-image: url('http://amateurs.io/api/img/teams/{{central.game.teams.[0].name}}.png');"></div>
+                            <div class="match-main_image match-main_image_away"
+                                 style="background-image: url('http://amateurs.io/api/img/teams/{{central.game.teams.[1].name}}.png');"></div>
+                        {{/ifCond}}
+
                         <div class="match-main_info">
                             <div class="match-main_teams">
 
@@ -174,7 +183,7 @@
             </div>
         {{/if}}
     </div>
-    <div class="col-md-4 column">
+    <div class="col-md-4 column sidebar">
         <!--<div class="panel s_m_0">-->
         <!--<div class="panel-body">-->
         <!--<form role="form" class="form form_type_signin" action="/login" method="post">-->
