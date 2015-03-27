@@ -1616,6 +1616,12 @@ $size: 200px;
     overflow:      hidden;
 }
 
+.text_light-on-hover:hover {
+    transition: all .2s ease-in;
+    color:      #B6B6B6;
+    cursor:     default;
+}
+
 /**
  * Animation
  */
