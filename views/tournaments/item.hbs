@@ -126,9 +126,9 @@
                 <div class="col-md-12 column">
                     <div class="panel panel_type_media s_m_0">
                         <div class="panel__header">
-                            <h4 class="s_m_0"><i class="fa fa-play-circle s_mr_5"></i> Последние превью</h4>
+                            <h4 class="s_m_0"><i class="fa fa-eye-open s_mr_5"></i> Последние превью</h4>
                         </div>
-                        <div class="{{#gt previews.length 1}}flickity{{/gt}}">
+                        <div class="{{#gt previews.length 1}}carousel{{/gt}}">
                             {{#each previews}}
                                 <div class="panel__body">
                                     <div class="row s_mb_20">
@@ -147,7 +147,8 @@
                                                     {{#if game.dateTime}}
                                                         <p class="text_size_12 text_color_light s_mb_3">
                                                             {{dateHuman game.dateTime}}<br>
-                                                            {{ucfirst (dateDay game.dateTime)}}
+                                                            {{ucfirst (dateDay game.dateTime)}}<br>
+                                                            {{#if game.time}}{{time game.dateTime}}{{/if}}
                                                         </p>
                                                     {{/if}}
                                                     {{#if game.placeName}}
@@ -178,12 +179,12 @@
                         </div>
                     </div>
 
-                    <div class="link_type_full">
-                        <span class="text_color_orange">Все обзоры</span>
-                    <span class="pull-right">
-                        <a href="/leagues/{{tournament.slug}}/table"><i class="fa fa-arrow-circle-o-right"></i></a>
-                    </span>
-                    </div>
+                    <!--<div class="link_type_full">-->
+                        <!--<span class="text_color_orange">Все обзоры</span>-->
+                    <!--<span class="pull-right">-->
+                        <!--<a href="/leagues/{{tournament.slug}}/table"><i class="fa fa-arrow-circle-o-right"></i></a>-->
+                    <!--</span>-->
+                    <!--</div>-->
                 </div>
             </div>
         {{/if}}

@@ -1,4 +1,4 @@
-define ['marionette', 'flickity', 'bootstrap.dropdown', 'bootstrap.tab', 'news'], (Marionette, Flickity) ->
+define ['marionette', 'bootstrap.dropdown', 'bootstrap.tab', 'owl', 'news'], (Marionette) ->
     App = new Marionette.Application()
 
     App.on 'start', ()->
@@ -17,9 +17,12 @@ define ['marionette', 'flickity', 'bootstrap.dropdown', 'bootstrap.tab', 'news']
             e.preventDefault()
             $(@).parent().toggleClass 'country_active_yes'
 
-        new Flickity '.flickity',
-            cellAlign: 'left'
-            contain: true
+        $('.carousel').owlCarousel
+          navigation : true
+          slideSpeed : 300
+          paginationSpeed : 400
+          singleItem: true
+          navigationText: ['Назад', 'Дальше']
 
 
     App

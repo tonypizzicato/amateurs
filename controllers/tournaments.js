@@ -79,7 +79,7 @@ module.exports = {
                 });
 
                 var previews = new Promise(function (resolve, reject) {
-                    GameArticleModel.find({tournament: doc.remoteId}).limit(30).lean().exec(function (err, docs) {
+                    GameArticleModel.find({tournament: doc.remoteId, show: true}).limit(30).lean().exec(function (err, docs) {
                         if (err) {
                             reject(err);
                         }
