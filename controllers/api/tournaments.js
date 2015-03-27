@@ -7,6 +7,8 @@ var RestClient      = require('node-rest-client').Client,
     async           = require('async'),
     remoteConfig    = require('../../config/tinyapi');
 
+var client = new RestClient(remoteConfig.authOptions);
+
 var api = {
 
     /**
@@ -31,8 +33,6 @@ var api = {
                 res.status(500).json({error: err});
                 return;
             }
-
-            var client = new RestClient(remoteConfig.authOptions);
 
             var _tournaments = [];
             var pending = 0;

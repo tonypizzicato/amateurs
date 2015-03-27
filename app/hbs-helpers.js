@@ -8,13 +8,6 @@ var linkRoutes = {
 };
 
 var helpers = {
-    link: function (href, options) {
-        console.log(options);
-        return new hbs.handlebars.SafeString(
-            href
-        );
-    },
-
     eq: function (lvalue, rvalue, options) {
         if (arguments.length < 3)
             throw new Error("hbs Helper eq needs 2 parameters");
@@ -145,8 +138,16 @@ var helpers = {
         return dateFn(date, 'L LT');
     },
 
-    datefull: function (date) {
-        return dateFn(date, 'LL');
+    dateFull: function (date) {
+        return dateFn(date, 'dddd, Do MMMM YYYY');
+    },
+
+    dateHuman: function (date) {
+        return dateFn(date, 'Do MMMM YYYY');
+    },
+
+    dateDay: function (date) {
+        return dateFn(date, 'dddd');
     },
 
     dateTimeShort: function (date) {

@@ -17,7 +17,8 @@
     "fontawesome": "~4.2.0",
     "animate.css": "~3.2.0",
     "jquery-waypoints": "~2.0.5",
-    "Parallax-ImageScroll": "~0.1.4"
+    "Parallax-ImageScroll": "~0.1.4",
+    "flickity": "~1.0.0"
   },
   "devDependencies": {},
   "resolutions": {
