@@ -247,6 +247,10 @@ var helpers = {
             default:
                 return options.inverse(this);
         }
+    },
+
+    noYear: function (name) {
+        return name.slice(0, name.indexOf(' - '));
     }
 };
 
