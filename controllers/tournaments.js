@@ -60,7 +60,7 @@ module.exports = {
                 });
 
                 var central = new Promise(function (resolve, reject) {
-                    GameArticleModel.findOne({tournament: doc.remoteId, type: 'preview', show: true}).lean().exec(function (err, doc) {
+                    GameArticleModel.findOne({tournament: doc.remoteId, type: 'preview', show: true, centralGame: true}).lean().exec(function (err, doc) {
                         if (err) {
                             return reject(err);
                         }
@@ -85,7 +85,7 @@ module.exports = {
                         }
 
                         if (!docs.length) {
-                            return [];
+                            return resolve([]);
                         }
 
                         var games = docs.map(function (item) {
@@ -121,7 +121,6 @@ module.exports = {
                                 return !!item.game;
                             });
 
-
                             var grouped = _.groupBy(docs, function (item) {
                                 return item.gameId;
                             });
@@ -134,6 +133,17 @@ module.exports = {
 
                             docs.forEach(function (item) {
                                 item.game.dateTime = item.game.date ? moment(item.game.date + ' ' + item.game.time, 'DD/MM/YYYY HH:mm') : null;
+                            });
+
+                            docs = docs.sort(function (a, b) {
+                                if (a.game.dateTime) {
+                                    if (b.game.dateTime) {
+                                        return a.game.dateTime.isBefore(b.game.dateTime) ? -1 : 1;
+                                    } else {
+                                        return -1;
+                                    }
+                                }
+                                return 1;
                             });
 
                             resolve(docs);

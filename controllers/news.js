@@ -22,9 +22,15 @@ var controller = {
                 return moment(item.dc).locale('ru').format('DD MMMM YYYY');
             });
 
-            res.locals.globals.newsSticked = Array.prototype.slice.call(docs.filter(function (item) {
+            var newsSticked = Array.prototype.slice.call(docs.filter(function (item) {
                 return item.stick == true;
             }), 0, 5);
+
+            newsSticked = newsSticked.sort(function (a, b) {
+                return a.sort < b.sort ? -1 : 1;
+            });
+
+            res.locals.globals.newsSticked = newsSticked;
 
             next();
         });
@@ -115,6 +121,8 @@ var getNewsList = function (req, cb) {
 
     function findNews(query, cb) {
         var populateOptions = {path: 'country'};
+        query.show = true;
+
         NewsModel.find(query).sort({dc: -1}).lean().populate(populateOptions).exec(function (err, docs) {
             cb(err, docs);
         });
