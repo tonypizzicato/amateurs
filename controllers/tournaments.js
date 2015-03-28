@@ -78,8 +78,78 @@ module.exports = {
                     });
                 });
 
-                Promise.all([stats, central]).then(function (result) {
-                    res.render('tournaments/item', {tournament: doc, stats: result[0], central: result[1]});
+                var previews = new Promise(function (resolve, reject) {
+                    GameArticleModel.find({tournament: doc.remoteId, show: true}).limit(30).lean().exec(function (err, docs) {
+                        if (err) {
+                            reject(err);
+                        }
+
+                        if (!docs.length) {
+                            return [];
+                        }
+
+                        var games = docs.map(function (item) {
+                            return 'gameIds[]=' + item.gameId;
+                        });
+
+                        var type = 'preview';
+
+                        client.get(remoteConfig.url + '/games?' + games.join('&'), function (games) {
+                            games = JSON.parse(games);
+
+                            var comparator;
+                            if (type == 'preview') {
+                                comparator = function (item) {
+                                    return item.state.toLowerCase() != 'closed';
+                                };
+                            } else {
+                                comparator = function (item) {
+                                    return item.state.toLowerCase() == 'closed';
+                                };
+                            }
+                            games.filter(comparator);
+
+                            games.forEach(function (item) {
+                                var article = docs.filter(function (doc) {
+                                    return doc.gameId == item._id;
+                                }).pop();
+
+                                article.game = item;
+                            });
+
+                            docs = docs.filter(function (item) {
+                                return !!item.game;
+                            });
+
+
+                            var grouped = _.groupBy(docs, function (item) {
+                                return item.gameId;
+                            });
+
+                            docs = _.flatten(
+                                _.values(grouped).filter(function (item) {
+                                    return item.length == 1 && item[0].type == type;
+                                })
+                            );
+
+                            docs.forEach(function (item) {
+                                item.game.dateTime = item.game.date ? moment(item.game.date + ' ' + item.game.time, 'DD/MM/YYYY HH:mm') : null;
+                            });
+
+                            resolve(docs);
+                        });
+
+
+                    })
+                });
+
+                Promise.all([stats, central, previews]).then(function (result) {
+                    res.render('tournaments/item', {
+                        tournament: doc,
+                        stats:      result[0],
+                        central:    result[1],
+                        previews:   result[2]
+                    });
                 });
             });
         });
@@ -172,7 +242,8 @@ module.exports = {
         var tournament;
         var populateCountry = {path: 'country'};
         var populateContacts = {path: 'contacts', options: {sort: {sort: 1}}};
-        TournamentModel.findOne({slug: req.params.name}).lean().populate(populateCountry).populate(populateContacts).exec(function (err, doc) {
+        TournamentModel.findOne({slug: req.params.name}).lean().populate(populateCountry).populate(populateContacts).exec(function (err,
+                                                                                                                                    doc) {
             if (err) {
                 return next(err);
             }

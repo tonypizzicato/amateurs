@@ -12,6 +12,7 @@ require.config
         'imageScroll':         '../vendor/Parallax-ImageScroll/jquery.imageScroll'
         'bootstrap.dropdown':  '../vendor/bootstrap-sass/vendor/assets/javascripts/bootstrap/dropdown'
         'bootstrap.tab':       '../vendor/bootstrap-sass/vendor/assets/javascripts/bootstrap/tab'
+        'owl':                 '../vendor/owlcarousel/owl-carousel/owl.carousel'
 
     shim:
         'underscore':

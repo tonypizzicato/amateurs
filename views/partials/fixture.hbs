@@ -1,38 +1,43 @@
 {{#notEmptyObject fixture}}
     {{#each fixture}}
         <h5 class="text_color_orange s_mt_0">{{@key}} Тур</h5>
-        <table class="table table_layout_fixed s_mb_10">
-            <tbody>
-            {{#each this}}
-                <tr>
-                    <td class="fixture__time text_size_12 text_color_muted{{#if time}} col-md-3{{else}} col-md-1{{/if}}">
-                                {{~#if dateTime}}{{dateTimeShort dateTime}}{{else}}&mdash;{{/if~}}
-                    </td>
-                    <td class="text_align_l{{#if time}} col-md-8{{else}} col-md-10{{/if}}">
+
+        {{#each this}}
+            <div class="row s_mb_5">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12 text_size_12 text_color_muted">
+                            <div class="s_display_inline-block text_light-on-hover">
+                                {{#if dateTime}}<span>{{dateTimeShort dateTime}}</span>{{/if}}
+                                {{#if placeName}}<span>{{placeName}}</span>{{/if}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10">
                         <span class="fixture__team s_pr_0
                             {{~#eq (gameResTeam teams.[0] this) 'w'}} fixture__winner{{/eq~}}
                             {{~#eq (gameResTeam teams.[0] this) 'l'}} fixture__looser{{/eq~}}
                             ">
                             <a href="/{{../../globals.league.slug}}/tournaments/{{../../globals.tournament.slug}}/teams/{{teams.[0]._id}}">{{~teams.[0].name~}}</a>
                         </span>
-                        <span>v</span>
+                            <span>v</span>
                         <span class="fixture__team s_pl_0
                             {{~#eq (gameResTeam teams.[0] this) 'l'}} fixture__winner{{/eq~}}
                             {{~#eq (gameResTeam teams.[0] this) 'w'}} fixture__looser{{/eq~}}
                             ">
                             <a href="/{{../../globals.league.slug}}/tournaments/{{../../globals.tournament.slug}}/teams/{{teams.[1]._id}}">{{~teams.[1].name~}}</a>
                         </span>
-                    </td>
-                    </td>
-                    <td class="fixture__score s_pr_0 text_align_r{{#if time}} col-md-2{{else}} col-md-1{{/if}}">
-                        <a href="/{{../../globals.league.slug}}/tournaments/{{../../globals.tournament.slug}}/matches/{{_id}}">
-                            {{#if score}}{{~score.ft.[0]}}:{{score.ft.[1]~}}{{else}}-:-{{/if}}
-                        </a>
-                    </td>
-                </tr>
-            {{/each}}
-            </tbody>
-        </table>
+                        </div>
+                        <div class="col-md-2 text_align_c">
+                            <a href="/{{../../globals.league.slug}}/tournaments/{{../../globals.tournament.slug}}/matches/{{_id}}">
+                                {{#if score}}{{~score.ft.[0]}}:{{score.ft.[1]~}}{{else}}-:-{{/if}}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
     {{/each}}
 {{else}}
     <p class="text_align_c s_pt_10">{{emptyText}}</p>

@@ -17,6 +17,7 @@ $color-red: #C63C3C !default;
 @import 'bootstrap-sass/vendor/assets/stylesheets/bootstrap';
 @import 'flags';
 @import 'news';
+@import 'owl';
 
 /*------------------------------------*\
                 #BASE
@@ -70,6 +71,10 @@ a:focus {
 
 a:hover {
     color: $navbar-default-link-hover-color !important;
+}
+
+.container {
+    width: 1170px !important;
 }
 
 .text_color_orange {
@@ -547,8 +552,14 @@ ul, ol {
     overflow:       hidden;
     position:       relative;
     vertical-align: middle;
-    padding:        20px 10px;
+    padding:        20px 0;
     border-bottom:  1px solid #060D17;
+}
+
+.contact div[class*='col-md'] {
+    display:        inline-block;
+    vertical-align: middle;
+    float:          none;
 }
 
 .contact:first-child {
@@ -598,13 +609,15 @@ ul, ol {
 }
 
 .contact__name {
-    font-weight: bold;
-    line-height: 1;
+    font-weight:   bold;
+    line-height:   1;
+    margin-bottom: 10px;
 }
 
 .contact__title {
     color:         #999;
     margin-bottom: 5px;
+    line-height:   1.2;
 }
 
 .contact .fa {
@@ -848,13 +861,13 @@ ul, ol {
     left:        50%;
     width:       100%;
     margin-left: -50%;
-    padding:     20px 0;
+    padding:     10px 0;
 }
 
 .match-main_teams span,
 .match-main_place span {
     display:   block;
-    font-size: 16px;
+    font-size: 15px;
 }
 
 .match-main_place .fa,
@@ -865,7 +878,11 @@ ul, ol {
 }
 
 .match-main_teams {
-    top: 0
+    top: 0;
+}
+
+.match-main_team:last-child {
+    padding: 0 20px;
 }
 
 .match-main_place {
@@ -1313,7 +1330,7 @@ $size: 200px;
 
 .s_valign_m {
     position:       relative;
-    vertical-align: middle;
+    vertical-align: middlle;
 }
 
 .s_valign_b {
@@ -1605,6 +1622,12 @@ $size: 200px;
     text-overflow: ellipsis;
     white-space:   nowrap;
     overflow:      hidden;
+}
+
+.text_light-on-hover:hover {
+    transition: all .2s ease-in;
+    color:      #B6B6B6;
+    cursor:     default;
 }
 
 /**

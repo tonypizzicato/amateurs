@@ -11,7 +11,7 @@
                         <ul class="nav nav-tabs">
                             {{#each tournaments}}
                                 <li class="tab__title tab__title_size_{{../tournaments.length}}{{#eq 0 @index}} active{{/eq}}">
-                                    <a href="#tab-table-{{_id}}" data-toggle="tab">{{name}}</a>
+                                    <a href="#tab-table-{{_id}}" data-toggle="tab">{{noYear name}}</a>
                                 </li>
                             {{/each}}
                         </ul>
@@ -70,7 +70,7 @@
                     <ul>
                         {{#each tournaments}}
                             <li class="s_ml_20 s_mb_5">
-                                <a href="/{{../../globals.league.slug}}/tournaments/{{slug}}">{{name}}</a>
+                                <a href="/{{../../globals.league.slug}}/tournaments/{{slug}}">{{noYear name}}</a>
                             </li>
                         {{/each}}
                     </ul>

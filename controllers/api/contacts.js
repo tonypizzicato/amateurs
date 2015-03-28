@@ -56,7 +56,9 @@ var api = {
                     return next();
                 }
 
-                _updateTournament(contact._id, contact.tournaments);
+                if (doc.tournaments.length) {
+                    _updateTournament(contact._id, contact.tournaments);
+                }
                 res.json(contact);
             });
         });
@@ -89,7 +91,9 @@ var api = {
                 }
 
                 if (count) {
-                    _updateTournament(req.params.id, doc.tournaments);
+                    if (doc.tournaments.length) {
+                        _updateTournament(req.params.id, doc.tournaments);
+                    }
                     res.status(200).json({});
                 } else {
                     res.status(404).json({});
