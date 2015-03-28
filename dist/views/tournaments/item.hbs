@@ -1,4 +1,4 @@
-<h1>{{tournament.name}}</h1>
+<h1>{{noYear tournament.name}}</h1>
 
 <div class="row clearfix s_mb_20">
     <div class="col-md-8 column">
@@ -17,7 +17,8 @@
                         <div class="link_type_full">
                             <span class="text_color_orange">Полная таблица</span>
                             <span class="pull-right">
-                                <a href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/table"><i class="fa fa-arrow-circle-o-right"></i></a>
+                                <a href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/table"><i
+                                        class="fa fa-arrow-circle-o-right"></i></a>
                             </span>
                         </div>
                     </div>
@@ -116,6 +117,32 @@
                         <!--</clipPath>-->
                         <!--</svg>-->
                     </div>
+                </div>
+            </div>
+        {{/if}}
+
+        {{#if previews.length}}
+            <div class="row clearfix s_mb_20">
+                <div class="col-md-12 column">
+                    <div class="panel panel_type_media s_m_0">
+                        <div class="panel__header">
+                            <h4 class="s_m_0"><i class="fa fa-eye s_mr_5"></i> Последние превью</h4>
+                        </div>
+                        <div class="{{#gt previews.length 1}}owl-carousel{{/gt}}">
+                            {{#each previews}}
+                                <div class="panel__body">
+                                    {{> preview_item article=this}}
+                                </div>
+                            {{/each}}
+                        </div>
+                    </div>
+
+                    <!--<div class="link_type_full">-->
+                        <!--<span class="text_color_orange">Все обзоры</span>-->
+                    <!--<span class="pull-right">-->
+                        <!--<a href="/leagues/{{tournament.slug}}/table"><i class="fa fa-arrow-circle-o-right"></i></a>-->
+                    <!--</span>-->
+                    <!--</div>-->
                 </div>
             </div>
         {{/if}}
