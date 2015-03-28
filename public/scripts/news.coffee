@@ -51,7 +51,8 @@ define ['jquery'], ($)->
     ), speed)
 
   doClickItem = ->
-    newsListItems.on 'click', ->
+    newsListItems.on 'click', (e)->
+      e.stopPropagation()
       clearInterval myTimer
       newsListItems.removeClass 'selected'
       $(this).addClass 'selected'
