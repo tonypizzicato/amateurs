@@ -47,6 +47,7 @@ app.use(bodyParser.urlencoded({limit: '5mb', extended: false}))
 app.use(session({
     secret:            'test secret',
     resave:            false,
+    name:              'ssid',
     saveUninitialized: true,
     store:             new SessionMongoStore({mongooseConnection: mongoose.connection})
 }));

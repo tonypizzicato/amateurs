@@ -552,8 +552,14 @@ ul, ol {
     overflow:       hidden;
     position:       relative;
     vertical-align: middle;
-    padding:        20px 10px;
+    padding:        20px 0;
     border-bottom:  1px solid #060D17;
+}
+
+.contact div[class*='col-md'] {
+    display:        inline-block;
+    vertical-align: middle;
+    float:          none;
 }
 
 .contact:first-child {
@@ -603,13 +609,15 @@ ul, ol {
 }
 
 .contact__name {
-    font-weight: bold;
-    line-height: 1;
+    font-weight:   bold;
+    line-height:   1;
+    margin-bottom: 10px;
 }
 
 .contact__title {
     color:         #999;
     margin-bottom: 5px;
+    line-height:   1.2;
 }
 
 .contact .fa {
@@ -1322,7 +1330,7 @@ $size: 200px;
 
 .s_valign_m {
     position:       relative;
-    vertical-align: middle;
+    vertical-align: middlle;
 }
 
 .s_valign_b {

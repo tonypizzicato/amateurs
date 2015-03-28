@@ -17,7 +17,7 @@ define ['marionette', 'bootstrap.dropdown', 'bootstrap.tab', 'owl', 'news'], (Ma
             e.preventDefault()
             $(@).parent().toggleClass 'country_active_yes'
 
-        $('.carousel').owlCarousel
+        $('.owl-carousel').owlCarousel
           navigation : true
           slideSpeed : 300
           paginationSpeed : 400
