@@ -205,7 +205,7 @@
                 <div class="tabbable" id="tabs-992576">
                     <ul class="nav nav-tabs">
                         <li class="tab__title tab__title_size_third active">
-                            <a href="#tab-preview" data-toggle="tab">Превью</a>
+                            <a href="#tab-preview" data-toggle="tab">Анонс</a>
                         </li>
                         <li class="tab__title tab__title_size_third">
                             <a href="#tab-review" data-toggle="tab">Обзор матча</a>
@@ -219,11 +219,15 @@
 
                             <div class="panel panel_type_media s_m_0">
                                 <div class="panel__body">
-                                    <div class="s_pl_0">
+                                    {{#if media.preview}}
                                         <h4>{{game.teams.[0].name}} v {{game.teams.[1].name}}</h4>
 
                                         <div>{{{media.preview.body}}}</div>
-                                    </div>
+
+                                        {{> video youtube=media.preview.youtube vimeo=media.preview.vimeo}}
+                                    {{else}}
+                                        <p class="text_align_c s_mt_10">Анонса матча пока нет</p>
+                                    {{/if}}
                                 </div>
                             </div>
                         </div>
@@ -232,12 +236,15 @@
 
                             <div class="panel panel_type_media s_m_0">
                                 <div class="panel__body">
-                                    <div class="s_pl_0">
-                                        <h4>{{game.teams.[0].name}} <span class="text_color_orange pull-right">{{game.score.ft.[0]}}</span></h4>
-                                        <h4>{{game.teams.[1].name}} <span class="text_color_orange pull-right">{{game.score.ft.[1]}}</span></h4>
+                                    {{#if media.review}}
+                                        <h4>{{game.teams.[0].name}} v {{game.teams.[1].name}}</h4>
 
                                         <div>{{{media.review.body}}}</div>
-                                    </div>
+
+                                        {{> video youtube=media.review.youtube vimeo=media.review.vimeo}}
+                                    {{else}}
+                                        <p class="text_align_c s_mt_10">Обзора матча пока нет</p>
+                                    {{/if}}
                                 </div>
                             </div>
                         </div>
@@ -246,34 +253,7 @@
 
                             <div class="panel panel_type_photo s_m_0">
                                 <div class="panel__body">
-                                    <div class="row s_mb_10">
-                                        <div class="column col-md-2"><img
-                                                src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
-                                        <div class="column col-md-2"><img
-                                                src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
-                                        <div class="column col-md-2"><img
-                                                src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
-                                        <div class="column col-md-2"><img
-                                                src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
-                                        <div class="column col-md-2"><img
-                                                src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
-                                        <div class="column col-md-2"><img
-                                                src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="column col-md-2"><img
-                                                src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
-                                        <div class="column col-md-2"><img
-                                                src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
-                                        <div class="column col-md-2"><img
-                                                src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
-                                        <div class="column col-md-2"><img
-                                                src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
-                                        <div class="column col-md-2"><img
-                                                src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
-                                        <div class="column col-md-2"><img
-                                                src="http://lorempixel.com/200/200/sports/?q={{#rand 0 20}}{{/rand}}"></div>
-                                    </div>
+                                    <p class="text_align_c s_mt_10">Фото пока нет</p>
                                 </div>
                             </div>
                         </div>

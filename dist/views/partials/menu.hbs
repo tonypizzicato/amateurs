@@ -39,7 +39,7 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <i class="fa fa-angle-down"></i>
                     {{#if globals.tournament}}
-                        <span>{{~globals.tournament.name~}}</span>
+                        <span>{{~noYear globals.tournament.name~}}</span>
                         {{else~}}
                         Турниры
                     {{~/if}}
@@ -57,7 +57,7 @@
                                         <ul class="s_mb_10">
                                             {{#each this.tournaments}}
                                                 <li class="s_mb_5">
-                                                    <a href="/{{../../globals.league.slug}}/tournaments/{{slug}}">{{name}}</a>
+                                                    <a href="/{{../../globals.league.slug}}/tournaments/{{slug}}">{{noYear name}}</a>
                                                 </li>
                                             {{/each}}
                                         </ul>

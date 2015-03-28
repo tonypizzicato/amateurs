@@ -13,7 +13,7 @@
                             </div>
                             <div class="article__info_details">
                                 <span class="s_display_inline-block text_color_orange text_size_16 s_ml_10 s_line-height_2">{{article.country.name}}</span>
-                                <span class="s_display_inline-block text_color_light text_size_14">{{ucfirst (dateTimeFull article.dc)}}</span>
+                                <span class="s_display_inline-block text_color_light text_size_14">{{ucfirst (dateHuman article.dc)}}, {{time article.dc}}</span>
                             </div>
                         </div>
                     </div>
@@ -23,11 +23,15 @@
                             <h2>{{article.title}}</h2>
 
                             <div class="text_color_light">
-                                {{article.teaser}}
+                                {{~article.teaser~}}
                             </div>
                         </div>
                     </div>
-                    {{{ article.body }}}
+                    <div>
+                        {{{ article.body }}}
+                    </div>
+
+                    {{> video youtube=article.youtube vimeo=article.vimeo}}
                 </div>
             </div>
             <div class="link_type_full s_mb_10">
