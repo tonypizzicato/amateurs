@@ -16,7 +16,7 @@
                                 <ul>
                                     {{#each game.events}}
                                         {{#eq type 'SCORED_H'}}
-                                            <li class="text_size_12 text_color_light text_align_r">{{firstField.name}} {{minute}}'</li>
+                                            <li class="text_size_12 text_color_light text_align_r">{{firstField.name}}{{#if minute}} {{minute}}'{{/if}}</li>
                                         {{/eq}}
                                     {{/each}}
                                 </ul>
@@ -66,7 +66,9 @@
                                 <ul>
                                     {{#each game.events}}
                                         {{#eq type 'SCORED_A'}}
-                                            <li class="text_size_12 text_color_light text_align_l">{{minute}}' {{firstField.name}}</li>
+                                            <li class="text_size_12 text_color_light text_align_l">
+                                                {{#if minute}}{{minute}}' {{/if}}{{firstField.name}}
+                                            </li>
                                         {{/eq}}
                                     {{/each}}
                                 </ul>
@@ -171,7 +173,10 @@
                                                     {{#eq type 'inj'}}
                                                         <i class="icon_type_event icon-injury"></i>
                                                     {{/eq}}
-                                                    {{minute}}'
+                                                    {{#eq secondField.name 'с пенальти'}}
+                                                        <i class="icon_type_event icon-penalty s_ml_20"></i>
+                                                    {{/eq}}
+                                                    {{#if minute}}{{minute}}'{{/if}}
                                                 </div>
                                             </div>
                                             <div class="column col-md-10">
@@ -182,8 +187,8 @@
                                                     {{~firstField.name~}}
                                                     {{~#if secondField~}}
                                                         <br>
-                                                        {{~#if secondField.number~}}
-                                                            <span class="text_color_light">{{secondField.number}}. {{secondField.name}}</span>
+                                                        {{~#if secondField~}}
+                                                            <span class="text_color_light">{{~#if secondField.number~}}{{secondField.number}}. {{/if}}{{ucfirst secondField.name}}</span>
                                                         {{~/if~}}
                                                     {{~/if~}}
                                                 </div>
