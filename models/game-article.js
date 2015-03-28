@@ -15,7 +15,9 @@ var GameArticleSchema = new Schema({
     gameId:      {type: ObjectId},
     tournament:  {type: ObjectId},
     imageHome:   {type: String},
-    imageAway:   {type: String}
+    imageAway:   {type: String},
+    youtube:     {type: String},
+    vimeo:       {type: String}
 });
 
 GameArticleSchema.pre('save', function (next) {
