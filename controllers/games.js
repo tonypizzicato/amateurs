@@ -68,8 +68,6 @@ module.exports = {
                     return item;
                 });
 
-                console.log(game.events);
-
                 GameArticleModel.find({gameId: req.params.id}).exec(function (err, docs) {
                     if (err) {
                         return next(err);
