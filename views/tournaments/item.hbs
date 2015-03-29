@@ -40,14 +40,14 @@
                                 <div class="tab-pane active" id="tab-strikers">
                                     <div class="panel s_m_0">
                                         <div class="panel__body s_p_0 s_pb_5">
-                                            {{> strikers stats=stats.goals emptyText='Голов ещё не забито'}}
+                                            {{> strikers stats=this.globals.stats.goals emptyText='Голов ещё не забито'}}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane" id="tab-assists">
                                     <div class="panel s_m_0">
                                         <div class="panel__body s_p_0 s_pb_5">
-                                            {{> assists stats=stats.assists emptyText='Никто не отдавал голевых'}}
+                                            {{> assists stats=this.globals.stats.assists emptyText='Никто не отдавал голевых'}}
                                         </div>
                                     </div>
                                 </div>

@@ -1,4 +1,4 @@
-define ['marionette', 'bootstrap.dropdown', 'bootstrap.tab', 'owl', 'news'], (Marionette) ->
+define ['marionette', 'bootstrap.dropdown', 'bootstrap.tab', 'owl', 'news', 'gallery'], (Marionette) ->
     App = new Marionette.Application()
 
     App.on 'start', ()->

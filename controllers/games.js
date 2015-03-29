@@ -5,7 +5,9 @@ var _                = require('underscore'),
     RestClient       = require('node-rest-client').Client,
     TournamentModel  = require('../models/tournament'),
     GameArticleModel = require('../models/game-article'),
-    remoteConfig     = require('../config/tinyapi');
+    PhotoModel       = require('../models/photo'),
+    remoteConfig     = require('../config/tinyapi'),
+    Promise          = require('promise');
 
 
 var client = new RestClient(remoteConfig.authOptions);
@@ -20,11 +22,11 @@ module.exports = {
                 res.status(404);
                 return next();
             }
+
             client.get(remoteConfig.url + '/games/' + req.params.id, function (game) {
                 game = JSON.parse(game);
 
                 game.dateTime = game.date ? moment(game.date + ' ' + game.time, 'DD/MM/YYYY HH:mm') : null;
-                console.log(game.dateTime);
 
                 var gameLength = doc.settings ? doc.settings.gameLength : undefined;
                 if (game.state.toLowerCase() == 'closed') {
@@ -46,6 +48,9 @@ module.exports = {
                 }
 
                 game.players = game.players.map(function (item) {
+                    if (!_.isArray(item)) {
+                        return [];
+                    }
                     item = item.sort(function (a, b) {
                         if (!a.position) {
                             return 1;
@@ -68,15 +73,44 @@ module.exports = {
                     return item;
                 });
 
-                GameArticleModel.find({gameId: req.params.id}).exec(function (err, docs) {
-                    if (err) {
-                        return next(err);
-                    }
+                /* Articles */
+                var articles = new Promise(function (resolve, reject) {
+                    GameArticleModel.find({gameId: req.params.id}).exec(function (err, docs) {
+                        if (err) {
+                            return reject(err);
+                        }
 
-                    var preview = _.findWhere(docs, {type: 'preview'});
-                    var review = _.findWhere(docs, {type: 'review'});
-                    res.render('games/item', {tournament: doc, game: game, media: {preview: preview, review: review}});
+                        var preview = _.findWhere(docs, {type: 'preview'});
+                        var review = _.findWhere(docs, {type: 'review'});
+
+                        resolve({preview: preview, review: review});
+                    });
                 });
+
+                /* Articles */
+                var photos = new Promise(function (resolve, reject) {
+                    PhotoModel.find({postId: req.params.id}).exec(function (err, docs) {
+                        if (err) {
+                            return reject(err);
+                        }
+
+                        resolve(docs);
+                    });
+                });
+
+
+                Promise.all([articles, photos]).then(function (result) {
+                    res.render('games/item', {
+                        tournament: doc,
+                        game:       game,
+                        media:      {
+                            preview: result[0].preview,
+                            review:  result[0].review,
+                            photos:  result[1]
+                        }
+                    });
+                });
+
             });
         });
     }
