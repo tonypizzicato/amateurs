@@ -34,14 +34,19 @@
                                                     <i class="flaticon flaticon-black188"></i><br>Матч завершен
                                                 </span>
                                             {{else}}
-                                                {{#if game.timeGone}}
-                                                    <span class="match__time_value match__time_value_minutes">{{game.timeGone}}</span>
+                                                {{#eq game.state 'STARTED'}}
+                                                    {{#if game.timeGone}}
+                                                        {{#lt game.timeGone 150}}
+                                                            <span class="match__time_value match__time_value_minutes">{{game.timeGone}}</span>
+                                                        {{else}}
+                                                            <span class="match__time_value match__time_value_infin">&infin;</span>
+                                                        {{/lt}}
+                                                    {{/if}}
                                                 {{else}}
                                                     <span class="match__time_value match__time_value_not-started">
                                                         <i class="flaticon flaticon-timer20"></i><br>Матч не начался
                                                     </span>
-
-                                                {{/if}}
+                                                {{/eq}}
                                             {{/eq}}
                                         </div>
                                     </div>
@@ -188,7 +193,8 @@
                                                     {{~#if secondField~}}
                                                         <br>
                                                         {{~#if secondField~}}
-                                                            <span class="text_color_light">{{~#if secondField.number~}}{{secondField.number}}. {{/if}}{{ucfirst secondField.name}}</span>
+                                                            <span class="text_color_light">{{~#if secondField.number~}}{{secondField.number}}
+                                                                . {{/if}}{{ucfirst secondField.name}}</span>
                                                         {{~/if~}}
                                                     {{~/if~}}
                                                 </div>
@@ -258,7 +264,24 @@
 
                             <div class="panel panel_type_photo s_m_0">
                                 <div class="panel__body">
-                                    <p class="text_align_c s_mt_10">Фото пока нет</p>
+                                    <div class="row">
+                                        {{~#if media.photos.length~}}
+                                            <div class="pswp-gallery">
+                                                {{~#each media.photos~}}
+                                                    <a class="photo__item column s_mb_10" href="{{main.src}}" data-size="{{main.w}}x{{main.h}}"
+                                                       {{#if author}}data-author="{{author}}"{{/if}}
+                                                        class="demo-gallery__img--main s_display_inline-block"
+                                                        style="display: inline-block; width: 175px; height: 116px;"
+                                                        >
+                                                        <img src="{{thumb.src}}" alt=""/>
+                                                        <figure class="s_display_none">{{../game.teams.[0].name}} v {{../game.teams.[1].name}}</figure>
+                                                    </a>
+                                                {{~/each~}}
+                                            </div>
+                                        {{~else~}}
+                                            <p class="text_align_c s_mt_10">Фотообзора пока нет</p>
+                                        {{~/if~}}
+                                    </div>
                                 </div>
                             </div>
                         </div>
