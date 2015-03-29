@@ -13,6 +13,8 @@ require.config
         'bootstrap.dropdown':  '../vendor/bootstrap-sass/vendor/assets/javascripts/bootstrap/dropdown'
         'bootstrap.tab':       '../vendor/bootstrap-sass/vendor/assets/javascripts/bootstrap/tab'
         'owl':                 '../vendor/owlcarousel/owl-carousel/owl.carousel'
+        'photoswipe':          '../vendor/photoswipe/dist/photoswipe'
+        'photoswipe.ui':          '../vendor/photoswipe/dist/photoswipe-ui-default'
 
     shim:
         'underscore':

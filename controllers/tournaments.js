@@ -258,7 +258,6 @@ module.exports = {
                 return next(err);
             }
             tournament = doc;
-            console.log(doc.contacts);
 
             /* Leagues */
             var leagues = new Promise(function (resolve, reject) {
@@ -282,6 +281,22 @@ module.exports = {
                     });
 
                     resolve(table);
+                });
+            });
+
+            /* Stats */
+            var stats = new Promise(function (resolve, reject) {
+                client.get(remoteConfig.url + '/stats/players_stats?tournamentId=' + doc.remoteId, function (stats) {
+                    stats = JSON.parse(stats);
+
+                    var goals = stats.sort(function (a, b) {
+                        return a.goals >= b.goals ? -1 : 1;
+                    }).slice(0, 10);
+                    var assists = stats.sort(function (a, b) {
+                        return a.assists >= b.assists ? -1 : 1;
+                    }).slice(0, 10);
+
+                    resolve({goals: goals, assists: assists});
                 });
             });
 
@@ -331,12 +346,13 @@ module.exports = {
                 });
             });
 
-            Promise.all([leagues, games, table]).then(function (result) {
+            Promise.all([leagues, games, table, stats]).then(function (result) {
                 res.locals.globals.tournament = tournament;
                 res.locals.globals.leagues = result[0];
                 res.locals.globals.recent = result[1].recent;
                 res.locals.globals.comming = result[1].comming;
                 res.locals.globals.table = result[2];
+                res.locals.globals.stats = result[3];
 
                 console.log('globals end');
                 next();

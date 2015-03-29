@@ -1,6 +1,7 @@
 "use strict";
 
-var fs          = require('fs.extra'),
+var _           = require('underscore'),
+    fs          = require('fs.extra'),
     Flickr      = require('flickrapi'),
     PhotosModel = require('../../models/photo');
 
@@ -66,7 +67,7 @@ var api = {
             console.log('finish, files uploaded ', files);
 
             var fls = files.slice(0);
-            var docs = []
+            var docs = [];
             fls.forEach(function (item) {
                 docs.push({
                     type:   'games',
@@ -74,6 +75,7 @@ var api = {
                     thumb:  item.url,
                     main:   item.url,
                     title:  item.title,
+                    author: req.query.user,
                     local:  item.path
                 });
             });
@@ -139,51 +141,69 @@ var api = {
 
 var _toFlickr = function (docs) {
     Flickr.authenticate(flickrOptions, function (err, flickr) {
-        console.log('flickr authed');
+            console.log('flickr authed');
 
-        var files = docs.map(function (doc) {
-            return {title: doc.title, photo: doc.local, path: doc.local};
-        });
+            var files = docs.map(function (doc) {
+                return {title: doc.title, photo: doc.local, path: doc.local};
+            });
 
-        var fls = files.slice();
+            var fls = files.slice();
 
-        var options = {
-            photos:      files,
-            permissions: 'write'
-        };
+            var options = {
+                photos:      files,
+                permissions: 'write'
+            };
 
-        var photosCount = files.length;
+            var photosCount = files.length;
 
-        Flickr.upload(options, flickrOptions, function (err, ids) {
-            if (err || !ids.length || ids.length != photosCount) {
-                console.log('Failed uploading photos.');
+            var getSize = function (sizes, width) {
+                console.log(sizes);
+                console.log(width);
+                var image = _.findWhere(sizes, {width: width + ''});
 
-                return;
-            }
+                console.log(image);
+                if (!image) {
+                    return undefined;
+                }
 
-            ids.forEach(function (id, index) {
-                flickr.photos.getSizes({photo_id: id}, function (err, res) {
-                    var s = res.sizes.size.filter(function (item) {
-                        return item.width == 800 || item.width == 640 || item.width == 150;
+                return {
+                    w:   image.width,
+                    h:   image.height,
+                    src: image.source
+                }
+            };
+
+            Flickr.upload(options, flickrOptions, function (err, ids) {
+                if (err || !ids.length || ids.length != photosCount) {
+                    console.log('Failed uploading photos.');
+
+                    return;
+                }
+
+                ids.forEach(function (id, index) {
+                    flickr.photos.getSizes({photo_id: id}, function (err, res) {
+                        var sizes = res.sizes.size;
+
+                        var set = {
+                            type:   'games',
+                            thumb:  getSize(sizes, 240),
+                            medium: getSize(sizes, 800),
+                            main:   getSize(sizes, 1024) || getSize(sizes, 800) || getSize(sizes, 640)
+                        };
+
+                        console.log(set);
+
+                        PhotosModel.update({main: docs[index].main}, {'$set': set, '$unset': {local: 1}}).exec();
                     });
+                });
 
-                    var set = {
-                        type:     'games',
-                        thumb:    s[0] ? s[0].source : '',
-                        main:     s[1] ? s[1].source : '',
-                        optional: s[2] ? s[2].source : ''
-                    };
-
-                    PhotosModel.update({main: docs[index].main}, {'$set': set, '$unset': {local: 1}}).exec();
+                fls.forEach(function (item) {
+                    console.log('delete ' + item.path);
+                    fs.unlinkSync(item.path);
                 });
             });
-
-            fls.forEach(function (item) {
-                console.log('delete ' + item.path);
-                fs.unlinkSync(item.path);
-            });
-        });
-    });
-}
+        }
+    );
+};
 
 module.exports = api;
