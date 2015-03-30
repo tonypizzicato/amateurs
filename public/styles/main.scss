@@ -577,7 +577,6 @@ ul, ol {
     margin-right:    20px;
     width:           100px;
     height:          100px;
-    background:      transparent url("https://pp.vk.me/c409718/v409718953/4cff/IQsN7usEI1I.jpg") no-repeat;
     background-size: cover;
     border-radius:   50%;
 }
@@ -585,22 +584,6 @@ ul, ol {
 .sidebar .contact__photo {
     width:  80px;
     height: 80px;
-}
-
-.contact:nth-child(2) .contact__photo {
-    background-image: url("https://pp.vk.me/c411317/v411317943/60ed/Lt8L_xHbNcE.jpg");
-}
-
-.contact:nth-child(3) .contact__photo {
-    background-image: url("https://pp.vk.me/c622526/v622526280/5a1/3vNp6c-HAy4.jpg");
-}
-
-.contact:nth-child(4) .contact__photo {
-    background-image: url("https://pp.vk.me/c421430/v421430983/583c/zmQJUCGxaRw.jpg");
-}
-
-.contact:nth-child(5) .contact__photo {
-    background-image: url("https://pp.vk.me/c10290/u337595/a_112b575a.jpg");
 }
 
 .contact__details {
@@ -680,10 +663,12 @@ ul, ol {
  * Fixture
  */
 
+.fixture__winner,
 .fixture__winner a {
     color: $navbar-default-link-active-color;
 }
 
+.fixture__looser,
 .fixture__looser a {
     color: #B6B6B6;
 }

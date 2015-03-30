@@ -349,6 +349,18 @@ module.exports = (grunt) ->
                         src:    [
                             "vendor/bootstrap-sass/vendor/assets/fonts/bootstrap/*.*"
                             "vendor/fontawesome/fonts/*.*"
+                            "vendor/photoswipe/dist/default-skin/*.{png,svg,gif}"
+                        ]
+                    }
+                    {
+                    # server app files
+                        expand: true
+                        flatten: true
+                        dot:    true
+                        cwd:    "<%= yeoman.public %>"
+                        dest:   "<%= yeoman.dist %>/styles"
+                        src:    [
+                            "vendor/photoswipe/dist/default-skin/*.{png,svg,gif}"
                         ]
                     }
                     {

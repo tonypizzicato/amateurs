@@ -11,12 +11,14 @@
 
         <tbody>
         {{#each stats}}
-            <tr>
-                <td class="text_align_c">{{inc @index}}</td>
-                <td class="text_align_l text_overflow_ellipsis">{{name}}</td>
-                <td class="text_align_c">{{position}}</td>
-                <td class="text_align_c">{{goals}}</td>
-            </tr>
+            {{#if _id}}
+                <tr>
+                    <td class="text_align_c">{{inc @index}}</td>
+                    <td class="text_align_l text_overflow_ellipsis">{{name}}</td>
+                    <td class="text_align_c">{{position}}</td>
+                    <td class="text_align_c">{{goals}}</td>
+                </tr>
+            {{/if}}
         {{/each}}
         </tbody>
     </table>
