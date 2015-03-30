@@ -132,6 +132,9 @@ module.exports = {
                         var article = docs.filter(function (doc) {
                             return doc.gameId == item._id && doc.type == type;
                         }).pop();
+                        if (!article) {
+                            return;
+                        }
 
                         article.game = item;
                     });
