@@ -16,7 +16,8 @@
                                 <ul>
                                     {{#each game.events}}
                                         {{#eq type 'SCORED_H'}}
-                                            <li class="text_size_12 text_color_light text_align_r">{{firstField.name}}{{#if minute}} {{minute}}'{{/if}}</li>
+                                            <li class="text_size_12 text_color_light text_align_r">{{ucfirst firstField.name}}{{#if minute}} {{minute}}
+                                                '{{/if}}</li>
                                         {{/eq}}
                                     {{/each}}
                                 </ul>
@@ -72,7 +73,7 @@
                                     {{#each game.events}}
                                         {{#eq type 'SCORED_A'}}
                                             <li class="text_size_12 text_color_light text_align_l">
-                                                {{#if minute}}{{minute}}' {{/if}}{{firstField.name}}
+                                                {{#if minute}}{{minute}}' {{/if}}{{ucfirst firstField.name}}
                                             </li>
                                         {{/eq}}
                                     {{/each}}
@@ -89,14 +90,14 @@
                 <div class="tabbable" id="tabs-992576">
                     <ul class="nav nav-tabs">
                         <li class="tab__title tab__title_size_half active">
-                            <a href="#tab-lineups" data-toggle="tab">Составы</a>
+                            <a href="#lineups" data-toggle="tab">Составы</a>
                         </li>
                         <li class="tab__title tab__title_size_half">
-                            <a href="#tab-events" data-toggle="tab">События</a>
+                            <a href="#events" data-toggle="tab">События</a>
                         </li>
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane active" id="tab-lineups">
+                        <div class="tab-pane active" id="lineups">
                             <div class="panel panel_type_transparent">
                                 <div class="row">
                                     <div class="column col-md-6">
@@ -144,7 +145,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane" id="tab-events">
+                        <div class="tab-pane" id="events">
                             <div class="panel panel_type_transparent">
                                 {{#if game.events.length}}
                                     {{#each game.events}}
@@ -189,7 +190,7 @@
                                                     {{~#if secondField}} match-events__description_double{{/if}}">
 
                                                     {{~#if firstField.number}}<span class="text_color_orange">{{firstField.number}}.</span> {{/if~}}
-                                                    {{~firstField.name~}}
+                                                    {{~ucfirst firstField.name~}}
                                                     {{~#if secondField~}}
                                                         <br>
                                                         {{~#if secondField~}}
@@ -216,17 +217,17 @@
                 <div class="tabbable" id="tabs-992576">
                     <ul class="nav nav-tabs">
                         <li class="tab__title tab__title_size_third active">
-                            <a href="#tab-preview" data-toggle="tab">Анонс</a>
+                            <a href="#preview" data-toggle="tab">Анонс</a>
                         </li>
                         <li class="tab__title tab__title_size_third">
-                            <a href="#tab-review" data-toggle="tab">Обзор матча</a>
+                            <a href="#review" data-toggle="tab">Обзор матча</a>
                         </li>
                         <li class="tab__title tab__title_size_third">
-                            <a href="#tab-photo" data-toggle="tab">Фотоотчет</a>
+                            <a href="#photo" data-toggle="tab">Фотоотчет</a>
                         </li>
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane active" id="tab-preview">
+                        <div class="tab-pane active" id="preview">
 
                             <div class="panel panel_type_media s_m_0">
                                 <div class="panel__body">
@@ -243,7 +244,7 @@
                             </div>
                         </div>
 
-                        <div class="tab-pane" id="tab-review">
+                        <div class="tab-pane" id="review">
 
                             <div class="panel panel_type_media s_m_0">
                                 <div class="panel__body">
@@ -260,7 +261,7 @@
                             </div>
                         </div>
 
-                        <div class="tab-pane" id="tab-photo">
+                        <div class="tab-pane" id="photo">
 
                             <div class="panel panel_type_photo s_m_0">
                                 <div class="panel__body">
@@ -268,17 +269,19 @@
                                         {{~#if media.photos.length~}}
                                             <div class="pswp-gallery">
                                                 {{~#each media.photos~}}
-                                                    <a class="photo__item column s_mb_10" href="{{main.src}}" data-size="{{main.w}}x{{main.h}}"
-                                                       {{#if author}}data-author="{{author}}"{{/if}}
-                                                        class="demo-gallery__img--main s_display_inline-block"
-                                                        style="display: inline-block; width: 175px; height: 116px;"
-                                                        >
-                                                        <img src="{{thumb.src}}" alt=""/>
-                                                        <figure class="s_display_none">{{../game.teams.[0].name}} v {{../game.teams.[1].name}}</figure>
-                                                    </a>
+                                                    {{~#if main~}}
+                                                        <a class="photo__item column s_mb_10" href="{{main.src}}" data-size="{{main.w}}x{{main.h}}"
+                                                           {{#if author}}data-author="{{author}}"{{/if}}
+                                                           class="demo-gallery__img--main s_display_inline-block"
+                                                           style="display: inline-block; width: 175px; height: 116px;"
+                                                                >
+                                                            <img src="{{thumb.src}}" alt=""/>
+                                                            <figure class="s_display_none">{{../game.teams.[0].name}} v {{../game.teams.[1].name}}</figure>
+                                                        </a>
+                                                    {{~/if~}}
                                                 {{~/each~}}
                                             </div>
-                                        {{~else~}}
+                                            {{~else~}}
                                             <p class="text_align_c s_mt_10">Фотообзора пока нет</p>
                                         {{~/if~}}
                                     </div>
