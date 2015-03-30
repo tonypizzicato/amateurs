@@ -64,7 +64,6 @@ var api = {
         });
 
         req.busboy.on('finish', function () {
-            console.log('finish, files uploaded ', files);
 
             var fls = files.slice(0);
             var docs = [];
@@ -99,9 +98,7 @@ var api = {
     save: function (req, res, next) {
         console.log('/api/games/:postId/images/:id PUT handled');
         PhotosModel.update({_id: req.params.id}, {$set: req.body}, function (err, count) {
-            console.log(req.body);
             if (err) {
-                console.log(err);
                 res.status(500).json({error: err});
                 return;
             }
@@ -157,11 +154,8 @@ var _toFlickr = function (docs) {
             var photosCount = files.length;
 
             var getSize = function (sizes, width) {
-                console.log(sizes);
-                console.log(width);
                 var image = _.findWhere(sizes, {width: width + ''});
 
-                console.log(image);
                 if (!image) {
                     return undefined;
                 }
@@ -175,7 +169,7 @@ var _toFlickr = function (docs) {
 
             Flickr.upload(options, flickrOptions, function (err, ids) {
                 if (err || !ids.length || ids.length != photosCount) {
-                    console.log('Failed uploading photos.');
+                    console.log('Failed uploading photos.', err, photosCount, ids.length);
 
                     return;
                 }
@@ -191,14 +185,11 @@ var _toFlickr = function (docs) {
                             main:   getSize(sizes, 1024) || getSize(sizes, 800) || getSize(sizes, 640)
                         };
 
-                        console.log(set);
-
                         PhotosModel.update({main: docs[index].main}, {'$set': set, '$unset': {local: 1}}).exec();
                     });
                 });
 
                 fls.forEach(function (item) {
-                    console.log('delete ' + item.path);
                     fs.unlinkSync(item.path);
                 });
             });

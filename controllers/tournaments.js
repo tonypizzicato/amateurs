@@ -78,89 +78,98 @@ module.exports = {
                     });
                 });
 
-                var previews = new Promise(function (resolve, reject) {
+                var articles = new Promise(function (resolve, reject) {
                     GameArticleModel.find({tournament: doc.remoteId, show: true}).limit(30).lean().exec(function (err, docs) {
                         if (err) {
                             reject(err);
                         }
 
                         if (!docs.length) {
-                            return resolve([]);
+                            return resolve({previews: [], reviews: []});
                         }
 
                         var games = docs.map(function (item) {
                             return 'gameIds[]=' + item.gameId;
                         });
 
-                        var type = 'preview';
-
                         client.get(remoteConfig.url + '/games?' + games.join('&'), function (games) {
                             games = JSON.parse(games);
 
-                            var comparator;
-                            if (type == 'preview') {
-                                comparator = function (item) {
-                                    return item.state.toLowerCase() != 'closed';
-                                };
-                            } else {
-                                comparator = function (item) {
-                                    return item.state.toLowerCase() == 'closed';
-                                };
-                            }
-                            games.filter(comparator);
+                            var previews = prepareArticles('preview', games, docs.slice());
+                            var reviews = prepareArticles('review', games, docs.slice());
 
-                            games.forEach(function (item) {
-                                var article = docs.filter(function (doc) {
-                                    return doc.gameId == item._id;
-                                }).pop();
-
-                                article.game = item;
-                            });
-
-                            docs = docs.filter(function (item) {
-                                return !!item.game;
-                            });
-
-                            var grouped = _.groupBy(docs, function (item) {
-                                return item.gameId;
-                            });
-
-                            docs = _.flatten(
-                                _.values(grouped).filter(function (item) {
-                                    return item.length == 1 && item[0].type == type;
-                                })
-                            );
-
-                            docs.forEach(function (item) {
-                                item.game.dateTime = item.game.date ? moment(item.game.date + ' ' + item.game.time, 'DD/MM/YYYY HH:mm') : null;
-                            });
-
-                            docs = docs.sort(function (a, b) {
-                                if (a.game.dateTime) {
-                                    if (b.game.dateTime) {
-                                        return a.game.dateTime.isBefore(b.game.dateTime) ? -1 : 1;
-                                    } else {
-                                        return -1;
-                                    }
-                                }
-                                return 1;
-                            });
-
-                            resolve(docs);
+                            resolve({previews: previews, reviews: reviews});
                         });
 
 
                     })
                 });
 
-                Promise.all([stats, central, previews]).then(function (result) {
+                Promise.all([stats, central, articles]).then(function (result) {
                     res.render('tournaments/item', {
                         tournament: doc,
                         stats:      result[0],
                         central:    result[1],
-                        previews:   result[2]
+                        previews:   result[2].previews,
+                        reviews:    result[2].reviews
                     });
                 });
+
+                function prepareArticles(type, games, docs) {
+                    var comparator;
+                    if (type == 'preview') {
+                        comparator = function (item) {
+                            return item.state.toLowerCase() != 'closed';
+                        };
+                    } else {
+                        comparator = function (item) {
+                            return item.state.toLowerCase() == 'closed';
+                        };
+                    }
+                    games = games.filter(comparator);
+
+                    games.forEach(function (item) {
+                        var article = docs.filter(function (doc) {
+                            return doc.gameId == item._id && doc.type == type;
+                        }).pop();
+
+                        article.game = item;
+                    });
+
+                    docs = docs.filter(function (item) {
+                        return !!item.game;
+                    });
+
+                    var grouped = _.groupBy(docs, function (item) {
+                        return item.gameId;
+                    });
+
+                    docs = _.flatten(
+                        _.values(grouped).filter(function (item) {
+                            return item.length == 1 && item[0].type == type;
+                        })
+                    );
+
+                    console.log(docs);
+
+                    docs.forEach(function (item) {
+                        item.game.dateTime = item.game.date ? moment(item.game.date + ' ' + item.game.time, 'DD/MM/YYYY HH:mm') : null;
+                    });
+
+                    docs = docs.sort(function (a, b) {
+                        if (a.game.dateTime) {
+                            if (b.game.dateTime) {
+                                return a.game.dateTime.isBefore(b.game.dateTime) ? -1 : 1;
+                            } else {
+                                return -1;
+                            }
+                        }
+                        return 1;
+                    });
+
+                    return docs;
+                }
+
             });
         });
 
@@ -193,6 +202,9 @@ module.exports = {
 
             client.get(remoteConfig.url + '/stats/players_stats?tournamentId=' + doc.remoteId, function (stats) {
                 stats = JSON.parse(stats);
+                stats = stats.filter(function (item) {
+                    return !!item.playerId;
+                });
 
                 stats = stats.sort(function (a, b) {
                     return a.points >= b.points ? -1 : 1;
@@ -251,7 +263,7 @@ module.exports = {
     globals: function (req, res, next) {
         var tournament;
         var populateCountry = {path: 'country'};
-        var populateContacts = {path: 'contacts', options: {sort: {sort: 1}}};
+        var populateContacts = {path: 'contacts', match: {show: true}, options: {sort: {sort: 1}}};
         TournamentModel.findOne({slug: req.params.name}).lean().populate(populateCountry).populate(populateContacts).exec(function (err,
                                                                                                                                     doc) {
             if (err) {
@@ -288,6 +300,9 @@ module.exports = {
             var stats = new Promise(function (resolve, reject) {
                 client.get(remoteConfig.url + '/stats/players_stats?tournamentId=' + doc.remoteId, function (stats) {
                     stats = JSON.parse(stats);
+                    stats = stats.filter(function (item) {
+                        return !!item.playerId;
+                    });
 
                     var goals = stats.sort(function (a, b) {
                         return a.goals >= b.goals ? -1 : 1;

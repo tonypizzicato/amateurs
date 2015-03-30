@@ -12,22 +12,22 @@
                 <div class="tabbable" id="tabs-992576">
                     <ul class="nav nav-tabs">
                         <li class="tab__title tab__title_size_half active">
-                            <a href="#tab-overview" data-toggle="tab">Обзор</a>
+                            <a href="#overview" data-toggle="tab">Обзор</a>
                         </li>
                         <li class="tab__title tab__title_size_half">
-                            <a href="#tab-squad" data-toggle="tab">Состав</a>
+                            <a href="#squad" data-toggle="tab">Состав</a>
                         </li>
                     </ul>
                     <div class="tab-content s_pt_20">
 
                         <!-- Overview tab -->
-                        <div class="tab-pane active" id="tab-overview">
+                        <div class="tab-pane active" id="overview">
 
                             <div class="row s_mb_20">
                                 <div class="column col-md-6">
                                     <div class="panel s_m_0">
                                         <div class="panel__header">
-                                            <i class="fa fa-list-ol s_mr_10"></i> Туринр
+                                            <i class="fa fa-list-ol s_mr_10"></i> Турнир
                                         </div>
                                         <div class="panel__body">
                                             {{> 'teams_table' table=this.table}}
@@ -70,7 +70,7 @@
                         </div>
 
                         <!-- Squads tab -->
-                        <div class="tab-pane" id="tab-squad">
+                        <div class="tab-pane" id="squad">
                             <div class="panel panel_type_squads panel_type_transparent s_m_0">
                                 <div class="panel__body s_pl_0 s_pr_0 s_pt_0">
                                     {{> 'teams_squads' squads=this.team.players emptyText='Заявка пуста'}}
@@ -86,7 +86,7 @@
 
     <!-- SIDEBAR -->
 
-    <div class="col-md-4 column">
+    <div class="col-md-4 column sidebar">
 
         {{#if globals.table}}
             <div class="panel s_m_0">

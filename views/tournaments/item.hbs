@@ -30,21 +30,21 @@
                         <div class="tabbable">
                             <ul class="nav nav-tabs">
                                 <li class="tab__title tab__title_size_half active">
-                                    <a href="#tab-strikers" data-toggle="tab">Бомбардиры</a>
+                                    <a href="#strikers" data-toggle="tab">Бомбардиры</a>
                                 </li>
                                 <li class="tab__title tab__title_size_half">
-                                    <a href="#tab-assists" data-toggle="tab">Ассистенты</a>
+                                    <a href="#assists" data-toggle="tab">Ассистенты</a>
                                 </li>
                             </ul>
                             <div class="tab-content">
-                                <div class="tab-pane active" id="tab-strikers">
+                                <div class="tab-pane active" id="strikers">
                                     <div class="panel s_m_0">
                                         <div class="panel__body s_p_0 s_pb_5">
                                             {{> strikers stats=this.globals.stats.goals emptyText='Голов ещё не забито'}}
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane" id="tab-assists">
+                                <div class="tab-pane" id="assists">
                                     <div class="panel s_m_0">
                                         <div class="panel__body s_p_0 s_pb_5">
                                             {{> assists stats=this.globals.stats.assists emptyText='Никто не отдавал голевых'}}
@@ -131,7 +131,7 @@
                         <div class="{{#gt previews.length 1}}owl-carousel{{/gt}}">
                             {{#each previews}}
                                 <div class="panel__body">
-                                    {{> preview_item article=this}}
+                                    {{> article_preview article=this league=globals.league tournament=globals.tournament}}
                                 </div>
                             {{/each}}
                         </div>
@@ -152,59 +152,15 @@
                 <div class="col-md-12 column">
                     <div class="panel panel_type_media s_m_0">
                         <div class="panel__header">
-                            <h4 class="s_m_0"><i class="fa fa-play-circle s_mr_5"></i> Последние обзоры</h4>
+                            <h4 class="s_m_0"><i class="fa fa-eye s_mr_5"></i> Последние обзоры</h4>
                         </div>
-                        <div class="panel__body">
-                            <div class="row">
-                                <div class="col-md-7">
-                                    <div class="media__item-wrapper">
-                                        <img class="media__item" alt="400x300"
-                                             src="https://pp.vk.me/c619622/v619622188/4f4b/ChZYfzg9uZA.jpg"/>
-                                    </div>
+                        <div class="{{#gt reviews.length 1}}owl-carousel{{/gt}}">
+                            {{#each reviews}}
+                                <div class="panel__body">
+                                    {{> article_review article=this league=../globals.league tournament=../globals.tournament}}
                                 </div>
-                                <div class="col-md-5 s_pl_0">
-                                    <h4>Вест Хэм Юнайтед <span class="text_color_orange pull-right">4</span></h4>
-                                    <h4>Вульверхэмптон <span class="text_color_orange pull-right">3</span></h4>
-
-                                    <p class="text_size_11 s_mb_3"><i class="fa fa-calendar s_mr_5"></i> 03.11.2014 15:40</p>
-
-                                    <p class="text_size_11"><i class="fa fa-location-arrow s_mr_5"></i> Прага</p>
-
-                                    <p>
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                                        the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
-                                        of type and scrambled it to make a type specimen book. It has survived not only five centuries,
-                                        but also the leap into electronic typesetting, remaining essentially unchanged.
-                                    </p>
-                                </div>
-                            </div>
+                            {{/each}}
                         </div>
-                    </div>
-
-                    <div class="link_type_full">
-                        <span class="text_color_orange">Все обзоры</span>
-                    <span class="pull-right">
-                        <a href="/leagues/{{tournament.slug}}/table"><i class="fa fa-arrow-circle-o-right"></i></a>
-                    </span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row clearfix s_mb_20">
-                <div class="col-md-12 column">
-                    <div class="panel panel_type_photo s_m_0">
-                        <div class="panel__header">
-                            <h4 class="s_m_0"><i class="fa fa-play-circle s_mr_5"></i> Последние фотографии</h4>
-                        </div>
-                        <div class="panel__body">
-                        </div>
-                    </div>
-
-                    <div class="link_type_full">
-                        <span class="text_color_orange">Все фотографии</span>
-                    <span class="pull-right">
-                        <a href="/leagues/{{tournament.slug}}/photo"><i class="fa fa-arrow-circle-o-right"></i></a>
-                    </span>
                     </div>
                 </div>
             </div>
