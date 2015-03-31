@@ -6,6 +6,7 @@ var _                = require('underscore'),
     LeagueModel      = require('../models/league'),
     TournamentModel  = require('../models/tournament'),
     GameArticleModel = require('../models/game-article'),
+    PhotoModel       = require('../models/photo'),
     remoteConfig     = require('../config/tinyapi'),
     Promise          = require('promise');
 
@@ -81,7 +82,7 @@ module.exports = {
                 var articles = new Promise(function (resolve, reject) {
                     GameArticleModel.find({tournament: doc.remoteId, show: true}).limit(30).lean().exec(function (err, docs) {
                         if (err) {
-                            reject(err);
+                            return reject(err);
                         }
 
                         if (!docs.length) {
@@ -105,13 +106,54 @@ module.exports = {
                     })
                 });
 
-                Promise.all([stats, central, articles]).then(function (result) {
+                var photos = new Promise(function (resolve, reject) {
+                    var date = moment().subtract(7, 'days').format('YYYY-MM-DD');
+                    PhotoModel.find({tournament: doc.remoteId, type: 'games', main: {'$ne': null}, dc: {$gte: date}}).sort({sort: 1}).exec(function (err, docs) {
+                        if (err) {
+                            return reject(err);
+                        }
+
+                        if (!docs.length) {
+                            return resolve([]);
+                        }
+
+                        docs = _.groupBy(docs, function (item) {
+                            return item.postId;
+                        });
+
+                        var ids = _.keys(docs).map(function (item) {
+                            return 'gameIds[]=' + item;
+                        });
+
+                        for (var game in docs) {
+                            docs[game] = docs[game].slice(0, 10);
+                        }
+
+                        client.get(remoteConfig.url + '/games?' + ids.join('&'), function (games) {
+                            games = JSON.parse(games);
+
+                            var res = [];
+
+                            games.forEach(function (item) {
+                                res.push({
+                                    game:   item,
+                                    photos: docs[item._id]
+                                })
+                            });
+
+                            resolve(res);
+                        });
+                    });
+                });
+
+                Promise.all([stats, central, articles, photos]).then(function (result) {
                     res.render('tournaments/item', {
                         tournament: doc,
                         stats:      result[0],
                         central:    result[1],
                         previews:   result[2].previews,
-                        reviews:    result[2].reviews
+                        reviews:    result[2].reviews,
+                        photos:     result[3]
                     });
                 });
 

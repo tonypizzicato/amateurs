@@ -3,17 +3,18 @@ var mongoose = require('mongoose'),
     ObjectId = Schema.ObjectId;
 
 var PhotoSchema = new Schema({
-    id:     ObjectId,
-    dc:     {type: Date, default: Date.now},
-    thumb:  {type: Object, required: true},
-    main:   {type: Object, required: true},
-    medium: {type: Object},
-    type:   {type: String, enum: ['games', 'news']},
-    postId: {type: ObjectId, required: true},
-    sort:   {type: Number, default: 9999},
-    title:  {type: String},
-    local:  {type: String},
-    author: {type: String}
+    id:         ObjectId,
+    dc:         {type: Date, default: Date.now},
+    thumb:      {type: Object, required: true},
+    main:       {type: Object, required: true},
+    medium:     {type: Object},
+    type:       {type: String, enum: ['games', 'news']},
+    postId:     {type: ObjectId, required: true},
+    tournament: {type: ObjectId},
+    sort:       {type: Number, default: 9999},
+    title:      {type: String},
+    local:      {type: String},
+    author:     {type: String}
 });
 
 /**

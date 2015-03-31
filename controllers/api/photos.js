@@ -69,13 +69,14 @@ var api = {
             var docs = [];
             fls.forEach(function (item) {
                 docs.push({
-                    type:   'games',
-                    postId: req.params.postId,
-                    thumb:  item.url,
-                    main:   item.url,
-                    title:  item.title,
-                    author: req.query.user,
-                    local:  item.path
+                    type:       'games',
+                    postId:     req.params.postId,
+                    thumb:      item.url,
+                    main:       item.url,
+                    title:      item.title,
+                    author:     req.query.user,
+                    tournament: req.query.tournament,
+                    local:      item.path
                 });
             });
 
@@ -97,6 +98,9 @@ var api = {
      */
     save: function (req, res, next) {
         console.log('/api/games/:postId/images/:id PUT handled');
+        if (req.params.tournament) {
+            req.body.tournament = req.params.tournament;
+        }
         PhotosModel.update({_id: req.params.id}, {$set: req.body}, function (err, count) {
             if (err) {
                 res.status(500).json({error: err});

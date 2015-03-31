@@ -1,17 +1,21 @@
 <div class="text_align_c">
-    {{#if youtube}}
-        <div class="s_mt_20">
-            <iframe id="ytplayer" type="text/html" width="710" height="400"
-                    src="http://www.youtube.com/embed/{{youtube}}?autoplay=0&origin=http://amateurs.io"
-                    frameborder="0"></iframe>
-        </div>
+    {{#if youtube.length}}
+        {{#each youtube}}
+            <div class="s_mt_20">
+                <iframe id="ytplayer" type="text/html" width="710" height="400"
+                        src="http://www.youtube.com/embed/{{this}}?autoplay=0&origin=http://amateurs.io"
+                        frameborder="0"></iframe>
+            </div>
+        {{/each}}
     {{/if}}
 
-    {{#if vimeo}}
-        <div class="s_mt_20">
-            <iframe id="vmplayer" src="https://player.vimeo.com/video/{{vimeo}}?title=0&byline=0&portrait=0&badge=0"
-                    width="710" height="400" frameborder="0"
-                    webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-        </div>
+    {{#if vimeo.length}}
+        {{#each vimeo}}
+            <div class="s_mt_20">
+                <iframe id="vmplayer" src="https://player.vimeo.com/video/{{this}}?title=0&byline=0&portrait=0&badge=0"
+                        width="710" height="400" frameborder="0"
+                        webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+            </div>
+        {{/each}}
     {{/if}}
 </div>

@@ -3,7 +3,7 @@
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-3 text_align_r s_mt_40">
-                <a href="/{{league.slug}}/tournaments/{{tournament.slug}}/teams/{{article.game.teams.[1]._id}}">
+                <a href="/{{league.slug}}/tournaments/{{tournament.slug}}/teams/{{article.game.teams.[0]._id}}">
                     {{article.game.teams.[0].name}}
                 </a>
             </div>
@@ -40,7 +40,7 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <div>
+        <div class="reading s_pl_10 s_pr_10">
             {{{article.body}}}
         </div>
     </div>
