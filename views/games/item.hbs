@@ -269,13 +269,17 @@
                                         {{~#if media.photos.length~}}
                                             <div class="pswp-gallery">
                                                 {{~#each media.photos~}}
-                                                    {{~#if main~}}
+                                                    {{~#if main.src~}}
                                                         <a class="photo__item column s_mb_10" href="{{main.src}}" data-size="{{main.w}}x{{main.h}}"
                                                            {{#if author}}data-author="{{author}}"{{/if}}
                                                            class="demo-gallery__img--main s_display_inline-block"
                                                            style="display: inline-block; width: 175px; height: 116px;"
                                                                 >
-                                                            <img src="{{thumb.src}}" alt=""/>
+                                                            {{#if thumb.src}}
+                                                                <img src="{{thumb.src}}" alt=""/>
+                                                            {{else}}
+                                                                <img src="{{main.src}}" alt=""/>
+                                                            {{/if}}
                                                             <figure class="s_display_none">{{../game.teams.[0].name}} v {{../game.teams.[1].name}}</figure>
                                                         </a>
                                                     {{~/if~}}

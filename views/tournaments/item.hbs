@@ -138,9 +138,9 @@
                     </div>
 
                     <!--<div class="link_type_full">-->
-                        <!--<span class="text_color_orange">Все обзоры</span>-->
+                    <!--<span class="text_color_orange">Все обзоры</span>-->
                     <!--<span class="pull-right">-->
-                        <!--<a href="/leagues/{{tournament.slug}}/table"><i class="fa fa-arrow-circle-o-right"></i></a>-->
+                    <!--<a href="/leagues/{{tournament.slug}}/table"><i class="fa fa-arrow-circle-o-right"></i></a>-->
                     <!--</span>-->
                     <!--</div>-->
                 </div>
@@ -161,6 +161,25 @@
                                 </div>
                             {{/each}}
                         </div>
+                    </div>
+                </div>
+            </div>
+        {{/if}}
+
+        {{#if photos}}
+            <div class="row clearfix s_mb_20">
+                <div class="col-md-12 column">
+                    <div class="panel panel_type_photo s_m_0">
+                        <div class="panel__header">
+                            <h4 class="s_m_0"><i class="fa fa-eye s_mr_5"></i> Последние фотоотчеты</h4>
+                        </div>
+                        {{#each photos}}
+                            <div class="panel__body">
+                                {{> tournament_photos photos=photos game=game league=../globals.league tournament=../globals.tournament}}
+
+                            </div>
+                        {{/each}}
+
                     </div>
                 </div>
             </div>
