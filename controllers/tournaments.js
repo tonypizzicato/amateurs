@@ -140,7 +140,6 @@ module.exports = {
                                     photos: docs[item._id]
                                 })
                             });
-                            console.log(res);
 
                             resolve(res);
                         });

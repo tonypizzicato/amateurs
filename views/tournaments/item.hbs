@@ -95,8 +95,15 @@
                                 <i class="flaticon-flaming"></i>
                             </div>
                             <div class="match-main_place">
+                                {{#unless central.game.score.ft}}
                                 <i class="fa fa-location-arrow"></i>
                                 <span class="match-main_field">{{central.game.placeName}}</span>
+                                {{else}}
+
+                                    <a class="text_color_orange text_size_48" href="/{{globals.league.slug}}/tournaments/{{globals.tournament.slug}}/matches/{{central.game._id}}">
+                                        {{central.game.score.ft.[0]}}:{{central.game.score.ft.[1]}}
+                                    </a>
+                                {{/unless}}
                                 <span class="match-main_time">{{date central.game.dateTime}}</span>
                                 <span class="match-main_time">{{central.game.time}}</span>
                             </div>
@@ -124,7 +131,7 @@
         {{#if previews.length}}
             <div class="row clearfix s_mb_20">
                 <div class="col-md-12 column">
-                    <div class="panel panel_type_media s_m_0">
+                    <div class="panel panel_type_article s_m_0">
                         <div class="panel__header">
                             <h4 class="s_m_0"><i class="fa fa-eye s_mr_5"></i> Последние анонсы</h4>
                         </div>
@@ -150,7 +157,7 @@
         {{#if reviews}}
             <div class="row clearfix s_mb_20">
                 <div class="col-md-12 column">
-                    <div class="panel panel_type_media s_m_0">
+                    <div class="panel panel_type_article s_m_0">
                         <div class="panel__header">
                             <h4 class="s_m_0"><i class="fa fa-eye s_mr_5"></i> Последние обзоры</h4>
                         </div>
