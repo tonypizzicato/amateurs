@@ -229,12 +229,10 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="preview">
 
-                            <div class="panel panel_type_media s_m_0">
+                            <div class="panel panel_type_article s_m_0">
                                 <div class="panel__body">
                                     {{#if media.preview}}
-                                        <h4>{{game.teams.[0].name}} v {{game.teams.[1].name}}</h4>
-
-                                        <div>{{{media.preview.body}}}</div>
+                                        <div class="reading s_pl_10 s_pr_10">{{{media.preview.body}}}</div>
 
                                         {{> video youtube=media.preview.youtube vimeo=media.preview.vimeo}}
                                     {{else}}
@@ -246,12 +244,10 @@
 
                         <div class="tab-pane" id="review">
 
-                            <div class="panel panel_type_media s_m_0">
+                            <div class="panel panel_type_article s_m_0">
                                 <div class="panel__body">
                                     {{#if media.review}}
-                                        <h4>{{game.teams.[0].name}} v {{game.teams.[1].name}}</h4>
-
-                                        <div>{{{media.review.body}}}</div>
+                                        <div class="reading s_pl_10 s_pr_10">{{{media.review.body}}}</div>
 
                                         {{> video youtube=media.review.youtube vimeo=media.review.vimeo}}
                                     {{else}}
@@ -269,13 +265,17 @@
                                         {{~#if media.photos.length~}}
                                             <div class="pswp-gallery">
                                                 {{~#each media.photos~}}
-                                                    {{~#if main~}}
+                                                    {{~#if main.src~}}
                                                         <a class="photo__item column s_mb_10" href="{{main.src}}" data-size="{{main.w}}x{{main.h}}"
                                                            {{#if author}}data-author="{{author}}"{{/if}}
                                                            class="demo-gallery__img--main s_display_inline-block"
                                                            style="display: inline-block; width: 175px; height: 116px;"
                                                                 >
-                                                            <img src="{{thumb.src}}" alt=""/>
+                                                            {{#if thumb.src}}
+                                                                <img src="{{thumb.src}}" alt=""/>
+                                                            {{else}}
+                                                                <img src="{{main.src}}" alt=""/>
+                                                            {{/if}}
                                                             <figure class="s_display_none">{{../game.teams.[0].name}} v {{../game.teams.[1].name}}</figure>
                                                         </a>
                                                     {{~/if~}}
