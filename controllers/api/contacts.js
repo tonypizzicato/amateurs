@@ -74,7 +74,9 @@ var api = {
 
         saveContact(req, function (doc) {
 
-            doc.tournaments = doc['tournaments[]'] ? doc['tournaments[]'] : [];
+            if(!!doc['tournaments[]']) {
+                doc.tournaments = doc['tournaments[]'] ? doc['tournaments[]'] : [];
+            }
 
             if (doc['vk[name]'] || doc['vk[url]']) {
                 doc.vk = {
@@ -91,7 +93,7 @@ var api = {
                 }
 
                 if (count) {
-                    if (doc.tournaments.length) {
+                    if (!!doc.tournaments && doc.tournaments.length) {
                         _updateTournament(req.params.id, doc.tournaments);
                     }
                     res.status(200).json({});

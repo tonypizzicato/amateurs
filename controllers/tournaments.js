@@ -108,7 +108,12 @@ module.exports = {
 
                 var photos = new Promise(function (resolve, reject) {
                     var date = moment().subtract(7, 'days').format('YYYY-MM-DD');
-                    PhotoModel.find({tournament: doc.remoteId, type: 'games', main: {'$ne': null}, dc: {$gte: date}}).sort({sort: 1}).exec(function (err, docs) {
+                    PhotoModel.find({
+                        tournament: doc.remoteId,
+                        type:       'games',
+                        main:       {'$ne': null},
+                        dc:         {$gte: date}
+                    }).sort({sort: 1}).exec(function (err, docs) {
                         if (err) {
                             return reject(err);
                         }
@@ -194,8 +199,6 @@ module.exports = {
                             return item.length == 1 && item[0].type == type;
                         })
                     );
-
-                    console.log(docs);
 
                     docs.forEach(function (item) {
                         item.game.dateTime = item.game.date ? moment(item.game.date + ' ' + item.game.time, 'DD/MM/YYYY HH:mm') : null;
@@ -372,20 +375,11 @@ module.exports = {
 
                     // TODO: replace with dateTime
                     games.sort(function (a, b) {
-                        if (a.tourNumber < b.tourNumber) {
-                            return -1;
-                        } else if ((a.dateTime && !b.dateTime) || (a.dateTime && b.dateTime && a.dateTime.isBefore(b.dateTime))) {
-                            return -1;
-                        } else {
-                            return 1;
+                        if (!a.dateTime && !b.dateTime) {
+                            return a.tourNumber < b.tourNumber ? -1 : 1;
                         }
-                    });
 
-                    var sortedGames = games.slice(0);
-                    sortedGames.sort(function (a, b) {
-                        if (a.tourNumber < b.tourNumber) {
-                            return -1;
-                        } else if (a.dateTime && a.dateTime.isBefore(b.dateTime)) {
+                        if ((a.dateTime && !b.dateTime) || (a.dateTime && b.dateTime && a.dateTime.isBefore(b.dateTime))) {
                             return -1;
                         } else {
                             return 1;
@@ -396,8 +390,27 @@ module.exports = {
                         return item.dateTime && item.dateTime.isBefore(moment()) && item.state == 'CLOSED';
                     });
                     var comming = games.filter(function (item) {
-                        return !item.dateTime || (item.dateTime && (item.dateTime.isAfter(moment()) || item.dateTime.isSame(moment())) && item.state != 'CLOSED');
+                        if (item.teams[0].name.toLowerCase() == 'tbd' || item.teams[1].name.toLowerCase() == 'tbd') {
+                            return false;
+                        }
+                        return !item.dateTime || (item.dateTime && item.state != 'CLOSED');
                     });
+
+                    comming = comming.slice(0, 12);
+
+                    var dated = comming.filter(function (item) {
+                        return !!item.dateTime;
+                    });
+
+                    if (dated.length) {
+                        comming = dated;
+                    } else {
+                        comming = _.values(_.groupBy(comming, 'tourNumber')).reduce(function (a, b) {
+                            return a.length > b.length ? a : b;
+                        });
+                    }
+
+                    console.log(comming);
 
                     recent = _.groupBy(recent.slice(-8), 'tourNumber');
                     comming = _.groupBy(comming.slice(0, 10), 'tourNumber');

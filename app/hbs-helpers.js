@@ -250,7 +250,9 @@ var helpers = {
     },
 
     noYear: function (name) {
-        return name.slice(0, name.indexOf(' - '));
+        if (name.indexOf(' - ') > 0) {
+            return name.slice(0, name.indexOf(' - '));
+        }
     }
 };
 

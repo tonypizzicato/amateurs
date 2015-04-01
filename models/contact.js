@@ -7,6 +7,7 @@ var ContactSchema = new Schema({
     dc:          {type: Date, default: Date.now},
     du:          {type: Date},
     show:        {type: Boolean},
+    sort:        {type: Number, default: 999},
     name:        {type: String},
     title:       {type: String},
     phone:       {type: String},
