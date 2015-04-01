@@ -253,6 +253,8 @@ var helpers = {
         if (name.indexOf(' - ') > 0) {
             return name.slice(0, name.indexOf(' - '));
         }
+
+        return name;
     }
 };
 
