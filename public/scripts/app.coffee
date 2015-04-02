@@ -26,12 +26,17 @@ define ['marionette', 'bootstrap.dropdown', 'bootstrap.tab', 'owl', 'news', 'gal
             e.preventDefault()
             $(@).parent().toggleClass 'country_active_yes'
 
-        $('.owl-carousel').owlCarousel
-          navigation : true
-          slideSpeed : 300
-          paginationSpeed : 400
-          singleItem: true
-          navigationText: ['Назад', 'Дальше']
+        $('.owl-carousel').each (i, item)->
+          console.log item
+          $(item).owlCarousel
+            navigation : true
+            pagination : $(item).data('pagination')
+            slideSpeed : 300
+            paginationSpeed : 400
+            items: $(item).data('items'),
+            singleItem: $(item).data('items') == 1
+            navigationText: [$(item).data('prev'), $(item).data('next')]
+            scrollPerPage: true
 
 
     App
