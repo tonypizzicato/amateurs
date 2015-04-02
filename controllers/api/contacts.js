@@ -44,11 +44,6 @@ var api = {
         console.log('/api/contacts POST handled');
 
         saveContact(req, function (doc) {
-            doc.vk = {
-                name: doc['vk[name]'],
-                url:  doc['vk[url]']
-            };
-            doc.tournaments = doc['tournaments[]'] ? doc['tournaments[]'] : [];
             ContactModel.create(doc, function (err, contact) {
                 if (err) {
                     console.log(err);
@@ -56,7 +51,7 @@ var api = {
                     return next();
                 }
 
-                if (doc.tournaments.length) {
+                if (contact.tournaments.length) {
                     _updateTournament(contact._id, contact.tournaments);
                 }
                 res.json(contact);
@@ -73,18 +68,6 @@ var api = {
         console.log('/api/contacts/:id PUT handled');
 
         saveContact(req, function (doc) {
-
-            if(!!doc['tournaments[]']) {
-                doc.tournaments = doc['tournaments[]'] ? doc['tournaments[]'] : [];
-            }
-
-            if (doc['vk[name]'] || doc['vk[url]']) {
-                doc.vk = {
-                    name: doc['vk[name]'],
-                    url:  doc['vk[url]']
-                }
-            }
-
             ContactModel.update({_id: req.params.id}, {$set: doc}, function (err, count) {
                 if (err) {
                     console.log(err);
