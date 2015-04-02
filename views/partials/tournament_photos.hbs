@@ -25,9 +25,10 @@
     <div class="col-md-12 s_pl_0 s_pr_0">
         {{~#if photos.length~}}
             <div class="pswp-gallery">
+                <div class="owl-carousel" data-items="4" data-pagination="false">
                 {{~#each photos~}}
                     {{~#if main.src~}}
-                        <a class="photo__item column s_mb_10" href="{{main.src}}" data-size="{{main.w}}x{{main.h}}"
+                        <a class="photo__item column item s_mb_10" href="{{main.src}}" data-size="{{main.w}}x{{main.h}}"
                            {{#if author}}data-author="{{author}}"{{/if}}
                            class="demo-gallery__img--main s_display_inline-block"
                            style="display: inline-block; width: 138px; height: 91px;"
@@ -41,6 +42,7 @@
                         </a>
                     {{~/if~}}
                 {{~/each~}}
+                </div>
             </div>
             {{~else~}}
             <p class="text_align_c s_mt_10">Фотообзора пока нет</p>

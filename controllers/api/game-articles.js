@@ -114,19 +114,8 @@ var saveArticle = function (req, save) {
         images.push({image: doc.imageAway, title: 'imageAway'});
     }
 
-    if(doc['youtube[]']) {
-        doc.youtube = doc['youtube[]'].filter(function(item) {
-            return !!item.length;
-        });
-    }
-    if(doc['vimeo[]']) {
-        doc.vimeo = doc['vimeo[]'].filter(function(item) {
-            return !!item.length;
-        });
-    }
-
     if (images.length) {
-        images.forEach(function (image, index) {
+        images.forEach(function (image) {
             var reg = /^data:image\/(.+);base64,/;
             var format = image.image.match(reg);
 

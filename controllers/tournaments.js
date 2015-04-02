@@ -131,7 +131,7 @@ module.exports = {
                         });
 
                         for (var game in docs) {
-                            docs[game] = docs[game].slice(0, 10);
+                            docs[game] = docs[game];
                         }
 
                         client.get(remoteConfig.url + '/games?' + ids.join('&'), function (games) {
@@ -409,8 +409,6 @@ module.exports = {
                             return a.length > b.length ? a : b;
                         });
                     }
-
-                    console.log(comming);
 
                     recent = _.groupBy(recent.slice(-8), 'tourNumber');
                     comming = _.groupBy(comming.slice(0, 10), 'tourNumber');
