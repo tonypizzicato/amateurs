@@ -20,8 +20,7 @@ var NewsSchema = new Schema({
     leagueId: {type: ObjectId},
     country:  {type: ObjectId, ref: 'Country'},
     image:    {type: String},
-    youtube:  {type: String},
-    vimeo:    {type: String}
+    video:    [Schema.Types.Mixed]
 });
 
 NewsSchema.pre('save', function (next) {

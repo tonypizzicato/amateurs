@@ -234,7 +234,7 @@
                                     {{#if media.preview}}
                                         <div class="reading s_pl_10 s_pr_10">{{{media.preview.body}}}</div>
 
-                                        {{> video youtube=media.preview.youtube vimeo=media.preview.vimeo}}
+                                        {{> video video=media.preview.video}}
                                     {{else}}
                                         <p class="text_align_c s_mt_10">Анонса матча пока нет</p>
                                     {{/if}}
@@ -249,7 +249,7 @@
                                     {{#if media.review}}
                                         <div class="reading s_pl_10 s_pr_10">{{{media.review.body}}}</div>
 
-                                        {{> video youtube=media.review.youtube vimeo=media.review.vimeo}}
+                                        {{> video video=media.review.video}}
                                     {{else}}
                                         <p class="text_align_c s_mt_10">Обзора матча пока нет</p>
                                     {{/if}}
