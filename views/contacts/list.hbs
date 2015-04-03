@@ -1,35 +1,100 @@
-<h2 class="s_mb_20">Контакты лиги Amateur</h2>
-
 <div class="row clearfix s_mb_20">
     <div class="col-md-8 column">
-        <div class="row clearfix">
-            {{#each contacts}}
-                <div class="col-md-6">
-                    <div class="panel panel_type_contact contact">
-                        <div class="panel__header">
-                            <i class="fa fa-user text_size_16 s_mr_10"></i> {{name}}
+        {{#unless globals.hasOrder}}
+            <div class="row">
+                <div class="col-md-12">
+                    <form class="stepform s_mb_40 animated fadeInUp js-contacts-form" autocomplete="off">
+                        <div class="stepform-inner js-stepform-inner">
+                            <h2 id="order">Оставить заявку на участие.</h2>
+                            <input type="hidden" name="leagueId" value="{{globals.league._id}}">
+                            <ol class="questions">
+                                <li class="current">
+                                    <span><label for="q1">Укажите Ваше имя.</label></span>
+                                    <input id="q1" name="name" type="text"/>
+                                </li>
+                                <li>
+                                    <span><label for="q2">В каком районе Вам было бы удобно играть?</label></span>
+                                    <input id="q2" name="region" type="text"/>
+                                </li>
+                                <li>
+                                    <span><label for="q3">В какой лиге Вы бы хотели участвовать?</label></span>
+                                    <input id="q3" name="league" type="text"/>
+                                </li>
+                                <li>
+                                    <span><label for="q4">За какую команду Вы бы хотели играть?</label></span>
+                                    <input id="q4" name="team" type="text"/>
+                                </li>
+                                <li>
+                                    <span><label for="q5">Откуда Вы узнали о нашей лиге?</label></span>
+                                    <input id="q5" name="source" type="text"/>
+                                </li>
+                                <li>
+                                    <span><label for="q6">Укажите Ваш email, чтобы мы могли с Вами связаться.</label></span>
+                                    <input id="q6" name="email" type="email"/>
+                                </li>
+                            </ol>
+                            <!-- /questions -->
+                            <div class="controls">
+                                <button class="next"></button>
+                                <div class="progress"></div>
+							<span class="number">
+								<span class="number-current"></span>
+								<span class="number-total"></span>
+							</span>
+                                <span class="error-message"></span>
+                            </div>
+                            <!-- / controls -->
                         </div>
-                        <div class="panel__body">
-                            <div class="contact__photo s_mt_10 s_mb_10" style="background-image: url('{{image}}')"></div>
-                            <div class="contact__details">
-                                <div class="contact__name">{{name}}</div>
-                                <div class="contact__title">{{title}}</div>
-                                {{#if email}}
-                                    <div class="contact__phone"><i class="fa fa-inbox text_color_orange s_mr_10"></i>{{email}}</div>
-                                {{/if}}
-                                {{#if phone}}
-                                    <div class="contact__phone"><i class="fa fa-phone text_color_orange s_mr_10"></i>{{phone}}</div>
-                                {{/if}}
-                                {{#if vk.url}}
-                                    <div class="contact__vk">
-                                        <i class="fa fa-vk text_color_orange s_mr_10"></i><a href="{{vk.url}}" target="_blank">{{vk.name}}</a>
+                        <!-- /stepform-inner -->
+                        <span class="final-message">Спасибо! Мы с Вами обязательно свяжемся!</span>
+                    </form>
+                    <!-- /stepform -->
+                </div>
+            </div>
+        {{/unless}}
+        <!--<h2 class="s_mb_20 animated fadeInUp ano">Контакты лиги Amateur</h2>-->
+
+        <div class="row clearfix masonry-container">
+            <div class="masonry js-masonry"
+                 data-masonry-options='{"itemSelector": ".js-masonry-item", "columnWidth": 390, "isAnimated": "true", "isFitWidth": "true" }'>
+                {{~#each contacts~}}
+                    <div class="masonry-item masonry-item__hidden_yes col-md-6 col-sm-6 col-xs-6 js-masonry-item">
+                        <div class="panel panel_type_contact contact">
+                            <div class="panel__header">
+                                <i class="fa fa-user text_size_16 s_mr_10"></i> {{name}}
+                            </div>
+                            <div class="panel__body">
+                                <div class="contact">
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-4 col-xs-4">
+                                            <div class="contact__photo s_mt_10 s_mb_10" style="background-image: url('{{image}}')"></div>
+                                        </div><!--
+
+
+                                        --><div class="col-md-8 col-sm-8 col-xs-8">
+                                            <div class="contact__details">
+                                                <div class="contact__name">{{name}}</div>
+                                                <div class="contact__title">{{{title}}}</div>
+                                                {{#if email}}
+                                                    <div class="contact__phone"><i class="fa fa-inbox text_color_orange s_mr_10"></i>{{email}}</div>
+                                                {{/if}}
+                                                {{#if phone}}
+                                                    <div class="contact__phone"><i class="fa fa-phone text_color_orange s_mr_10"></i>{{phone}}</div>
+                                                {{/if}}
+                                                {{#if vk.url}}
+                                                    <div class="contact__vk">
+                                                        <i class="fa fa-vk text_color_orange s_mr_10"></i><a href="{{vk.url}}" target="_blank">{{vk.name}}</a>
+                                                    </div>
+                                                {{/if}}
+                                            </div>
+                                        </div>
                                     </div>
-                                {{/if}}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            {{/each}}
+                {{~/each~}}
+            </div>
         </div>
     </div>
     <div class="col-md-4 column sidebar">
