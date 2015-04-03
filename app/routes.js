@@ -22,7 +22,8 @@ var express          = require('express'),
     apiGames         = require('../controllers/api/games'),
     apiArticlesGames = require('../controllers/api/game-articles'),
     apiPhotos        = require('../controllers/api/photos'),
-    apiContacts      = require('../controllers/api/contacts');
+    apiContacts      = require('../controllers/api/contacts'),
+    apiOrders        = require('../controllers/api/orders');
 
 module.exports.initialize = function (app) {
     var apiRouter = express.Router(),
@@ -89,6 +90,9 @@ module.exports.initialize = function (app) {
     r.route('/contacts/:id')
         .put(apiContacts.save)
         .delete(apiContacts.delete);
+
+    r.route('/orders')
+        .get(apiOrders.list);
 
     apiRouter.use(r);
 
