@@ -18,6 +18,7 @@ $color-red: #C63C3C !default;
 @import 'flags';
 @import 'news';
 @import 'owl';
+@import '_form';
 
 /*------------------------------------*\
                 #BASE
@@ -36,13 +37,14 @@ body {
     background:  #f6f6f6;
     color:       $navbar-default-link-color;
     font-family: "Exo 2", "Roboto", "Open Sans", sans-serif;
+}
 
-    background:  -webkit-linear-gradient(90deg, #101621 10%, #060e18 90%); /* Chrome 10+, Saf5.1+ */
-    background:  -moz-linear-gradient(90deg, #101621 10%, #060e18 90%); /* FF3.6+ */
-    background:  -ms-linear-gradient(90deg, #101621 10%, #060e18 90%); /* IE10 */
-    background:  -o-linear-gradient(90deg, #101621 10%, #060e18 90%); /* Opera 11.10+ */
-    background:  linear-gradient(90deg, #101621 10%, #060e18 90%); /* W3C */
-
+html, body {
+    background: -webkit-linear-gradient(90deg, #101621 10%, #060e18 90%); /* Chrome 10+, Saf5.1+ */
+    background: -moz-linear-gradient(90deg, #101621 10%, #060e18 90%); /* FF3.6+ */
+    background: -ms-linear-gradient(90deg, #101621 10%, #060e18 90%); /* IE10 */
+    background: -o-linear-gradient(90deg, #101621 10%, #060e18 90%); /* Opera 11.10+ */
+    background: linear-gradient(90deg, #101621 10%, #060e18 90%); /* W3C */
 }
 
 h1, h2, h3,
@@ -1696,30 +1698,17 @@ $size: 200px;
     -webkit-animation-delay: 1s;
 }
 
-/**
- * CONTENTS
- *
- * SETTINGS
- * Global...............Globally-available variables and config.
- *
- * TOOLS
- * Mixins...............Useful mixins.
- *
- * GENERIC
- * Normalize.css........A level playing field.
- * Box-sizing...........Better default `box-sizing`.
- *
- * BASE
- * Headings.............H1–H6 styles.
- *
- * OBJECTS
- * Wrappers.............Wrapping and constraining elements.
- *
- * COMPONENTS
- * Page-head............The main page header.
- * Page-foot............The main page footer.
- * Buttons..............Button elements.
- *
- * TRUMPS
- * Text.................Text helpers.
- */
+.masonry-container {
+    max-width: 790px;
+    position:  relative;
+}
+
+.masonry-item {
+    opacity:    1;
+    transition: opacity 1s;
+}
+
+.masonry-item__hidden_yes {
+    opacity:    0;
+    transition: opacity .5s;
+}

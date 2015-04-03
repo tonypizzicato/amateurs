@@ -14,7 +14,8 @@ require.config
         'bootstrap.tab':       '../vendor/bootstrap-sass/vendor/assets/javascripts/bootstrap/tab'
         'owl':                 '../vendor/owlcarousel/owl-carousel/owl.carousel'
         'photoswipe':          '../vendor/photoswipe/dist/photoswipe'
-        'photoswipe.ui':          '../vendor/photoswipe/dist/photoswipe-ui-default'
+        'photoswipe.ui':       '../vendor/photoswipe/dist/photoswipe-ui-default'
+        'masonry':             '../vendor/masonry/dist/masonry.pkgd'
 
     shim:
         'underscore':

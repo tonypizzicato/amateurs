@@ -19,7 +19,8 @@
     "jquery-waypoints": "~2.0.5",
     "Parallax-ImageScroll": "~0.1.4",
     "owlcarousel": "~1.3.2",
-    "photoswipe": "~4.0.7"
+    "photoswipe": "~4.0.7",
+    "masonry": "~3.2.3"
   },
   "devDependencies": {},
   "resolutions": {

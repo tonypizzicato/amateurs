@@ -13,6 +13,7 @@ var express          = require('express'),
     matches          = require('../controllers/matches'),
     teams            = require('../controllers/teams'),
     news             = require('../controllers/news'),
+    orders           = require('../controllers/orders'),
 
     apiNews          = require('../controllers/api/news'),
     apiCountries     = require('../controllers/api/countries'),
@@ -97,6 +98,8 @@ module.exports.initialize = function (app) {
     app.get('/account', auth.account);
     app.post('/login', auth.login);
     app.post('/logout', auth.logout);
+
+    app.post('/orders', orders.create);
 
 
     app.get('/:league/tournaments/:name/fixture', news.pre, tournaments.globals, tournaments.fixture);

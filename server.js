@@ -142,6 +142,8 @@ app.get('*', function (req, res, next) {
 
     res.locals.globals = res.locals.globals || {};
 
+    res.locals.globals.hasOrder = !!req.session.order;
+
     var query = {};
     if (typeof req.params[0] == 'string') {
         var param = req.params[0].slice(1);

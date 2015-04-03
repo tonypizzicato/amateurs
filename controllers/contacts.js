@@ -5,15 +5,7 @@ var _            = require('underscore'),
 
 module.exports = {
     list: function (req, res) {
-        ContactModel.find({show: true}).exec(function (err, docs) {
-
-            docs = _.groupBy(docs, function (item) {
-                return item.name;
-            });
-
-            docs = _.values(_.map(docs, function (item) {
-                return _.first(item);
-            }));
+        ContactModel.find({show: true}).sort({sort: 1}).exec(function (err, docs) {
             res.render('contacts/list', {contacts: docs, pageContacts: true});
         });
     }
