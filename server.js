@@ -142,7 +142,7 @@ app.get('*', function (req, res, next) {
 
     res.locals.globals = res.locals.globals || {};
 
-    res.locals.globals.hasOrder = false; //!!req.session.order;
+    res.locals.globals.hasOrder = !!req.session.order;
 
     var query = {};
     if (typeof req.params[0] == 'string') {
