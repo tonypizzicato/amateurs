@@ -80,7 +80,7 @@ module.exports = {
                 });
 
                 var articles = new Promise(function (resolve, reject) {
-                    GameArticleModel.find({tournament: doc.remoteId, show: true}).limit(30).lean().exec(function (err, docs) {
+                    GameArticleModel.find({tournament: doc.remoteId, show: true}).sort({dc: 1}).limit(30).lean().exec(function (err, docs) {
                         if (err) {
                             return reject(err);
                         }

@@ -49,7 +49,7 @@
                             {{#if stick}}
                                 {{#if image}}
                                     <li class="{{#eq 0 @index}}selected{{/eq}}">
-                                        <span class="news__time">{{dateTimeShort dc}}</span>
+                                        <span class="news__time">{{dateTimeShort dc true}}</span>
                                         {{#if ../../../globals.tournament._id}}
                                             <a class="news__title"
                                                href="/{{../../../../globals.league.slug}}/tournaments/{{../../../../globals.tournament.slug}}/news/{{slug}}">{{title}}</a>

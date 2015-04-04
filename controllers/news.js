@@ -27,7 +27,7 @@ var controller = {
             }), 0, 5);
 
             newsSticked = newsSticked.sort(function (a, b) {
-                return a.sort < b.sort ? -1 : 1;
+                return a.dc < b.dc ? 1 : -1;
             });
 
             res.locals.globals.newsSticked = newsSticked;
