@@ -126,40 +126,40 @@ var helpers = {
         return text.slice(0, symbolsCount) + '...';
     },
 
-    date: function (date) {
-        return dateFn(date, 'L');
+    date: function (date, tz) {
+        return dateFn(date, 'L', tz);
     },
 
-    dateShort: function (date) {
-        return dateFn(date, 'DD.MM');
+    dateShort: function (date, tz) {
+        return dateFn(date, 'DD.MM', tz);
     },
 
-    datetime: function (date) {
-        return dateFn(date, 'L LT');
+    datetime: function (date, tz) {
+        return dateFn(date, 'L LT', tz);
     },
 
-    dateFull: function (date) {
-        return dateFn(date, 'dddd, Do MMMM YYYY');
+    dateFull: function (date, tz) {
+        return dateFn(date, 'dddd, Do MMMM YYYY', tz);
     },
 
-    dateHuman: function (date) {
-        return dateFn(date, 'Do MMMM YYYY');
+    dateHuman: function (date, tz) {
+        return dateFn(date, 'Do MMMM YYYY', tz);
     },
 
-    dateDay: function (date) {
-        return dateFn(date, 'dddd');
+    dateDay: function (date, tz) {
+        return dateFn(date, 'dddd', tz);
     },
 
-    dateTimeShort: function (date) {
-        return dateFn(date, 'DD.MM HH:mm');
+    dateTimeShort: function (date, tz) {
+        return dateFn(date, 'DD.MM HH:mm', tz);
     },
 
-    dateTimeFull: function (date) {
-        return dateFn(date, 'dddd, Do MMMM YYYY HH:mm');
+    dateTimeFull: function (date, tz) {
+        return dateFn(date, 'dddd, Do MMMM YYYY HH:mm', tz);
     },
 
-    time: function (date) {
-        return dateFn(date, 'HH:mm');
+    time: function (date, tz) {
+        return dateFn(date, 'HH:mm', tz);
     },
 
     contains: function (string, needle) {
@@ -258,10 +258,14 @@ var helpers = {
     }
 };
 
-var dateFn = function (date, format) {
-    var tz = 'Europe/Moscow';
+var dateFn = function (date, format, tz) {
 
-    return moment(date).locale('ru').format(format);
+    if(!tz) {
+        return moment(date).locale('ru').format(format);
+    } else {
+        var zone = 'Europe/Moscow';
+        return moment(date).locale('ru').tz(zone).format(format);
+    }
 };
 
 module.exports.initialize = function (hbs) {
