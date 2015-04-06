@@ -4,36 +4,45 @@
     <div class="col-md-8 column">
         <div class="row clearfix">
             <div class="col-md-12">
-                {{#each league.countries}}
-                    <h3 class="s_mt_0 s_mb_20">{{name}}</h3>
+                <div class="accordion js-accordion">
+                    {{#each league.countries}}
+                        <div class="accordion__item">
+                            <a class="accordion__header" href="#">
+                                {{~name~}}
+                                <span class="st-arrow">Открыть/Закрыть</span>
+                            </a>
 
-                    <div class="tabbable s_mb_40">
-                        <ul class="nav nav-tabs">
-                            {{#each tournaments}}
-                                <li class="tab__title tab__title_size_{{../tournaments.length}}{{#eq 0 @index}} active{{/eq}}">
-                                    <a href="#tab-table-{{_id}}" data-toggle="tab">{{noYear name}}</a>
-                                </li>
-                            {{/each}}
-                        </ul>
-                        <div class="tab-content">
-                            {{~# each tournaments~}}
-                                <div class="tab-pane{{#eq 0 @index}} active{{/eq}}" id="tab-table-{{_id}}">
-                                    <div class="panel s_m_0">
-                                        <div class="panel__body s_p_0 s_pb_5">
-                                            {{> table table=table league=../../league tournament=this tableFull=true showLogo=true}}
-                                        </div>
-                                    </div>
-                                    <div class="link_type_full s_mb_10">
-                                        <span class="text_color_orange">Таблица</span>
+                            <div class="accordion__content js-accordion-content">
+                                <div class="tabbable s_mb_40">
+                                    <ul class="nav nav-tabs">
+                                        {{#each tournaments}}
+                                            <li class="tab__title tab__title_size_{{../tournaments.length}}{{#eq 0 @index}} active{{/eq}}">
+                                                <a href="#tab-table-{{_id}}" data-toggle="tab">{{noYear name}}</a>
+                                            </li>
+                                        {{/each}}
+                                    </ul>
+                                    <div class="tab-content">
+                                        {{~# each tournaments~}}
+                                            <div class="tab-pane{{#eq 0 @index}} active{{/eq}}" id="tab-table-{{_id}}">
+                                                <div class="panel s_m_0">
+                                                    <div class="panel__body s_p_0 s_pb_5">
+                                                        {{> table table=table league=../../league tournament=this tableFull=true showLogo=true}}
+                                                    </div>
+                                                </div>
+                                                <div class="link_type_full s_mb_10">
+                                                    <span class="text_color_orange">Таблица</span>
                                         <span class="pull-right">
                                             <a href="/{{../../league.slug}}/tournaments/{{slug}}/table"><i class="fa fa-arrow-circle-o-right"></i></a>
                                         </span>
+                                                </div>
+                                            </div>
+                                        {{/each}}
                                     </div>
                                 </div>
-                            {{/each}}
+                            </div>
                         </div>
-                    </div>
-                {{/each}}
+                    {{/each}}
+                </div>
             </div>
         </div>
     </div>
