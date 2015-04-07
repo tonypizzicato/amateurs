@@ -4,41 +4,110 @@
     <div class="col-md-8 column">
         <div class="row clearfix">
             <div class="col-md-12">
-                <div class="accordion js-accordion">
+                <div class="accordion js-accordion" data-opened="0">
                     {{#each league.countries}}
-                        <div class="accordion__item">
-                            <a class="accordion__header" href="#">
+                        <div class="accordion__item{{#if @first}} accordion__item_opened{{/if}} js-accordion-item">
+                            <a class="accordion__header js-accordion-control" href="#">
+                                <div class='flag__wrapper s_mr_20'>
+                                    <div class="flag flag_country_{{slug}}"></div>
+                                </div>
                                 {{~name~}}
                                 <span class="st-arrow">Открыть/Закрыть</span>
                             </a>
 
                             <div class="accordion__content js-accordion-content">
-                                <div class="tabbable s_mb_40">
-                                    <ul class="nav nav-tabs">
-                                        {{#each tournaments}}
-                                            <li class="tab__title tab__title_size_{{../tournaments.length}}{{#eq 0 @index}} active{{/eq}}">
-                                                <a href="#tab-table-{{_id}}" data-toggle="tab">{{noYear name}}</a>
-                                            </li>
-                                        {{/each}}
-                                    </ul>
-                                    <div class="tab-content">
-                                        {{~# each tournaments~}}
-                                            <div class="tab-pane{{#eq 0 @index}} active{{/eq}}" id="tab-table-{{_id}}">
-                                                <div class="panel s_m_0">
-                                                    <div class="panel__body s_p_0 s_pb_5">
-                                                        {{> table table=table league=../../league tournament=this tableFull=true showLogo=true}}
+                                {{~# each tournaments~}}
+                                    <div class="tabbable s_mb_40">
+                                        <div class="tab-pane{{#if @first}} active{{/if}}" id="tab-{{slug}}">
+                                            <div class="tabbable s_mb_40">
+                                                <ul class="nav nav-tabs">
+                                                    <li class="tab__title active tab__title_size_4">
+                                                        <a href="#tab-{{slug}}-table" data-toggle="tab">{{noYear name}}</a>
+                                                    </li>
+                                                    <li class="tab__title tab__title_size_4">
+                                                        <a href="#tab-{{slug}}-recent" data-toggle="tab" data-lazy="true" data-name="{{slug}}"
+                                                           data-route="recent">Последние матчи</a>
+                                                    </li>
+                                                    <li class="tab__title tab__title_size_4">
+                                                        <a href="#tab-{{slug}}-comming" data-toggle="tab" data-lazy="true" data-name="{{slug}}"
+                                                           data-route="comming">Ближайшие матчи</a>
+                                                    </li>
+                                                    <li class="tab__title tab__title_size_4">
+                                                        <a href="#tab-{{slug}}-stats" data-toggle="tab" data-lazy="true" data-name="{{slug}}"
+                                                           data-route="stats">Статистика</a>
+                                                    </li>
+                                                </ul>
+                                                <div class="tab-content">
+                                                    <div class="tab-pane active" id="tab-{{slug}}-table">
+                                                        <div class="panel s_m_0">
+                                                            <div class="panel__body">
+                                                                {{> table table=table league=../../league tournament=this tableFull=true showLogo=true}}
+                                                            </div>
+                                                        </div>
+                                                        <div class="link_type_full s_mb_10">
+                                                            <span class="text_color_orange">Таблица</span>
+                                                              <span class="pull-right">
+                                                                  <a href="/{{../../league.slug}}/tournaments/{{slug}}/table"><i
+                                                                          class="fa fa-arrow-circle-o-right"></i></a>
+                                                              </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tab-pane" id="tab-{{slug}}-recent">
+                                                        <div class="panel s_m_0">
+                                                            <div class="panel__body">
+                                                                <div class="loader">
+                                                                    <div class="loader__ball"></div>
+                                                                    <p class="loader__text">Загрузка</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="link_type_full s_mb_10">
+                                                            <span class="text_color_orange">Календарь</span>
+                                                              <span class="pull-right">
+                                                                  <a href="/{{../../league.slug}}/tournaments/{{slug}}/fixture"><i
+                                                                          class="fa fa-arrow-circle-o-right"></i></a>
+                                                              </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tab-pane" id="tab-{{slug}}-comming">
+                                                        <div class="panel s_m_0">
+                                                            <div class="panel__body">
+                                                                <div class="loader">
+                                                                    <div class="loader__ball"></div>
+                                                                    <p class="loader__text">Загрузка</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="link_type_full s_mb_10">
+                                                            <span class="text_color_orange">Календарь</span>
+                                                              <span class="pull-right">
+                                                                  <a href="/{{../../league.slug}}/tournaments/{{slug}}/fixture"><i
+                                                                          class="fa fa-arrow-circle-o-right"></i></a>
+                                                              </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tab-pane" id="tab-{{slug}}-stats">
+                                                        <div class="panel s_m_0">
+                                                            <div class="panel__body">
+                                                                <div class="loader">
+                                                                    <div class="loader__ball"></div>
+                                                                    <p class="loader__text">Загрузка</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="link_type_full s_mb_10">
+                                                            <span class="text_color_orange">Статистика</span>
+                                                              <span class="pull-right">
+                                                                  <a href="/{{../../league.slug}}/tournaments/{{slug}}/stats"><i
+                                                                          class="fa fa-arrow-circle-o-right"></i></a>
+                                                              </span>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="link_type_full s_mb_10">
-                                                    <span class="text_color_orange">Таблица</span>
-                                        <span class="pull-right">
-                                            <a href="/{{../../league.slug}}/tournaments/{{slug}}/table"><i class="fa fa-arrow-circle-o-right"></i></a>
-                                        </span>
-                                                </div>
                                             </div>
-                                        {{/each}}
+                                        </div>
                                     </div>
-                                </div>
+                                {{/each}}
                             </div>
                         </div>
                     {{/each}}

@@ -1,4 +1,4 @@
-define ['marionette', 'stepform', 'bootstrap.dropdown', 'bootstrap.tab', 'owl', 'news', 'gallery', 'masonry'], (Marionette, StepForm) ->
+define ['marionette', 'stepform', 'accordion', 'bootstrap.dropdown', 'bootstrap.tab', 'owl', 'news', 'gallery', 'masonry'], (Marionette, StepForm, Accordion) ->
     App = new Marionette.Application()
 
     App.on 'start', ()->
@@ -13,10 +13,24 @@ define ['marionette', 'stepform', 'bootstrap.dropdown', 'bootstrap.tab', 'owl', 
           $('a[href="' + location.hash + '"]').tab('show')
 
         $('a[data-toggle="tab"]').on 'shown.bs.tab', (e) ->
-          if history.pushState
-            history.pushState(null, null, '#'+$(e.target).attr('href').substr(1))
+          control = $(e.target)
+
+          unless control.data 'lazy'
+            if history.pushState
+              history.pushState(null, null, '#' + control.attr('href').substr(1))
+            else
+              location.hash = '#' + control.attr('href').substr(1)
           else
-            location.hash = '#'+$(e.target).attr('href').substr(1)
+            $.ajax
+              url: '/lazy/' + control.data('route') + '/' + control.data('name')
+              success: (data)->
+                $(control.attr('href')).find('.panel__body').fadeOut(400, ->
+                    $(@).html data
+                    $(@).fadeIn 500
+                )
+              error: ->
+                $(control.attr('href')).find('.panel__body').html 'error'
+
 
         $('.js-country-link').click (e)->
             e.preventDefault()
@@ -53,6 +67,10 @@ define ['marionette', 'stepform', 'bootstrap.dropdown', 'bootstrap.tab', 'owl', 
                         $('.js-contacts-form').removeClass 's_mb_40'
                         $('.js-contacts-form').addClass 'hide'
                     , 3000
+
+        $('.js-accordion').each (i, el) ->
+          new Accordion el
+
 
 
 
