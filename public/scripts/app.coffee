@@ -28,6 +28,7 @@ define ['marionette', 'stepform', 'accordion', 'bootstrap.dropdown', 'bootstrap.
                     $(@).html data
                     $(@).fadeIn 500
                 )
+                control.data 'lazy', false
               error: ->
                 $(control.attr('href')).find('.panel__body').html 'error'
 

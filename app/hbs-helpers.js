@@ -264,7 +264,7 @@ var dateFn = function (date, format, tz) {
         return moment(date).locale('ru').format(format);
     } else {
         var zone = 'Europe/Moscow';
-        return moment(date).locale('ru').tz(zone).format(format);
+        return moment(date).locale('ru').format(format);
     }
 };
 

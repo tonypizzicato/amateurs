@@ -20,6 +20,7 @@ var CountrySchema = new Schema({
     state:       {type: String, required: true, default: State.CREATED},
     sort:        {type: Number, default: 1},
     show:        {type: Boolean},
+    vk:          {type: String, default: ''},
     leagueId:    {type: ObjectId},
     tournaments: [{type: ObjectId, ref: 'Tournament'}]
 });

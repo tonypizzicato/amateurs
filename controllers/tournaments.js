@@ -187,12 +187,12 @@ module.exports = {
                         assists: []
                     };
 
-                    stats = stats.sort(function (a, b) {
+                    stats      = stats.sort(function (a, b) {
                         return a.goals >= b.goals ? -1 : 1;
                     });
                     stat.goals = stats.slice(0, 10);
 
-                    stats = stats.sort(function (a, b) {
+                    stats        = stats.sort(function (a, b) {
                         return a.assists >= b.assists ? -1 : 1;
                     });
                     stat.assists = stats.slice(0, 10);
@@ -238,7 +238,7 @@ module.exports = {
                         games = JSON.parse(games);
 
                         var previews = prepareArticles('preview', games, docs.slice());
-                        var reviews = prepareArticles('review', games, docs.slice());
+                        var reviews  = prepareArticles('review', games, docs.slice());
 
                         resolve({previews: previews, reviews: reviews});
                     });
@@ -263,6 +263,10 @@ module.exports = {
                         return resolve([]);
                     }
 
+                    docs = _.filter(docs, function(item) {
+                        return !!item.main && !!item.main.src;
+                    });
+
                     docs = _.groupBy(docs, function (item) {
                         return item.postId;
                     });
@@ -283,7 +287,7 @@ module.exports = {
                         games.forEach(function (item) {
                             res.push({
                                 game:   item,
-                                photos: docs[item._id]
+                                photos: docs[item._id].slice(0, 5)
                             })
                         });
 
@@ -358,7 +362,6 @@ module.exports = {
 
                 return docs;
             }
-
         });
 
     },
@@ -449,10 +452,10 @@ module.exports = {
 
     globals: function (req, res, next) {
         var tournament;
-        var populateCountry = {path: 'country'};
+        var populateCountry  = {path: 'country'};
         var populateContacts = {path: 'contacts', match: {show: true}, options: {sort: {sort: 1}}};
-        TournamentModel.findOne({slug: req.params.name}).lean().populate(populateCountry).populate(populateContacts).exec(function (err,
-                                                                                                                                    doc) {
+
+        TournamentModel.findOne({slug: req.params.name}).lean().populate(populateCountry).populate(populateContacts).exec(function (err, doc) {
             if (err) {
                 return next(err);
             }
@@ -474,6 +477,7 @@ module.exports = {
             var table = new Promise(function (resolve, reject) {
                 client.get(remoteConfig.url + '/stats/table?tournamentId=' + doc.remoteId, function (table) {
                     table = JSON.parse(table);
+
                     table.temas = table.teams.map(function (item) {
                         item.form = item.form.slice(-5);
                         return item;
@@ -494,6 +498,7 @@ module.exports = {
                     var goals = stats.sort(function (a, b) {
                         return a.goals >= b.goals ? -1 : 1;
                     }).slice(0, 10);
+
                     var assists = stats.sort(function (a, b) {
                         return a.assists >= b.assists ? -1 : 1;
                     }).slice(0, 10);
@@ -528,6 +533,7 @@ module.exports = {
                     var recent = games.filter(function (item) {
                         return item.dateTime && item.dateTime.isBefore(moment()) && item.state == 'CLOSED';
                     });
+
                     var comming = games.filter(function (item) {
                         if (item.teams[0].name.toLowerCase() == 'tbd' || item.teams[1].name.toLowerCase() == 'tbd') {
                             return false;
@@ -553,7 +559,7 @@ module.exports = {
                         }
                     }
 
-                    recent = _.groupBy(recent.slice(-8), 'tourNumber');
+                    recent  = _.groupBy(recent.slice(-8), 'tourNumber');
                     comming = _.groupBy(comming.slice(0, 10), 'tourNumber');
 
                     resolve({recent: recent, comming: comming});
@@ -562,11 +568,11 @@ module.exports = {
 
             Promise.all([leagues, games, table, stats]).then(function (result) {
                 res.locals.globals.tournament = tournament;
-                res.locals.globals.leagues = result[0];
-                res.locals.globals.recent = result[1].recent;
-                res.locals.globals.comming = result[1].comming;
-                res.locals.globals.table = result[2];
-                res.locals.globals.stats = result[3];
+                res.locals.globals.leagues    = result[0];
+                res.locals.globals.recent     = result[1].recent;
+                res.locals.globals.comming    = result[1].comming;
+                res.locals.globals.table      = result[2];
+                res.locals.globals.stats      = result[3];
 
                 console.log('globals end');
                 next();
