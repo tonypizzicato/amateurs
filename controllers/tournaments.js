@@ -8,7 +8,8 @@ var _                = require('underscore'),
     GameArticleModel = require('../models/game-article'),
     PhotoModel       = require('../models/photo'),
     remoteConfig     = require('../config/tinyapi'),
-    Promise          = require('promise');
+    Promise          = require('promise'),
+    Handlebars       = require('hbs').handlebars;
 
 var client = new RestClient(remoteConfig.authOptions);
 
@@ -25,6 +26,145 @@ module.exports = {
                 res.render('tournaments/list', {tournaments: docs, pageTournaments: true});
             });
 
+        });
+    },
+
+    restRecent: function (req, res, next) {
+        TournamentModel.findOne({slug: req.params.name}, function (err, doc) {
+            client.get(remoteConfig.url + '/games?tournamentId=' + doc.remoteId, function (games) {
+                games = JSON.parse(games);
+
+                games = games.map(function (item) {
+                    item.dateTime = item.date ? moment(item.date + ' ' + item.time, 'DD/MM/YYYY HH:mm') : null;
+                    return item;
+                });
+
+                // TODO: replace with dateTime
+                games.sort(function (a, b) {
+                    if (!a.dateTime && !b.dateTime) {
+                        return a.tourNumber < b.tourNumber ? -1 : 1;
+                    }
+
+                    if ((a.dateTime && !b.dateTime) || (a.dateTime && b.dateTime && a.dateTime.isBefore(b.dateTime))) {
+                        return -1;
+                    } else {
+                        return 1;
+                    }
+                });
+
+                var recent = games.filter(function (item) {
+                    return item.dateTime && item.dateTime.isBefore(moment()) && item.state == 'CLOSED';
+                });
+
+                recent = _.groupBy(recent.slice(-8), 'tourNumber');
+
+                res.render('partials/lazy/fixture', {
+                    league:     res.locals.globals.league,
+                    tournament: doc,
+                    fixture:    recent,
+                    emptyText:  'Нет данных',
+                    layout:     false
+                });
+            });
+        });
+    },
+
+    restComming: function (req, res, next) {
+        TournamentModel.findOne({slug: req.params.name}, function (err, doc) {
+            client.get(remoteConfig.url + '/games?tournamentId=' + doc.remoteId, function (games) {
+                games = JSON.parse(games);
+
+                games = games.map(function (item) {
+                    item.dateTime = item.date ? moment(item.date + ' ' + item.time, 'DD/MM/YYYY HH:mm') : null;
+                    return item;
+                });
+
+                // TODO: replace with dateTime
+                games.sort(function (a, b) {
+                    if (!a.dateTime && !b.dateTime) {
+                        return a.tourNumber < b.tourNumber ? -1 : 1;
+                    }
+
+                    if ((a.dateTime && !b.dateTime) || (a.dateTime && b.dateTime && a.dateTime.isBefore(b.dateTime))) {
+                        return -1;
+                    } else {
+                        return 1;
+                    }
+                });
+
+                var comming = games.filter(function (item) {
+                    if (item.teams[0].name.toLowerCase() == 'tbd' || item.teams[1].name.toLowerCase() == 'tbd') {
+                        return false;
+                    }
+                    return !item.dateTime || (item.dateTime && item.state != 'CLOSED');
+                });
+
+
+                if (!comming.length) {
+                    return res.render('partials/lazy/fixture', {
+                        fixture:   {},
+                        emptyText: 'Нет данных',
+                        layout:    false
+                    });
+                }
+
+                comming = comming.slice(0, 12);
+
+                var dated = comming.filter(function (item) {
+                    return !!item.dateTime;
+                });
+
+                if (dated.length) {
+                    comming = dated;
+                } else {
+                    comming = _.values(_.groupBy(comming, 'tourNumber')).reduce(function (a, b) {
+                        return a.length > b.length ? a : b;
+                    });
+                }
+
+                comming = _.groupBy(comming.slice(0, 10), 'tourNumber');
+
+                res.render('partials/lazy/fixture', {
+                    league:     res.locals.globals.league,
+                    tournament: doc,
+                    fixture:    comming,
+                    emptyText:  'Нет данных',
+                    layout:     false
+                });
+            });
+        });
+    },
+
+    restStats: function (req, res, next) {
+        TournamentModel.findOne({slug: req.params.name}, function (err, doc) {
+            if (err) {
+                return next(err);
+            }
+            if (!doc) {
+                res.status(404);
+                return next(null);
+            }
+
+            client.get(remoteConfig.url + '/stats/players_stats?tournamentId=' + doc.remoteId, function (stats) {
+                stats = JSON.parse(stats);
+                stats = stats.filter(function (item) {
+                    return !!item.playerId;
+                });
+
+                stats = stats.sort(function (a, b) {
+                    return a.points >= b.points ? -1 : 1;
+                });
+
+                stats = stats.slice(0, 10);
+
+                res.render('partials/lazy/stats', {
+                    league:     res.locals.globals.league,
+                    tournament: doc,
+                    stats:      stats,
+                    emptyText:  'Нет данных',
+                    layout:     false
+                });
+            });
         });
     },
 
@@ -122,6 +262,10 @@ module.exports = {
                     if (!docs.length) {
                         return resolve([]);
                     }
+
+                    docs = _.filter(docs, function(item) {
+                        return !!item.main && !!item.main.src;
+                    });
 
                     docs = _.groupBy(docs, function (item) {
                         return item.postId;
@@ -237,7 +381,6 @@ module.exports = {
     },
 
     stats: function (req, res) {
-        console.log('stats start');
         TournamentModel.findOne({slug: req.params.name}, function (err, doc) {
             if (err) {
                 return next(err);
@@ -407,9 +550,13 @@ module.exports = {
                     if (dated.length) {
                         comming = dated;
                     } else {
-                        comming = _.values(_.groupBy(comming, 'tourNumber')).reduce(function (a, b) {
-                            return a.length > b.length ? a : b;
-                        });
+                        if (comming.length) {
+                            comming = _.values(_.groupBy(comming, 'tourNumber')).reduce(function (a, b) {
+                                return a.length > b.length ? a : b;
+                            });
+                        } else {
+                            comming = [];
+                        }
                     }
 
                     recent  = _.groupBy(recent.slice(-8), 'tourNumber');
