@@ -47,178 +47,177 @@ module.exports = {
                         assists: []
                     };
 
-                    stats = stats.sort(function (a, b) {
+                    stats      = stats.sort(function (a, b) {
                         return a.goals >= b.goals ? -1 : 1;
                     });
                     stat.goals = stats.slice(0, 10);
 
-                    stats = stats.sort(function (a, b) {
+                    stats        = stats.sort(function (a, b) {
                         return a.assists >= b.assists ? -1 : 1;
                     });
                     stat.assists = stats.slice(0, 10);
 
                     resolve(stats);
                 });
-
-                var central = new Promise(function (resolve, reject) {
-                    GameArticleModel.findOne({tournament: doc.remoteId, type: 'preview', show: true, centralGame: true}).lean().exec(function (err, doc) {
-                        if (err) {
-                            return reject(err);
-                        }
-                        if (!doc) {
-                            return resolve(null);
-                        }
-
-                        client.get(remoteConfig.url + '/games/' + doc.gameId, function (game) {
-                            doc.game = JSON.parse(game);
-
-                            doc.game.dateTime = doc.game.date ? moment(doc.game.date + ' ' + doc.game.time, 'DD/MM/YYYY HH:mm') : null;
-
-                            resolve(doc);
-                        });
-                    });
-                });
-
-                var articles = new Promise(function (resolve, reject) {
-                    GameArticleModel.find({tournament: doc.remoteId, show: true}).sort({dc: 1}).limit(30).lean().exec(function (err, docs) {
-                        if (err) {
-                            return reject(err);
-                        }
-
-                        if (!docs.length) {
-                            return resolve({previews: [], reviews: []});
-                        }
-
-                        var games = docs.map(function (item) {
-                            return 'gameIds[]=' + item.gameId;
-                        });
-
-                        client.get(remoteConfig.url + '/games?' + games.join('&'), function (games) {
-                            games = JSON.parse(games);
-
-                            var previews = prepareArticles('preview', games, docs.slice());
-                            var reviews = prepareArticles('review', games, docs.slice());
-
-                            resolve({previews: previews, reviews: reviews});
-                        });
-
-
-                    })
-                });
-
-                var photos = new Promise(function (resolve, reject) {
-                    var date = moment().subtract(7, 'days').format('YYYY-MM-DD');
-                    PhotoModel.find({
-                        tournament: doc.remoteId,
-                        type:       'games',
-                        main:       {'$ne': null},
-                        dc:         {$gte: date}
-                    }).sort({sort: 1}).exec(function (err, docs) {
-                        if (err) {
-                            return reject(err);
-                        }
-
-                        if (!docs.length) {
-                            return resolve([]);
-                        }
-
-                        docs = _.groupBy(docs, function (item) {
-                            return item.postId;
-                        });
-
-                        var ids = _.keys(docs).map(function (item) {
-                            return 'gameIds[]=' + item;
-                        });
-
-                        for (var game in docs) {
-                            docs[game] = docs[game];
-                        }
-
-                        client.get(remoteConfig.url + '/games?' + ids.join('&'), function (games) {
-                            games = JSON.parse(games);
-
-                            var res = [];
-
-                            games.forEach(function (item) {
-                                res.push({
-                                    game:   item,
-                                    photos: docs[item._id]
-                                })
-                            });
-
-                            resolve(res);
-                        });
-                    });
-                });
-
-                Promise.all([stats, central, articles, photos]).then(function (result) {
-                    res.render('tournaments/item', {
-                        tournament: doc,
-                        stats:      result[0],
-                        central:    result[1],
-                        previews:   result[2].previews,
-                        reviews:    result[2].reviews,
-                        photos:     result[3]
-                    });
-                });
-
-                function prepareArticles(type, games, docs) {
-                    var comparator;
-                    if (type == 'preview') {
-                        comparator = function (item) {
-                            return item.state.toLowerCase() != 'closed';
-                        };
-                    } else {
-                        comparator = function (item) {
-                            return item.state.toLowerCase() == 'closed';
-                        };
-                    }
-                    games = games.filter(comparator);
-
-                    games.forEach(function (item) {
-                        var article = docs.filter(function (doc) {
-                            return doc.gameId == item._id && doc.type == type;
-                        }).pop();
-                        if (!article) {
-                            return;
-                        }
-
-                        article.game = item;
-                    });
-
-                    docs = docs.filter(function (item) {
-                        return !!item.game;
-                    });
-
-                    var grouped = _.groupBy(docs, function (item) {
-                        return item.gameId;
-                    });
-
-                    docs = _.flatten(
-                        _.values(grouped).filter(function (item) {
-                            return item.length == 1 && item[0].type == type;
-                        })
-                    );
-
-                    docs.forEach(function (item) {
-                        item.game.dateTime = item.game.date ? moment(item.game.date + ' ' + item.game.time, 'DD/MM/YYYY HH:mm') : null;
-                    });
-
-                    docs = docs.sort(function (a, b) {
-                        if (a.game.dateTime) {
-                            if (b.game.dateTime) {
-                                return a.game.dateTime.isBefore(b.game.dateTime) ? -1 : 1;
-                            } else {
-                                return -1;
-                            }
-                        }
-                        return 1;
-                    });
-
-                    return docs;
-                }
-
             });
+
+            var central = new Promise(function (resolve, reject) {
+                GameArticleModel.findOne({tournament: doc.remoteId, type: 'preview', show: true, centralGame: true}).lean().exec(function (err, doc) {
+                    if (err) {
+                        return reject(err);
+                    }
+                    if (!doc) {
+                        return resolve(null);
+                    }
+
+                    client.get(remoteConfig.url + '/games/' + doc.gameId, function (game) {
+                        doc.game = JSON.parse(game);
+
+                        doc.game.dateTime = doc.game.date ? moment(doc.game.date + ' ' + doc.game.time, 'DD/MM/YYYY HH:mm') : null;
+
+                        resolve(doc);
+                    });
+                });
+            });
+
+            var articles = new Promise(function (resolve, reject) {
+                GameArticleModel.find({tournament: doc.remoteId, show: true}).sort({dc: 1}).limit(30).lean().exec(function (err, docs) {
+                    if (err) {
+                        return reject(err);
+                    }
+
+                    if (!docs.length) {
+                        return resolve({previews: [], reviews: []});
+                    }
+
+                    var games = docs.map(function (item) {
+                        return 'gameIds[]=' + item.gameId;
+                    });
+
+                    client.get(remoteConfig.url + '/games?' + games.join('&'), function (games) {
+                        games = JSON.parse(games);
+
+                        var previews = prepareArticles('preview', games, docs.slice());
+                        var reviews  = prepareArticles('review', games, docs.slice());
+
+                        resolve({previews: previews, reviews: reviews});
+                    });
+
+
+                })
+            });
+
+            var photos = new Promise(function (resolve, reject) {
+                var date = moment().subtract(7, 'days').format('YYYY-MM-DD');
+                PhotoModel.find({
+                    tournament: doc.remoteId,
+                    type:       'games',
+                    main:       {'$ne': null},
+                    dc:         {$gte: date}
+                }).sort({sort: 1}).exec(function (err, docs) {
+                    if (err) {
+                        return reject(err);
+                    }
+
+                    if (!docs.length) {
+                        return resolve([]);
+                    }
+
+                    docs = _.groupBy(docs, function (item) {
+                        return item.postId;
+                    });
+
+                    var ids = _.keys(docs).map(function (item) {
+                        return 'gameIds[]=' + item;
+                    });
+
+                    for (var game in docs) {
+                        docs[game] = docs[game];
+                    }
+
+                    client.get(remoteConfig.url + '/games?' + ids.join('&'), function (games) {
+                        games = JSON.parse(games);
+
+                        var res = [];
+
+                        games.forEach(function (item) {
+                            res.push({
+                                game:   item,
+                                photos: docs[item._id].slice(0, 5)
+                            })
+                        });
+
+                        resolve(res);
+                    });
+                });
+            });
+
+            Promise.all([stats, central, articles, photos]).then(function (result) {
+                res.render('tournaments/item', {
+                    tournament: doc,
+                    stats:      result[0],
+                    central:    result[1],
+                    previews:   result[2].previews,
+                    reviews:    result[2].reviews,
+                    photos:     result[3]
+                });
+            });
+
+            function prepareArticles(type, games, docs) {
+                var comparator;
+                if (type == 'preview') {
+                    comparator = function (item) {
+                        return item.state.toLowerCase() != 'closed';
+                    };
+                } else {
+                    comparator = function (item) {
+                        return item.state.toLowerCase() == 'closed';
+                    };
+                }
+                games = games.filter(comparator);
+
+                games.forEach(function (item) {
+                    var article = docs.filter(function (doc) {
+                        return doc.gameId == item._id && doc.type == type;
+                    }).pop();
+                    if (!article) {
+                        return;
+                    }
+
+                    article.game = item;
+                });
+
+                docs = docs.filter(function (item) {
+                    return !!item.game;
+                });
+
+                var grouped = _.groupBy(docs, function (item) {
+                    return item.gameId;
+                });
+
+                docs = _.flatten(
+                    _.values(grouped).filter(function (item) {
+                        return item.length == 1 && item[0].type == type;
+                    })
+                );
+
+                docs.forEach(function (item) {
+                    item.game.dateTime = item.game.date ? moment(item.game.date + ' ' + item.game.time, 'DD/MM/YYYY HH:mm') : null;
+                });
+
+                docs = docs.sort(function (a, b) {
+                    if (a.game.dateTime) {
+                        if (b.game.dateTime) {
+                            return a.game.dateTime.isBefore(b.game.dateTime) ? -1 : 1;
+                        } else {
+                            return -1;
+                        }
+                    }
+                    return 1;
+                });
+
+                return docs;
+            }
         });
 
     },
@@ -310,10 +309,10 @@ module.exports = {
 
     globals: function (req, res, next) {
         var tournament;
-        var populateCountry = {path: 'country'};
+        var populateCountry  = {path: 'country'};
         var populateContacts = {path: 'contacts', match: {show: true}, options: {sort: {sort: 1}}};
-        TournamentModel.findOne({slug: req.params.name}).lean().populate(populateCountry).populate(populateContacts).exec(function (err,
-                                                                                                                                    doc) {
+
+        TournamentModel.findOne({slug: req.params.name}).lean().populate(populateCountry).populate(populateContacts).exec(function (err, doc) {
             if (err) {
                 return next(err);
             }
@@ -335,6 +334,7 @@ module.exports = {
             var table = new Promise(function (resolve, reject) {
                 client.get(remoteConfig.url + '/stats/table?tournamentId=' + doc.remoteId, function (table) {
                     table = JSON.parse(table);
+
                     table.temas = table.teams.map(function (item) {
                         item.form = item.form.slice(-5);
                         return item;
@@ -355,6 +355,7 @@ module.exports = {
                     var goals = stats.sort(function (a, b) {
                         return a.goals >= b.goals ? -1 : 1;
                     }).slice(0, 10);
+
                     var assists = stats.sort(function (a, b) {
                         return a.assists >= b.assists ? -1 : 1;
                     }).slice(0, 10);
@@ -389,6 +390,7 @@ module.exports = {
                     var recent = games.filter(function (item) {
                         return item.dateTime && item.dateTime.isBefore(moment()) && item.state == 'CLOSED';
                     });
+
                     var comming = games.filter(function (item) {
                         if (item.teams[0].name.toLowerCase() == 'tbd' || item.teams[1].name.toLowerCase() == 'tbd') {
                             return false;
@@ -410,7 +412,7 @@ module.exports = {
                         });
                     }
 
-                    recent = _.groupBy(recent.slice(-8), 'tourNumber');
+                    recent  = _.groupBy(recent.slice(-8), 'tourNumber');
                     comming = _.groupBy(comming.slice(0, 10), 'tourNumber');
 
                     resolve({recent: recent, comming: comming});
@@ -419,11 +421,11 @@ module.exports = {
 
             Promise.all([leagues, games, table, stats]).then(function (result) {
                 res.locals.globals.tournament = tournament;
-                res.locals.globals.leagues = result[0];
-                res.locals.globals.recent = result[1].recent;
-                res.locals.globals.comming = result[1].comming;
-                res.locals.globals.table = result[2];
-                res.locals.globals.stats = result[3];
+                res.locals.globals.leagues    = result[0];
+                res.locals.globals.recent     = result[1].recent;
+                res.locals.globals.comming    = result[1].comming;
+                res.locals.globals.table      = result[2];
+                res.locals.globals.stats      = result[3];
 
                 console.log('globals end');
                 next();

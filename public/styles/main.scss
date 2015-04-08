@@ -1091,15 +1091,12 @@ ul.social-buttons li:last-child {
     line-height:           40px;
     text-align:            center;
 
-    -webkit-transition:    all 0.25s;
-    -moz-transition:       all 0.25s;
-    -o-transition:         all 0.25s;
-    transition:            all 0.25s;
+    transition:            all 0.5s !important;
 }
 
 .socials__button:hover {
     background: $navbar-default-link-active-color;
-    color:      $navbar-default-link-color;
+    color:      $navbar-default-link-color !important;
 }
 
 .socials__button:active {
