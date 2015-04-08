@@ -151,9 +151,12 @@ app.get('*', function (req, res, next) {
 
         if (match && match.length >= 1) {
             query = {slug: match[1]};
+        } else {
+            query = {slug: req.session.league.slug};
         }
     }
 
+    console.log(query);
     var populateOptions = {path: 'countries', match: {show: true}, options: {sort: {'sort': 1}}};
     LeagueModel.findOne(query).populate(populateOptions).exec(function (err, doc) {
         if (err) {

@@ -23,7 +23,7 @@ define ['marionette', 'stepform', 'accordion', 'bootstrap.dropdown', 'bootstrap.
           else
             unless control.data 'ready'
               $.ajax
-                url: '/lazy/' + control.data('route') + '/' + control.data('name')
+                url: '/lazy/' + control.data('league') + '/' + control.data('route') + '/' + control.data('name')
                 success: (data)->
                   $(control.attr('href')).find('.panel__body').fadeOut(400, ->
                       $(@).html data
