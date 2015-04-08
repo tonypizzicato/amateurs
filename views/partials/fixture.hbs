@@ -3,7 +3,7 @@
         <h5 class="text_color_orange s_mt_0">{{@key}} Тур</h5>
 
         {{#each this}}
-            <div class="row s_mb_5">
+            <div class="row s_mb_5{{#if @last}} s_mb_20{{/if}}">
                 <div class="col-md-12">
                     {{#if dateTime}}
                         <div class="row">

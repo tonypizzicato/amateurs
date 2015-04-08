@@ -19,6 +19,7 @@ $color-red: #C63C3C !default;
 @import 'news';
 @import 'owl';
 @import '_form';
+@import 'accordion';
 
 /*------------------------------------*\
                 #BASE
@@ -417,6 +418,10 @@ ul, ol {
 
 .nav-tabs .tab__title.tab__title_size_full {
     width: 100%;
+}
+
+.nav-tabs .tab__title.tab__title_size_5 {
+    width: 20%;
 }
 
 .nav-tabs .tab__title.tab__title_size_4 {
@@ -1695,6 +1700,10 @@ $size: 200px;
     -webkit-animation-delay: 1s;
 }
 
+/**
+ * CONTACTS MASONRY
+ */
+
 .masonry-container {
     max-width: 790px;
     position:  relative;
@@ -1708,4 +1717,66 @@ $size: 200px;
 .masonry-item__hidden_yes {
     opacity:    0;
     transition: opacity .5s;
+}
+
+/**
+ * LEAGUES ACCORDION
+ */
+
+.accordion__header .flag__wrapper {
+    height:     48px;
+    width:      48px;
+    padding:    1.2px;
+    margin-top: -5px;
+}
+
+.accordion__header .flag__wrapper:after {
+    content: none;
+}
+
+.accordion__header .flag {
+    border-width: 1px;
+}
+
+/**
+ * Loader
+ */
+
+.loader {
+    text-align: center;
+    padding:    20px 0;
+}
+
+.loader__ball {
+    width:            30px;
+    height:           30px;
+    background-color: #f5b367;
+    border-radius:    50%;
+    display:          inline-block;
+    animation:        loader_motion 2s infinite;
+}
+
+.loader__text {
+    color:          #ecf0f1;
+    margin-top:     5px;
+    letter-spacing: 3px;
+    font-size:      16px;
+}
+
+@keyframes loader_motion {
+    0% {
+        transform: translateX(0) scale(1)
+    }
+    25% {
+        transform: translateX(-50px) scale(0.3)
+    }
+    50% {
+        transform: translateX(0) scale(1)
+    }
+    75% {
+        transform: translateX(50px) scale(0.3)
+    }
+    100% {
+        transform: translateX(0) scale(1)
+    }
 }

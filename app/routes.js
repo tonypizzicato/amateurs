@@ -128,4 +128,9 @@ module.exports.initialize = function (app) {
     app.get('/:league/:countries/news', news.pre, news.list);
 
     app.get('/:league/countries/:country', countries.item);
+
+
+    app.get('/lazy/recent/:name', tournaments.restRecent);
+    app.get('/lazy/comming/:name', tournaments.restComming);
+    app.get('/lazy/stats/:name', tournaments.restStats);
 };
