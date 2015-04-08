@@ -21,16 +21,17 @@ define ['marionette', 'stepform', 'accordion', 'bootstrap.dropdown', 'bootstrap.
             else
               location.hash = '#' + control.attr('href').substr(1)
           else
-            $.ajax
-              url: '/lazy/' + control.data('route') + '/' + control.data('name')
-              success: (data)->
-                $(control.attr('href')).find('.panel__body').fadeOut(400, ->
-                    $(@).html data
-                    $(@).fadeIn 500
-                )
-                control.data 'lazy', false
-              error: ->
-                $(control.attr('href')).find('.panel__body').html 'error'
+            unless control.data 'ready'
+              $.ajax
+                url: '/lazy/' + control.data('route') + '/' + control.data('name')
+                success: (data)->
+                  $(control.attr('href')).find('.panel__body').fadeOut(400, ->
+                      $(@).html data
+                      $(@).fadeIn 500
+                  )
+                  control.data 'ready', true
+                error: ->
+                  $(control.attr('href')).find('.panel__body').html 'error'
 
 
         $('.js-country-link').click (e)->
