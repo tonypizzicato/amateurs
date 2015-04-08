@@ -279,7 +279,7 @@ module.exports = (grunt) ->
             options:
                 assetsDirs: ["<%= yeoman.dist %>"]
 
-            html: ["<%= yeoman.dist %>/{,*/}*.{html,hbs}"]
+            html: ["<%= yeoman.dist %>/**/*.{html,hbs}"]
             css:  ["<%= yeoman.dist %>/styles/**/*.css"]
 
 
@@ -369,7 +369,7 @@ module.exports = (grunt) ->
                         dot:    true
                         cwd:    "<%= yeoman.server %>"
                         dest:   "<%= yeoman.dist %>"
-                        src:    ["views/{,*/}*.hbs"]
+                        src:    ["views/**/*.hbs"]
                     }
                 ]
 
@@ -535,7 +535,7 @@ module.exports = (grunt) ->
         "svgmin"
         "rev"
         "usemin"
-        "htmlmin"
+        "htmlmin:dist"
     ]
     grunt.registerTask "default", [
         "newer:jshint"
