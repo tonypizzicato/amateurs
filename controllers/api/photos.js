@@ -47,7 +47,7 @@ var api = {
         req.busboy.on('file', function (fieldname, file, filename) {
             console.log("Uploading: " + fieldname + ' ' + filename);
 
-            var dir = __dirname + '/../../public',
+            var dir  = __dirname + '/../../public',
                 path = '/uploads/' + req.params.postId + '/';
 
             dir = dir + path;
@@ -55,8 +55,8 @@ var api = {
                 fs.mkdirRecursiveSync(dir);
             }
 
-            var url = req.protocol + '://' + req.headers.host + path + filename,
-                path = dir + filename,
+            var url   = req.protocol + '://' + req.headers.host + path + filename,
+                path  = dir + filename,
                 local = dir + filename;
 
             files.push({title: filename, photo: path, url: url, path: local});
@@ -65,7 +65,7 @@ var api = {
 
         req.busboy.on('finish', function () {
 
-            var fls = files.slice(0);
+            var fls  = files.slice(0);
             var docs = [];
             fls.forEach(function (item) {
                 docs.push({
@@ -172,16 +172,15 @@ var _toFlickr = function (docs) {
             };
 
             Flickr.upload(options, flickrOptions, function (err, ids) {
-                if (err || !ids.length || ids.length != photosCount) {
-                    console.log('Failed uploading photos.', err, photosCount, ids.length);
-
+                if (err) {
+                    console.warn('Error uploading photos.', err);
                     return;
                 }
+                console.log('Uploaded ' + ids.length + ' photos of ' + photosCount);
 
                 ids.forEach(function (id, index) {
                     flickr.photos.getSizes({photo_id: id}, function (err, res) {
                         var sizes = res.sizes.size;
-
                         var set = {
                             type:   'games',
                             thumb:  getSize(sizes, 240),
