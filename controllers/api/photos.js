@@ -14,6 +14,13 @@ var flickrOptions = {
     access_token:        "72157648906532524-e46b00c69350c43b",
     access_token_secret: "4a0ee319266c77e2",
     permissions:         'delete'
+
+    //api_key:             "01e97ba1bba4167dc7b41bc79bb54f6d",
+    //secret:              "89b0f108c26d209f",
+    //user_id:             "131060322@N08",
+    //access_token:        "72157649526764664-5e88e591f01c6691",
+    //access_token_secret: "622c61239e669b53",
+    //permissions:         'delete'
 };
 
 var eve = new EventEmitter();
@@ -123,8 +130,8 @@ var api = {
                 PhotosModel.create(doc);
             }
 
-            result[upRes.index] = !!err;
-            //fs.unlinkSync(upRes.path);
+            result[upRes.index] = !err;
+            fs.unlinkSync(upRes.path);
 
             if (filesSaved == filesCount) {
                 res.json(result);
@@ -216,21 +223,20 @@ var _toFlickr = function (files, cb) {
                 Flickr.upload(options, flickrOptions, function (err, ids) {
                     if (err) {
                         console.warn('Error uploading photos.', err);
-                        return cb(err);
+                        return cb(err, {path: photo.path, index: index});
                     }
                     uploaded += 1;
-                    console.log('Uploaded ' + uploaded + ' photos of ' + photosCount);
+                    console.log('Uploaded ' + uploaded + ' photos of ' + photosCount, ids);
 
                     ids.forEach(function (id) {
                         flickr.photos.getSizes({photo_id: id}, function (err, res) {
                             if (err) {
-                                return cb(err);
+                                return cb(err, {path: photo.path, index: index});
                             }
                             var sizes = res.sizes.size;
 
                             var set = {
                                 thumb:  getSize(sizes, 'Small'),
-                                medium: getSize(sizes, 'Medium 800'),
                                 main:   getSize(sizes, 'Original')
                             };
 

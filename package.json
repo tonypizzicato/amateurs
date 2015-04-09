@@ -11,7 +11,7 @@
     "express": "^4.12.2",
     "express-mongoose": "^0.1.0",
     "express-session": "^1.10.3",
-    "flickrapi": "^0.3.28",
+    "flickrapi": "git+https://github.com/tonypizzicato/node-flickrapi#master",
     "fs.extra": "^1.3.2",
     "gm": "^1.17.0",
     "hbs": "~3.0",

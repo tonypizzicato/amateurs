@@ -7,7 +7,6 @@ var PhotoSchema = new Schema({
     dc:         {type: Date, default: Date.now},
     thumb:      {type: Object, required: true},
     main:       {type: Object, required: true},
-    medium:     {type: Object},
     type:       {type: String, enum: ['games', 'news']},
     postId:     {type: ObjectId, required: true},
     tournament: {type: ObjectId},
