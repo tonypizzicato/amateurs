@@ -68,7 +68,10 @@ module.exports.initialize = function (app) {
 
     r.route('/:type/:postId/images')
         .get(apiPhotos.list)
-        .post(apiPhotos.create);
+        .post(require('multer')({
+            dest: __dirname +  '/../public/uploads/',
+            inMemory: true
+        }), apiPhotos.create);
 
     r.route('/:type/:postId/images/:id')
         .get(apiPhotos.list)

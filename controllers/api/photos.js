@@ -1,9 +1,11 @@
 "use strict";
 
-var _           = require('underscore'),
-    fs          = require('fs.extra'),
-    Flickr      = require('flickrapi'),
-    PhotosModel = require('../../models/photo');
+var _            = require('underscore'),
+    fs           = require('fs.extra'),
+    EventEmitter = require('events').EventEmitter,
+    Flickr       = require('flickrapi'),
+    PhotosModel  = require('../../models/photo'),
+    gm           = require('gm');
 
 var flickrOptions = {
     api_key:             "ffd56ffb2631d75166e922ed7b5cc5b6",
@@ -13,6 +15,8 @@ var flickrOptions = {
     access_token_secret: "4a0ee319266c77e2",
     permissions:         'delete'
 };
+
+var eve = new EventEmitter();
 
 var api = {
 
@@ -43,52 +47,90 @@ var api = {
     create: function (req, res, next) {
         console.log('/api/games/:id/images POST handled');
 
-        var files = [];
-        req.busboy.on('file', function (fieldname, file, filename) {
-            console.log("Uploading: " + fieldname + ' ' + filename);
+        var files        = [],
+            filesCount   = _.values(req.files).length,
+            filesHandled = 0,
+            filesSaved   = 0,
+            result       = {};
 
-            var dir  = __dirname + '/../../public',
-                path = '/uploads/' + req.params.postId + '/';
+        _.values(req.files).forEach(function (file) {
+            prepareImage(file, function (err, buf) {
+                filesHandled++;
+                if (err) {
+                    console.warn('error preparing image', err);
+                } else {
 
-            dir = dir + path;
-            if (!fs.existsSync(dir)) {
-                fs.mkdirRecursiveSync(dir);
-            }
+                    files.push({
+                        filename: file.name,
+                        buffer:   buf,
+                        path:     file.path
+                    });
+                }
 
-            var url   = req.protocol + '://' + req.headers.host + path + filename,
-                path  = dir + filename,
-                local = dir + filename;
-
-            files.push({title: filename, photo: path, url: url, path: local});
-            file.pipe(fs.createWriteStream(path));
+                if (filesHandled == filesCount) {
+                    _toFlickr(files, onLoad);
+                }
+            });
         });
 
-        req.busboy.on('finish', function () {
+        function prepareImage(file, cb) {
+            var img = gm(file.buffer, file.name);
+            img.size({bufferStream: true}, function (err, size) {
+                if (err) {
+                    console.warn('error getting size');
+                    cb(err);
+                }
 
-            var fls  = files.slice(0);
-            var docs = [];
-            fls.forEach(function (item) {
-                docs.push({
-                    type:       'games',
-                    postId:     req.params.postId,
-                    thumb:      item.url,
-                    main:       item.url,
-                    title:      item.title,
-                    author:     req.query.user,
-                    tournament: req.query.tournament,
-                    local:      item.path
+                var w, h;
+
+                if (size.width > size.height) {
+                    w = size.width > 1024 ? 1024 : size.width;
+                    h = null;
+                } else if (size.width < size.height) {
+                    h = size.height > 800 ? 800 : size.height;
+                    w = null;
+                } else if (size.width > 1024) {
+                    w = h = 1024;
+                }
+
+                img.resize(w, h);
+
+                img.write(file.path, function (err) {
+                    if (err) {
+                        return cb(err);
+                    }
+
+                    cb(null, file.path);
                 });
             });
+        }
 
-            PhotosModel.create(docs, function (err) {
-                var args = Array.prototype.slice.call(arguments, 1);
-                _toFlickr(args);
-            });
+        function onLoad(err, upRes) {
+            filesSaved++;
+            if (err) {
+                console.log('Error loading to flickr', err);
+            } else {
+                var doc = {
+                    type:       'games',
+                    postId:     req.params.postId,
+                    thumb:      upRes.sizes.thumb,
+                    main:       upRes.sizes.main,
+                    title:      upRes.title,
+                    author:     req.query.user,
+                    tournament: req.query.tournament
+                };
 
-            res.json({});
-        }.bind(this));
+                PhotosModel.create(doc);
+            }
 
-        req.pipe(req.busboy);
+            result[upRes.index] = !!err;
+            //fs.unlinkSync(upRes.path);
+
+            if (filesSaved == filesCount) {
+                res.json(result);
+            }
+        }
+
     },
 
     /**
@@ -140,25 +182,19 @@ var api = {
     }
 };
 
-var _toFlickr = function (docs) {
+var _toFlickr = function (files, cb) {
     Flickr.authenticate(flickrOptions, function (err, flickr) {
             console.log('flickr authed');
 
-            var files = docs.map(function (doc) {
-                return {title: doc.title, photo: doc.local, path: doc.local};
+            var photos = files.map(function (file) {
+                return {title: file.filename, photo: file.buffer, path: file.path};
             });
 
-            var fls = files.slice();
+            var photosCount = photos.length,
+                uploaded    = 0;
 
-            var options = {
-                photos:      files,
-                permissions: 'write'
-            };
-
-            var photosCount = files.length;
-
-            var getSize = function (sizes, width) {
-                var image = _.findWhere(sizes, {width: width + ''});
+            var getSize = function (sizes, label) {
+                var image = _.findWhere(sizes, {label: label});
 
                 if (!image) {
                     return undefined;
@@ -171,29 +207,36 @@ var _toFlickr = function (docs) {
                 }
             };
 
-            Flickr.upload(options, flickrOptions, function (err, ids) {
-                if (err) {
-                    console.warn('Error uploading photos.', err);
-                    return;
-                }
-                console.log('Uploaded ' + ids.length + ' photos of ' + photosCount);
+            photos.forEach(function (photo, index) {
+                var options = {
+                    photo:       photo,
+                    permissions: 'write'
+                };
 
-                ids.forEach(function (id, index) {
-                    flickr.photos.getSizes({photo_id: id}, function (err, res) {
-                        var sizes = res.sizes.size;
-                        var set = {
-                            type:   'games',
-                            thumb:  getSize(sizes, 240),
-                            medium: getSize(sizes, 800),
-                            main:   getSize(sizes, 1024) || getSize(sizes, 800) || getSize(sizes, 640)
-                        };
+                Flickr.upload(options, flickrOptions, function (err, ids) {
+                    if (err) {
+                        console.warn('Error uploading photos.', err);
+                        return cb(err);
+                    }
+                    uploaded += 1;
+                    console.log('Uploaded ' + uploaded + ' photos of ' + photosCount);
 
-                        PhotosModel.update({main: docs[index].main}, {'$set': set, '$unset': {local: 1}}).exec();
+                    ids.forEach(function (id) {
+                        flickr.photos.getSizes({photo_id: id}, function (err, res) {
+                            if (err) {
+                                return cb(err);
+                            }
+                            var sizes = res.sizes.size;
+
+                            var set = {
+                                thumb:  getSize(sizes, 'Small'),
+                                medium: getSize(sizes, 'Medium 800'),
+                                main:   getSize(sizes, 'Original')
+                            };
+
+                            cb(null, {path: photo.path, sizes: set, title: photo.title, index: index});
+                        });
                     });
-                });
-
-                fls.forEach(function (item) {
-                    fs.unlinkSync(item.path);
                 });
             });
         }
