@@ -1,11 +1,10 @@
 "use strict";
 
-var _            = require('underscore'),
-    fs           = require('fs.extra'),
-    EventEmitter = require('events').EventEmitter,
-    Flickr       = require('flickrapi'),
-    PhotosModel  = require('../../models/photo'),
-    gm           = require('gm');
+var _           = require('underscore'),
+    fs          = require('fs.extra'),
+    Flickr      = require('flickrapi'),
+    PhotosModel = require('../../models/photo'),
+    gm          = require('gm');
 
 var flickrOptions = {
     api_key:             "ffd56ffb2631d75166e922ed7b5cc5b6",
@@ -22,8 +21,6 @@ var flickrOptions = {
     //access_token_secret: "622c61239e669b53",
     //permissions:         'delete'
 };
-
-var eve = new EventEmitter();
 
 var api = {
 
@@ -58,25 +55,33 @@ var api = {
             filesCount   = _.values(req.files).length,
             filesHandled = 0,
             filesSaved   = 0,
-            result       = {};
+            result       = {},
+            photosCount;
 
-        _.values(req.files).forEach(function (file) {
-            prepareImage(file, function (err, buf) {
-                filesHandled++;
-                if (err) {
-                    console.warn('error preparing image', err);
-                } else {
+        PhotosModel.getByGame(req.params.postId, function (err, docs) {
+            photosCount = docs.length;
 
-                    files.push({
-                        filename: file.name,
-                        buffer:   buf,
-                        path:     file.path
-                    });
-                }
+            _.values(req.files).forEach(function (file) {
+                file.index = parseInt(file.fieldname.match(/\d+/)[0]);
 
-                if (filesHandled == filesCount) {
-                    _toFlickr(files, onLoad);
-                }
+                prepareImage(file, function (err, buf) {
+                    filesHandled++;
+                    if (err) {
+                        console.warn('error preparing image', err);
+                    } else {
+
+                        files.push({
+                            filename: file.name,
+                            buffer:   buf,
+                            path:     file.path,
+                            index:    file.index
+                        });
+                    }
+
+                    if (filesHandled == filesCount) {
+                        _toFlickr(files, onLoad);
+                    }
+                });
             });
         });
 
@@ -114,6 +119,9 @@ var api = {
 
         function onLoad(err, upRes) {
             filesSaved++;
+
+            result[upRes.index] = !err;
+
             if (err) {
                 console.log('Error loading to flickr', err);
             } else {
@@ -124,13 +132,15 @@ var api = {
                     main:       upRes.sizes.main,
                     title:      upRes.title,
                     author:     req.query.user,
+                    sort:       photosCount + upRes.index + 1,
                     tournament: req.query.tournament
                 };
 
-                PhotosModel.create(doc);
+                if (result[upRes.index]) {
+                    PhotosModel.create(doc);
+                }
             }
 
-            result[upRes.index] = !err;
             fs.unlinkSync(upRes.path);
 
             if (filesSaved == filesCount) {
@@ -170,21 +180,29 @@ var api = {
      *
      * /api/games/:postId/images/:id DELETE call
      */
-    delete: function (req, res, next) {
+    delete: function (req, res) {
         console.log('/api/games/:postId/images/:id DELETE handled');
 
-        PhotosModel.remove({_id: req.params.id}, function (err, count) {
+        PhotosModel.findOne({_id: req.params.id}).exec(function (err, doc) {
             if (err) {
-                res.status(500).json({error: err});
+                return res.status(500).json({error: err});
             }
 
-            if (count) {
-                res.status(200).json({});
-            } else {
-                res.status(404).json({});
-            }
+            PhotosModel.remove({_id: req.params.id}, function (err, count) {
+                if (count) {
+                    res.status(200).json({});
+                } else {
+                    res.status(404).json({});
+                }
+            });
 
-            next();
+            if (!!doc.main && !!doc.main.src) {
+                Flickr.authenticate(flickrOptions, function (err, flickr) {
+                    var id = doc.main.src.match(/\/(\d+)_/)[1];
+                    flickr.photos.delete({photo_id: id}, function (err, res) {
+                    });
+                });
+            }
         });
     }
 };
@@ -194,7 +212,7 @@ var _toFlickr = function (files, cb) {
             console.log('flickr authed');
 
             var photos = files.map(function (file) {
-                return {title: file.filename, photo: file.buffer, path: file.path};
+                return {title: file.filename, photo: file.buffer, path: file.path, index: file.index};
             });
 
             var photosCount = photos.length,
@@ -214,7 +232,7 @@ var _toFlickr = function (files, cb) {
                 }
             };
 
-            photos.forEach(function (photo, index) {
+            photos.forEach(function (photo) {
                 var options = {
                     photo:       photo,
                     permissions: 'write'
@@ -223,7 +241,7 @@ var _toFlickr = function (files, cb) {
                 Flickr.upload(options, flickrOptions, function (err, ids) {
                     if (err) {
                         console.warn('Error uploading photos.', err);
-                        return cb(err, {path: photo.path, index: index});
+                        return cb(err, {path: photo.path, index: photo.index});
                     }
                     uploaded += 1;
                     console.log('Uploaded ' + uploaded + ' photos of ' + photosCount, ids);
@@ -231,16 +249,16 @@ var _toFlickr = function (files, cb) {
                     ids.forEach(function (id) {
                         flickr.photos.getSizes({photo_id: id}, function (err, res) {
                             if (err) {
-                                return cb(err, {path: photo.path, index: index});
+                                return cb(err, {path: photo.path, index: photo.index});
                             }
                             var sizes = res.sizes.size;
 
                             var set = {
-                                thumb:  getSize(sizes, 'Small'),
-                                main:   getSize(sizes, 'Original')
+                                thumb: getSize(sizes, 'Small'),
+                                main:  getSize(sizes, 'Original')
                             };
 
-                            cb(null, {path: photo.path, sizes: set, title: photo.title, index: index});
+                            cb(null, {path: photo.path, sizes: set, title: photo.title, index: photo.index});
                         });
                     });
                 });

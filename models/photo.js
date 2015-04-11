@@ -24,7 +24,7 @@ var PhotoSchema = new Schema({
  * @returns {Promise}
  */
 PhotoSchema.statics.getByGame = function (gameId, cb) {
-    var promise = this.find({postId: gameId, type: 'games'}).sort({sort: 1});
+    var promise = this.find({postId: gameId, type: 'games'}).sort({sort: 1, dc: 1});
 
     return promise.exec(cb);
 };
