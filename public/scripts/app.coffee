@@ -1,4 +1,4 @@
-define ['marionette', 'stepform', 'accordion', 'bootstrap.dropdown', 'bootstrap.tab', 'owl', 'news', 'gallery', 'masonry'], (Marionette, StepForm, Accordion) ->
+define ['marionette', 'stepform', 'accordion', 'masonry', 'bootstrap.dropdown', 'bootstrap.tab', 'owl', 'news', 'gallery'], (Marionette, StepForm, Accordion, Masonry) ->
     App = new Marionette.Application()
 
     App.on 'start', ()->
@@ -8,9 +8,6 @@ define ['marionette', 'stepform', 'accordion', 'bootstrap.dropdown', 'bootstrap.
         require ['imageScroll'], ()->
             $('.img-holder').imageScroll
                 extraHeight: 500
-
-        if location.hash != ''
-          $('a[href="' + location.hash + '"]').tab('show')
 
         $('a[data-toggle="tab"]').on 'shown.bs.tab', (e) ->
           control = $(e.target)
@@ -32,6 +29,17 @@ define ['marionette', 'stepform', 'accordion', 'bootstrap.dropdown', 'bootstrap.
                   control.data 'ready', true
                 error: ->
                   $(control.attr('href')).find('.panel__body').html 'error'
+
+          msnr = $(control.attr('href')).find('.panel__body .js-masonry-js')
+          if msnr.length and !msnr.data('init')
+            new Masonry msnr.get(0),
+              itemSelector: ".js-masonry-item"
+              isAnimated: "true"
+            msnr.data 'init', true
+
+
+        if location.hash != ''
+          $('a[href="' + location.hash + '"]').tab('show')
 
 
         $('.js-country-link').click (e)->
@@ -72,9 +80,6 @@ define ['marionette', 'stepform', 'accordion', 'bootstrap.dropdown', 'bootstrap.
 
         $('.js-accordion').each (i, el) ->
           new Accordion el
-
-
-
 
         $.fn.serializeObject = ->
             o = {}
