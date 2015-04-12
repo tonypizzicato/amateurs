@@ -263,13 +263,13 @@
                                 <div class="panel__body">
                                     <div class="row">
                                         {{~#if media.photos.length~}}
-                                            <div class="js-masonry"
-                                                 data-masonry-options='{"itemSelector": ".photo__item", "isAnimated": "true" }'>
+                                            <div class="js-masonry-js">
                                                 <div class="pswp-gallery">
                                                     {{~#each media.photos~}}
                                                         {{~#if main.src~}}
-                                                            <a class="photo__item column s_mb_10" href="{{main.src}}" data-size="{{main.w}}x{{main.h}}"
-                                                               {{#if author}}data-author="{{author}}"{{/if}} style="display: inline-block; width: 175px;">
+                                                            <a class="photo__item column s_mb_10 js-masonry-item" href="{{main.src}}" data-size="{{main.w}}x{{main.h}}"
+                                                               {{#if author}}data-author="{{author}}"{{/if}}
+                                                               style="display: inline-block; width: 175px;">
                                                                 {{#if thumb.src}}
                                                                     <img src="{{thumb.src}}" alt=""/>
                                                                 {{else}}
