@@ -10,3 +10,4 @@ test/vendor
 access.log
 data
 uploads
+auth.js
