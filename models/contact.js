@@ -21,5 +21,14 @@ var ContactSchema = new Schema({
     tournaments: [{type: ObjectId, ref: 'Tournament'}]
 });
 
+ContactSchema.pre('save', function (next) {
+    var now = new Date();
+    this.du = now;
+    if (!this.dc) {
+        this.dc = now;
+    }
+    next();
+});
+
 module.exports = mongoose.model('Contact', ContactSchema, 'contacts');
 

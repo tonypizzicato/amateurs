@@ -23,11 +23,12 @@ var express          = require('express'),
     apiArticlesGames = require('../controllers/api/game-articles'),
     apiPhotos        = require('../controllers/api/photos'),
     apiContacts      = require('../controllers/api/contacts'),
+    apiCategories    = require('../controllers/api/categories'),
     apiOrders        = require('../controllers/api/orders');
 
 module.exports.initialize = function (app) {
     var apiRouter = express.Router(),
-        r = express.Router();
+        r         = express.Router();
 
     r.route('/news')
         .get(apiNews.list)
@@ -68,7 +69,10 @@ module.exports.initialize = function (app) {
 
     r.route('/:type/:postId/images')
         .get(apiPhotos.list)
-        .post(apiPhotos.create);
+        .post(require('multer')({
+            dest:     __dirname + '/../public/uploads/',
+            inMemory: true
+        }), apiPhotos.create);
 
     r.route('/:type/:postId/images/:id')
         .get(apiPhotos.list)
@@ -90,6 +94,14 @@ module.exports.initialize = function (app) {
     r.route('/contacts/:id')
         .put(apiContacts.save)
         .delete(apiContacts.delete);
+
+    r.route('/categories')
+        .get(apiCategories.list)
+        .post(apiCategories.create);
+
+    r.route('/categories/:id')
+        .put(apiCategories.save)
+        .delete(apiCategories.delete);
 
     r.route('/orders')
         .get(apiOrders.list);

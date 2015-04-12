@@ -221,7 +221,7 @@ module.exports = {
             });
 
             var articles = new Promise(function (resolve, reject) {
-                GameArticleModel.find({tournament: doc.remoteId, show: true}).sort({dc: 1}).limit(30).lean().exec(function (err, docs) {
+                GameArticleModel.find({tournament: doc.remoteId, show: true}).sort({dc: -1}).limit(30).lean().exec(function (err, docs) {
                     if (err) {
                         return reject(err);
                     }
@@ -263,9 +263,13 @@ module.exports = {
                         return resolve([]);
                     }
 
-                    docs = _.filter(docs, function(item) {
+                    docs = _.filter(docs, function (item) {
                         return !!item.main && !!item.main.src;
                     });
+
+                    if (!docs.length) {
+                        return resolve([]);
+                    }
 
                     docs = _.groupBy(docs, function (item) {
                         return item.postId;
@@ -352,12 +356,12 @@ module.exports = {
                 docs = docs.sort(function (a, b) {
                     if (a.game.dateTime) {
                         if (b.game.dateTime) {
-                            return a.game.dateTime.isBefore(b.game.dateTime) ? -1 : 1;
+                            return a.game.dateTime.isBefore(b.game.dateTime) ? 1 : -1;
                         } else {
                             return -1;
                         }
                     }
-                    return 1;
+                    return -1;
                 });
 
                 return docs;

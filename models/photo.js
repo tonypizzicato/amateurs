@@ -7,7 +7,6 @@ var PhotoSchema = new Schema({
     dc:         {type: Date, default: Date.now},
     thumb:      {type: Object, required: true},
     main:       {type: Object, required: true},
-    medium:     {type: Object},
     type:       {type: String, enum: ['games', 'news']},
     postId:     {type: ObjectId, required: true},
     tournament: {type: ObjectId},
@@ -25,7 +24,7 @@ var PhotoSchema = new Schema({
  * @returns {Promise}
  */
 PhotoSchema.statics.getByGame = function (gameId, cb) {
-    var promise = this.find({postId: gameId, type: 'games'}).sort({sort: 1});
+    var promise = this.find({postId: gameId, type: 'games'}).sort({sort: 1, dc: 1});
 
     return promise.exec(cb);
 };
