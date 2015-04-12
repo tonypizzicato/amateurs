@@ -3,6 +3,7 @@
 var fs              = require('fs.extra'),
     transliteration = require('transliteration'),
     NewsModel       = require('../../models/news'),
+    CategoryModel   = require('../../models/category'),
     Flickr          = require('flickrapi');
 
 var flickrOptions = {
@@ -55,6 +56,9 @@ var api = {
                     res.status(500).json({error: err});
                     return;
                 }
+                if (!!article.category) {
+                    _updateCategory(article._id, article.category);
+                }
 
                 res.json(article);
             });
@@ -78,6 +82,9 @@ var api = {
                 }
 
                 if (count) {
+                    if (!!doc.category) {
+                        _updateCategory(doc._id, doc.category);
+                    }
                     res.status(200).json({});
                 } else {
                     res.status(404).json({});
@@ -109,23 +116,28 @@ var api = {
     }
 };
 
-var saveArticle = function (req, save) {
+var _updateCategory = function (articleId, categoryId) {
+    CategoryModel.update({news: articleId}, {$pull: {news: articleId}}, {multi: true}).exec();
+    CategoryModel.update({_id: categoryId}, {$addToSet: {news: articleId}}, {multi: true}).exec();
+};
+
+var saveArticle = function (req, cb) {
     var doc = req.body;
 
     if (doc.image) {
-        var reg = /^data:image\/(.+);base64,/;
+        var reg    = /^data:image\/(.+);base64,/;
         var format = doc.image.match(reg);
 
         if (format && format.length >= 2) {
             format = format[1];
         } else {
-            save(doc);
+            cb(doc);
             return;
         }
 
         var base64Data = doc.image.replace(/^data:image\/(.+);base64,/, "");
 
-        var dir = __dirname + '/../../' + (process.env == 'production' ? 'dist' : 'public'),
+        var dir  = __dirname + '/../../' + (process.env == 'production' ? 'dist' : 'public'),
             path = '/uploads/' + doc.country + '/';
 
         dir = dir + path;
@@ -139,13 +151,13 @@ var saveArticle = function (req, save) {
 
             if (err) {
                 console.log(err);
-                save(doc);
+                cb(doc);
                 next();
             }
 
             var imageUrl = req.protocol + '://' + req.headers.host + path + filename;
-            doc.image = imageUrl;
-            save(doc);
+            doc.image    = imageUrl;
+            cb(doc);
 
             Flickr.authenticate(flickrOptions, function (err, flickr) {
                 console.log('flickr authed');
@@ -195,7 +207,7 @@ var saveArticle = function (req, save) {
             });
         });
     } else {
-        save(doc);
+        cb(doc);
     }
 };
 

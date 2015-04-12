@@ -19,6 +19,7 @@ var NewsSchema = new Schema({
     author:   {type: String, default: ''},
     leagueId: {type: ObjectId},
     country:  {type: ObjectId, ref: 'Country'},
+    category: {type: ObjectId, ref: 'Category'},
     image:    {type: String},
     video:    [Schema.Types.Mixed]
 });
