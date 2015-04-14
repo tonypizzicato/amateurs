@@ -61,13 +61,14 @@ var api = {
         PhotosModel.getByGame(req.params.postId, function (err, docs) {
             photosCount = docs.length;
 
+            console.log('Got ' + _.values(req.files).length + ' files from admin app. Processing images');
             _.values(req.files).forEach(function (file) {
                 file.index = parseInt(file.fieldname.match(/\d+/)[0]);
 
                 prepareImage(file, function (err, buf) {
                     filesHandled++;
                     if (err) {
-                        console.warn('error preparing image', err);
+                        console.warn('error preparing image', err, file.name);
                     } else {
 
                         files.push({
@@ -88,10 +89,11 @@ var api = {
         function prepareImage(file, cb) {
             var img = gm(file.buffer, file.name);
             img.size({bufferStream: true}, function (err, size) {
-                if (err) {
-                    console.warn('error getting size');
+                if (err || !size || !size.width || !size.height) {
+                    console.warn('error getting size', file.name);
                     cb(err);
                 }
+                console.log('Got image size. ' + file.name);
 
                 var w, h;
 
@@ -103,15 +105,20 @@ var api = {
                     w = null;
                 } else if (size.width > 1024) {
                     w = h = 1024;
+                } else {
+                    w = size.width;
+                    h = size.height;
                 }
 
                 img.resize(w, h);
+                console.log('Resized image. ' + file.name, 'Trying to save image to ' + file.path);
 
                 img.write(file.path, function (err) {
                     if (err) {
                         return cb(err);
                     }
 
+                    console.log('Processed image. ' + file.name);
                     cb(null, file.path);
                 });
             });
@@ -184,7 +191,7 @@ var api = {
         console.log('/api/games/:postId/images/:id DELETE handled');
 
         PhotosModel.findOne({_id: req.params.id}).exec(function (err, doc) {
-            if (err) {
+            if (err || !doc) {
                 return res.status(500).json({error: err});
             }
 

@@ -120,7 +120,6 @@ app.use(function (req, res, next) {
 
 //CORS middleware
 app.use('/api', function (req, res, next) {
-    console.log('allowCrossDomain');
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, Cache-Control');
@@ -152,11 +151,10 @@ app.get('*', function (req, res, next) {
         if (match && match.length >= 1) {
             query = {slug: match[1]};
         } else {
-            query = {slug: req.session.league.slug};
+            query = {slug: req.session.league ? req.session.league.slug : 'moscow'};
         }
     }
 
-    console.log(query);
     var populateOptions = {path: 'countries', match: {show: true}, options: {sort: {'sort': 1}}};
     LeagueModel.findOne(query).populate(populateOptions).exec(function (err, doc) {
         if (err) {

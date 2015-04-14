@@ -32,9 +32,11 @@ define ['marionette', 'stepform', 'accordion', 'masonry', 'bootstrap.dropdown', 
 
           msnr = $(control.attr('href')).find('.panel__body .js-masonry-js')
           if msnr.length and !msnr.data('init')
-            new Masonry msnr.get(0),
-              itemSelector: ".js-masonry-item"
-              isAnimated: "true"
+            setTimeout ->
+              new Masonry msnr.get(0),
+                itemSelector: ".js-masonry-item"
+                isAnimated: "true",
+              300
             msnr.data 'init', true
 
 
