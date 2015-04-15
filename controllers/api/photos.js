@@ -2,6 +2,7 @@
 
 var _           = require('underscore'),
     fs          = require('fs.extra'),
+    async       = require('async'),
     Flickr      = require('flickrapi'),
     PhotosModel = require('../../models/photo'),
     gm          = require('gm');
@@ -12,14 +13,16 @@ var flickrOptions = {
     user_id:             "130112246@N08",
     access_token:        "72157648906532524-e46b00c69350c43b",
     access_token_secret: "4a0ee319266c77e2",
-    permissions:         'delete'
+    permissions:         'delete',
+    progress:            false
 
     //api_key:             "01e97ba1bba4167dc7b41bc79bb54f6d",
     //secret:              "89b0f108c26d209f",
     //user_id:             "131060322@N08",
     //access_token:        "72157649526764664-5e88e591f01c6691",
     //access_token_secret: "622c61239e669b53",
-    //permissions:         'delete'
+    //permissions:         'delete',
+    //progress:            false
 };
 
 var api = {
@@ -51,39 +54,66 @@ var api = {
     create: function (req, res, next) {
         console.log('/api/games/:id/images POST handled');
 
-        var files        = [],
-            filesCount   = _.values(req.files).length,
-            filesHandled = 0,
-            filesSaved   = 0,
-            result       = {},
+        var files  = [],
+            result = {},
             photosCount;
 
         PhotosModel.getByGame(req.params.postId, function (err, docs) {
             photosCount = docs.length;
 
             console.log('Got ' + _.values(req.files).length + ' files from admin app. Processing images');
-            _.values(req.files).forEach(function (file) {
+
+            /** Process images and get array of photos for flickr */
+            async.mapSeries(_.values(req.files), function (file, callback) {
                 file.index = parseInt(file.fieldname.match(/\d+/)[0]);
 
-                prepareImage(file, function (err, buf) {
-                    filesHandled++;
-                    if (err) {
-                        console.warn('error preparing image', err, file.name);
-                    } else {
-
-                        files.push({
+                /** Convert image and fulsh it to disk */
+                async.waterfall([
+                    function (cb) {
+                        prepareImage(file, cb);
+                    },
+                    function (filepath, cb) {
+                        cb(null, {
                             filename: file.name,
-                            buffer:   buf,
-                            path:     file.path,
+                            path:     filepath,
                             index:    file.index
                         });
                     }
+                ], callback);
 
-                    if (filesHandled == filesCount) {
-                        _toFlickr(files, onLoad);
-                    }
+            }, function (err, files) {
+                /** Upload to flickr and process result */
+                _toFlickr(files, function (err, files) {
+                    var sort = 0;
+                    files.forEach(function (file) {
+                        if (file.sizes) {
+                            var doc = {
+                                type:       'games',
+                                postId:     req.params.postId,
+                                thumb:      file.sizes.thumb,
+                                main:       file.sizes.main,
+                                title:      file.title,
+                                author:     req.query.user,
+                                sort:       photosCount + sort++,
+                                tournament: req.query.tournament
+                            };
+
+                            PhotosModel.create(doc);
+                        }
+                    });
+
+                    files.forEach(function (file) {
+                        result[file.index] = !!file.sizes;
+
+                        if (file.path) {
+                            fs.unlinkSync(file.path);
+                        }
+                    });
+
+                    res.json(result);
                 });
             });
+
         });
 
         function prepareImage(file, cb) {
@@ -91,18 +121,17 @@ var api = {
             img.size({bufferStream: true}, function (err, size) {
                 if (err || !size || !size.width || !size.height) {
                     console.warn('error getting size', file.name);
-                    cb(err);
+                    return cb(null, false);
                 }
-                console.log('Got image size. ' + file.name);
 
-                var w, h;
+                var w = '', h = '';
 
                 if (size.width > size.height) {
                     w = size.width > 1024 ? 1024 : size.width;
-                    h = null;
+                    h = '';
                 } else if (size.width < size.height) {
                     h = size.height > 800 ? 800 : size.height;
-                    w = null;
+                    w = '';
                 } else if (size.width > 1024) {
                     w = h = 1024;
                 } else {
@@ -115,7 +144,7 @@ var api = {
 
                 img.write(file.path, function (err) {
                     if (err) {
-                        return cb(err);
+                        return cb(null, false);
                     }
 
                     console.log('Processed image. ' + file.name);
@@ -123,38 +152,6 @@ var api = {
                 });
             });
         }
-
-        function onLoad(err, upRes) {
-            filesSaved++;
-
-            result[upRes.index] = !err;
-
-            if (err) {
-                console.log('Error loading to flickr', err);
-            } else {
-                var doc = {
-                    type:       'games',
-                    postId:     req.params.postId,
-                    thumb:      upRes.sizes.thumb,
-                    main:       upRes.sizes.main,
-                    title:      upRes.title,
-                    author:     req.query.user,
-                    sort:       photosCount + upRes.index + 1,
-                    tournament: req.query.tournament
-                };
-
-                if (result[upRes.index]) {
-                    PhotosModel.create(doc);
-                }
-            }
-
-            fs.unlinkSync(upRes.path);
-
-            if (filesSaved == filesCount) {
-                res.json(result);
-            }
-        }
-
     },
 
     /**
@@ -216,62 +213,65 @@ var api = {
 
 var _toFlickr = function (files, cb) {
     Flickr.authenticate(flickrOptions, function (err, flickr) {
-            console.log('flickr authed');
+        console.log('flickr authed');
 
-            var photos = files.map(function (file) {
-                return {title: file.filename, photo: file.buffer, path: file.path, index: file.index};
-            });
+        var getSize = function (sizes, label) {
+            var image = _.findWhere(sizes, {label: label});
 
-            var photosCount = photos.length,
-                uploaded    = 0;
+            if (!image) {
+                return undefined;
+            }
 
-            var getSize = function (sizes, label) {
-                var image = _.findWhere(sizes, {label: label});
+            return {
+                w:   image.width,
+                h:   image.height,
+                src: image.source
+            }
+        };
 
-                if (!image) {
-                    return undefined;
-                }
+        var photos = files.map(function (file) {
+            return {title: file.filename, photo: file.path, path: file.path, index: file.index};
+        });
 
-                return {
-                    w:   image.width,
-                    h:   image.height,
-                    src: image.source
-                }
+        var photosCount = photos.length,
+            uploaded    = 0;
+
+
+        async.map(photos, function (photo, cb) {
+            if (!photo.path) {
+                return cb(null, {index: photo.index});
+            }
+
+            var options = {
+                photo:       photo,
+                permissions: 'write'
             };
+            Flickr.upload(options, flickrOptions, function (err, ids) {
+                if (err) {
+                    console.warn('Error uploading photos.', err);
+                    return cb(null, {path: photo.path, index: photo.index});
+                }
 
-            photos.forEach(function (photo) {
-                var options = {
-                    photo:       photo,
-                    permissions: 'write'
-                };
+                console.log('Uploaded ' + ++uploaded + ' photos of ' + photosCount, ids);
 
-                Flickr.upload(options, flickrOptions, function (err, ids) {
-                    if (err) {
-                        console.warn('Error uploading photos.', err);
-                        return cb(err, {path: photo.path, index: photo.index});
-                    }
-                    uploaded += 1;
-                    console.log('Uploaded ' + uploaded + ' photos of ' + photosCount, ids);
+                ids.forEach(function (id) {
+                    flickr.photos.getSizes({photo_id: id}, function (err, res) {
+                        if (err) {
+                            return cb(null, {path: photo.path, index: photo.index});
+                        }
+                        var sizes = res.sizes.size;
 
-                    ids.forEach(function (id) {
-                        flickr.photos.getSizes({photo_id: id}, function (err, res) {
-                            if (err) {
-                                return cb(err, {path: photo.path, index: photo.index});
-                            }
-                            var sizes = res.sizes.size;
+                        var set = {
+                            thumb: getSize(sizes, 'Small'),
+                            main:  getSize(sizes, 'Original')
+                        };
 
-                            var set = {
-                                thumb: getSize(sizes, 'Small'),
-                                main:  getSize(sizes, 'Original')
-                            };
-
-                            cb(null, {path: photo.path, sizes: set, title: photo.title, index: photo.index});
-                        });
+                        cb(null, {path: photo.path, sizes: set, title: photo.title, index: photo.index});
                     });
                 });
             });
-        }
-    );
+        }, cb);
+    });
 };
 
 module.exports = api;

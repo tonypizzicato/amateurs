@@ -937,7 +937,11 @@ ul, ol {
 .panel_type_photo img {
     width:  100%;
     height: 100%;
-    //    border: 2px solid #2c3e50;
+}
+
+.panel_type_photo-preview img {
+    width:  auto;
+    height: 100%;
 }
 
 .panel_type_photo .row {
@@ -996,6 +1000,10 @@ ul, ol {
 
 .photo__item {
     box-sizing: content-box;
+}
+
+.pswp-gallery .photo__item {
+    opacity: 0;
 }
 
 /**

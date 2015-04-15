@@ -78,7 +78,7 @@ var helpers = {
             console.error('No partial name given.');
         }
         values = Array.prototype.slice.call(arguments, 1);
-        opts = values.pop();
+        opts   = values.pop();
         while (!done) {
             value = values.pop();
             if (value) {
@@ -255,12 +255,31 @@ var helpers = {
         }
 
         return name;
+    },
+
+    previewHeight: function (photos, index, width, def) {
+        var padding = (photos.length - 1) * 5 * 2;
+
+        var sum = photos.reduce(function (sum, item) {
+            var image = item.thumb ? item.thumb : item.main,
+                ratio;
+            if (image.w && image.h) {
+                ratio = image.w / image.h;
+            } else {
+                ratio = def;
+            }
+
+            console.log(sum);
+
+            return sum + ratio;
+        }, 0);
+        return (width - padding) / sum;
     }
 };
 
 var dateFn = function (date, format, tz) {
 
-    if(!tz) {
+    if (!tz) {
         return moment(date).locale('ru').format(format);
     } else {
         var zone = 'Europe/Moscow';
