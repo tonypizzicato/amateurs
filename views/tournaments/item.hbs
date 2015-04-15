@@ -176,14 +176,13 @@
         {{#if photos}}
             <div class="row clearfix s_mb_20">
                 <div class="col-md-12 column">
-                    <div class="panel panel_type_photo s_m_0">
+                    <div class="panel panel_type_photo panel_type_photo-preview s_m_0">
                         <div class="panel__header">
                             <h4 class="s_m_0"><i class="fa fa-camera-retro s_mr_5"></i> Последние фотоотчеты</h4>
                         </div>
                         {{#each photos}}
                             <div class="panel__body">
                                 {{> tournament_photos photos=photos game=game league=../globals.league tournament=../globals.tournament}}
-
                             </div>
                         {{/each}}
 
