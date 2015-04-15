@@ -16,6 +16,7 @@ require.config
         'photoswipe':          '../vendor/photoswipe/dist/photoswipe'
         'photoswipe.ui':       '../vendor/photoswipe/dist/photoswipe-ui-default'
         'masonry':             '../vendor/masonry/dist/masonry.pkgd'
+        'imagesLoaded':        '../vendor/imagesloaded/imagesloaded.pkgd'
 
     shim:
         'underscore':

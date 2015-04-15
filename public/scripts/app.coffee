@@ -1,4 +1,15 @@
-define ['marionette', 'stepform', 'accordion', 'masonry', 'bootstrap.dropdown', 'bootstrap.tab', 'owl', 'news', 'gallery'], (Marionette, StepForm, Accordion, Masonry) ->
+define [
+    'marionette',
+    'stepform',
+    'accordion',
+    'imagesLoaded',
+    'masonry',
+    'bootstrap.dropdown',
+    'bootstrap.tab',
+    'owl',
+    'news',
+    'gallery'
+], (Marionette, StepForm, Accordion, imagesLoaded, Masonry) ->
     App = new Marionette.Application()
 
     App.on 'start', ()->
@@ -10,38 +21,41 @@ define ['marionette', 'stepform', 'accordion', 'masonry', 'bootstrap.dropdown', 
                 extraHeight: 500
 
         $('a[data-toggle="tab"]').on 'shown.bs.tab', (e) ->
-          control = $(e.target)
+            control = $(e.target)
 
-          unless control.data 'lazy'
-            if history.pushState
-              history.pushState(null, null, '#' + control.attr('href').substr(1))
+            unless control.data 'lazy'
+                if history.pushState
+                    history.pushState(null, null, '#' + control.attr('href').substr(1))
+                else
+                    location.hash = '#' + control.attr('href').substr(1)
             else
-              location.hash = '#' + control.attr('href').substr(1)
-          else
-            unless control.data 'ready'
-              $.ajax
-                url: '/lazy/' + control.data('league') + '/' + control.data('route') + '/' + control.data('name')
-                success: (data)->
-                  $(control.attr('href')).find('.panel__body').fadeOut(400, ->
-                      $(@).html data
-                      $(@).fadeIn 500
-                  )
-                  control.data 'ready', true
-                error: ->
-                  $(control.attr('href')).find('.panel__body').html 'error'
+                unless control.data 'ready'
+                    $.ajax
+                        url: '/lazy/' + control.data('league') + '/' + control.data('route') + '/' + control.data('name')
+                        success: (data)->
+                            $(control.attr('href')).find('.panel__body').fadeOut(400, ->
+                                $(@).html data
+                                $(@).fadeIn 500
+                            )
+                            control.data 'ready', true
+                        error: ->
+                            $(control.attr('href')).find('.panel__body').html 'error'
 
-          msnr = $(control.attr('href')).find('.panel__body .js-masonry-js')
-          if msnr.length and !msnr.data('init')
-            setTimeout ->
-              new Masonry msnr.get(0),
-                itemSelector: ".js-masonry-item"
-                isAnimated: "true",
-              300
-            msnr.data 'init', true
+            msnr = $(control.attr('href')).find('.panel__body .js-masonry-js')
+            if msnr.length and !msnr.data('init')
+                imagesLoaded msnr, ->
+                    new Masonry msnr.get(0),
+                        itemSelector: ".js-masonry-item"
+                        isAnimated: "true",
+
+                msnr.imagesLoaded().progress (imgLoad, image)->
+                    item = $(image.img).parents '.js-masonry-item'
+                    item.addClass('animated')
+                msnr.data 'init', true
 
 
         if location.hash != ''
-          $('a[href="' + location.hash + '"]').tab('show')
+            $('a[href="' + location.hash + '"]').tab('show')
 
 
         $('.js-country-link').click (e)->
@@ -53,16 +67,16 @@ define ['marionette', 'stepform', 'accordion', 'masonry', 'bootstrap.dropdown', 
             $(@).parent().toggleClass 'country_active_yes'
 
         $('.owl-carousel').each (i, item)->
-          console.log item
-          $(item).owlCarousel
-            navigation : true
-            pagination : $(item).data('pagination')
-            slideSpeed : 300
-            paginationSpeed : 400
-            items: $(item).data('items'),
-            singleItem: $(item).data('items') == 1
-            navigationText: [$(item).data('prev'), $(item).data('next')]
-            scrollPerPage: true
+            console.log item
+            $(item).owlCarousel
+                navigation: true
+                pagination: $(item).data('pagination')
+                slideSpeed: 300
+                paginationSpeed: 400
+                items: $(item).data('items'),
+                singleItem: $(item).data('items') == 1
+                navigationText: [$(item).data('prev'), $(item).data('next')]
+                scrollPerPage: true
 
         $('.js-masonry-item').removeClass('masonry-item__hidden_yes')
 
@@ -81,7 +95,7 @@ define ['marionette', 'stepform', 'accordion', 'masonry', 'bootstrap.dropdown', 
                     , 3000
 
         $('.js-accordion').each (i, el) ->
-          new Accordion el
+            new Accordion el
 
         $.fn.serializeObject = ->
             o = {}
@@ -89,7 +103,7 @@ define ['marionette', 'stepform', 'accordion', 'masonry', 'bootstrap.dropdown', 
             $.each a, ->
                 if o[@name] != undefined
                     if !o[@name].push
-                        o[@name] = [ o[@name] ]
+                        o[@name] = [o[@name]]
                     o[@name].push @value or ''
                 else
                     o[@name] = @value or ''

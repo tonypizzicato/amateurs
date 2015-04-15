@@ -998,6 +998,10 @@ ul, ol {
     box-sizing: content-box;
 }
 
+.pswp-gallery .photo__item {
+    opacity: 0;
+}
+
 /**
  * Federations
  */

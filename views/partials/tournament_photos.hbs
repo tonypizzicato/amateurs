@@ -30,15 +30,15 @@
             <div class="pswp-gallery">
                 {{~#each photos~}}
                     {{~#if main.src~}}
-                        <a class="photo__item column item s_mb_10" href="{{main.src}}" data-size="{{main.w}}x{{main.h}}"
+                        <a class="photo__item column item s_mb_10 fadeIn animated" href="{{main.src}}" data-size="{{main.w}}x{{main.h}}"
                            {{#if author}}data-author="{{author}}"{{/if}}
                            class="demo-gallery__img--main s_display_inline-block"
-                           style="display: inline-block; width: 138px;"
+                           style="display: inline-block; height: 138px;"
                                 >
                             {{#if thumb.src}}
-                                <img src="{{thumb.src}}" alt=""/>
+                                <img src="{{thumb.src}}" height="138" alt=""/>
                             {{else}}
-                                <img src="{{main.src}}" alt=""/>
+                                <img src="{{main.src}}" height="138" alt=""/>
                             {{/if}}
                             <figure class="s_display_none">{{../game.game.teams.[0].name}} v {{../game.game.teams.[1].name}}</figure>
                         </a>
