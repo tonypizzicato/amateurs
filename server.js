@@ -1,18 +1,18 @@
-var express = require('express');
-var session = require('express-session');
-var path = require('path');
-var fs = require('fs');
-var hbs = require('hbs');
+var express  = require('express');
+var session  = require('express-session');
+var path     = require('path');
+var fs       = require('fs');
+var hbs      = require('hbs');
 var mongoose = require('mongoose');
 
 var passport = require('passport');
 
-var bodyParser = require('body-parser');
-var busboy = require('connect-busboy');
+var bodyParser   = require('body-parser');
+var busboy       = require('connect-busboy');
 var cookieParser = require('cookie-parser');
-var favicon = require('serve-favicon');
+var favicon      = require('serve-favicon');
 
-var morgan = require('morgan');
+var morgan  = require('morgan');
 var helpers = require('./app/hbs-helpers');
 
 var routes = require('./app/routes');
@@ -21,8 +21,8 @@ var app = express();
 
 var SessionMongoStore = require('connect-mongo')(session);
 
-var LeagueModel = require('./models/league');
-var CountryModel = require('./models/country');
+var LeagueModel     = require('./models/league');
+var CountryModel    = require('./models/country');
 var TournamentModel = require('./models/tournament');
 
 // Configure server
@@ -69,7 +69,7 @@ var clientDir, viewsDir;
  */
 if (app.get('env') === 'development') {
     clientDir = '/public';
-    viewsDir = '/views';
+    viewsDir  = '/views';
 
     app.use(express.static(path.join(__dirname, '.tmp')));
     app.use(express.static(path.join(__dirname, 'public')));
@@ -89,7 +89,7 @@ if (app.get('env') === 'development') {
  */
 if (app.get('env') === 'production') {
     clientDir = '/dist';
-    viewsDir = '/dist/views';
+    viewsDir  = '/dist/views';
 
     app.use(express.static(path.join(__dirname, 'dist')));
 
@@ -143,15 +143,15 @@ app.get('*', function (req, res, next) {
 
     res.locals.globals.hasOrder = !!req.session.order;
 
-    var query = {};
+    var query = {show: true};
     if (typeof req.params[0] == 'string') {
         var param = req.params[0].slice(1);
         var match = param.match(/^(moscow|spb)/);
 
         if (match && match.length >= 1) {
-            query = {slug: match[1]};
+            query.slug = match[1];
         } else {
-            query = {slug: req.session.league ? req.session.league.slug : 'moscow'};
+            query.slug = req.session.league ? req.session.league.slug : 'moscow';
         }
     }
 
@@ -160,14 +160,34 @@ app.get('*', function (req, res, next) {
         if (err) {
             return next(err);
         }
+
+        var populateTournaments = {path: 'countries.tournaments', model: 'Tournament', match: {show: true}, options: {sort: {'sort': 1}}};
+
         if (!doc) {
-            res.status(404);
-            return next(null);
+
+            var populateCountries = {path: 'countries', match: {show: true}, options: {sort: {'sort': 1}}};
+
+            LeagueModel.find({show: true}).sort({sort: 1})
+                .populate(populateCountries)
+                .lean()
+                .exec(function (err, leagues) {
+                    res.locals.globals.leagues = leagues;
+                    if (leagues.length == 1) {
+                        res.locals.globals.league = leagues[0];
+                    }
+
+                    LeagueModel.populate(leagues, populateTournaments, function (err, leagues) {
+                        res.locals.globals.leagues = leagues;
+
+                        res.status(404).render('404');
+                    });
+                });
+
+            return;
         }
 
-        populateOptions = {path: 'countries.tournaments', model: 'Tournament', match: {show: true}, options: {sort: {'sort': 1}}};
-        LeagueModel.populate(doc, populateOptions, function (err, doc) {
-            req.session.league = doc;
+        LeagueModel.populate(doc, populateTournaments, function (err, doc) {
+            req.session.league        = doc;
             res.locals.globals.league = doc;
 
             next();
