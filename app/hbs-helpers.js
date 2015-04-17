@@ -271,7 +271,8 @@ var helpers = {
 
             return sum + ratio;
         }, 0);
-        return (width - padding) / sum;
+
+        return Math.floor((width - padding) / sum);
     }
 };
 
