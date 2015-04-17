@@ -170,6 +170,9 @@
                                                     {{#eq type 'RED_A'}}
                                                         <i class="icon_type_event icon-red"></i>
                                                     {{/eq}}
+                                                    {{#eq type 'COMMENT'}}
+                                                        <i class="icon_type_event fa fa-comments-o text_color_orange"></i>
+                                                    {{/eq}}
                                                     {{#eq type 'pen'}}
                                                         <i class="icon_type_event icon-penalty"></i>
                                                     {{/eq}}
@@ -276,7 +279,7 @@
                                                                 {{else}}
                                                                     <img src="{{main.src}}" alt=""/>
                                                                 {{/if}}
-                                                                <figure class="s_display_none">{{../game.teams.[0].name}} v {{../game.teams.[1].name}}</figure>
+                                                                <figure class="s_display_none">{{../../game.teams.[0].name}} v {{../../game.teams.[1].name}}</figure>
                                                             </a>
                                                         {{~/if~}}
                                                     {{~/each~}}

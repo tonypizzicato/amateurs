@@ -30,17 +30,19 @@ module.exports = {
         /* League */
         var league = new Promise(function (resolve, reject) {
             var populateOptions = {path: 'countries', match: {show: true}, options: {sort: {'sort': 1}}};
-            LeagueModel.findOne({slug: req.params.league}).populate(populateOptions).lean().exec(function (err, doc) {
+            LeagueModel.findOne({slug: req.params.league}).populate(populateOptions).lean().exec(function (err, league) {
                 if (err) {
                     return next(err);
                 }
-                if (!doc) {
+                if (!league) {
                     res.status(404);
                     return next(null);
                 }
 
-                TournamentModel.find({leagueId: doc._id, show: true}).sort({sort: 1}).lean().exec(function (err, docs) {
-                    var ids = docs.map(function (item) {
+                TournamentModel.find({leagueId: league._id, show: true}).sort({sort: 1}).lean().exec(function (err, tournaments) {
+                    var startTime = new Date().getTime();
+
+                    var ids = tournaments.map(function (item) {
                         return item._id;
                     });
 
@@ -49,14 +51,24 @@ module.exports = {
                         query.push('tournamentId[]=' + item);
                     });
 
+                    log(remoteConfig.url + '/stats/table?' + query.join('&'));
+
                     client.get(remoteConfig.url + '/stats/table?' + query.join('&'), function (tables) {
-                        var format = 'DD/MM/YYYY';
+
+                        var endTime = new Date().getTime();
+                        log('received Tables', (endTime - startTime) + "ms.", tables.length);
+
                         tables = JSON.parse(tables);
+
+                        if(!tables.length) {
+                            resolve(league);
+                        }
 
                         tables = _.groupBy(tables, function (item) {
                             return item.tournamentId;
                         });
 
+                        var format = 'DD/MM/YYYY';
                         for (var id in tables) {
                             if (tables[id].length > 1) {
                                 tables[id] = tables[id].sort(function (a, b) {
@@ -65,21 +77,25 @@ module.exports = {
                             }
                         }
 
-                        docs.map(function (item) {
+                        tournaments.map(function (item) {
                             item.table = tables[item.remoteId] ? tables[item.remoteId][0] : null;
-                            item.table.teams = item.table.teams.map(function (item) {
-                                item.form = item.form.slice(-5);
-                                return item;
-                            });
+                            if(!!item.table) {
+                                item.table.teams = item.table.teams.map(function (item) {
+                                    item.form = item.form.slice(-5);
+                                    return item;
+                                });
+                            }
                         });
 
-                        doc.countries.forEach(function (country) {
-                            country.tournaments = docs.filter(function (item) {
+                        league.countries.forEach(function (country) {
+                            country.tournaments = tournaments.filter(function (item) {
                                 return item.country.toString() == country._id.toString();
                             })
                         });
 
-                        resolve(doc);
+                        log('processed Tables', (endTime - startTime) + "ms.");
+
+                        resolve(league);
                     });
                 });
 
@@ -107,3 +123,10 @@ module.exports = {
 
     }
 };
+
+
+function log(log) {
+    var args = Array.prototype.slice.call(arguments, 0);
+    args     = Array.prototype.concat.call([moment().format('HH:mm:ss:SSS')], args);
+    return console.log.apply(null, args);
+}

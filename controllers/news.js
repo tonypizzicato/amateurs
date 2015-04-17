@@ -1,6 +1,7 @@
 "use strict";
 
 var _               = require('underscore'),
+    async           = require('async'),
     moment          = require('moment-timezone'),
     LeagueModel     = require('../models/league'),
     TournamentModel = require('../models/tournament'),
@@ -64,32 +65,20 @@ var controller = {
     },
 
     globals: function (req, res, next) {
-
+        var parallels = [];
         /* Leagues */
-        var leagues = new Promise(function (resolve, reject) {
+        parallels = parallels.concat(function (cb) {
             var populateOptions = {path: 'countries', match: {show: true}, options: {sort: {'sort': 1}}};
-            LeagueModel.find({show: true}).sort({sort: 1}).populate(populateOptions).exec(function (err, docs) {
-                if (err) {
-                    return reject(err);
-                }
-
-                resolve(docs);
-            });
+            LeagueModel.find({show: true}).sort({sort: 1}).populate(populateOptions).exec(cb);
         });
 
         /* Contacts */
-        var contacts = new Promise(function (resolve, reject) {
-            ContactModel.find({show: true, tournaments: []}).sort({sort: 1}).exec(function (err, docs) {
-                if (err) {
-                    reject(err);
-                }
-
-                resolve(docs);
-            });
+        parallels = parallels.concat(function (cb) {
+            ContactModel.find({show: true, tournaments: []}).sort({sort: 1}).exec(cb);
         });
 
-        Promise.all([leagues, contacts]).then(function (result) {
-            res.locals.globals.leagues = result[0];
+        async.parallel(parallels, function (err, result) {
+            res.locals.globals.leagues  = result[0];
             res.locals.globals.contacts = result[1];
 
             console.log('globals end');
@@ -99,29 +88,49 @@ var controller = {
 };
 
 var getNewsList = function (req, cb) {
-    if (req.params.name) {
-        TournamentModel.findOne({slug: req.params.name}).lean().exec(function (err, doc) {
-            if (err) {
-                return next();
-            }
+    var query  = {},
+        series = [];
 
-            findNews({country: doc.country}, cb);
+    /** Get league if defined in request */
+    if (req.params.league) {
+        series = series.concat(function (cb) {
+            LeagueModel.findOne({slug: req.params.league}).lean().exec(cb);
         });
-    } else if (req.params.league) {
-        LeagueModel.findOne({slug: req.params.league}).lean().exec(function (err, doc) {
-            if (err) {
-                return next();
-            }
-
-            findNews({leagueId: doc._id}, cb);
-        });
-    } else {
-        findNews({}, cb);
     }
+
+    /** Get tournament if defined in request */
+    if (req.params.name) {
+        series = series.concat(function (league, cb) {
+            var query = {slug: req.params.name};
+
+            if (typeof(league) === 'function') {
+                cb = league;
+            } else {
+                query.leagueId = league._id;
+            }
+
+            TournamentModel.findOne(query).lean().exec(cb);
+        });
+    }
+
+    async.waterfall(series, function (err, res) {
+        var query = {};
+
+        if (req.params.name) {
+            query.leagueId = res.leagueId;
+            query.country  = res.country;
+        } else if (req.params.league) {
+            query.leagueId = res._id;
+        }
+
+        console.log(query);
+
+        findNews(query, cb);
+    });
 
     function findNews(query, cb) {
         var populateOptions = {path: 'country'};
-        query.show = true;
+        query.show          = true;
 
         NewsModel.find(query).sort({dc: -1}).lean().populate(populateOptions).exec(function (err, docs) {
             cb(err, docs);
