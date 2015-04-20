@@ -47,9 +47,23 @@ module.exports = {
                     game.timeGoneDegrees = game.timeGoneDegrees < 360 ? game.timeGoneDegrees : 360;
 
 
-                    console.log(game.timeGone);
-                    console.log(game.timeGonePercent);
-                    console.log(game.timeGoneDegrees);
+                    if (game.stats && game.stats.length == 2) {
+                        game.stats.max = Math.max(Math.max.apply(null, _.values(game.stats[0])), Math.max.apply(null, _.values(game.stats[1])));
+
+                        if (game.stats.max > 0) {
+                            var setPercent = function (val) {
+                                return {
+                                    value:   val,
+                                    percent: val / game.stats.max * 100
+                                };
+                            };
+
+                            game.stats[0] = _.mapObject(game.stats[0], setPercent);
+                            game.stats[1] = _.mapObject(game.stats[1], setPercent);
+                        } else {
+                            delete game.stats;
+                        }
+                    }
 
                     if (game.events) {
                         game.events = game.events.sort(function (a, b) {

@@ -89,12 +89,30 @@
             {{#eq game.stats.length 2}}
                 <div class="row s_mb_40 game-stats">
                     {{#each game.stats.[0]}}
-                        <div class="col-md-12 s_mb_20">
-                            <div class="col-md-1 s_line-height_2 text_size_16">{{get ../game.stats.[0] @key}}</div>
-                            <div class="col-md-4 game-stats__bar game-stats__bar_home"></div>
-                            <div class="col-md-2 text_color_light text_transform_u text_align_c s_line-height_3">{{@key}}</div>
-                            <div class="col-md-4 game-stats__bar game-stats__bar_away"></div>
-                            <div class="col-md-1 s_line-height_2 text_size_16 text_align_r">{{get ../game.stats.[1] @key}}</div>
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="game-stats__bar game-stats__bar_home
+                                    {{#gt (get ../game.stats.[0] @key 'value') (get ../game.stats.[1] @key 'value')}}game-stats__bar_more{{/gt}}
+                                    {{#lt (get ../game.stats.[0] @key 'value') (get ../game.stats.[1] @key 'value')}}game-stats__bar_eq{{/lt}}
+                                    " style="width:{{get ../game.stats.[0] @key 'percent'}}%;">
+                                </div>
+                            </div>
+                            <div class="col-md-1 s_line-height_42 text_size_16 text_align_c">{{get ../game.stats.[0] @key 'value'}}</div>
+                            <div class="col-md-2 text_color_light text_transform_u text_align_c s_line-height_42">
+                                {{#eq @key 'opportunity'}}Моменты{{/eq}}
+                                {{#eq @key 'foul'}}Фолы{{/eq}}
+                                {{#eq @key 'corner'}}Угловые{{/eq}}
+                                {{#eq @key 'shotOnGoal'}}В створ{{/eq}}
+                                {{#eq @key 'shotMissed'}}Мимо{{/eq}}
+                            </div>
+                            <div class="col-md-1 s_line-height_42 text_size_16 text_align_c">{{get ../game.stats.[1] @key 'value'}}</div>
+                            <div class="col-md-4 s_pl_0">
+                                <div class="game-stats__bar game-stats__bar_away
+                                    {{#lt (get ../game.stats.[0] @key 'value') (get ../game.stats.[1] @key 'value')}}game-stats__bar_more{{/lt}}
+                                    {{#gt (get ../game.stats.[0] @key 'value') (get ../game.stats.[1] @key 'value')}}game-stats__bar_less{{/gt}}
+                                    " style="width:{{get ../game.stats.[1] @key 'percent'}}%;">
+                                </div>
+                            </div>
                         </div>
                     {{/each}}
                 </div>

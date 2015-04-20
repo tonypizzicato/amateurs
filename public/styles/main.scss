@@ -1343,18 +1343,26 @@ $size: 200px;
   position: relative;
 }
 
-.game-stats__bar:after {
+.game-stats__bar {
   content:       " ";
   display:       inline-block;
   height:        32px;
   width:         100px;
-  background:    #C63C3C;
+  background:    #F5B367;
   border-radius: 5px;
   position:      absolute;
   top:           5px;
 }
 
-.game-stats__bar_home:after {
+.game-stats__bar_more {
+  background: #2DA6E4;
+}
+
+.game-stats__bar_less {
+  background: #C63C3C;
+}
+
+.game-stats__bar_home {
   right: 0;
 }
 
@@ -1619,6 +1627,10 @@ $size: 200px;
 
 .s_line-height_3 {
   line-height: 3;
+}
+
+.s_line-height_42 {
+  line-height: 42px;
 }
 
 .text_transform_u {
