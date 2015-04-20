@@ -23,7 +23,7 @@
                                 </ul>
                             </div>
                             <div class="col-md-4 text_align_c">
-                                <div class="match__time s_mb_10{{#gt game.time 40}} gt-50{{/gt}}">
+                                <div class="match__time s_mb_10{{#gt game.timeGone 40}} gt-50{{/gt}}">
                                     <div class="ppc-progress">
                                         <div class="ppc-progress-fill"
                                              style="transform:  rotate({{game.timeGoneDegrees}}deg); -webkit-transform: rotate({{game.timeGoneDegrees}}deg);"></div>
@@ -84,6 +84,40 @@
                 </div>
             </div>
         </div>
+
+        {{#if game.stats}}
+            {{#eq game.stats.length 2}}
+                <div class="row s_mb_40 game-stats">
+                    {{#each game.stats.[0]}}
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="game-stats__bar game-stats__bar_home
+                                    {{#gt (get ../game.stats.[0] @key 'value') (get ../game.stats.[1] @key 'value')}}game-stats__bar_more{{/gt}}
+                                    {{#lt (get ../game.stats.[0] @key 'value') (get ../game.stats.[1] @key 'value')}}game-stats__bar_eq{{/lt}}
+                                    " style="width:{{get ../game.stats.[0] @key 'percent'}}%;">
+                                </div>
+                            </div>
+                            <div class="col-md-1 s_line-height_42 text_size_16 text_align_c">{{get ../game.stats.[0] @key 'value'}}</div>
+                            <div class="col-md-2 text_color_light text_transform_u text_align_c s_line-height_42">
+                                {{#eq @key 'opportunity'}}Моменты{{/eq}}
+                                {{#eq @key 'foul'}}Фолы{{/eq}}
+                                {{#eq @key 'corner'}}Угловые{{/eq}}
+                                {{#eq @key 'shotOnGoal'}}В створ{{/eq}}
+                                {{#eq @key 'shotMissed'}}Мимо{{/eq}}
+                            </div>
+                            <div class="col-md-1 s_line-height_42 text_size_16 text_align_c">{{get ../game.stats.[1] @key 'value'}}</div>
+                            <div class="col-md-4 s_pl_0">
+                                <div class="game-stats__bar game-stats__bar_away
+                                    {{#lt (get ../game.stats.[0] @key 'value') (get ../game.stats.[1] @key 'value')}}game-stats__bar_more{{/lt}}
+                                    {{#gt (get ../game.stats.[0] @key 'value') (get ../game.stats.[1] @key 'value')}}game-stats__bar_less{{/gt}}
+                                    " style="width:{{get ../game.stats.[1] @key 'percent'}}%;">
+                                </div>
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+            {{/eq}}
+        {{/if}}
 
         <div class="row s_mb_40">
             <div class="column col-md-12">
@@ -279,13 +313,14 @@
                                                                 {{else}}
                                                                     <img src="{{main.src}}" alt=""/>
                                                                 {{/if}}
-                                                                <figure class="s_display_none">{{../../game.teams.[0].name}} v {{../../game.teams.[1].name}}</figure>
+                                                                <figure class="s_display_none">{{../../game.teams.[0].name}}
+                                                                    v {{../../game.teams.[1].name}}</figure>
                                                             </a>
                                                         {{~/if~}}
                                                     {{~/each~}}
                                                 </div>
                                             </div>
-                                        {{~else~}}
+                                            {{~else~}}
                                             <p class="text_align_c s_mt_10">Фотообзора пока нет</p>
                                         {{~/if~}}
                                     </div>

@@ -194,6 +194,19 @@ var helpers = {
         return value + add;
     },
 
+    get: function (obj) {
+        var args = Array.prototype.slice.call(arguments, 1);
+        var key  = typeof args[args.length - 1] === 'object' ? args.slice(0, args.length - 1) : args;
+        if (key.length > 1) {
+            return helpers.get.apply(null, [obj[key[0]]].concat(key.slice(1)));
+        }
+        if (obj.hasOwnProperty(key)) {
+            return obj[key];
+        } else {
+            console.log('no value', obj, key);
+        }
+    },
+
     endsWith: function (str, suffix, options) {
         if (str.toLowerCase().indexOf(suffix.toLowerCase(), str.length - suffix.length) !== -1) {
             return options.fn(this);
