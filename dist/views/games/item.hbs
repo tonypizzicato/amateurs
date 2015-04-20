@@ -93,7 +93,7 @@
                             <div class="col-md-4">
                                 <div class="game-stats__bar game-stats__bar_home
                                     {{#gt (get ../game.stats.[0] @key 'value') (get ../game.stats.[1] @key 'value')}}game-stats__bar_more{{/gt}}
-                                    {{#lt (get ../game.stats.[0] @key 'value') (get ../game.stats.[1] @key 'value')}}game-stats__bar_eq{{/lt}}
+                                    {{#lt (get ../game.stats.[0] @key 'value') (get ../game.stats.[1] @key 'value')}}game-stats__bar_less{{/lt}}
                                     " style="width:{{get ../game.stats.[0] @key 'percent'}}%;">
                                 </div>
                             </div>
