@@ -194,6 +194,12 @@ var helpers = {
         return value + add;
     },
 
+    get: function (obj, key) {
+        if (obj.hasOwnProperty(key)) {
+            return obj[key];
+        }
+    },
+
     endsWith: function (str, suffix, options) {
         if (str.toLowerCase().indexOf(suffix.toLowerCase(), str.length - suffix.length) !== -1) {
             return options.fn(this);
