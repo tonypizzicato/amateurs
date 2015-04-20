@@ -422,8 +422,12 @@ module.exports = {
                     return next(null);
                 }
 
-                client.get(remoteConfig.url + '/stats/players_stats?tournamentId=' + tournament.remoteId, function (stats) {
-                    stats = JSON.parse(stats);
+                request.get({
+                    uri:  remoteConfig.url + '/stats/players_stats?tournamentId=' + tournament.remoteId,
+                    auth: remoteConfig.authOptions,
+                    gzip: true,
+                    json: true
+                }, function (err, response, stats) {
                     stats = stats.filter(function (item) {
                         return !!item.playerId;
                     });
@@ -449,9 +453,12 @@ module.exports = {
                     return next(null);
                 }
 
-                client.get(remoteConfig.url + '/games?tournamentId=' + tournament.remoteId, function (games) {
-                    games = JSON.parse(games);
-
+                request.get({
+                    uri:  remoteConfig.url + '/games?tournamentId=' + tournament.remoteId,
+                    auth: remoteConfig.authOptions,
+                    gzip: true,
+                    json: true
+                }, function (err, response, games) {
                     games = games.map(function (item) {
                         item.dateTime = item.date ? moment(item.date + ' ' + item.time, 'DD/MM/YYYY HH:mm') : null;
                         return item;
