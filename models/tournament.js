@@ -19,6 +19,7 @@ var TournamentSchema = new Schema({
     country:  {type: ObjectId, ref: 'Country'},
     settings: {type: Object, default: {}},
     contacts: [{type: ObjectId, ref: 'Contact', default: []}],
+    fields:   [{type: ObjectId, ref: 'Field', default: []}],
     vk:       {type: String}
 });
 
