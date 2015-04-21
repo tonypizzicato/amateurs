@@ -123,8 +123,6 @@ var getNewsList = function (req, cb) {
             query.leagueId = res._id;
         }
 
-        console.log(query);
-
         findNews(query, cb);
     });
 

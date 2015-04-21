@@ -58,16 +58,16 @@ define ['jquery', 'smartresize'], ($) ->
                 # open / close item
                 instance._toggleItem $item
                 false
-            $(window).bind 'smartresize.accordion', (event) ->
-                # reset orinal item values
-                instance._saveDimValues()
-                # reset the content's height of any item that is currently opened
-                instance.$el.find('.accordion__item_opened').each ->
-                    $this = $(this)
-                    $this.css 'height', $this.data('originalHeight') + $this.find('.js-accordion-content').outerHeight(true)
-                # scroll to current
-                if instance._isOpened()
-                    instance._scroll()
+#            $(window).bind 'smartresize.accordion', (event) ->
+#                # reset orinal item values
+#                instance._saveDimValues()
+#                # reset the content's height of any item that is currently opened
+#                instance.$el.find('.accordion__item_opened').each ->
+#                    $this = $(this)
+#                    $this.css 'height', $this.data('originalHeight') + $this.find('.js-accordion-content').outerHeight(true)
+#                # scroll to current
+#                if instance._isOpened()
+#                    instance._scroll()
 
         _isOpened: ->
             @$el.find('.accordion__item_opened').length > 0
@@ -82,7 +82,7 @@ define ['jquery', 'smartresize'], ($) ->
                 @current = $item.index()
                 $content.stop(true, true).fadeIn @options.speed
                 $item.addClass('accordion__item_opened').stop().animate({height: $item.data('originalHeight') + $content.outerHeight(true)}, @options.speed, @options.easing)
-                @_scroll(@)
+#                @_scroll(@)
 
         _scroll: (instance) ->
             instance = instance or this
