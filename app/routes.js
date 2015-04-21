@@ -22,6 +22,7 @@ var express          = require('express'),
     apiGames         = require('../controllers/api/games'),
     apiArticlesGames = require('../controllers/api/game-articles'),
     apiPhotos        = require('../controllers/api/photos'),
+    apiFields        = require('../controllers/api/fields'),
     apiContacts      = require('../controllers/api/contacts'),
     apiCategories    = require('../controllers/api/categories'),
     apiOrders        = require('../controllers/api/orders');
@@ -86,6 +87,17 @@ module.exports.initialize = function (app) {
     r.route('/game-articles/:id')
         .put(apiArticlesGames.save)
         .delete(apiArticlesGames.delete);
+
+    r.route('/game-articles/:type/:gameId')
+        .get(apiArticlesGames.byGame);
+
+    r.route('/fields')
+        .get(apiFields.list)
+        .post(apiFields.create);
+
+    r.route('/fields/:id')
+        .put(apiFields.save)
+        .delete(apiFields.delete);
 
     r.route('/contacts')
         .get(apiContacts.list)

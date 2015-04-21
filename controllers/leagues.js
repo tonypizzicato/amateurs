@@ -60,7 +60,7 @@ module.exports = {
 
                         tables = JSON.parse(tables);
 
-                        if(!tables.length) {
+                        if (!tables.length) {
                             resolve(league);
                         }
 
@@ -79,7 +79,7 @@ module.exports = {
 
                         tournaments.map(function (item) {
                             item.table = tables[item.remoteId] ? tables[item.remoteId][0] : null;
-                            if(!!item.table) {
+                            if (!!item.table) {
                                 item.table.teams = item.table.teams.map(function (item) {
                                     item.form = item.form.slice(-5);
                                     return item;
@@ -104,18 +104,20 @@ module.exports = {
 
         /* Contacts */
         var contacts = new Promise(function (resolve, reject) {
-            ContactModel.find({show: true, tournaments: []}).sort({sort: 1}).exec(function (err, docs) {
-                if (err) {
-                    reject(err);
-                }
+            LeagueModel.findOne({slug: req.params.league}).lean().exec(function (err, league) {
+                ContactModel.find({show: true, leagueId: league._id, tournaments: []}).sort({sort: 1}).exec(function (err, docs) {
+                    if (err) {
+                        reject(err);
+                    }
 
-                resolve(docs);
+                    resolve(docs);
+                });
             });
         });
 
         Promise.all([leagues, league, contacts]).then(function (result) {
-            res.locals.globals.leagues = result[0];
-            res.locals.globals.league = result[1];
+            res.locals.globals.leagues  = result[0];
+            res.locals.globals.league   = result[1];
             res.locals.globals.contacts = result[2];
 
             res.render('leagues/item', {league: result[1]});

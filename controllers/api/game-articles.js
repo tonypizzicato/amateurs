@@ -19,6 +19,39 @@ var api = {
     /**
      * Get game articles items list
      *
+     * /api/game-articles/:id GET call
+     */
+    item: function (req, res) {
+        console.log('/api/game-articles/:id GET handled');
+        ArticleModel.findOne(req.params.id).exec(function (err, article) {
+            if (err) {
+                res.status(500).json({error: err});
+            }
+
+            res.json(article);
+        });
+    },
+
+    /**
+     * Get game article item by type and game id
+     *
+     * /api/game-articles/:type/:gameId GET call
+     */
+    byGame: function (req, res) {
+        console.log('/api/game-articles/:type/:gameId GET handled');
+        console.log({gamesId: req.params.gameId, type: req.params.type});
+        ArticleModel.findOne({gameId: req.params.gameId, type: req.params.type}).exec(function (err, article) {
+            if (err) {
+                res.status(500).json({error: err});
+            }
+
+            res.json(article);
+        });
+    },
+
+    /**
+     * Get game articles items list
+     *
      * /api/game-articles GET call
      */
     list: function (req, res) {

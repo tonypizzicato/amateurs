@@ -37,6 +37,7 @@ define [
                                 $(@).html data
                                 $(@).fadeIn 500
                             )
+                            $(control.attr('href')).parents('.js-accordion-item').css({height: 'auto'})
                             control.data 'ready', true
                         error: ->
                             $(control.attr('href')).find('.panel__body').html 'error'

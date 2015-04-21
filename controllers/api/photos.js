@@ -8,21 +8,21 @@ var _           = require('underscore'),
     gm          = require('gm');
 
 var flickrOptions = {
-    api_key:             "ffd56ffb2631d75166e922ed7b5cc5b6",
-    secret:              "34c94bc92ac6cd39",
-    user_id:             "130112246@N08",
-    access_token:        "72157648906532524-e46b00c69350c43b",
-    access_token_secret: "4a0ee319266c77e2",
-    permissions:         'delete',
-    progress:            false
-
-    //api_key:             "01e97ba1bba4167dc7b41bc79bb54f6d",
-    //secret:              "89b0f108c26d209f",
-    //user_id:             "131060322@N08",
-    //access_token:        "72157649526764664-5e88e591f01c6691",
-    //access_token_secret: "622c61239e669b53",
+    //api_key:             "ffd56ffb2631d75166e922ed7b5cc5b6",
+    //secret:              "34c94bc92ac6cd39",
+    //user_id:             "130112246@N08",
+    //access_token:        "72157648906532524-e46b00c69350c43b",
+    //access_token_secret: "4a0ee319266c77e2",
     //permissions:         'delete',
     //progress:            false
+
+    api_key:             "01e97ba1bba4167dc7b41bc79bb54f6d",
+    secret:              "89b0f108c26d209f",
+    user_id:             "131060322@N08",
+    access_token:        "72157649526764664-5e88e591f01c6691",
+    access_token_secret: "622c61239e669b53",
+    permissions:         'delete',
+    progress:            false
 };
 
 var api = {

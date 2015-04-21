@@ -17,12 +17,7 @@ module.exports = {
         LeagueModel.findOne({slug: req.params.league}, function (err, doc) {
             TournamentModel.findOne({slug: req.params.name, leagueId: doc._id}, function (err, tournament) {
 
-                request.get({
-                    uri:  remoteConfig.url + '/games?tournamentId=' + tournament.remoteId,
-                    auth: remoteConfig.authOptions,
-                    gzip: true,
-                    json: true
-                }, function (err, response, games) {
+                remote(remoteConfig.url + '/games?tournamentId=' + tournament.remoteId, function (err, response, games) {
                     games = games.map(function (item) {
                         item.dateTime = item.date ? moment(item.date + ' ' + item.time, 'DD/MM/YYYY HH:mm') : null;
                         return item;
@@ -62,13 +57,7 @@ module.exports = {
     restComming: function (req, res, next) {
         LeagueModel.findOne({slug: req.params.league}, function (err, doc) {
             TournamentModel.findOne({slug: req.params.name, leagueId: doc._id}, function (err, tournament) {
-
-                request.get({
-                    uri:  remoteConfig.url + '/games?tournamentId=' + tournament.remoteId,
-                    auth: remoteConfig.authOptions,
-                    gzip: true,
-                    json: true
-                }, function (err, response, games) {
+                remote(remoteConfig.url + '/games?tournamentId=' + tournament.remoteId, function (err, response, games) {
                     games = games.map(function (item) {
                         item.dateTime = item.date ? moment(item.date + ' ' + item.time, 'DD/MM/YYYY HH:mm') : null;
                         return item;
@@ -142,12 +131,7 @@ module.exports = {
                     return next(null);
                 }
 
-                request.get({
-                    uri:  remoteConfig.url + '/stats/players_stats?tournamentId=' + tournament.remoteId,
-                    auth: remoteConfig.authOptions,
-                    gzip: true,
-                    json: true
-                }, function (err, response, stats) {
+                remote(remoteConfig.url + '/stats/players_stats?tournamentId=' + tournament.remoteId, function (err, response, stats) {
                     stats = stats.filter(function (item) {
                         return !!item.playerId;
                     });
@@ -182,12 +166,7 @@ module.exports = {
                 }
 
                 var stats = new Promise(function (resolve, reject) {
-                    request.get({
-                        uri:  remoteConfig.url + '/stats/players_stats?tournamentId=' + tournament.remoteId,
-                        auth: remoteConfig.authOptions,
-                        gzip: true,
-                        json: true
-                    }, function (err, response, stats) {
+                    remote(remoteConfig.url + '/stats/players_stats?tournamentId=' + tournament.remoteId, function (err, response, stats) {
                         var stat = {
                             goals:   [],
                             assists: []
@@ -221,15 +200,11 @@ module.exports = {
                             return resolve(null);
                         }
 
-                        request.get({
-                            uri:  remoteConfig.url + '/games/' + article.gameId,
-                            auth: remoteConfig.authOptions,
-                            gzip: true,
-                            json: true
-                        }, function (err, response, game) {
+                        remote(remoteConfig.url + '/games/' + article.gameId, function (err, response, game) {
                             article.game = game;
 
-                            article.game.dateTime = article.game.date ? moment(article.game.date + ' ' + article.game.time, 'DD/MM/YYYY HH:mm') : null;
+                            article.game.dateTime = article.game.date ? moment(article.game.date + ' ' + article.game.time,
+                                'DD/MM/YYYY HH:mm') : null;
 
                             resolve(article);
                         });
@@ -252,19 +227,12 @@ module.exports = {
                         });
 
 
-                        request.get({
-                            uri:  remoteConfig.url + '/games?' + games.join('&'),
-                            auth: remoteConfig.authOptions,
-                            gzip: true,
-                            json: true
-                        }, function (err, response, games) {
+                        remote(remoteConfig.url + '/games?' + games.join('&'), function (err, response, games) {
                             var previews = prepareArticles('preview', games, docs.slice());
                             var reviews  = prepareArticles('review', games, docs.slice());
 
                             resolve({previews: previews, reviews: reviews});
                         });
-
-
                     })
                 });
 
@@ -292,6 +260,19 @@ module.exports = {
                             return resolve([]);
                         }
 
+                        docs = docs.sort(function (a, b) {
+                            var format = 'YYYY-MM-DD';
+                            var dateA  = moment(a.dc).format(format);
+                            var dateB  = moment(b.dc).format(format);
+                            if (dateB < dateA) {
+                                return -1
+                            } else if (dateA == dateB) {
+                                return a.sort < b.sort ? -1 : 1;
+                            } else {
+                                return 1;
+                            }
+                        });
+
                         docs = _.groupBy(docs, function (item) {
                             return item.postId;
                         });
@@ -304,12 +285,7 @@ module.exports = {
                             docs[game] = docs[game];
                         }
 
-                        request.get({
-                            uri:  remoteConfig.url + '/games?' + ids.join('&'),
-                            auth: remoteConfig.authOptions,
-                            gzip: true,
-                            json: true
-                        }, function (err, response, games) {
+                        remote(remoteConfig.url + '/games?' + ids.join('&'), function (err, response, games) {
                             var res = [];
 
                             games.forEach(function (item) {
@@ -422,12 +398,7 @@ module.exports = {
                     return next(null);
                 }
 
-                request.get({
-                    uri:  remoteConfig.url + '/stats/players_stats?tournamentId=' + tournament.remoteId,
-                    auth: remoteConfig.authOptions,
-                    gzip: true,
-                    json: true
-                }, function (err, response, stats) {
+                remote(remoteConfig.url + '/stats/players_stats?tournamentId=' + tournament.remoteId, function (err, response, stats) {
                     stats = stats.filter(function (item) {
                         return !!item.playerId;
                     });
@@ -453,12 +424,7 @@ module.exports = {
                     return next(null);
                 }
 
-                request.get({
-                    uri:  remoteConfig.url + '/games?tournamentId=' + tournament.remoteId,
-                    auth: remoteConfig.authOptions,
-                    gzip: true,
-                    json: true
-                }, function (err, response, games) {
+                remote(remoteConfig.url + '/games?tournamentId=' + tournament.remoteId, function (err, response, games) {
                     games = games.map(function (item) {
                         item.dateTime = item.date ? moment(item.date + ' ' + item.time, 'DD/MM/YYYY HH:mm') : null;
                         return item;
@@ -537,13 +503,7 @@ module.exports = {
             /* Table */
             parallels = parallels.concat(function (cb) {
                 var startTime = new Date().getTime();
-
-                request.get({
-                    uri:  remoteConfig.url + '/stats/table?tournamentId=' + tournament.remoteId,
-                    auth: remoteConfig.authOptions,
-                    gzip: true,
-                    json: true
-                }, function (err, response, table) {
+                remote(remoteConfig.url + '/stats/table?tournamentId=' + tournament.remoteId, function (err, response, table) {
                     var endTime = new Date().getTime();
                     log('received Table', (endTime - startTime) + "ms.", response.body.length);
 
@@ -556,6 +516,17 @@ module.exports = {
                     log('processed Table', (endTime - startTime) + "ms.");
 
                     cb(null, table);
+                }).on('response', function (response) {
+                    // unmodified http.IncomingMessage object
+                    var length = 0;
+                    response.on('data', function (data) {
+                        // compressed data as it is received
+                        length += data.length;
+                    });
+                    response.on('end', function (data) {
+                        // compressed data as it is received
+                        log('received ' + length + ' bytes of compressed data')
+                    })
                 });
             });
 
@@ -563,12 +534,7 @@ module.exports = {
             parallels = parallels.concat(function (cb) {
                 var startTime = new Date().getTime();
 
-                request.get({
-                    uri:  remoteConfig.url + '/stats/players_stats?tournamentId=' + tournament.remoteId,
-                    auth: remoteConfig.authOptions,
-                    gzip: true,
-                    json: true
-                }, function (err, response, stats) {
+                remote(remoteConfig.url + '/stats/players_stats?tournamentId=' + tournament.remoteId, function (err, response, stats) {
                     var endTime = new Date().getTime();
                     log('received Stats', (endTime - startTime) + "ms.", response.body.length);
 
@@ -595,12 +561,7 @@ module.exports = {
             parallels = parallels.concat(function (cb) {
                 var startTime = new Date().getTime();
 
-                request.get({
-                    uri:  remoteConfig.url + '/games?tournamentId=' + tournament.remoteId,
-                    auth: remoteConfig.authOptions,
-                    gzip: true,
-                    json: true
-                }, function (err, response, games) {
+                remote(remoteConfig.url + '/games?tournamentId=' + tournament.remoteId, function (err, response, games) {
                     var endTime = new Date().getTime();
                     log('received Games', (endTime - startTime) + "ms.", response.body.length);
 
@@ -679,6 +640,14 @@ module.exports = {
     }
 };
 
+function remote(url, cb) {
+    return request.get({
+        uri:  url,
+        auth: remoteConfig.authOptions,
+        gzip: true,
+        json: true
+    }, cb);
+}
 
 function log(log) {
     var args = Array.prototype.slice.call(arguments, 0);
