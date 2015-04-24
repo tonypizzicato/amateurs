@@ -1,36 +1,37 @@
 <div class="row clearfix s_mb_20">
     <div class="col-md-8 column">
-        <h2 class="s_mb_20">Контакты лиги Amateur</h2>
-
-        <h3>Страница в разработке</h3>
-
         <div class="row clearfix">
             <div class="col-md-12 s_mb_40">
-                <div class="row clearfix">
-                    {{#each fields}}
-                        <div class="col-md-4 s_mb_20">
+                {{#if fields.length}}
+                    <div class="row clearfix">
+                        {{#each fields}}
+                            <div class="col-md-6 s_mb_20">
 
-                            <div class="panel panel_type_field s_m_0">
-                                <div class="panel__header">
-                                    <i class="fa fa-map-marker text_size_18 s_mr_10 s_valign_m"></i><span
-                                        class="text_color_orange s_valign_m">{{address}}</span>
-                                </div>
-                                <div class="panel__body">
-                                    <div class="field__route s_mb_20">
-                                        <i class="fa fa-bus s_mr_10"></i><span class="text_line-height_20">{{route}}</span>
+                                <div class="panel panel_type_field s_m_0">
+                                    <div class="panel__header">
+                                        <i class="fa fa-map-marker text_size_18 s_mr_10 s_valign_m"></i>
+                                        <span class="text_color_orange s_valign_m">{{title}}</span>
                                     </div>
-                                    <img class="field__map" src="{{coords}}">
+                                    <div class="panel__body">
+                                        <div class="field__photo" data-lat="{{geo.[0]}}" data-long="{{geo.[1]}}"></div>
+                                    </div>
+                                </div>
+                                <div class="link_type_full s_mb_10">
+                                    <span class="text_color_orange">Подробнее</span>
+                                    <span class="pull-right">
+                                        {{#if globals.tournament._id}}
+                                            <a href="/{{globals.league.slug}}/tournaments/{{globals.tournament.slug}}/fields/{{slug}}"><i class="fa fa-arrow-circle-o-right"></i></a>
+                                        {{else}}
+                                            <a href="/{{globals.league.slug}}/fields/{{slug}}"><i class="fa fa-arrow-circle-o-right"></i></a>
+                                        {{/if}}
+                                    </span>
                                 </div>
                             </div>
-                            <div class="link_type_full s_mb_10">
-                                <span class="text_color_orange">Перейти к карте</span>
-                                <span class="pull-right">
-                                    <a href="http://maps.yandex.ru" target="_blank"><i class="fa fa-arrow-circle-o-right"></i></a>
-                                </span>
-                            </div>
-                        </div>
-                    {{/each}}
-                </div>
+                        {{/each}}
+                    </div>
+                {{else}}
+                    <h3>Нет полей в лиге... Нам негде играть!!!</h3>
+                {{/if}}
             </div>
         </div>
     </div>

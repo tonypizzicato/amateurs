@@ -1,6 +1,7 @@
-var mongoose = require('mongoose'),
-    Schema   = mongoose.Schema,
-    ObjectId = Schema.ObjectId;
+var transliteration = require('transliteration'),
+    mongoose        = require('mongoose'),
+    Schema          = mongoose.Schema,
+    ObjectId        = Schema.ObjectId;
 
 var FieldSchema = new Schema({
     id:          ObjectId,
@@ -9,6 +10,7 @@ var FieldSchema = new Schema({
     show:        {type: Boolean, default: false},
     sort:        {type: Number, default: 999},
     title:       {type: String},
+    slug:        {type: String},
     howto:       {type: String},
     address:     {type: String},
     geo:         {type: [Number], index: '2d'},
@@ -19,11 +21,13 @@ var FieldSchema = new Schema({
 });
 
 FieldSchema.pre('save', function (next) {
+    console.log('pre save');
     var now = new Date();
     this.du = now;
     if (!this.dc) {
         this.dc = now;
     }
+    this.slug = transliteration.slugify(this.title);
     next();
 });
 
