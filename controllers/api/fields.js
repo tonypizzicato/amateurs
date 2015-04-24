@@ -1,6 +1,8 @@
 "use strict";
 
-var request         = require('request'),
+var fs              = require('fs.extra'),
+    request         = require('request'),
+    gm              = require('gm'),
     FieldModel      = require('../../models/field'),
     TournamentModel = require('../../models/tournament'),
     LeagueModel     = require('../../models/league'),
@@ -82,7 +84,10 @@ var api = {
     create: function (req, res, next) {
         console.log('/api/fields POST handled');
 
-        FieldModel.create(req.body, function (err, field) {
+        var field = req.body;
+        field.geo = [field.lat, field.long];
+
+        FieldModel.create(field, function (err, field) {
             if (err) {
                 res.status(500).json({error: err});
                 return;
@@ -104,7 +109,38 @@ var api = {
     save: function (req, res, next) {
         console.log('/api/fields/:id PUT handled');
 
-        FieldModel.update({_id: req.params.id}, {$set: req.body}, function (err, count) {
+        var field = req.body;
+        field.geo = [field.lat, field.long];
+
+        if (field.image) {
+            var reg    = /^data:image\/(.+);base64,/;
+            var format = field.image.match(reg);
+
+            if (format && format.length >= 2) {
+                format = format[1];
+
+                console.log('uploading image');
+
+                var base64Data   = field.image.replace(/^data:image\/(.+);base64,/, "");
+                var decodedImage = new Buffer(base64Data, 'base64');
+
+                var path = __dirname + '/../../public/uploads/';
+                fs.mkdirRecursiveSync(path);
+
+                gm(decodedImage).write(path + field._id + '.' + format, function (err) {
+                    if (!err) {
+                        console.log('done');
+                    }
+                    else console.log(err);
+                });
+            } else {
+                delete field.image;
+            }
+
+        }
+
+
+        FieldModel.update({_id: req.params.id}, {$set: field}, function (err, count) {
             if (err) {
                 return res.status(500).json({error: err});
             }
