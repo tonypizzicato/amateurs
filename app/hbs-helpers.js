@@ -198,12 +198,17 @@ var helpers = {
         var args = Array.prototype.slice.call(arguments, 1);
         var key  = typeof args[args.length - 1] === 'object' ? args.slice(0, args.length - 1) : args;
         if (key.length > 1) {
-            return helpers.get.apply(null, [obj[key[0]]].concat(key.slice(1)));
+            if (obj) {
+                return helpers.get.apply(null, [obj[key[0]]].concat(key.slice(1)));
+            } else {
+                return undefined;
+            }
         }
         if (obj.hasOwnProperty(key)) {
             return obj[key];
         } else {
             console.log('no value', obj, key);
+            return undefined;
         }
     },
 
@@ -226,6 +231,14 @@ var helpers = {
             return score[1] > score[0] ? 'w' : (score[0] == score[1] ? 'd' : 'l');
         }
 
+    },
+
+    isNumber: function (value, options) {
+        if (_.isNumber(value)) {
+            return options.fn(this);
+        }
+
+        return options.inverse(this);
     },
 
     notEmptyObject: function (obj, options) {

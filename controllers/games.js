@@ -46,16 +46,24 @@ module.exports = {
                     game.timeGonePercent = game.timeGonePercent < 100 ? game.timeGonePercent : 100;
                     game.timeGoneDegrees = game.timeGoneDegrees < 360 ? game.timeGoneDegrees : 360;
 
-
                     if (game.stats && game.stats.length == 2) {
-                        game.stats.max = Math.max(Math.max.apply(null, _.values(game.stats[0])), Math.max.apply(null, _.values(game.stats[1])));
+                        var filter     = function (value) {
+                            return _.isNumber(value);
+                        };
+                        var homeStats  = _.values(game.stats[0]).filter(filter);
+                        var awayStats  = _.values(game.stats[1]).filter(filter);
+                        game.stats.max = Math.max(Math.max.apply(null, homeStats), Math.max.apply(null, awayStats));
 
                         if (game.stats.max > 0) {
                             var setPercent = function (val) {
-                                return {
-                                    value:   val,
-                                    percent: val / game.stats.max * 100
-                                };
+                                if (_.isNumber(val)) {
+                                    return {
+                                        value:   val,
+                                        percent: val / game.stats.max * 100
+                                    };
+                                } else if (_.isObject(val)) {
+                                    return _.mapObject(val, setPercent);
+                                }
                             };
 
                             game.stats[0] = _.mapObject(game.stats[0], setPercent);
