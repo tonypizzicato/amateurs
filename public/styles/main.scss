@@ -1344,14 +1344,15 @@ $size: 200px;
 }
 
 .game-stats__bar {
-    content:       " ";
-    display:       inline-block;
-    height:        32px;
-    width:         100px;
-    background:    #F5B367;
-    border-radius: 5px;
-    position:      absolute;
-    top:           5px;
+  content:       " ";
+  display:       inline-block;
+  min-width:     4px;
+  height:        32px;
+  width:         100px;
+  background:    #F5B367;
+  border-radius: 5px;
+  position:      absolute;
+  top:           6px;
 }
 
 .game-stats__bar_more {
@@ -1364,6 +1365,38 @@ $size: 200px;
 
 .game-stats__bar_home {
     right: 0;
+}
+
+.game-stats__bar_home_first {
+  right: 0;
+}
+
+.game-stats__bar__value {
+  right:       0;
+  line-height: 30px;
+  color:       #252525;
+  text-align:  left;
+  margin:      0 5px;
+  font-size:   12px;
+}
+
+.game-stats__bar_home_first,
+.game-stats__bar_away_first {
+  background: #CD9658;
+}
+
+.game-stats__bar_home_first.game-stats__bar_less,
+.game-stats__bar_away_first.game-stats__bar_less {
+  background: #942828;
+}
+
+.game-stats__bar_home_first.game-stats__bar_more,
+.game-stats__bar_away_first.game-stats__bar_more {
+  background: #1F8EC7;
+}
+
+.game-stats__bar_away_first {
+  left: 0;
 }
 
 /**
