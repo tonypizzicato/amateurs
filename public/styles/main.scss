@@ -1447,7 +1447,7 @@ $size: 200px;
     height:        16px;
     width:         16px;
     border-radius: 50%;
-    background:    #00234a;
+    background:    #001B38;
     border:        2px solid #099cd8;
 }
 
@@ -1458,6 +1458,42 @@ $size: 200px;
 .field__metro_green:after {
     background:   #113C14;
     border-color: #2E7D32;
+}
+
+.field__metro_red {
+    border-bottom-color: #AB1E1E;
+}
+
+.field__metro_red:after {
+    background:   #620A0A;
+    border-color: #AB1E1E;
+}
+
+.field__metro_blue {
+    border-bottom-color: #09509E;
+}
+
+.field__metro_blue:after {
+    background:   #001B38;
+    border-color: #09509E;
+}
+
+.field__metro_grey {
+    border-bottom-color: #838383;
+}
+
+.field__metro_grey:after {
+    background:   #343434;
+    border-color: #838383;
+}
+
+.field__metro_orange {
+    border-bottom-color: #E48E2B;
+}
+
+.field__metro_orange:after {
+    background:   #7C5B34;
+    border-color: #E48E2B;
 }
 
 .field__tournaments .flag__wrapper {

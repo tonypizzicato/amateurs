@@ -9,11 +9,14 @@
                 <div class="text_align_c s_mb_20">
                     <i class="fa fa-map-marker text_size_24"></i><br>
                     <span class="text_color_orange s_valign_m">{{field.address}}</span>
+
                     <p>{{{field.howto}}}</p>
                 </div>
-                <div class="field__metro field__metro_{{field.metro.color}} text_align_c s_mb_20">
-                    <span class="s_display_inline-block text_size_16 s_mb_10">{{field.metro.name}}</span>
-                </div>
+                {{#if metro.name}}
+                    <div class="field__metro field__metro_{{field.metro.color}} text_align_c s_mb_20">
+                        <span class="s_display_inline-block text_size_16 s_mb_10">{{field.metro.name}}</span>
+                    </div>
+                {{/if}}
                 <div class="field__map s_mb_20 js-map" data-lat="{{field.geo.[0]}}" data-long="{{field.geo.[1]}}"></div>
 
                 <div class="field__tournaments text_align_c s_mb_20">

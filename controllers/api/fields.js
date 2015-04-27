@@ -179,7 +179,10 @@ var api = {
             }
         }
 
-        field.slug = transliteration.slugify(field.title);
+        if (field.title) {
+            field.slug = transliteration.slugify(field.title);
+        }
+
         FieldModel.update({_id: req.params.id}, {$set: field}, function (err, count) {
             if (err) {
                 return res.status(500).json({error: err});
