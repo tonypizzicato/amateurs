@@ -56,7 +56,11 @@
                                     {{#if game.dateTime}}{{ucfirst (dateTimeFull game.dateTime)}}{{else}}Время не определено{{/if}}
                                 </p>
                                 {{#if game.placeName}}
-                                    <p class="s_m_0 text_color_light">Стадион: {{game.placeName}}</p>
+                                    <p class="s_m_0 text_color_light">Стадион:
+                                        <a class="text_color_light" href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/fields/{{slugify game.placeName}}">
+                                            {{game.placeName}}
+                                        </a>
+                                    </p>
                                 {{/if}}
                                 {{#if game.refereeName}}
                                     <p class="text_color_light">Судья: {{game.refereeName}}</p>

@@ -8,9 +8,15 @@
                     {{#if dateTime}}
                         <div class="row">
                             <div class="col-md-12 text_size_12 text_color_light">
-                                <div class="s_display_inline-block text_light-on-hover">
-                                    {{#if dateTime}}<span>{{dateTimeShort dateTime}}</span>{{/if}}
-                                    {{#if placeName}}<span>{{placeName}}</span>{{/if}}
+                                <div class="s_display_inline-block">
+                                    {{#if dateTime}}
+                                        <span>{{dateTimeShort dateTime}}</span>
+                                    {{/if}}
+                                    {{#if placeName}}
+                                        <a class="text_color_light" href="/{{../../../../globals.league.slug}}/tournaments/{{../../../../globals.tournament.slug}}/fields/{{slugify placeName}}">
+                                            <span>{{placeName}}</span>
+                                        </a>
+                                    {{/if}}
                                 </div>
                             </div>
                         </div>

@@ -96,16 +96,23 @@
                             </div>
                             <div class="match-main_place">
                                 {{#unless central.game.score.ft}}
-                                <i class="fa fa-location-arrow"></i>
-                                <span class="match-main_field">{{central.game.placeName}}</span>
+                                    {{#if central.game.placeName}}
+                                        <i class="fa fa-location-arrow"></i>
+                                        <a class="text_color_light"
+                                           href="/{{globals.league.slug}}/tournaments/{{globals.tournament.slug}}/fields/{{slugify central.game.placeName}}">
+                                            <span class="match-main_field">{{central.game.placeName}}</span>
+                                        </a>
+                                    {{/if}}
                                 {{else}}
-
-                                    <a class="text_color_orange text_size_48" href="/{{globals.league.slug}}/tournaments/{{globals.tournament.slug}}/matches/{{central.game._id}}">
+                                    <a class="text_color_orange text_size_48"
+                                       href="/{{globals.league.slug}}/tournaments/{{globals.tournament.slug}}/matches/{{central.game._id}}">
                                         {{central.game.score.ft.[0]}}:{{central.game.score.ft.[1]}}
                                     </a>
                                 {{/unless}}
-                                <span class="match-main_time">{{date central.game.dateTime}}</span>
-                                <span class="match-main_time">{{central.game.time}}</span>
+                                {{#if central.game.dateTime}}
+                                    <span class="match-main_time">{{date central.game.dateTime}}</span>
+                                    <span class="match-main_time">{{central.game.time}}</span>
+                                {{/if}}
                             </div>
                         </div>
 

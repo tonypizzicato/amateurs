@@ -17,6 +17,7 @@ require.config
         'photoswipe.ui':       '../vendor/photoswipe/dist/photoswipe-ui-default'
         'masonry':             '../vendor/masonry/dist/masonry.pkgd'
         'imagesLoaded':        '../vendor/imagesloaded/imagesloaded.pkgd'
+        'async':               '../vendor/requirejs-plugins/src/async'
 
     shim:
         'underscore':

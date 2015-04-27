@@ -117,14 +117,12 @@ module.exports = {
                 return next(err);
             }
             if (!league) {
-                return res.send(404);
+                return res.sendStatus(404);
             }
 
             /* Teams list */
             var teams = new Promise(function (resolve, reject) {
                 remote(remoteConfig.url + '/teams?leagueId=' + league.remoteId, function (err, response, teams) {
-                    teams = JSON.parse(teams);
-
                     resolve(teams);
                 });
             });
@@ -133,8 +131,6 @@ module.exports = {
                 /* Table */
                 var table = new Promise(function (resolve, reject) {
                     remote(remoteConfig.url + '/stats/table?tournamentId=' + tournament.remoteId, function (err, response, table) {
-                        table = JSON.parse(table);
-
                         resolve(table);
                     });
                 });

@@ -4,12 +4,13 @@ define [
     'accordion',
     'imagesLoaded',
     'masonry',
+    'maps',
     'bootstrap.dropdown',
     'bootstrap.tab',
     'owl',
     'news',
     'gallery'
-], (Marionette, StepForm, Accordion, imagesLoaded, Masonry) ->
+], (Marionette, StepForm, Accordion, imagesLoaded, Masonry, maps) ->
     App = new Marionette.Application()
 
     App.on 'start', ()->
@@ -97,6 +98,14 @@ define [
 
         $('.js-accordion').each (i, el) ->
             new Accordion el
+
+        $('.js-image').each ->
+            $(@).attr 'src', $(@).data('src')
+            @.onload = ()=>
+                $(@).addClass 's_image__loaded'
+
+        if $('.js-map').length
+            maps.init()
 
         $.fn.serializeObject = ->
             o = {}

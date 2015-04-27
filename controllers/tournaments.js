@@ -490,6 +490,10 @@ module.exports = {
                 return next(err);
             }
 
+            if(!result) {
+                return res.status(404).render('404');
+            }
+
             var tournament = result,
                 parallels  = [];
 
