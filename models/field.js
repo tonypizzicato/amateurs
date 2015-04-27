@@ -13,6 +13,10 @@ var FieldSchema = new Schema({
     slug:        {type: String},
     howto:       {type: String},
     address:     {type: String},
+    metro:       {
+        name:  {type: String},
+        color: {type: String}
+    },
     geo:         {type: [Number], index: '2d'},
     image:       {type: String},
     remoteId:    {type: ObjectId},

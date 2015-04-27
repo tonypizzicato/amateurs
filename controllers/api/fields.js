@@ -105,7 +105,6 @@ var api = {
         console.log('/api/fields POST handled');
 
         var field = req.body;
-        field.geo = [field.lat, field.long];
 
         FieldModel.create(field, function (err, field) {
             if (err) {
@@ -130,7 +129,6 @@ var api = {
         console.log('/api/fields/:id PUT handled');
 
         var field = req.body;
-        field.geo = [field.lat, field.long];
 
         if (field.image) {
             var reg    = /^data:image\/(.+);base64,/;
