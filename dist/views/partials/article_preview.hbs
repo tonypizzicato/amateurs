@@ -22,7 +22,9 @@
                 {{/if}}
                 {{#if article.game.placeName}}
                     <p class="text_size_12 text_color_muted ">
-                        {{article.game.placeName}}
+                        <a class="text_color_light" href="/{{league.slug}}/tournaments/{{tournament.slug}}/fields/{{slugify article.game.placeName}}">
+                            {{article.game.placeName}}
+                        </a>
                     </p>
                 {{/if}}
             </div>

@@ -28,7 +28,11 @@
                     </td>
 
                     <td class="col-md-3 text_align_r text_size_12 text_color_light">
-                        {{#if placeName}}<span>{{placeName}}</span>{{/if}}
+                        {{#if placeName}}
+                            <a class="text_color_light" href="/{{../../../league.slug}}/tournaments/{{../../../tournament.slug}}/fields/{{slugify placeName}}">
+                                {{placeName}}
+                            </a>
+                        {{/if}}
                     </td>
                 </tr>
             {{/each}}

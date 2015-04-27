@@ -1,49 +1,42 @@
-<div class="row clearfix s_mb_20">
-    <div class="col-md-8 column">
-        <div class="row clearfix masonry-container">
-            {{#if fields.length}}
-                <div class="masonry js-masonry"
-                     data-masonry-options='{"itemSelector": ".js-masonry-item", "columnWidth": 390, "isAnimated": "true", "isFitWidth": "true" }'>
-                    {{#each fields}}
-                        <div class="masonry-item masonry-item__hidden_yes {{#gt ../fields.length 1}}col-md-6{{else}}col-md-12{{/gt}} s_mb_20 js-masonry-item">
-                            <div class="panel panel_type_field s_m_0">
-                                <div class="panel__header">
-                                    <i class="fa fa-location-arrow text_size_18 s_mr_10 s_valign_m"></i>
-                                    <span>{{title}}</span>
-                                </div>
-                                <div class="panel__body">
-                                    <div class="text_align_c s_mb_20">
-                                        <i class="fa fa-map-marker text_size_24"></i><br>
-                                        <span class="text_color_orange s_valign_m">{{address}}</span>
-                                    </div>
-                                    {{#if metro.name}}
-                                        <div class="field__metro field__metro_{{metro.color}} text_align_c s_mb_20">
-                                            <span class="s_display_inline-block s_mb_10">{{metro.name}}</span>
-                                        </div>
-                                    {{/if}}
-                                    <div class="field__photo s_mb_10">
-                                        <img src="{{#gt ../fields.length 1}}{{image.thumb.src}}{{else}}{{image.main.src}}{{/gt}}"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="link_type_full s_mb_10">
-                                <span class="text_color_orange">Подробнее</span>
-                                    <span class="pull-right">
-                                        {{#if ../../globals.tournament._id}}
-                                            <a href="/{{../../globals.league.slug}}/tournaments/{{../../globals.tournament.slug}}/fields/{{slug}}">
-                                                <i class="fa fa-arrow-circle-o-right"></i>
-                                            </a>
-                                        {{else}}
-                                            <a href="/{{../../globals.league.slug}}/fields/{{slug}}"><i class="fa fa-arrow-circle-o-right"></i></a>
-                                        {{/if}}
-                                    </span>
-                            </div>
+<div class="block_type_fields row clearfix s_mb_20">
+    <div class="column col-md-8">
+        <div class="panel panel_type_field s_m_0">
+            <div class="panel__header">
+                <i class="fa fa-location-arrow text_size_18 s_mr_10 s_valign_m"></i>
+                <span>{{field.title}}</span>
+            </div>
+            <div class="panel__body">
+                <div class="text_align_c s_mb_20">
+                    <i class="fa fa-map-marker text_size_24"></i><br>
+                    <span class="text_color_orange s_valign_m">{{field.address}}</span>
+
+                    <p>{{{field.howto}}}</p>
+                </div>
+                {{#if metro.name}}
+                    <div class="field__metro field__metro_{{field.metro.color}} text_align_c s_mb_20">
+                        <span class="s_display_inline-block text_size_16 s_mb_10">{{field.metro.name}}</span>
+                    </div>
+                {{/if}}
+                <div class="field__map s_mb_20 js-map" data-lat="{{field.geo.[0]}}" data-long="{{field.geo.[1]}}"></div>
+
+                <div class="field__tournaments text_align_c s_mb_20">
+                    <div class="text_size_16 text_color_orange">Играют<br/><i class="fa fa-circle text_size_12"></i></div>
+                    {{#each field.countries}}
+                        <div class="s_mt_5">
+                            <div class='text_size_16'>{{country.name}}</div>
+                            {{#each tournaments}}
+                                <a class="s_display_block text_color_light"
+                                   href="/{{../../globals.league.slug}}/tournaments/{{slug}}/fields">{{noYear name}}
+                                </a>
+                            {{/each}}
                         </div>
                     {{/each}}
                 </div>
-            {{else}}
-                <h3>Нет полей в лиге... Нам негде играть!!!</h3>
-            {{/if}}
+
+                <div class="field__photo">
+                    <img src="{{field.image.main.src}}"/>
+                </div>
+            </div>
         </div>
     </div>
 
