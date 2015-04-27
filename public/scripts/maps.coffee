@@ -2,9 +2,8 @@ define ['jquery', 'maps/style', 'async!http://maps.google.com/maps/api/js?sensor
     init = () ->
         $('.js-map').each (i, item)->
             mapOptions =
-                zoom: 13
+                zoom: 14
                 center: new google.maps.LatLng $(item).data('lat'), $(item).data('long')
-                styles: style
 
             new google.maps.Map item, mapOptions
 

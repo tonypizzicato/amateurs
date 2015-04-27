@@ -1,38 +1,47 @@
 <div class="row clearfix s_mb_20">
     <div class="col-md-8 column">
-        <div class="row clearfix">
-            <div class="col-md-12 s_mb_40">
-                {{#if fields.length}}
-                    <div class="row clearfix">
-                        {{#each fields}}
-                            <div class="col-md-6 s_mb_20">
-
-                                <div class="panel panel_type_field s_m_0">
-                                    <div class="panel__header">
-                                        <i class="fa fa-map-marker text_size_18 s_mr_10 s_valign_m"></i>
-                                        <span class="text_color_orange s_valign_m">{{title}}</span>
-                                    </div>
-                                    <div class="panel__body">
-                                        <div class="field__photo" data-lat="{{geo.[0]}}" data-long="{{geo.[1]}}"></div>
-                                    </div>
+        <div class="row clearfix masonry-container">
+            {{#if fields.length}}
+                <div class="masonry js-masonry"
+                     data-masonry-options='{"itemSelector": ".js-masonry-item", "columnWidth": 390, "isAnimated": "true", "isFitWidth": "true" }'>
+                    {{#each fields}}
+                        <div class="masonry-item masonry-item__hidden_yes {{#gt ../fields.length 1}}col-md-6{{else}}col-md-12{{/gt}} s_mb_20 js-masonry-item">
+                            <div class="panel panel_type_field s_m_0">
+                                <div class="panel__header">
+                                    <i class="fa fa-location-arrow text_size_18 s_mr_10 s_valign_m"></i>
+                                    <span>{{title}}</span>
                                 </div>
-                                <div class="link_type_full s_mb_10">
-                                    <span class="text_color_orange">Подробнее</span>
-                                    <span class="pull-right">
-                                        {{#if globals.tournament._id}}
-                                            <a href="/{{globals.league.slug}}/tournaments/{{globals.tournament.slug}}/fields/{{slug}}"><i class="fa fa-arrow-circle-o-right"></i></a>
-                                        {{else}}
-                                            <a href="/{{globals.league.slug}}/fields/{{slug}}"><i class="fa fa-arrow-circle-o-right"></i></a>
-                                        {{/if}}
-                                    </span>
+                                <div class="panel__body">
+                                    <div class="text_align_c s_mb_20">
+                                        <i class="fa fa-map-marker text_size_24"></i><br>
+                                        <span class="text_color_orange s_valign_m">{{address}}</span>
+                                    </div>
+                                    <div class="field__metro field__metro_{{metro.color}} text_align_c s_mb_20">
+                                        <span class="s_display_inline-block s_mb_10">{{metro.name}}</span>
+                                    </div>
+                                    <div class="field__photo s_mb_10">
+                                        <img src="{{#gt ../fields.length 1}}{{image.thumb.src}}{{else}}{{image.main.src}}{{/gt}}"/>
+                                    </div>
                                 </div>
                             </div>
-                        {{/each}}
-                    </div>
-                {{else}}
-                    <h3>Нет полей в лиге... Нам негде играть!!!</h3>
-                {{/if}}
-            </div>
+                            <div class="link_type_full s_mb_10">
+                                <span class="text_color_orange">Подробнее</span>
+                                    <span class="pull-right">
+                                        {{#if ../globals.tournament._id}}
+                                            <a href="/{{../globals.league.slug}}/tournaments/{{../globals.tournament.slug}}/fields/{{slug}}">
+                                                <i class="fa fa-arrow-circle-o-right"></i>
+                                            </a>
+                                        {{else}}
+                                            <a href="/{{../globals.league.slug}}/fields/{{slug}}"><i class="fa fa-arrow-circle-o-right"></i></a>
+                                        {{/if}}
+                                    </span>
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+            {{else}}
+                <h3>Нет полей в лиге... Нам негде играть!!!</h3>
+            {{/if}}
         </div>
     </div>
 

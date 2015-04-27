@@ -648,6 +648,7 @@ ul, ol {
     padding:  15px 10px;
     position: relative;
     overflow: hidden;
+    z-index:  0;
 }
 
 .panel__header {
@@ -1344,15 +1345,15 @@ $size: 200px;
 }
 
 .game-stats__bar {
-  content:       " ";
-  display:       inline-block;
-  min-width:     4px;
-  height:        32px;
-  width:         100px;
-  background:    #F5B367;
-  border-radius: 5px;
-  position:      absolute;
-  top:           6px;
+    content:       " ";
+    display:       inline-block;
+    min-width:     4px;
+    height:        32px;
+    width:         100px;
+    background:    #F5B367;
+    border-radius: 5px;
+    position:      absolute;
+    top:           6px;
 }
 
 .game-stats__bar_more {
@@ -1368,35 +1369,35 @@ $size: 200px;
 }
 
 .game-stats__bar_home_first {
-  right: 0;
+    right: 0;
 }
 
 .game-stats__bar__value {
-  right:       0;
-  line-height: 30px;
-  color:       #252525;
-  text-align:  left;
-  margin:      0 5px;
-  font-size:   12px;
+    right:       0;
+    line-height: 30px;
+    color:       #252525;
+    text-align:  left;
+    margin:      0 5px;
+    font-size:   12px;
 }
 
 .game-stats__bar_home_first,
 .game-stats__bar_away_first {
-  background: #CD9658;
+    background: #CD9658;
 }
 
 .game-stats__bar_home_first.game-stats__bar_less,
 .game-stats__bar_away_first.game-stats__bar_less {
-  background: #942828;
+    background: #942828;
 }
 
 .game-stats__bar_home_first.game-stats__bar_more,
 .game-stats__bar_away_first.game-stats__bar_more {
-  background: #1F8EC7;
+    background: #1F8EC7;
 }
 
 .game-stats__bar_away_first {
-  left: 0;
+    left: 0;
 }
 
 /**
@@ -1411,10 +1412,62 @@ $size: 200px;
 
 .field__map {
     width:        100%;
-    height:       220px;
+    height:       360px;
     display:      block;
     margin-left:  auto;
     margin-right: auto;
+}
+
+.field__photo {
+    box-shadow: inset 0px 0px 20px rgba(0, 0, 0, 0.9);
+}
+
+.field__photo img {
+    position:       relative;
+    width:          100%;
+    -webkit-filter: sepia(.4);
+    filter:         sepia(.4);
+    z-index:        -1;
+}
+
+.field__metro {
+    position:      relative;
+    margin-bottom: 20px;
+    border-bottom: 1px solid;
+}
+
+.field__metro:after {
+    content:       "";
+    position:      absolute;
+    top:           auto;
+    right:         auto;
+    bottom:        -8px;
+    left:          50%;
+    margin-left:   -8px;
+    height:        16px;
+    width:         16px;
+    border-radius: 50%;
+    background:    #00234a;
+    border:        2px solid #099cd8;
+}
+
+.field__metro_green {
+    border-bottom-color: #2E7D32;
+}
+
+.field__metro_green:after {
+    background:   #113C14;
+    border-color: #2E7D32;
+}
+
+.field__tournaments .flag__wrapper {
+    width:   30px;
+    height:  30px;
+    padding: 1px;
+}
+
+.field__tournaments .flag {
+    border: none;
 }
 
 /*------------------------------------*\
@@ -1762,6 +1815,15 @@ $size: 200px;
     cursor:     default;
 }
 
+.s_image {
+    opacity:    0;
+    transition: opacity .3s;
+}
+
+.s_image_loaded {
+    opacity: 1;
+}
+
 /**
  * Animation
  */
@@ -1784,6 +1846,11 @@ $size: 200px;
     max-width: 790px;
     position:  relative;
 }
+
+.masonry-container .masonry {
+    width: 100% !important;
+}
+
 
 .masonry-item {
     opacity:    1;

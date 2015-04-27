@@ -18,14 +18,13 @@ var FieldSchema = new Schema({
         color: {type: String}
     },
     geo:         {type: [Number], index: '2d'},
-    image:       {type: String},
+    image:       {type: Object},
     remoteId:    {type: ObjectId},
     leagueId:    {type: ObjectId},
     tournaments: [{type: ObjectId, ref: 'Tournament'}]
 });
 
-FieldSchema.pre('save', function (next) {
-    console.log('pre save');
+FieldSchema.pre('save', true, function (next) {
     var now = new Date();
     this.du = now;
     if (!this.dc) {

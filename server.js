@@ -39,10 +39,10 @@ app.use(cookieParser());
 
 app.use(busboy());
 // parse application/json
-app.use(bodyParser.json({limit: '5mb'}));
+app.use(bodyParser.json({limit: '10mb'}));
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({limit: '5mb', extended: false}))
+app.use(bodyParser.urlencoded({limit: '10mb', extended: false}))
 
 app.use(session({
     secret:            'test secret',
@@ -144,9 +144,13 @@ app.get('*', function (req, res, next) {
     res.locals.globals.hasOrder = !!req.session.order;
 
     var query = {show: true};
-    if (typeof req.params[0] == 'string') {
-        var param = req.params[0].slice(1);
-        var match = param.match(/^(moscow|spb)/);
+    var path = req.params[0];
+
+    /** Dirty hack */
+    path = path.replace('/lazy/', '/');
+    if (typeof path == 'string') {
+        var param = path.slice(1);
+        var match = param.match(/^(\w+)\//);
 
         if (match && match.length >= 1) {
             query.slug = match[1];
@@ -154,6 +158,8 @@ app.get('*', function (req, res, next) {
             query.slug = req.session.league ? req.session.league.slug : 'moscow';
         }
     }
+
+    console.log(query);
 
     var populateOptions = {path: 'countries', match: {show: true}, options: {sort: {'sort': 1}}};
     LeagueModel.findOne(query).populate(populateOptions).exec(function (err, doc) {

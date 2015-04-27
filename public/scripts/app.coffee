@@ -99,6 +99,10 @@ define [
         $('.js-accordion').each (i, el) ->
             new Accordion el
 
+        $('.js-image').each ->
+            $(@).attr 'src', $(@).data('src')
+            @.onload = ()=>
+                $(@).addClass 's_image__loaded'
 
         if $('.js-map').length
             maps.init()

@@ -92,28 +92,30 @@ var getNewsList = function (req, cb) {
         series = [];
 
     /** Get league if defined in request */
-    if (req.params.league) {
-        series = series.concat(function (cb) {
-            LeagueModel.findOne({slug: req.params.league}).lean().exec(cb);
-        });
-    }
+    series = series.concat(function (cb) {
+        LeagueModel.findOne({slug: req.params.league}).lean().exec(cb);
+    });
 
     /** Get tournament if defined in request */
     if (req.params.name) {
         series = series.concat(function (league, cb) {
-            var query = {slug: req.params.name};
-
-            if (typeof(league) === 'function') {
-                cb = league;
-            } else {
-                query.leagueId = league._id;
+            if (!league) {
+                return cb(true);
             }
+
+            var query = {
+                slug:     req.params.name,
+                leagueId: league._id
+            };
 
             TournamentModel.findOne(query).lean().exec(cb);
         });
     }
 
     async.waterfall(series, function (err, res) {
+        if (err || !res) {
+            return cb(true);
+        }
         var query = {};
 
         if (req.params.name) {

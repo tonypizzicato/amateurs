@@ -5,6 +5,7 @@ var _               = require('underscore'),
     request         = require('request'),
     async           = require('async'),
     gm              = require('gm'),
+    transliteration = require('transliteration'),
     FieldModel      = require('../../models/field'),
     TournamentModel = require('../../models/tournament'),
     LeagueModel     = require('../../models/league'),
@@ -178,12 +179,19 @@ var api = {
             }
         }
 
+        field.slug = transliteration.slugify(field.title);
         FieldModel.update({_id: req.params.id}, {$set: field}, function (err, count) {
             if (err) {
                 return res.status(500).json({error: err});
             }
 
-            res.status(200).json({});
+            if (field.tournaments.length) {
+                console.log(field.tournaments);
+                TournamentModel.update({fields: field._id}, {$pull: {fields: field._id}}, {multi: true}).exec();
+                TournamentModel.update({_id: {$in: field.tournaments}}, {$addToSet: {fields: field._id}}, {multi: true}).exec();
+            }
+
+            res.status(200).json({count: count});
         });
     },
 
@@ -285,7 +293,7 @@ var _toFlickr = function (files, cb) {
                         var sizes = res.sizes.size;
 
                         var set = {
-                            thumb: getSize(sizes, 'Small'),
+                            thumb: getSize(sizes, 'Small 320'),
                             main:  getSize(sizes, 'Original')
                         };
 
