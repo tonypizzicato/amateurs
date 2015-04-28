@@ -21,8 +21,13 @@
                                             <span class="s_display_inline-block s_mb_10">{{metro.name}}</span>
                                         </div>
                                     {{/if}}
+
                                     <div class="field__photo s_mb_10">
-                                        <img src="{{#gt ../fields.length 1}}{{image.thumb.src}}{{else}}{{image.main.src}}{{/gt}}"/>
+                                        {{#if image}}
+                                            <img src="{{#gt ../fields.length 1}}{{image.thumb.src}}{{else}}{{image.main.src}}{{/gt}}"/>
+                                        {{else}}
+                                            <img src="https://placehold.it/340x230&text=image+is+comming!"/>
+                                        {{/if}}
                                     </div>
                                 </div>
                             </div>
