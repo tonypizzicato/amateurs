@@ -12,7 +12,8 @@ var flickrOptions = {
     user_id:             "130112246@N08",
     access_token:        "72157648906532524-e46b00c69350c43b",
     access_token_secret: "4a0ee319266c77e2",
-    permissions:         'delete'
+    permissions:         'delete',
+    progress:            false
 };
 
 var api = {

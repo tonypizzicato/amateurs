@@ -10,10 +10,12 @@ var GameArticleSchema = new Schema({
     body:        {type: String},
     show:        {type: Boolean},
     type:        {type: String, required: true},
-    author:      {type: String, default: ''},
+    author:      {type: String},
+    editor:      {type: String},
     centralGame: {type: Boolean, default: false},
     gameId:      {type: ObjectId},
     tournament:  {type: ObjectId},
+    leagueId:    {type: ObjectId},
     imageHome:   {type: String},
     imageAway:   {type: String},
     video:       [Schema.Types.Mixed]
