@@ -11,7 +11,8 @@ var flickrOptions = {
     user_id:             "130112246@N08",
     access_token:        "72157648906532524-e46b00c69350c43b",
     access_token_secret: "4a0ee319266c77e2",
-    permissions:         'delete'
+    permissions:         'delete',
+    progress:            false
 };
 
 var api = {
@@ -95,6 +96,8 @@ var api = {
         console.log('/api/game-articles PUT handled');
 
         saveArticle(req, function (doc) {
+            /** pre save hack(( */
+            doc.du = new Date();
             ArticleModel.update({_id: req.params.id}, {$set: doc}, function (err, count) {
                 if (err) {
                     console.log(err);
@@ -149,7 +152,7 @@ var saveArticle = function (req, save) {
 
     if (images.length) {
         images.forEach(function (image) {
-            var reg = /^data:image\/(.+);base64,/;
+            var reg    = /^data:image\/(.+);base64,/;
             var format = image.image.match(reg);
 
             if (format && format.length >= 2) {
@@ -160,7 +163,7 @@ var saveArticle = function (req, save) {
 
             var base64Data = image.image.replace(/^data:image\/(.+);base64,/, "");
 
-            var dir = __dirname + '/../../' + (process.env == 'production' ? 'dist' : 'public'),
+            var dir  = __dirname + '/../../' + (process.env == 'production' ? 'dist' : 'public'),
                 path = '/uploads/' + doc.tournament + '/';
 
             dir = dir + path;
@@ -172,7 +175,7 @@ var saveArticle = function (req, save) {
             var filename = transliteration.slugify(doc.gameId + image.title) + "." + format;
             require("fs").writeFileSync(dir + filename, base64Data, 'base64');
 
-            var imageUrl = req.protocol + '://' + req.headers.host + path + filename;
+            var imageUrl     = req.protocol + '://' + req.headers.host + path + filename;
             doc[image.title] = imageUrl;
 
             Flickr.authenticate(flickrOptions, function (err, flickr) {
@@ -182,7 +185,8 @@ var saveArticle = function (req, save) {
 
                 var options = {
                     photos:      [file],
-                    permissions: 'write'
+                    permissions: 'write',
+                    silent:      true
                 };
 
                 Flickr.upload(options, flickrOptions, function (err, ids) {
@@ -209,9 +213,9 @@ var saveArticle = function (req, save) {
 
                                 doc[image.title] = s[0].source;
 
-                                var m = {}, set = {};
-                                m.gameId = doc.gameId;
-                                m.type = 'preview';
+                                var m            = {}, set = {};
+                                m.gameId         = doc.gameId;
+                                m.type           = 'preview';
                                 set[image.title] = s[0].source;
 
                                 ArticleModel.update(m, {'$set': set}).exec();

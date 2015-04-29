@@ -107,7 +107,7 @@ module.exports = {
 
                     /* Articles */
                     var articles = new Promise(function (resolve, reject) {
-                        GameArticleModel.find({gameId: req.params.id, show: true}).exec(function (err, docs) {
+                        GameArticleModel.find({gameId: req.params.id, show: true}).sort({dc: -1}).exec(function (err, docs) {
                             if (err) {
                                 return reject(err);
                             }
