@@ -307,18 +307,18 @@ module.exports = (grunt) ->
                 options:
                     collapseBooleanAttributes: true
                     collapseWhitespace:        true
-                    removeAttributeQuotes:     true
 
                     removeCommentsFromCDATA:   true
                     removeEmptyAttributes:     true
                     removeOptionalTags:        true
                     removeRedundantAttributes: true
                     useShortDoctype:           true
+                    customAttrSurround:        [[/\{\{#[^}]+\}\}/, /\{\{\/[^}]+\}\}/]]
 
                 files: [
                     expand: true
                     cwd:    "<%= yeoman.dist %>"
-                    src:    ["{,*/}*.{html,hbs}"]
+                    src:    ["**/*.{html,hbs}"]
                     dest:   "<%= yeoman.dist %>"
                 ]
 
