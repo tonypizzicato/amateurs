@@ -3,10 +3,9 @@ $navbar-default-link-hover-color: #2DA6E4 !default;
 $navbar-default-link-active-color: #F5B367 !default;
 
 .news__list {
-    height:      308px;
-    margin:      0 auto;
-    font-family: "Segoe UI", "Trebuchet MS", Arial, sans-serif;
-    font-size:   13px;
+    height:    308px;
+    margin:    0 auto;
+    font-size: 13px;
 }
 
 .news__list * {
@@ -46,6 +45,7 @@ $navbar-default-link-active-color: #F5B367 !default;
 
 .news__headlines li a {
     font-size:   12px;
+    font-family: "Segoe UI", "Trebuchet MS", Arial, sans-serif;
     line-height: 1.7;
 }
 

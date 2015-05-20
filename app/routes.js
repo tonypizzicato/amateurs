@@ -69,6 +69,7 @@ module.exports.initialize = function (app) {
 
     r.route('/:type/:postId/images')
         .get(apiPhotos.list)
+        .put(apiPhotos.saveByGame)
         .post(require('multer')({
             dest:     __dirname + '/../public/uploads/',
             inMemory: true
@@ -87,8 +88,13 @@ module.exports.initialize = function (app) {
         .put(apiArticlesGames.save)
         .delete(apiArticlesGames.delete);
 
+    /** TODO: remove */
     r.route('/game-articles/:type/:gameId')
         .get(apiArticlesGames.byGame);
+
+    r.route('/game-articles/game/:gameId')
+        .get(apiArticlesGames.byGame)
+        .put(apiArticlesGames.saveByGame);
 
     r.route('/fields')
         .get(apiFields.list)
