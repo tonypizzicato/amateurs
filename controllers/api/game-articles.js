@@ -40,8 +40,13 @@ var api = {
      */
     byGame: function (req, res) {
         console.log('/api/game-articles/:type/:gameId GET handled');
-        console.log({gamesId: req.params.gameId, type: req.params.type});
-        ArticleModel.findOne({gameId: req.params.gameId, type: req.params.type}).exec(function (err, article) {
+
+        var query = {gameId: req.params.gameId};
+        if (req.params.type || req.query.type) {
+            query.type = req.params.type || req.query.type;
+        }
+
+        ArticleModel.findOne(query).exec(function (err, article) {
             if (err) {
                 res.status(500).json({error: err});
             }
@@ -92,7 +97,7 @@ var api = {
      *
      * /api/game-articles/:id PUT call
      */
-    save: function (req, res, next) {
+    save: function (req, res) {
         console.log('/api/game-articles PUT handled');
 
         saveArticle(req, function (doc) {
@@ -111,6 +116,26 @@ var api = {
                     res.status(404).json({});
                 }
             });
+        });
+    },
+
+    /**
+     * Update game article items by game id
+     *
+     * /api/game-articles/game/:gameId PUT call
+     */
+    saveByGame: function (req, res) {
+        console.log('/api/game-articles/game/:gameId PUT handled');
+        ArticleModel.update({gameId: req.params.gameId}, {$set: req.body}, {multi: true}, function (err, count) {
+            if (err) {
+                return res.status(500).json({error: err});
+            }
+
+            if (count) {
+                res.status(200).json({});
+            } else {
+                res.status(404).json({});
+            }
         });
     },
 
