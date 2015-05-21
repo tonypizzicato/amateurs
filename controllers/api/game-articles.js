@@ -120,26 +120,6 @@ var api = {
     },
 
     /**
-     * Update game article items by game id
-     *
-     * /api/game-articles/game/:gameId PUT call
-     */
-    saveByGame: function (req, res) {
-        console.log('/api/game-articles/game/:gameId PUT handled');
-        ArticleModel.update({gameId: req.params.gameId}, {$set: req.body}, {multi: true}, function (err, count) {
-            if (err) {
-                return res.status(500).json({error: err});
-            }
-
-            if (count) {
-                res.status(200).json({});
-            } else {
-                res.status(404).json({});
-            }
-        });
-    },
-
-    /**
      * Delete game article item
      *
      * /api/game-articles/:id DELETE call

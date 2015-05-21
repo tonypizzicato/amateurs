@@ -178,27 +178,6 @@ var api = {
         });
     },
 
-
-    /**
-     * Update photo items by game
-     *
-     * /api/games/:postId/images PUT call
-     */
-    saveByGame: function (req, res) {
-        console.log('/api/games/:postId/images PUT handled');
-        PhotosModel.update({postId: req.params.postId}, {$set: req.body}, {multi: true}, function (err, count) {
-            if (err) {
-                return res.status(500).json({error: err});
-            }
-
-            if (count) {
-                res.status(200).json({});
-            } else {
-                res.status(404).json({});
-            }
-        });
-    },
-
     /**
      * Delete photo item
      *
