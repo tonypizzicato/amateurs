@@ -27,17 +27,19 @@ var api = {
 
     save: function (req, res) {
         console.log('/api/games PUT handled');
-        var newGameId = req.body.gameId;
+        var newGameId       = req.body.gameId;
+        var newTournamentId = req.body.tournament;
 
-        if (newGameId) {
+        if (newGameId && newTournamentId) {
             var changed = 0;
-            ArticleModel.update({gameId: req.params.id}, {$set: {gameId: newGameId}}, {multi: true}, function (err, count) {
+
+            ArticleModel.update({gameId: req.params.id}, {$set: {gameId: newGameId, tournament: newTournamentId}}, {multi: true}, function (err, count) {
                 if (err) {
                     return res.status(500).json({error: err});
                 }
                 changed += count;
 
-                PhotosModel.update({postId: req.params.id}, {$set: {postId: newGameId}}, {multi: true}, function (err, count) {
+                PhotosModel.update({postId: req.params.id}, {$set: {postId: newGameId, tournament: newTournamentId}}, {multi: true}, function (err, count) {
                     if (err) {
                         return res.status(500).json({error: err});
                     }
@@ -48,7 +50,7 @@ var api = {
                 });
             });
         } else {
-            res.status(200).json({count: 0});
+            res.status(500).json({error: 'No gameId or tournament parameter set'});
         }
     }
 };
