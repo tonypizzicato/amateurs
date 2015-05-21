@@ -30,21 +30,21 @@ var api = {
         var newGameId = req.body.gameId;
 
         if (newGameId) {
-            ArticleModel.update({gameId: req.params.id}, {$set: {gameId: newGameId}}, {multi: true}, function (err) {
+            var changed = 0;
+            ArticleModel.update({gameId: req.params.id}, {$set: {gameId: newGameId}}, {multi: true}, function (err, count) {
                 if (err) {
                     return res.status(500).json({error: err});
                 }
+                changed += count;
 
                 PhotosModel.update({postId: req.params.id}, {$set: {postId: newGameId}}, {multi: true}, function (err, count) {
                     if (err) {
                         return res.status(500).json({error: err});
                     }
 
-                    if (count) {
-                        res.status(200).json({count: count});
-                    } else {
-                        res.status(404).json({});
-                    }
+                    changed += count;
+
+                    res.status(200).json({count: changed});
                 });
             });
         } else {
