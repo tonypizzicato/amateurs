@@ -169,9 +169,17 @@
                                                     {{/eq}}
                                                     {{#eq type 'YELLOW_H'}}
                                                         <i class="icon_type_event icon-yellow"></i>
+
+                                                        {{#eq additionalField  2}}
+                                                            <i class="icon_type_event icon-red-yellow"></i>
+                                                        {{/eq}}
                                                     {{/eq}}
                                                     {{#eq type 'YELLOW_A'}}
                                                         <i class="icon_type_event icon-yellow"></i>
+
+                                                        {{#eq additionalField  2}}
+                                                            <i class="icon_type_event icon-red-yellow"></i>
+                                                        {{/eq}}
                                                     {{/eq}}
                                                     {{#eq type 'RED_H'}}
                                                         <i class="icon_type_event icon-red"></i>
@@ -206,7 +214,7 @@
                                                     {{~#if secondField~}}
                                                         <br>
                                                         {{~#if secondField~}}
-                                                            <span class="text_color_light">{{~#if secondField.number~}}{{secondField.number}}
+                                                            <span class="text_color_light">{{~#if secondField.number~}}{{~secondField.number~}}
                                                                 . {{/if}}{{ucfirst secondField.name}}</span>
                                                         {{~/if~}}
                                                     {{~/if~}}
