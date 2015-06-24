@@ -212,6 +212,14 @@ var helpers = {
         }
     },
 
+    last: function(arr) {
+        if(!_.isArray(arr)) {
+            return null;
+        }
+
+        return _.last(arr);
+    },
+
     endsWith: function (str, suffix, options) {
         if (str.toLowerCase().indexOf(suffix.toLowerCase(), str.length - suffix.length) !== -1) {
             return options.fn(this);
