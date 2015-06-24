@@ -23,8 +23,8 @@
             <tr class="table__position" data-pos="{{inc @index}}">
                 <td class="text_align_l">{{inc @index}}.</td>
                 <td class="text_align_l text_overflow_ellipsis">{{name}}</td>
-                <td class="text_align_l text_overflow_ellipsis"><img class="s_mr_10" src="http://amateurs.io/api/img/teams/{{teams.[0].name}}.png"
-                                                                     width="20" height="20"/> {{teams.[0].name}}</td>
+                <td class="text_align_l text_overflow_ellipsis"><img class="s_mr_10" src="http://amateurs.io/api/img/teams/{{get (last teams) 'name'}}.png"
+                                                                     width="20" height="20"/> {{get (last teams) 'name'}}</td>
                 <td class="text_align_c">{{played}}</td>
                 <td class="text_align_c">{{goals}}</td>
                 <td class="text_align_c">{{assists}}</td>
