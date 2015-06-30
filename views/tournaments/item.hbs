@@ -169,7 +169,11 @@
                         <div class="panel__header">
                             <h4 class="s_m_0"><i class="fa fa-eye s_mr_5"></i> Последние обзоры</h4>
                         </div>
-                        <div class="{{#gt reviews.length 1}}owl-carousel{{/gt}}" data-items="1" data-pagination="true" data-prev="Назад" data-next="Дальше">
+                        <div class="{{#gt reviews.length 1}}owl-carousel owl-theme{{/gt}}"
+                             data-items="1"
+                             data-pagination="true"
+                             data-prev="Назад"
+                             data-next="Дальше">
                             {{#each reviews}}
                                 <div class="panel__body">
                                     {{> article_review article=this league=../globals.league tournament=../globals.tournament}}

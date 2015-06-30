@@ -959,50 +959,6 @@ ul, ol {
   padding-right: 5px;
 }
 
-.panel_type_photo .owl-carousel {
-  padding:    0 60px;
-  text-align: center;
-}
-
-.panel_type_photo .owl-theme .owl-controls .owl-prev,
-.panel_type_photo .owl-theme .owl-controls .owl-next {
-  display:                 inline-block;
-  width:                   40px;
-  height:                  40px;
-  margin:                  5px 0;
-  padding:                 0;
-  font:                    normal normal normal 24px/1 FontAwesome;
-  text-rendering:          auto;
-  -webkit-font-smoothing:  antialiased;
-  opacity:                 0.3;
-  transition:              opacity .3s;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-.panel_type_photo .owl-theme .owl-controls .owl-buttons div:hover {
-  opacity: .6;
-}
-
-.panel_type_photo .owl-theme .owl-controls .owl-buttons {
-  margin-top: -40px;
-}
-
-.panel_type_photo .owl-prev:before,
-.panel_type_photo .owl-next:before {
-  display: inline-block;
-}
-
-.panel_type_photo .owl-prev:before {
-  content:     "\f053";
-  padding:     9px 0 0 0;
-  margin-left: -3px;
-}
-
-.panel_type_photo .owl-next:before {
-  content: "\f054";
-  padding: 9px 0 0 6px;
-}
-
 .photo__item {
   box-sizing: content-box;
 }

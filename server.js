@@ -73,6 +73,7 @@ if (app.get('env') === 'development') {
 
     app.use(express.static(path.join(__dirname, '.tmp')));
     app.use(express.static(path.join(__dirname, 'public')));
+    app.use(express.static(path.join(__dirname, '.')));
 
     app.use(function (err, req, res, next) {
         console.log(err);

@@ -32,14 +32,7 @@ module.exports = (grunt) ->
 
             coffee:
                 files: ["<%= yeoman.public %>/scripts/**/*.{coffee,litcoffee,coffee.md}"]
-                tasks: ["coffee:dist"]
-
-            coffeeTest:
-                files: ["test/spec/**/*.{coffee,litcoffee,coffee.md}"]
-                tasks: [
-                    "coffee:test"
-                    "test:watch"
-                ]
+                tasks: ["coffeeify"]
 
             gruntfile:
                 files: ["Gruntfile.js"]
@@ -149,28 +142,6 @@ module.exports = (grunt) ->
                     run:  true
                     urls: ["http://<%= connect.test.options.hostname %>:<%= connect.test.options.port %>/index.html"]
 
-
-    # Compiles CoffeeScript to JavaScript
-        coffee:
-            dist:
-                files: [
-                    expand: true
-                    cwd:    "<%= yeoman.public %>/scripts"
-                    src:    "**/*.{coffee,litcoffee,coffee.md}"
-                    dest:   ".tmp/scripts"
-                    ext:    ".js"
-                ]
-
-            test:
-                files: [
-                    expand: true
-                    cwd:    "test/spec"
-                    src:    "**/*.{coffee,litcoffee,coffee.md}"
-                    dest:   ".tmp/spec"
-                    ext:    ".js"
-                ]
-
-
     # Compiles Sass to CSS and generates necessary files if requested
         compass:
             options:
@@ -213,26 +184,14 @@ module.exports = (grunt) ->
             target:
                 rjsConfig: "<%= yeoman.public %>/scripts/main.js"
 
-        requirejs:
+        coffeeify:
             dist:
-            # Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
+                files: [{
+                    src: ["<%= yeoman.public %>/scripts/main.coffee"]
+                    dest: ".tmp/scripts/out.js"
+                }]
                 options:
-                # `name` and `out` is set by grunt-usemin
-                    baseUrl:                 ".tmp/scripts"
-                    optimize:                "none"
-                    name:                    "main"
-                    mainConfigFile:          ".tmp/scripts/main.js"
-
-                # TODO: Figure out how to make sourcemaps work with grunt-usemin
-                # https://github.com/yeoman/grunt-usemin/issues/30
-                #generateSourceMaps: true,
-                # required to support SourceMaps
-                # http://requirejs.org/docs/errors.html#sourcemapcomments
-                    preserveLicenseComments: false
-                    useStrict:               true
-                    wrap:                    true
-                    findNestedDependencies:  true
-                    out:                     ".tmp/concat/scripts/out.js"
+                    debug: true
 
 
     #uglify2: {} // https://github.com/mishoo/UglifyJS2
@@ -350,7 +309,7 @@ module.exports = (grunt) ->
                         src:    [
                             "vendor/bootstrap-sass/vendor/assets/fonts/bootstrap/*.*"
                             "vendor/fontawesome/fonts/*.*"
-                            "vendor/photoswipe/dist/default-skin/*.{png,svg,gif}"
+                            "node_modules/photoswipe/dist/default-skin/*.{png,svg,gif}"
                         ]
                     }
                     {
@@ -361,7 +320,7 @@ module.exports = (grunt) ->
                         cwd:    "<%= yeoman.public %>"
                         dest:   "<%= yeoman.dist %>/styles"
                         src:    [
-                            "vendor/photoswipe/dist/default-skin/*.{png,svg,gif}"
+                            "node_modules/photoswipe/dist/default-skin/*.{png,svg,gif}"
                         ]
                     }
                     {
@@ -445,16 +404,16 @@ module.exports = (grunt) ->
     # Run some tasks in parallel to speed up build process
         concurrent:
             server: [
-                        "compass:server"
-                        "coffee:dist"
-                        "copy:styles"
-                    ]
+                "compass:server"
+                "coffeeify:dist"
+                "copy:styles"
+            ]
             test: [
-                "coffee"
+                "coffeeify"
                 "copy:styles"
             ]
             dist: [
-                "coffee"
+                "coffeeify"
                 "compass"
                 "copy:bodge"
                 "copy:styles"
@@ -527,7 +486,7 @@ module.exports = (grunt) ->
         "useminPrepare"
         "autoprefixer"
         "concat"
-        "requirejs:dist"
+        "coffeeify"
         "cssmin"
         "uglify"
         "copy:dist"
