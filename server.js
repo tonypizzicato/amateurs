@@ -1,3 +1,4 @@
+var _        = require('underscore');
 var express  = require('express');
 var session  = require('express-session');
 var path     = require('path');
@@ -73,6 +74,7 @@ if (app.get('env') === 'development') {
 
     app.use(express.static(path.join(__dirname, '.tmp')));
     app.use(express.static(path.join(__dirname, 'public')));
+    app.use(express.static(path.join(__dirname, 'node_modules')));
 
     app.use(function (err, req, res, next) {
         console.log(err);
@@ -130,7 +132,7 @@ app.use('/api', function (req, res, next) {
 
 app.get('/', function (req, res) {
     //var slug = req.session.league ? req.session.league.slug : null;
-    res.redirect('/moscow');
+    res.redirect('/' + req.session.league ? req.session.league.slug : 'moscow');
 });
 
 app.get('*', function (req, res, next) {
@@ -144,15 +146,17 @@ app.get('*', function (req, res, next) {
     res.locals.globals.hasOrder = !!req.session.order;
 
     var query = {show: true};
-    var path = req.params[0];
+    var path  = req.params[0];
 
     /** Dirty hack */
     path = path.replace('/lazy/', '/');
     if (typeof path == 'string') {
         var param = path.slice(1);
-        var match = param.match(/^(\w+)\//);
 
-        if (match && match.length >= 1) {
+        var match = param.match(/^(\w+)\/?(.*|$)/);
+
+        var leaguesNames = ['moscow', 'spb'];
+        if (match && match.length >= 1 && _.contains(leaguesNames, match[1])) {
             query.slug = match[1];
         } else {
             query.slug = req.session.league ? req.session.league.slug : 'moscow';
@@ -166,11 +170,9 @@ app.get('*', function (req, res, next) {
         }
 
         var populateTournaments = {path: 'countries.tournaments', model: 'Tournament', match: {show: true}, options: {sort: {'sort': 1}}};
+        var populateCountries = {path: 'countries', match: {show: true}, options: {sort: {'sort': 1}}};
 
         if (!doc) {
-
-            var populateCountries = {path: 'countries', match: {show: true}, options: {sort: {'sort': 1}}};
-
             LeagueModel.find({show: true}).sort({sort: 1})
                 .populate(populateCountries)
                 .lean()
@@ -189,6 +191,14 @@ app.get('*', function (req, res, next) {
 
             return;
         }
+
+        LeagueModel.find({show: true}).sort({sort: 1}).populate(populateCountries).lean().exec(function (err, leagues) {
+            if (err) {
+                return next(err);
+            }
+
+            res.locals.globals.leagues = leagues;
+        });
 
         LeagueModel.populate(doc, populateTournaments, function (err, doc) {
             req.session.league        = doc;

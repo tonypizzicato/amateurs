@@ -115,6 +115,9 @@
         <!--</li>-->
         <!--</ul>-->
         <ul class="nav navbar-nav pull-right">
+            <li class="navbar__item{{#if pageAbout}} navbar__item_active_yes{{/if}}">
+                <a href="/about">О Лиге</a>
+            </li>
             <li class="navbar__item{{#if pageContacts}} navbar__item_active_yes{{/if}}">
                 <a href="/{{globals.league.slug}}/contacts">Контакты</a>
             </li>

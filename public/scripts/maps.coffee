@@ -1,5 +1,8 @@
-define ['jquery', 'maps/style', 'async!http://maps.google.com/maps/api/js?sensor=false'], ($, style)->
-    init = () ->
+$ = require('jquery')
+MapsLoader = require('google-maps')
+
+MapsLoader.load (google)->
+    init = ()->
         $('.js-map').each (i, item)->
             center = new google.maps.LatLng $(item).data('lat'), $(item).data('long')
             mapOptions =
@@ -14,9 +17,4 @@ define ['jquery', 'maps/style', 'async!http://maps.google.com/maps/api/js?sensor
                 title: $(item).data('title')
 
 
-
     google.maps.event.addDomListener(window, 'load', init);
-
-    return {
-        init: init
-    }

@@ -1,4 +1,4 @@
-define [], ->
+module.exports =
     [
         {
             "featureType": "water",

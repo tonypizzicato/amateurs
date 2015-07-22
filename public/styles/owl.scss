@@ -1,25 +1,59 @@
-.owl-controls {
+.owl-carousel .owl-nav {
     padding-bottom: 10px;
+    width:          100%;
 }
 
-.owl-prev {
+.owl-carousel .owl-nav .owl-prev {
     left: 5px;
 }
 
-.owl-next {
+.owl-carousel .owl-nav .owl-next {
     right: 5px;
 }
 
-.owl-buttons {
-    width:    100%;
-}
-
-.owl-buttons div {
+.owl-carousel .owl-nav .owl-prev,
+.owl-carousel .owl-nav .owl-next {
     position: absolute;
-    margin: 0 20px;
+    margin:   0 20px;
     bottom:   10px;
 }
 
-.owl-pagination {
-    margin: 0 50px;
+.owl-carousel .owl-nav .owl-prev,
+.owl-carousel .owl-nav .owl-next {
+    opacity:       .5;
+    transition:    opacity .3s;
+
+    color:         #fff;
+    margin:        5px;
+    padding:       3px 10px;
+    font-size:     12px;
+    transition:    opacity .3s;
+    border-radius: 30px;
+    background:    #869791;
 }
+
+.owl-carousel .owl-nav .owl-prev:hover,
+.owl-carousel .owl-nav .owl-next:hover {
+    opacity: 1;
+}
+
+.owl-carousel .owl-nav .owl-prev:before,
+.owl-carousel .owl-nav .owl-next:before {
+    display: inline-block;
+}
+
+.owl-carousel .owl-dots {
+    padding-bottom: 12px;
+}
+
+.owl-carousel .owl-dots .owl-dot span {
+    margin:     4px;
+    background: #869791;
+    opacity:    .5;
+}
+
+.owl-carousel .owl-dots .owl-dot:hover span,
+.owl-carousel .owl-dots .owl-dot.active span {
+    opacity: 1;
+}
+

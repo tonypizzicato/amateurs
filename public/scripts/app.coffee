@@ -1,122 +1,66 @@
-define [
-    'marionette',
-    'stepform',
-    'accordion',
-    'imagesLoaded',
-    'masonry',
-    'maps',
-    'bootstrap.dropdown',
-    'bootstrap.tab',
-    'owl',
-    'news',
-    'gallery'
-], (Marionette, StepForm, Accordion, imagesLoaded, Masonry, maps) ->
-    App = new Marionette.Application()
+window.jQuery = $ = require 'jquery'
+React = require 'react'
 
-    App.on 'start', ()->
-        console.log 'app started'
+Backbone = require 'backbone'
+Marionette = require 'backbone.marionette'
 
-    App.on 'start', ()->
-        require ['imageScroll'], ()->
-            $('.img-holder').imageScroll
-                extraHeight: 500
+StepForm = require './elements/stepform.coffee'
+Masonry = require 'masonry-layout'
 
-        $('a[data-toggle="tab"]').on 'shown.bs.tab', (e) ->
-            control = $(e.target)
+require './news.coffee'
 
-            unless control.data 'lazy'
-                if history.pushState
-                    history.pushState(null, null, '#' + control.attr('href').substr(1))
-                else
-                    location.hash = '#' + control.attr('href').substr(1)
-            else
-                unless control.data 'ready'
-                    $.ajax
-                        url: '/lazy/' + control.data('league') + '/' + control.data('route') + '/' + control.data('name')
-                        success: (data)->
-                            $(control.attr('href')).find('.panel__body').fadeOut(400, ->
-                                $(@).html data
-                                $(@).fadeIn 500
-                            )
-                            $(control.attr('href')).parents('.js-accordion-item').css({height: 'auto'})
-                            control.data 'ready', true
-                        error: ->
-                            $(control.attr('href')).find('.panel__body').html 'error'
+IndexPage = require './pages/index.coffee'
+TournamentPage = require './pages/tournament.coffee'
+MatchPage = require './pages/match.coffee'
+PromoPage = require './pages/promo.coffee'
 
-            msnr = $(control.attr('href')).find('.panel__body .js-masonry-js')
-            if msnr.length and !msnr.data('init')
-                imagesLoaded msnr, ->
-                    new Masonry msnr.get(0),
-                        itemSelector: ".js-masonry-item"
-                        isAnimated: "true",
-
-                msnr.imagesLoaded().progress (imgLoad, image)->
-                    item = $(image.img).parents '.js-masonry-item'
-                    item.addClass('animated')
-                msnr.data 'init', true
+Router = Backbone.Router.extend
+    routes:
+        ':city/tournaments/:tournament/matches/:id': 'match'
+        ':city/tournaments/:tournament': 'tournament'
+        ':city': 'index'
+        'promo/nationals.html': 'promo'
+        '*notFound': 'notFound'
 
 
-        if location.hash != ''
-            $('a[href="' + location.hash + '"]').tab('show')
+appRouter = new Router()
+
+appRouter.on 'route:index', ()->
+    new IndexPage el: $('.container')
+
+appRouter.on 'route:tournament', ()->
+    new TournamentPage el: $('.container')
+
+appRouter.on 'route:match', ()->
+    new MatchPage el: $('.container')
+
+appRouter.on 'route:promo', ()->
+    new PromoPage el: $('.container')
+
+appRouter.on 'route:notFound', (fragment)->
+    console.log 'notFound route handled', fragment
+
+if Backbone.history
+    Backbone.history.start
+        pushState: true
 
 
-        $('.js-country-link').click (e)->
-            e.preventDefault()
-            $(@).parent().toggleClass 'country_active_yes'
+App = new Marionette.Application()
 
-        $('.js-country-link').click (e)->
-            e.preventDefault()
-            $(@).parent().toggleClass 'country_active_yes'
+App.on 'start', ()->
+    console.log 'app started'
 
-        $('.owl-carousel').each (i, item)->
-            console.log item
-            $(item).owlCarousel
-                navigation: true
-                pagination: $(item).data('pagination')
-                slideSpeed: 300
-                paginationSpeed: 400
-                items: $(item).data('items'),
-                singleItem: $(item).data('items') == 1
-                navigationText: [$(item).data('prev'), $(item).data('next')]
-                scrollPerPage: true
+App.on 'start', ()->
+    if $('.js-map').length
+        require('./maps.coffee')
 
-        $('.js-masonry-item').removeClass('masonry-item__hidden_yes')
 
-        if $('.js-contacts-form').length
-            new StepForm $('.js-contacts-form')[0],
-                onSubmit: ()->
-                    $.post '/orders', $('.js-contacts-form').serializeObject()
+# applications
 
-                    console.log 'submitted'
-                    $('.js-stepform-inner').addClass 'hide'
-                    $('.final-message').addClass 'show'
-                    setTimeout ->
-                        $('.final-message').removeClass 'show'
-                        $('.js-contacts-form').removeClass 's_mb_40'
-                        $('.js-contacts-form').addClass 'hide'
-                    , 3000
+StatsAppRouter = require './apps/stats/stats_app.coffee'
 
-        $('.js-accordion').each (i, el) ->
-            new Accordion el
 
-        $('.js-image').each ->
-            $(@).attr 'src', $(@).data('src')
-            @.onload = ()=>
-                $(@).addClass 's_image__loaded'
+App.addInitializer ()->
+    new StatsAppRouter()
 
-        if $('.js-map').length
-            maps.init()
-
-        $.fn.serializeObject = ->
-            o = {}
-            a = @serializeArray()
-            $.each a, ->
-                if o[@name] != undefined
-                    if !o[@name].push
-                        o[@name] = [o[@name]]
-                    o[@name].push @value or ''
-                else
-                    o[@name] = @value or ''
-                return
-            o
-    App
+module.exports = App

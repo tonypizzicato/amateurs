@@ -20,20 +20,20 @@
                                     <div class="tabbable s_mb_40">
                                         <div class="tab-pane{{#if @first}} active{{/if}}" id="tab-{{slug}}">
                                             <div class="tabbable s_mb_40">
-                                                <ul class="nav nav-tabs">
+                                                <ul class="nav nav-tabs js-tabs">
                                                     <li class="tab__title active tab__title_size_4">
                                                         <a href="#tab-{{slug}}-table" data-toggle="tab">{{noYear name}}</a>
                                                     </li>
                                                     <li class="tab__title tab__title_size_4">
-                                                        <a href="#tab-{{slug}}-recent" data-toggle="tab" data-lazy="true" data-league="{{../../league.slug}}" data-name="{{slug}}"
+                                                        <a href="#tab-{{slug}}-recent" class="js-tab-lazy" data-toggle="tab" data-lazy="true" data-league="{{../../league.slug}}" data-name="{{slug}}"
                                                            data-route="recent">Последние матчи</a>
                                                     </li>
                                                     <li class="tab__title tab__title_size_4">
-                                                        <a href="#tab-{{slug}}-comming" data-toggle="tab" data-lazy="true" data-league="{{../../league.slug}}" data-name="{{slug}}"
+                                                        <a href="#tab-{{slug}}-comming" class="js-tab-lazy" data-toggle="tab" data-lazy="true" data-league="{{../../league.slug}}" data-name="{{slug}}"
                                                            data-route="comming">Ближайшие матчи</a>
                                                     </li>
                                                     <li class="tab__title tab__title_size_4">
-                                                        <a href="#tab-{{slug}}-stats" data-toggle="tab" data-lazy="true" data-league="{{../../league.slug}}" data-name="{{slug}}"
+                                                        <a href="#tab-{{slug}}-stats" class="js-tab-lazy" data-toggle="tab" data-lazy="true" data-league="{{../../league.slug}}" data-name="{{slug}}"
                                                            data-route="stats">Статистика</a>
                                                     </li>
                                                 </ul>
