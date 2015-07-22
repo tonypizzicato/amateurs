@@ -151,7 +151,10 @@ app.get('*', function (req, res, next) {
     path = path.replace('/lazy/', '/');
     if (typeof path == 'string') {
         var param = path.slice(1);
+
         var match = param.match(/^(\w+)\//);
+
+        console.log(param, match);
 
         if (match && match.length >= 1) {
             query.slug = match[1];
@@ -159,6 +162,8 @@ app.get('*', function (req, res, next) {
             query.slug = req.session.league ? req.session.league.slug : 'moscow';
         }
     }
+
+    console.log(path, query);
 
     var populateOptions = {path: 'countries', match: {show: true}, options: {sort: {'sort': 1}}};
     LeagueModel.findOne(query).populate(populateOptions).exec(function (err, doc) {
@@ -169,6 +174,8 @@ app.get('*', function (req, res, next) {
         var populateTournaments = {path: 'countries.tournaments', model: 'Tournament', match: {show: true}, options: {sort: {'sort': 1}}};
 
         if (!doc) {
+
+            console.log('no league');
 
             var populateCountries = {path: 'countries', match: {show: true}, options: {sort: {'sort': 1}}};
 
@@ -189,11 +196,14 @@ app.get('*', function (req, res, next) {
                 });
 
             return;
+        } else {
+            console.log('has league');
         }
 
         LeagueModel.populate(doc, populateTournaments, function (err, doc) {
             req.session.league        = doc;
             res.locals.globals.league = doc;
+            console.log(doc.name);
 
             next();
         });

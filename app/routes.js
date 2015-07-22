@@ -124,6 +124,12 @@ module.exports.initialize = function (app) {
 
     app.use('/api', apiRouter);
 
+
+
+    app.get('/about', function(req, res) {
+        res.render('static/about', {pageAbout: true});
+    });
+
     app.get('/login', auth.loginPage);
     app.get('/account', auth.account);
     app.post('/login', auth.login);
