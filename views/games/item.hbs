@@ -97,12 +97,12 @@
         <div class="row s_mb_40">
             <div class="column col-md-12">
                 <div class="tabbable" id="tabs-992576">
-                    <ul class="nav nav-tabs">
+                    <ul class="nav nav-tabs js-tabs">
                         <li class="tab__title tab__title_size_half active">
-                            <a href="#lineups" data-toggle="tab">Составы</a>
+                            <a href="#lineups" class="js-tab" data-toggle="tab">Составы</a>
                         </li>
                         <li class="tab__title tab__title_size_half">
-                            <a href="#events" data-toggle="tab">События</a>
+                            <a href="#events" class="js-tab" data-toggle="tab">События</a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -235,54 +235,51 @@
         <div class="row s_mb_20">
             <div class="column col-md-12">
                 <div class="tabbable" id="tabs-992576">
-                    <ul class="nav nav-tabs">
+                    <ul class="nav nav-tabs js-tabs">
                         <li class="tab__title tab__title_size_third active">
-                            <a href="#preview" data-toggle="tab">Анонс</a>
+                            <a href="#preview" class="js-tab" data-toggle="tab">Анонс</a>
                         </li>
                         <li class="tab__title tab__title_size_third">
-                            <a href="#review" data-toggle="tab">Обзор матча</a>
+                            <a href="#review" class="js-tab" data-toggle="tab">Обзор матча</a>
                         </li>
                         <li class="tab__title tab__title_size_third">
-                            <a href="#photo" data-toggle="tab">Фотоотчет</a>
+                            <a href="#photo" class="js-tab" data-toggle="tab">Фотоотчет</a>
                         </li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="preview">
-
                             <div class="panel panel_type_article s_m_0">
                                 <div class="panel__body">
-                                    {{#if media.preview}}
+                                    {{~#if media.preview~}}
                                         <div class="reading s_pl_10 s_pr_10">{{{media.preview.body}}}</div>
 
                                         {{> video video=media.preview.video}}
-                                    {{else}}
+                                    {{~else~}}
                                         <p class="text_align_c s_mt_10">Анонса матча пока нет</p>
-                                    {{/if}}
+                                    {{~/if~}}
                                 </div>
                             </div>
                         </div>
 
                         <div class="tab-pane" id="review">
-
                             <div class="panel panel_type_article s_m_0">
                                 <div class="panel__body">
-                                    {{#if media.review}}
+                                    {{~#if media.review~}}
                                         <div class="reading s_pl_10 s_pr_10">{{{media.review.body}}}</div>
 
                                         {{> video video=media.review.video}}
-                                    {{else}}
+                                    {{~else~}}
                                         <p class="text_align_c s_mt_10">Обзора матча пока нет</p>
-                                    {{/if}}
+                                    {{~/if~}}
                                 </div>
                             </div>
                         </div>
 
                         <div class="tab-pane" id="photo">
-
                             <div class="panel panel_type_photo s_m_0">
-                                <div class="panel__body">
-                                    <div class="row">
-                                        {{~#if media.photos.length~}}
+                                <div class="panel__body">                                        <div class="row">
+
+                                    {{~#if media.photos.length~}}
                                             <div class="js-masonry-js">
                                                 <div class="pswp-gallery">
                                                     {{~#each media.photos~}}
@@ -303,10 +300,10 @@
                                                     {{~/each~}}
                                                 </div>
                                             </div>
-                                            {{~else~}}
-                                            <p class="text_align_c s_mt_10">Фотообзора пока нет</p>
-                                        {{~/if~}}
-                                    </div>
+                                    {{~else~}}
+                                        <p class="text_align_c s_mt_10">Фотообзора пока нет</p>
+                                    {{~/if~}}                                        </div>
+
                                 </div>
                             </div>
                         </div>
