@@ -382,6 +382,7 @@ module.exports = {
                     return next(null);
                 }
 
+                res.title('Турнирная Таблица');
                 res.render('tournaments/table', {tournament: tournament, pageTable: true});
             });
         });
@@ -406,7 +407,8 @@ module.exports = {
                     stats = stats.sort(function (a, b) {
                         return a.points >= b.points ? -1 : 1;
                     });
-                    log('stats end');
+
+                    res.title('Статистика');
                     res.render('tournaments/stats', {tournament: tournament, stats: stats, pageStats: true});
                 });
             });
@@ -452,6 +454,7 @@ module.exports = {
                         fixture[item.tourNumber].push(item);
                     });
 
+                    res.title('Календарь');
                     res.render('tournaments/fixture', {tournament: tournament, fixture: fixture, pageFixture: true});
                 });
             });
@@ -490,7 +493,7 @@ module.exports = {
                 return next(err);
             }
 
-            if(!result) {
+            if (!result) {
                 return res.status(404).render('404');
             }
 
@@ -637,6 +640,9 @@ module.exports = {
                 res.locals.globals.stats      = result[2];
                 res.locals.globals.recent     = result[3].recent;
                 res.locals.globals.comming    = result[3].comming;
+
+                var name         = Handlebars.helpers['noYear'](tournament.name);
+                res.locals.title = res.locals.title ? res.locals.title + ' — ' + name : name
 
                 next();
             });

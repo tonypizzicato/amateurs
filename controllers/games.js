@@ -132,6 +132,8 @@ module.exports = {
 
 
                     Promise.all([articles, photos]).then(function (result) {
+                        res.title(game.teams[0].name + ' vs ' + game.teams[1].name + '. ' + game.tourNumber + ' Тур');
+
                         res.render('games/item', {
                             tournament: tournament,
                             game:       game,

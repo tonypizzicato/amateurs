@@ -113,6 +113,10 @@ hbs.registerPartials(__dirname + viewsDir + '/partials');
 
 
 app.use(function (req, res, next) {
+    res.title = function (title) {
+        res.locals.title = res.locals.title ? title + ' — ' + res.locals.title : title;
+    }.bind(res);
+
     if (req.url.substr(-1) == '/' && req.url.length > 1) {
         res.redirect(301, req.url.slice(0, -1));
     } else {
@@ -171,7 +175,7 @@ app.get('*', function (req, res, next) {
         }
 
         var populateTournaments = {path: 'countries.tournaments', model: 'Tournament', match: {show: true}, options: {sort: {'sort': 1}}};
-        var populateCountries = {path: 'countries', match: {show: true}, options: {sort: {'sort': 1}}};
+        var populateCountries   = {path: 'countries', match: {show: true}, options: {sort: {'sort': 1}}};
 
         if (!doc) {
             LeagueModel.find({show: true}).sort({sort: 1})

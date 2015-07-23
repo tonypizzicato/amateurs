@@ -120,6 +120,7 @@ module.exports = {
             res.locals.globals.league   = result[1];
             res.locals.globals.contacts = result[2];
 
+            res.title(result[1].name);
             res.render('leagues/item', {league: result[1]});
         });
 

@@ -60,6 +60,7 @@ var controller = {
                 return next(err);
             }
 
+            res.title(article.title);
             res.render('news/item', {article: article, pageNews: true});
         })
     },

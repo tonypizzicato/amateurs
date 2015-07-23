@@ -104,6 +104,8 @@ module.exports = {
                 });
 
                 Promise.all([table, team, games]).then(function (result) {
+
+                    res.title('Клубы: ' + result[1].name);
                     res.render('teams/item',
                         {tournament: tournament, table: result[0], team: result[1], games: result[2], pageTeams: true});
                 });
@@ -143,6 +145,7 @@ module.exports = {
                         }).pop());
                     });
 
+                    res.title('Клубы');
                     res.render('teams/list', {league: tournament, teams: teams, pageTeams: true});
                 });
             });

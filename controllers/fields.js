@@ -32,6 +32,7 @@ module.exports = {
                         };
                     });
 
+                    res.title('Поля: ' + field.title);
                     res.render('fields/item', {field: field, pageFields: true});
                 });
 

@@ -2,7 +2,10 @@
 <html xmlns="http://www.w3.org/1999/html">
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Amateur Football League</title>
+    <title>
+        {{#if title}}{{title}} — {{/if}}Любительская Футбольная Лига Amateur Football League.
+        {{#eq globals.league.slug 'spb'}}Санкт-Петербург{{else}}Москва{{/eq}}.
+    </title>
 
     <meta name='viewport' content='width=1170'>
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
