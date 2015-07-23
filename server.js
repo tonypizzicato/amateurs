@@ -131,8 +131,7 @@ app.use('/api', function (req, res, next) {
 
 
 app.get('/', function (req, res) {
-    //var slug = req.session.league ? req.session.league.slug : null;
-    res.redirect('/' + req.session.league ? req.session.league.slug : 'moscow');
+    res.redirect('/' + (req.session.league ? req.session.league.slug : 'moscow'));
 });
 
 app.get('*', function (req, res, next) {
@@ -144,6 +143,8 @@ app.get('*', function (req, res, next) {
     res.locals.globals = res.locals.globals || {};
 
     res.locals.globals.hasOrder = !!req.session.order;
+    res.locals.globals.hasOrder = false;
+
 
     var query = {show: true};
     var path  = req.params[0];

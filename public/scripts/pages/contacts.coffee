@@ -1,33 +1,39 @@
 $ = require 'jquery'
 _ = require 'underscore'
-Backbone = require '../utils/backbone.coffee'
 
 ProjectPage = require './project.coffee'
+WithMasonry = require '../mixins/with-masonry-item.coffee'
+StepForm = require '../elements/stepform.coffee'
 
-WithLazyTabs = require '../mixins/with-lazy-tabs.coffee'
+ContactsPage = ProjectPage.mix(WithMasonry).extend
 
-IndexPage = ProjectPage.mix(WithLazyTabs).extend
+    _selectors: ()->
+        _.defaults {
+            "form": '.js-contacts-form'
+            "stepform": '.js-stepform-inner'
+            "message": '.final-message'
+        }, this._super()
+
 
     initialize: ()->
-        console.log 'initialize index page'
         this._super()
 
         this._initForm()
 
     _initForm: ()->
 
-        if $('.js-contacts-form').length
-            new StepForm $('.js-contacts-form')[0],
-                onSubmit: ()->
-                    $.post '/orders', $('.js-contacts-form').serializeObject()
+        if this._elem('form').length
+            new StepForm this._elem('form').get(0),
+                onSubmit: ()=>
+                    $.post '/orders', this._elem('form').serializeObject()
 
                     console.log 'submitted'
-                    $('.js-stepform-inner').addClass 'hide'
-                    $('.final-message').addClass 'show'
-                    setTimeout ->
-                        $('.final-message').removeClass 'show'
-                        $('.js-contacts-form').removeClass 's_mb_40'
-                        $('.js-contacts-form').addClass 'hide'
+                    this._elem('stepform').addClass 'hide'
+                    this._elem('message').addClass 'show'
+                    setTimeout =>
+                        this._elem('message').removeClass 'show'
+                        this._elem('form').removeClass 's_mb_40'
+                        this._elem('form').addClass 'hide'
                     , 3000
 
         $.fn.serializeObject = ->
@@ -44,4 +50,4 @@ IndexPage = ProjectPage.mix(WithLazyTabs).extend
             o
 
 
-module.exports = IndexPage
+module.exports = ContactsPage

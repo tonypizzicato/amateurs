@@ -1,22 +1,10 @@
-$ = require 'jquery'
-_ = require 'underscore'
-
-Backbone = require '../utils/backbone.coffee'
-
 ProjectPage = require './project.coffee'
 
 WithTabs = require '../mixins/with-masonry-tabs.coffee'
+WithMasonry = require '../mixins/with-masonry-item.coffee'
 
-require '../gallery.coffee'
+require '../elements/gallery.coffee'
 
-MatchPage = ProjectPage.mix(WithTabs).extend
-
-    initialize: ()->
-        this._super()
-
-        $('.js-masonry-item').removeClass('masonry-item__hidden_yes')
-
-        console.log 'initialize match page'
-
+MatchPage = ProjectPage.mix(WithTabs, WithMasonry).extend {}
 
 module.exports = MatchPage
