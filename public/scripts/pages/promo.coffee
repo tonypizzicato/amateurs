@@ -24,8 +24,6 @@ PromoPage = ProjectPage.extend
     initialize: ()->
         this._super()
 
-        console.log 'initialize promo page'
-        this.bindUIElements()
         this._initWaypoints()
 
     initialize: ()->

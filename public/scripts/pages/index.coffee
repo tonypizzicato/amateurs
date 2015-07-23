@@ -15,7 +15,6 @@ IndexPage = ProjectPage.mix(WithLazyTabs).extend
         }, this._super()
 
     initialize: ()->
-        console.log 'initialize index page'
         this._super()
 
         this._initAccordion()

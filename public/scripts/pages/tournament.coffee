@@ -2,10 +2,7 @@ $ = require 'jquery'
 _ = require 'underscore'
 require 'owl.carousel',
 
-Backbone = require '../utils/backbone.coffee'
-
 ProjectPage = require './project.coffee'
-
 WithTabs = require '../mixins/with-tabs.coffee'
 
 TournamentPage = ProjectPage.mix(WithTabs).extend
@@ -18,10 +15,7 @@ TournamentPage = ProjectPage.mix(WithTabs).extend
     initialize: ()->
         this._super()
 
-        console.log 'initialize tournament page'
-
         this._initCarousel()
-#        this._initGallery()
 
     _initCarousel: ()->
 

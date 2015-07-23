@@ -180,14 +180,10 @@ module.exports = (grunt) ->
                     dest:   ".tmp/styles/"
                 ]
 
-        bower:
-            target:
-                rjsConfig: "<%= yeoman.public %>/scripts/main.js"
-
         coffeeify:
             dist:
                 files: [{
-                    src: ["<%= yeoman.public %>/scripts/main.coffee"]
+                    src: ["<%= yeoman.public %>/scripts/app.coffee"]
                     dest: ".tmp/scripts/out.js"
                 }]
                 options:

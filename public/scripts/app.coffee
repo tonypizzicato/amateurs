@@ -4,20 +4,15 @@ React = require 'react'
 Backbone = require 'backbone'
 Marionette = require 'backbone.marionette'
 
-StepForm = require './elements/stepform.coffee'
-Masonry = require 'masonry-layout'
-
-require './news.coffee'
-
-IndexPage = require './pages/index.coffee'
-TournamentPage = require './pages/tournament.coffee'
-MatchPage = require './pages/match.coffee'
-PromoPage = require './pages/promo.coffee'
+PageClasses = require './page-classes.coffee'
 
 Router = Backbone.Router.extend
     routes:
         ':city/tournaments/:tournament/matches/:id': 'match'
         ':city/tournaments/:tournament': 'tournament'
+        ':city/tournaments/:tournament/fields': 'fields'
+        ':city/contacts': 'contacts'
+        ':city/fields': 'fields'
         ':city': 'index'
         'promo/nationals.html': 'promo'
         '*notFound': 'notFound'
@@ -26,41 +21,27 @@ Router = Backbone.Router.extend
 appRouter = new Router()
 
 appRouter.on 'route:index', ()->
-    new IndexPage el: $('.container')
+    new PageClasses.IndexPage el: $('.container')
 
 appRouter.on 'route:tournament', ()->
-    new TournamentPage el: $('.container')
+    new PageClasses.TournamentPage el: $('.container')
 
 appRouter.on 'route:match', ()->
-    new MatchPage el: $('.container')
+    new PageClasses.MatchPage el: $('.container')
+
+appRouter.on 'route:contacts', ()->
+    new PageClasses.ContactsPage el: $('.container')
+
+appRouter.on 'route:fields', ()->
+    new PageClasses.FieldsPage el: $('.container')
 
 appRouter.on 'route:promo', ()->
-    new PromoPage el: $('.container')
+    new PageClasses.PromoPage el: $('.container')
 
 appRouter.on 'route:notFound', (fragment)->
+    new PageClasses.ProjectPage el: $('.container')
     console.log 'notFound route handled', fragment
 
 if Backbone.history
     Backbone.history.start
         pushState: true
-
-
-App = new Marionette.Application()
-
-App.on 'start', ()->
-    console.log 'app started'
-
-App.on 'start', ()->
-    if $('.js-map').length
-        require('./maps.coffee')
-
-
-# applications
-
-StatsAppRouter = require './apps/stats/stats_app.coffee'
-
-
-App.addInitializer ()->
-    new StatsAppRouter()
-
-module.exports = App
