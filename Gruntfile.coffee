@@ -293,7 +293,16 @@ module.exports = (grunt) ->
                             "images/{,*/}*.webp"
                             "images/logos/*.png"
                             "{,*/}*.html"
-                            "styles/fonts/{,*/}*.*"
+                        ]
+                    }
+                    {
+                        expand: true
+                        dot:    true
+                        flatten: true
+                        cwd:    "<%= yeoman.public %>"
+                        dest:   "<%= yeoman.dist %>/styles"
+                        src:    [
+                            "styles/fonts/football/*.{woff,eot,svg,ttf}"
                         ]
                     }
                     {
