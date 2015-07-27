@@ -260,6 +260,7 @@ module.exports = (grunt) ->
         htmlmin:
             dist:
                 options:
+                    minifyJS:                  true
                     collapseBooleanAttributes: true
                     collapseWhitespace:        true
 

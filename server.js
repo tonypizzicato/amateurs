@@ -117,6 +117,10 @@ app.use(function (req, res, next) {
         res.locals.title = res.locals.title ? title + ' — ' + res.locals.title : title;
     }.bind(res);
 
+    res.desc = function (desc) {
+        res.locals.desc = res.locals.desc ? desc + ' — ' + res.locals.desc : desc;
+    }.bind(res);
+
     if (req.url.substr(-1) == '/' && req.url.length > 1) {
         res.redirect(301, req.url.slice(0, -1));
     } else {

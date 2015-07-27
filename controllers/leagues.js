@@ -1,6 +1,7 @@
 'use strict';
 
 var _               = require('underscore'),
+    s               = require('underscore.string'),
     moment          = require('moment'),
     LeagueModel     = require('../models/league'),
     TournamentModel = require('../models/tournament'),
@@ -105,7 +106,7 @@ module.exports = {
         /* Contacts */
         var contacts = new Promise(function (resolve, reject) {
             LeagueModel.findOne({slug: req.params.league}).lean().exec(function (err, league) {
-                ContactModel.find({show: true, leagueId: league._id, tournaments: []}).sort({sort: 1}).exec(function (err, docs) {
+                ContactModel.find({show: true, leagueId: league._id}).sort({sort: 1}).exec(function (err, docs) {
                     if (err) {
                         reject(err);
                     }
@@ -121,6 +122,7 @@ module.exports = {
             res.locals.globals.contacts = result[2];
 
             res.title(result[1].name);
+            res.desc(s.sprintf(require('../config/descriptions').league, result[1].name, result[1].slug == 'moscow' ? "Москва" : "Санкт-Петербург"));
             res.render('leagues/item', {league: result[1]});
         });
 
