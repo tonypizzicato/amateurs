@@ -116,7 +116,6 @@ app.use(function (req, res, next) {
     res.title = function (title) {
         res.locals.title = res.locals.title ? title + ' — ' + res.locals.title : title;
     }.bind(res);
-
     res.desc = function (desc) {
         res.locals.desc = res.locals.desc ? desc + ' — ' + res.locals.desc : desc;
     }.bind(res);
@@ -147,6 +146,8 @@ app.get('*', function (req, res, next) {
     if (req.url.indexOf('/api') === 0) {
         return next();
     }
+
+    res.locals.opts = require('./config/settings.js');
 
     res.locals.globals = res.locals.globals || {};
 
