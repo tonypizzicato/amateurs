@@ -1969,10 +1969,12 @@ td .tl {
 
 .partner__border {
     overflow: hidden;
+    width:    80%;
+    margin:   0 auto;
 }
 
 .partner__image {
-    width:    340px;
+    width:    100%;
     position: relative;
     top:      -2px;
     left:     -2px;
