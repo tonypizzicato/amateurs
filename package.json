@@ -31,6 +31,7 @@
     "morgan": "^1.5.1",
     "multer": "^0.1.8",
     "node-rest-client": "^1.4.4",
+    "nodemailer": "^1.4.0",
     "owl.carousel": "git+https://github.com/tonypizzicato/OwlCarousel2#master",
     "passport": "^0.2.1",
     "passport-local": "^1.0.0",
