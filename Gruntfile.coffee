@@ -62,6 +62,7 @@ module.exports = (grunt) ->
             express:
                 files: [#Files to be watched
                     "<%= yeoman.server %>/server.js"
+                    "<%= yeoman.server %>/config/*.js"
                     "<%= yeoman.server %>/app/*.js"
                     "<%= yeoman.server %>/controllers/*.js"
                     "<%= yeoman.server %>/controllers/api/*.js"

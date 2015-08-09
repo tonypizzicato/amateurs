@@ -642,7 +642,7 @@ module.exports = {
                 res.locals.globals.comming    = result[3].comming;
 
                 var name         = Handlebars.helpers['noYear'](tournament.name);
-                res.locals.title = res.locals.title ? res.locals.title + ' — ' + name : name
+                res.title(name);
 
                 next();
             });

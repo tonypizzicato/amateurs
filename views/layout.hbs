@@ -66,7 +66,8 @@
                             {{#if stick}}
                                 {{#if image}}
                                     <div class="news__content">
-                                        <div class="news__image" style="background-image: url({{image}}); background-size: cover; background-position: 50% 50%;"></div>
+                                        <div class="news__image"
+                                             style="background-image: url({{image}}); background-size: cover; background-position: 50% {{imagePosition}};"></div>
 
                                         <div class="news__resume">
                                             {{#if ../../../globals.tournament._id}}
@@ -96,6 +97,14 @@
         </div>
     {{/if}}
 
+    {{#if globals.tournament}}
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                {{> submenu this}}
+            </div>
+        </div>
+    {{/if}}
+
     {{{body}}}
 
     {{#if globals.league}}
@@ -119,15 +128,18 @@
 {{> photoswipe}}
 
 <script>
-    var cb = function(href) {
-        var l = document.createElement('link'); l.rel = 'stylesheet';
+    var cb = function (href) {
+        var l  = document.createElement('link');
+        l.rel  = 'stylesheet';
         l.href = href;
-        var h = document.getElementsByTagName('head')[0]; h.parentNode.insertBefore(l, h);
+        var h  = document.getElementsByTagName('head')[0];
+        h.parentNode.insertBefore(l, h);
     };
     var raf = requestAnimationFrame || mozRequestAnimationFrame ||
             webkitRequestAnimationFrame || msRequestAnimationFrame;
     if (raf) {
-        raf(cb.bind(null, 'https://fonts.googleapis.com/css?family=Exo+2:400,100,300,600,700,500|Open+Sans:300,400,500,700&subset=latin,cyrillic'));
+        raf(cb.bind(null,
+                'https://fonts.googleapis.com/css?family=Exo+2:400,100,300,600,700,500|Open+Sans:300,400,500,700&subset=latin,cyrillic'));
         raf(cb.bind(null, 'http://188.166.105.215:3000/css/tl-sprite20.css'));
     }
     else window.addEventListener('load', cb);
@@ -146,12 +158,12 @@
     (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;
         i[r] = i[r] || function () {
-            (i[r].q = i[r].q || []).push(arguments)
-        }, i[r].l = 1 * new Date();
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
         a = s.createElement(o),
                 m = s.getElementsByTagName(o)[0];
         a.async = 1;
-        a.src = g;
+        a.src   = g;
         m.parentNode.insertBefore(a, m)
     })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 

@@ -69,7 +69,7 @@ a:hover,
 a:active,
 a:focus {
     color:      $navbar-default-link-color;
-    transition: color .2s;
+    transition: color .2s, background-color .2s;
 }
 
 a:hover {
@@ -78,6 +78,10 @@ a:hover {
 
 .container {
     width: 1170px !important;
+}
+
+.container .container {
+    width: 1140px !important;
 }
 
 .text_color_orange {
@@ -146,6 +150,56 @@ ul, ol {
  */
 
 .navbar {
+    background-color:   #131A23;
+    border:             none;
+    border-radius:      0;
+    margin-top:         20px;
+    -webkit-transition: all 0.3s ease;
+    transition:         all 0.3s ease;
+}
+
+.navbar-default {
+    z-index: 500;
+}
+
+.navbar.navbar-fixed-top {
+    z-index:    499;
+    top:        0;
+    padding:    0;
+    opacity:    0;
+    background: $navbar-default-link-active-color;
+    box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.05);
+}
+
+.navbar.navbar-fixed-top .nav {
+    padding: 5px 0;
+}
+
+.navbar-fixed-top a {
+    color:     #09111B;
+    font-size: 16px;
+}
+
+.navbar.navbar-fixed-top .navbar__item.navbar__item_active_yes a {
+    color: #0F6C9C;
+}
+
+.navbar-fixed-top a:hover,
+.navbar-fixed-top a:focus {
+    color: #fff !important;
+}
+
+.navbar-fixed-top .nav .dropdown-menu.dropdown-menu_type_tournaments {
+    width:      100%;
+    margin-top: 0;
+}
+
+.navbar-fixed-top .nav.navbar-nav.navbar_border_left {
+    border-color: #EFAB5B;
+}
+
+.navbar-fixed-top .navbar-link_type_promo {
+    display: none;
     background-color: #131A23;
     border:           none;
     border-radius:    0;
@@ -169,6 +223,15 @@ ul, ol {
 .navbar .navbar__item.navbar__item_active_yes a:focus {
     color:  $navbar-default-link-active-color;
     cursor: default;
+}
+
+.nav > li > a:hover, .nav > li > a:hover,
+.nav > li > a:hover, .nav > li > a:focus {
+    background-color: transparent;
+}
+
+.nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
+    background-color: transparent;
 }
 
 .nav_type_user {
@@ -730,8 +793,21 @@ ul, ol {
 }
 
 .panel_type_squads .match-lineup__player,
-.panel_type_squads .match-lineup__number {
-    padding: 15px;
+.panel_type_squads .match-lineup__number,
+.panel_type_squads .match-lineup__photo {
+    padding:     15px;
+    line-height: 3;
+}
+
+.panel_type_squads .match-lineup__photo {
+    padding:         0;
+    background-size: cover;
+    width:           72px;
+    height:          72px;
+}
+
+.panel_type_squads .match-lineup__photo img {
+    width: 100%;
 }
 
 /**
@@ -767,13 +843,13 @@ ul, ol {
     right: 0;
 }
 
-.form .form-group .fa {
-    position:       absolute;
-    padding:        10px;
-    pointer-events: none;
-    color:          $navbar-default-link-active-color;
-    font-size:      16px;
-}
+//.form .form-group .fa {
+//    position:       absolute;
+//    padding:        10px;
+//    pointer-events: none;
+//    color:          $navbar-default-link-active-color;
+//    font-size:      16px;
+//}
 
 .form_type_signin .btn {
     background: #30a8e6;
@@ -1247,7 +1323,8 @@ $size: 200px;
 .match-events__time,
 .match-events__description,
 .match-lineup__player,
-.match-lineup__number {
+.match-lineup__number,
+.match-lineup__photo {
     display:       inline-block;
     padding:       15px 20px 15px 15px;
     margin-bottom: 10px;
@@ -1280,7 +1357,8 @@ $size: 200px;
     margin-bottom: 1px;
 }
 
-.match-lineup__player {
+.match-lineup__player,
+.match-lineup__photo {
     border-left: 5px solid #08101c;
 }
 
@@ -1637,6 +1715,10 @@ $size: 200px;
     margin-bottom: 20px;
 }
 
+.s_mb_30 {
+    margin-bottom: 30px;
+}
+
 .s_mb_40 {
     margin-bottom: 40px;
 }
@@ -1849,6 +1931,7 @@ $size: 200px;
 .delay-05s {
     animation-delay:         0.5s;
     -webkit-animation-delay: 0.5s;
+    animation-duration:      0.5s;
 }
 
 .delay-1s {
@@ -1967,6 +2050,14 @@ td .tl {
     margin-bottom:  1px;
 }
 
+.navbar-link_type_promo {
+    background-color: $color-red;
+}
+
+.navbar-link_type_promo:hover {
+    background-color: #F5B367 !important;
+    color:            #222 !important;
+}
 .partner__border {
     overflow: hidden;
     width:    80%;

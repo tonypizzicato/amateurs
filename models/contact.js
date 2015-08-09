@@ -11,6 +11,7 @@ var ContactSchema = new Schema({
     name:        {type: String},
     title:       {type: String},
     phone:       {type: String},
+    toCall:      {type: Boolean},
     email:       {type: String},
     vk:          {
         name: {type: String},

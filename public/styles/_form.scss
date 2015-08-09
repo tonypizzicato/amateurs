@@ -2,342 +2,448 @@ $fa-font-path: "/vendor/fontawesome/fonts/";
 @import 'fontawesome/scss/font-awesome';
 
 .stepform {
-    position:   relative;
-    margin:     0 auto;
-    width:      100%;
-    text-align: left;
-    font-size:  24px;
+  position:   relative;
+  margin:     0 auto;
+  width:      100%;
+  text-align: left;
+  font-size:  24px;
 
-    max-height: 7em;
-    transition: max-height .6s;
+  max-height: 7em;
+  transition: max-height .6s;
 }
 
 .stepform.hide {
-    display:       block !important;
-    margin-bottom: 0;
-    max-height:    0;
-    overflow:      hidden;
+  display:       block !important;
+  margin-bottom: 0;
+  max-height:    0;
+  overflow:      hidden;
 }
 
 .stepform .submit {
-    display: none;
+  display: none;
 }
 
 /* Question list style */
 .stepform ol {
-    margin:             0;
-    padding:            0;
-    list-style:         none;
-    position:           relative;
-    -webkit-transition: height 0.4s;
-    transition:         height 0.4s;
+  margin:             0;
+  padding:            0;
+  list-style:         none;
+  position:           relative;
+  -webkit-transition: height 0.4s;
+  transition:         height 0.4s;
 }
 
 .stepform ol:before {
-    content:          '';
-    background-color: #131A23;
-    position:         absolute;
-    left:             0;
-    bottom:           0;
-    width:            100%;
-    height:           2.35em;
+  content:          '';
+  background-color: #131A23;
+  position:         absolute;
+  left:             0;
+  bottom:           0;
+  width:            100%;
+  height:           2.35em;
 }
 
 .questions li {
-    z-index:            100;
-    position:           relative;
-    visibility:         hidden;
-    height:             0;
-    -webkit-transition: visibility 0s 0.4s, height 0s 0.4s;
-    transition:         visibility 0s 0.4s, height 0s 0.4s;
+  z-index:            100;
+  position:           relative;
+  visibility:         hidden;
+  height:             0;
+  -webkit-transition: visibility 0s 0.4s, height 0s 0.4s;
+  transition:         visibility 0s 0.4s, height 0s 0.4s;
 }
 
 .questions li.current,
 .no-js .questions li {
-    visibility:         visible;
-    height:             auto;
-    -webkit-transition: none;
-    transition:         none;
+  visibility:         visible;
+  height:             auto;
+  -webkit-transition: none;
+  transition:         none;
 }
 
 /* Labels */
 .questions li > span {
-    display:  block;
-    overflow: hidden;
+  display:  block;
+  overflow: hidden;
 }
 
 .questions li > span label {
-    display:            block;
-    font-weight:        100;
+  display:            block;
+  font-weight:        100;
 
-    -webkit-transition: -webkit-transform 0.4s;
-    transition:         transform 0.4s;
-    -webkit-transform:  translateY(-100%);
-    transform:          translateY(-100%);
+  -webkit-transition: -webkit-transform 0.4s;
+  transition:         transform 0.4s;
+  -webkit-transform:  translateY(-100%);
+  transform:          translateY(-100%);
 }
 
 .questions li.current > span label,
 .no-js .questions li > span label {
-    -webkit-transition: none;
-    transition:         none;
-    -webkit-transform:  translateY(0);
-    transform:          translateY(0);
+  -webkit-transition: none;
+  transition:         none;
+  -webkit-transform:  translateY(0);
+  transform:          translateY(0);
 }
 
 .show-next .questions li.current > span label {
-    -webkit-animation: moveUpFromDown 0.4s both;
-    animation:         moveUpFromDown 0.4s both;
+  -webkit-animation: moveUpFromDown 0.4s both;
+  animation:         moveUpFromDown 0.4s both;
 }
 
 @-webkit-keyframes moveUpFromDown {
-    from {
-        -webkit-transform: translateY(100%);
-    }
-    to {
-        -webkit-transform: translateY(0);
-    }
+  from {
+    -webkit-transform: translateY(100%);
+  }
+  to {
+    -webkit-transform: translateY(0);
+  }
 }
 
 @keyframes moveUpFromDown {
-    from {
-        -webkit-transform: translateY(100%);
-        transform:         translateY(100%);
-    }
-    to {
-        -webkit-transform: translateY(0);
-        transform:         translateY(0);
-    }
+  from {
+    -webkit-transform: translateY(100%);
+    transform:         translateY(100%);
+  }
+  to {
+    -webkit-transform: translateY(0);
+    transform:         translateY(0);
+  }
 }
 
 /* Input field */
 .questions input {
-    display:            block;
-    margin:             0.3em 0 0 0;
-    padding:            0.2em 1em 0.5em 0.7em;
-    width:              calc(100% - 2em);
-    border:             none;
-    background:         transparent;
-    color:              rgba(255, 255, 255, 0.8);
-    font-size:          1em;
-    line-height:        1;
-    opacity:            0;
-    -webkit-transition: opacity 0.3s;
-    transition:         opacity 0.3s;
-    height:             2.1em;
+  display:            block;
+  margin:             0.3em 0 0 0;
+  padding:            0.2em 1em 0.5em 0.7em;
+  width:              calc(100% - 2em);
+  border:             none;
+  background:         transparent;
+  color:              rgba(255, 255, 255, 0.8);
+  font-size:          1em;
+  line-height:        1;
+  opacity:            0;
+  -webkit-transition: opacity 0.3s;
+  transition:         opacity 0.3s;
+  height:             2.1em;
 }
 
 .questions .current input,
 .no-js .questions input {
-    opacity: 1;
+  opacity: 1;
 }
 
 .questions input:focus,
 .stepform button:focus {
-    outline: none;
+  outline:    none;
+  border:     1px solid #30a8e6;
+  transition: border .4s;
 }
 
 /* Next question button */
 .next {
-    position:                    absolute;
-    right:                       0;
-    bottom:                      .3em; /* padding-bottom of form plus progress bar height */
-    display:                     block;
-    padding:                     0;
-    width:                       2em;
-    height:                      2em;
-    border:                      none;
-    background:                  #131A23;
-    color:                       rgba(245, 179, 103, .6);
-    text-align:                  center;
-    opacity:                     0;
-    z-index:                     100;
-    cursor:                      pointer;
-    -webkit-transition:          -webkit-transform 0.3s, opacity 0.3s;
-    transition:                  transform 0.3s, opacity 0.3s;
-    -webkit-transform:           translateX(-20%);
-    transform:                   translateX(-20%);
-    pointer-events:              none;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  position:                    absolute;
+  right:                       0;
+  bottom:                      .3em; /* padding-bottom of form plus progress bar height */
+  display:                     block;
+  padding:                     0;
+  width:                       2em;
+  height:                      2em;
+  border:                      none;
+  background:                  #131A23;
+  color:                       rgba(245, 179, 103, .6);
+  text-align:                  center;
+  opacity:                     0;
+  z-index:                     100;
+  cursor:                      pointer;
+  -webkit-transition:          -webkit-transform 0.3s, opacity 0.3s;
+  transition:                  transform 0.3s, opacity 0.3s;
+  -webkit-transform:           translateX(-20%);
+  transform:                   translateX(-20%);
+  pointer-events:              none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 .next:hover {
-    color: rgba(245, 179, 103, .9);
+  color: rgba(245, 179, 103, .9);
 }
 
 .next::after {
-    position:                absolute;
-    top:                     0;
-    left:                    0;
-    width:                   100%;
-    height:                  100%;
-    content:                 "\f054";
-    text-transform:          none;
-    font-weight:             normal;
-    font-style:              normal;
-    font-variant:            normal;
-    font-family:             'FontAwesome';
-    line-height:             2;
-    speak:                   none;
-    -webkit-font-smoothing:  antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  position:                absolute;
+  top:                     0;
+  left:                    0;
+  width:                   100%;
+  height:                  100%;
+  content:                 "\f054";
+  text-transform:          none;
+  font-weight:             normal;
+  font-style:              normal;
+  font-variant:            normal;
+  font-family:             'FontAwesome';
+  line-height:             2;
+  speak:                   none;
+  -webkit-font-smoothing:  antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .next.show {
-    opacity:           1;
-    -webkit-transform: translateX(0);
-    transform:         translateX(0);
-    pointer-events:    auto;
+  opacity:           1;
+  -webkit-transform: translateX(0);
+  transform:         translateX(0);
+  pointer-events:    auto;
 }
 
 /* Progress bar */
 .stepform .progress {
-    width:              0%;
-    height:             0.14em;
-    margin:             0;
-    background:         #2da6e4;
-    border-radius:      0;
-    -webkit-transition: width 0.4s ease-in-out;
-    transition:         width 0.4s ease-in-out;
+  width:              0%;
+  height:             0.14em;
+  margin:             0;
+  background:         #2da6e4;
+  border-radius:      0;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition:         width 0.4s ease-in-out;
 }
 
 .stepform .progress::before {
-    position:   absolute;
-    top:        auto;
-    width:      100%;
-    height:     inherit;
-    background: rgba(0, 0, 0, 0.05);
-    content:    '';
+  position:   absolute;
+  top:        auto;
+  width:      100%;
+  height:     inherit;
+  background: rgba(0, 0, 0, 0.05);
+  content:    '';
 }
 
 /* Number indicator */
 .stepform .number {
-    position:    absolute;
-    right:       0;
-    overflow:    hidden;
-    margin:      0.4em 0;
-    width:       3em;
-    font-weight: 700;
-    font-size:   0.4em;
+  position:    absolute;
+  right:       0;
+  overflow:    hidden;
+  margin:      0.4em 0;
+  width:       3em;
+  font-weight: 700;
+  font-size:   0.4em;
 }
 
 .stepform .number:after {
-    position:          absolute;
-    left:              50%;
-    content:           '/';
-    opacity:           0.4;
-    -webkit-transform: translateX(-50%);
-    transform:         translateX(-50%);
+  position:          absolute;
+  left:              50%;
+  content:           '/';
+  opacity:           0.4;
+  -webkit-transform: translateX(-50%);
+  transform:         translateX(-50%);
 }
 
 .stepform .number span {
-    float:      right;
-    width:      40%;
-    text-align: center;
+  float:      right;
+  width:      40%;
+  text-align: center;
 }
 
 .stepform .number .number-current {
-    float: left;
+  float: left;
 }
 
 .stepform .number-next {
-    position: absolute;
-    left:     0;
+  position: absolute;
+  left:     0;
 }
 
 .stepform.show-next .number-current {
-    -webkit-transition: -webkit-transform 0.4s;
-    transition:         transform 0.4s;
-    -webkit-transform:  translateY(-100%);
-    transform:          translateY(-100%);
+  -webkit-transition: -webkit-transform 0.4s;
+  transition:         transform 0.4s;
+  -webkit-transform:  translateY(-100%);
+  transform:          translateY(-100%);
 }
 
 .stepform.show-next .number-next {
-    -webkit-animation: moveUpFromDown 0.4s both;
-    animation:         moveUpFromDown 0.4s both;
+  -webkit-animation: moveUpFromDown 0.4s both;
+  animation:         moveUpFromDown 0.4s both;
 }
 
 /* Error and final message */
 .stepform .error-message,
 .stepform .final-message {
-    position:           absolute;
-    visibility:         hidden;
-    opacity:            0;
-    -webkit-transition: opacity 0.4s;
-    transition:         opacity 0.4s;
+  position:           absolute;
+  visibility:         hidden;
+  opacity:            0;
+  -webkit-transition: opacity 0.4s;
+  transition:         opacity 0.4s;
 }
 
 .stepform .error-message {
-    padding:   0.4em 3.5em 0 0;
-    width:     100%;
-    color:     #888;
-    font-size: 0.5em;
+  padding:   0.4em 3.5em 0 0;
+  width:     100%;
+  color:     #888;
+  font-size: 0.5em;
 }
 
 .final-message {
-    top:               50%;
-    left:              0;
-    padding:           1.4em 0;
-    width:             100%;
-    -webkit-transform: translateY(-50%);
-    transform:         translateY(-50%);
+  top:               50%;
+  left:              0;
+  padding:           1.4em 0;
+  width:             100%;
+  -webkit-transform: translateY(-50%);
+  transform:         translateY(-50%);
 }
 
 .error-message.show,
 .final-message.show {
-    visibility: visible;
-    opacity:    1;
+  visibility: visible;
+  opacity:    1;
 }
 
 .final-message.show {
-    -webkit-transition-delay: 0.5s;
-    transition-delay:         0.5s;
+  -webkit-transition-delay: 0.5s;
+  transition-delay:         0.5s;
 }
 
 /* Final hiding of form / showing message */
 .stepform-inner.hide {
-    display:            block !important;
-    visibility:         hidden;
-    opacity:            0;
-    -webkit-transition: opacity 0.3s, visibility 0s 0.3s;
-    transition:         opacity 0.3s, visibility 0s 0.3s;
+  display:            block !important;
+  visibility:         hidden;
+  opacity:            0;
+  -webkit-transition: opacity 0.3s, visibility 0s 0.3s;
+  transition:         opacity 0.3s, visibility 0s 0.3s;
 }
 
 /* No JS Fallback */
 .no-js .stepform {
-    font-size: 1.75em;
+  font-size: 1.75em;
 }
 
 .no-js .questions li {
-    padding: 0 0 2em;
+  padding: 0 0 2em;
 }
 
 .no-js .stepform .submit {
-    display:    block;
-    float:      right;
-    padding:    10px 20px;
-    border:     none;
-    background: rgba(0, 0, 0, 0.3);
-    color:      rgba(0, 0, 0, 0.4);
+  display:    block;
+  float:      right;
+  padding:    10px 20px;
+  border:     none;
+  background: rgba(0, 0, 0, 0.3);
+  color:      rgba(0, 0, 0, 0.4);
 }
 
 .no-js .stepform .controls {
-    display: none;
+  display: none;
 }
 
 /* Remove IE clear cross */
 input[type=text]::-ms-clear {
-    display: none;
+  display: none;
 }
 
 /* Adjust form for smaller screens */
 @media screen and (max-width: 44.75em) {
-    .stepform {
-        font-size: 1.8em;
-    }
+  .stepform {
+    font-size: 1.8em;
+  }
 }
 
 @media screen and (max-width: 33.5625em) {
-    .stepform {
-        font-size: 1.2em;
-    }
+  .stepform {
+    font-size: 1.2em;
+  }
+}
+
+// SIMPLE CONTACT FORM //
+
+/* Input field */
+.contact-form input,
+.contact-form textarea {
+  position:           relative;
+  display:            block;
+  padding:            1.2em 1em 1.3em;
+  border:             none;
+  background:         #060E18;
+  color:              rgba(255, 255, 255, 0.8);
+  font-size:          18px;
+  line-height:        1;
+  -webkit-transition: opacity 0.3s;
+  transition:         opacity 0.3s;
+  width:              100%;
+  height:             2.1em;
+  z-index:            10;
+}
+
+.contact-form textarea {
+  max-width: 100%;
+  height:    150px;
+  resize:    none;
+}
+
+.contact-form input,
+.contact-form textarea {
+  border:     1px solid #060E18;
+  transition: border .2s;
+
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border:  1px solid #30a8e6;
+}
+
+.contact-form button:focus {
+  outline: none;
+}
+
+/* Labels */
+.contact-form span {
+  display:  block;
+  overflow: hidden;
+}
+
+.contact-form span label {
+  display:     block;
+  font-size:   17px;
+  font-weight: 100;
+}
+
+.contact-form .btn {
+  position:         relative;
+  height:           60px;
+  font-size:        24px;
+  color:            #fff;
+  background-color: #c63c3c;
+}
+
+.contact-form .btn .fa {
+  position:         absolute;
+  left:             0;
+  font-size:        40px;
+  top:              0;
+  padding:          10px 20px;
+  color:            #fff;
+  background-color: #F5B367;
+  z-index:          0;
+}
+
+/* Error and final message */
+.contact-form .form-field span.error,
+.contact-form .final {
+  visibility: hidden;
+  opacity:    0;
+  z-index:    0;
+
+  width:      100%;
+  color:      #888;
+
+  transition: all 0.4s;
+}
+
+.contact-form .form-field.error .error {
+  opacity:    1;
+  visibility: visible;
+  transform:  translateY(110%);
+}
+
+.contact-form .form-field.error input,
+.contact-form .form-field.error textarea {
+  border-color: #c63c3c;
+}
+
+.btn-span-ok {
+  position: relative;
+  top:      -34px;
+  opacity:  0;
 }

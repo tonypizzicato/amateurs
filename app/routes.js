@@ -12,6 +12,7 @@ var express          = require('express'),
     teams            = require('../controllers/teams'),
     news             = require('../controllers/news'),
     orders           = require('../controllers/orders'),
+    promo            = require('../controllers/promo'),
 
     apiNews          = require('../controllers/api/news'),
     apiCountries     = require('../controllers/api/countries'),
@@ -142,6 +143,9 @@ module.exports.initialize = function (app) {
 
     app.post('/orders', orders.create);
 
+
+    /** Delete after 1 month */
+    app.get('/:league/tournaments/promo/vdv-day', t(''), promo.vdv);
 
     app.get('/:league/tournaments/:name/fixture', t(''), news.pre, tournaments.globals, tournaments.fixture);
     app.get('/:league/tournaments/:name/table', t(''), news.pre, tournaments.globals, tournaments.table);
