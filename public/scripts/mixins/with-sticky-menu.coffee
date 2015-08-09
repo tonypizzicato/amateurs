@@ -34,12 +34,13 @@ WithStickyMenu =
 
 
         onScroll = ()=>
-            if ($(window).scrollTop() > this._elem('original').offset().top)
-                $('nav.original').css('opacity', '0');
-                $('nav.navbar-fixed-top').css('opacity', '1');
-            else
-                $('nav.original').css('opacity', '1');
-                $('nav.navbar-fixed-top').css('opacity', '0');
+            if this._elem('original').length
+                if ($(window).scrollTop() > this._elem('original').offset().top)
+                    $('nav.original').css('opacity', '0');
+                    $('nav.navbar-fixed-top').css('opacity', '.95');
+                else
+                    $('nav.original').css('opacity', '1');
+                    $('nav.navbar-fixed-top').css('opacity', '0');
 
         setTimeout onScroll, 200
 
