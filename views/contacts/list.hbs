@@ -3,52 +3,84 @@
         {{#unless globals.hasOrder}}
             <div class="row">
                 <div class="col-md-12">
-                    <form class="stepform s_mb_40 animated fadeInUp js-contacts-form" autocomplete="off">
-                        <div class="stepform-inner js-stepform-inner">
-                            <h2 id="order">Оставить заявку на участие.</h2>
-                            <input type="hidden" name="leagueId" value="{{globals.league._id}}">
-                            <ol class="questions">
-                                <li class="current">
+                    <div class="panel s_pt_10 s_pb_20 s_pl_20 s_pr_20">
+                        <h2 class="text_align_c text_color_orange s_mb_20 s_mt_20">Вступай в игру!</h2>
+
+                        <p class="text_align_c s_mb_30">Оставьте заявку на участие в Лиге и мы обязательно с вами свяжимся!</p>
+
+                        <form class="form contact-form js-contacts-form" autocomplete="off">
+
+                            <div class="row s_mb_20">
+                                <input type="hidden" name="leagueId" value="{{globals.league._id}}">
+
+                                <div class="form-field not-empty col-md-6">
                                     <span><label for="q1">Укажите Ваше имя.</label></span>
                                     <input id="q1" name="name" type="text"/>
-                                </li>
-                                <li>
-                                    <span><label for="q2">В каком районе Вам было бы удобно играть?</label></span>
-                                    <input id="q2" name="region" type="text"/>
-                                </li>
-                                <li>
+                                    <span class="error not-empty">Заполните поле</span>
+                                </div>
+                                <div class="form-field col-md-6">
+                                    <span><label for="q2">Откуда Вы узнали о нашей лиге?</label></span>
+                                    <input id="q2" name="source" type="text"/>
+                                </div>
+                            </div>
+                            <div class="row s_mb_20">
+                                <div class="form-field col-md-6">
                                     <span><label for="q3">В какой лиге Вы бы хотели участвовать?</label></span>
                                     <input id="q3" name="league" type="text"/>
-                                </li>
-                                <li>
+                                </div>
+                                <div class="form-field col-md-6">
                                     <span><label for="q4">За какую команду Вы бы хотели играть?</label></span>
                                     <input id="q4" name="team" type="text"/>
-                                </li>
-                                <li>
-                                    <span><label for="q5">Откуда Вы узнали о нашей лиге?</label></span>
-                                    <input id="q5" name="source" type="text"/>
-                                </li>
-                                <li>
-                                    <span><label for="q6">Укажите Ваш email, чтобы мы могли с Вами связаться.</label></span>
-                                    <input id="q6" name="email" type="email"/>
-                                </li>
-                            </ol>
-                            <!-- /questions -->
-                            <div class="controls">
-                                <button class="next"></button>
-                                <div class="progress"></div>
-							<span class="number">
-								<span class="number-current"></span>
-								<span class="number-total"></span>
-							</span>
-                                <span class="error-message"></span>
+                                </div>
                             </div>
-                            <!-- / controls -->
+                            <div class="row s_mb_20">
+                                <div class="form-field col-md-6">
+                                    <span><label for="q5">Укажиет Ваш телефон</label></span>
+                                    <input id="q5" name="phone" type="text"/>
+                                </div>
+                                <div class="form-field col-md-6">
+                                    <span><label for="q6">Укажите Ваш email</label></span>
+                                    <input id="q6" name="email" type="email"/>
+                                </div>
+                            </div>
+                            <div class="row s_mb_30">
+
+                                <div class="form-field col-md-12">
+                                    <span><label for="q7">Комментарий</label></span>
+                                    <textarea id="q7" name="message"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group form-group_icon_left js-button-submit fadeOutUp">
+                                <button class="btn form-control"><i class="fa fa-arrow-circle-o-right"></i>
+                                    <span class="animated delay-05s js-button-span">Отправить заявку</span>
+                                    <span class="btn-span-ok animated delay-05s js-button-span-ok">Спасибо! Мы с Вами обязательно свяжемся!</span>
+                                </button>
+                            </div>
+                        </form>
+
+                        <div class="row">
+                            <div class="text_align_c col-md-12">
+                                {{#if toCall}}
+                                    <p class="text_align_c text_size_16 s_mt_20">Или просто свяжитесь с этим парнем!</p>
+                                    <div class="contact__photo s_display_block" style="margin: 20px auto; background-image: url('{{toCall.image}}')"></div>
+                                    <div class="contact__details">
+                                        <div class="contact__name text_color_orange text_size_16npm">{{toCall.name}}</div>
+                                        {{#if toCall.email}}
+                                            <span class="contact__phone s_mr_20"><i class="fa fa-inbox text_color_orange s_mr_10"></i>{{toCall.email}}</span>
+                                        {{/if}}
+                                        {{#if toCall.phone}}
+                                            <span class="contact__phone s_mr_20"><i class="fa fa-phone text_color_orange s_mr_10"></i>{{toCall.phone}}</span>
+                                        {{/if}}
+                                        {{#if toCall.vk.url}}
+                                            <span class="contact__vk">
+                                                <i class="fa fa-vk text_color_orange s_mr_10"></i><a href="{{toCall.vk.url}}" target="_blank">{{toCall.vk.name}}</a>
+                                            </span>
+                                        {{/if}}
+                                    </div>
+                                {{/if}}
+                            </div>
                         </div>
-                        <!-- /stepform-inner -->
-                        <span class="final-message">Спасибо! Мы с Вами обязательно свяжемся!</span>
-                    </form>
-                    <!-- /stepform -->
+                    </div>
                 </div>
             </div>
         {{/unless}}
@@ -68,10 +100,12 @@
                                     <div class="row">
                                         <div class="col-md-4 col-sm-4 col-xs-4">
                                             <div class="contact__photo s_mt_10 s_mb_10" style="background-image: url('{{image}}')"></div>
-                                        </div><!--
+                                        </div>
+                                        <!--
 
 
-                                        --><div class="col-md-8 col-sm-8 col-xs-8">
+                                                                                -->
+                                        <div class="col-md-8 col-sm-8 col-xs-8">
                                             <div class="contact__details">
                                                 <div class="contact__name">{{name}}</div>
                                                 <div class="contact__title">{{{title}}}</div>
