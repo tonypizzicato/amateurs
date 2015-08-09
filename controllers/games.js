@@ -21,11 +21,14 @@ module.exports = {
                     return next(err);
                 }
                 if (!tournament) {
-                    res.status(404);
-                    return next();
+                    return res.status(404).render('404');
                 }
 
-                client.get(remoteConfig.url + '/games/' + req.params.id, function (game) {
+                client.get(remoteConfig.url + '/games/' + req.params.id, function (game, response) {
+                    if(response.statusCode >= 400) {
+                        return res.status(404).render('404');
+                    }
+
                     game = JSON.parse(game);
 
                     game.dateTime = game.date ? moment(game.date + ' ' + game.time, 'DD/MM/YYYY HH:mm') : null;

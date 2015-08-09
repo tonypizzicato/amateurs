@@ -223,6 +223,10 @@ app.get('*', function (req, res, next) {
 routes.initialize(app);
 
 
+app.use(function(req, res, next) {
+    res.status(404).render('404');
+});
+
 var server = app.listen(port, function () {
 
     var host = server.address().address;
