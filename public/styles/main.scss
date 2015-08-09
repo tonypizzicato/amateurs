@@ -790,8 +790,21 @@ ul, ol {
 }
 
 .panel_type_squads .match-lineup__player,
-.panel_type_squads .match-lineup__number {
-    padding: 15px;
+.panel_type_squads .match-lineup__number,
+.panel_type_squads .match-lineup__photo {
+    padding:     15px;
+    line-height: 3;
+}
+
+.panel_type_squads .match-lineup__photo {
+    padding:         0;
+    background-size: cover;
+    width:           72px;
+    height:          72px;
+}
+
+.panel_type_squads .match-lineup__photo img {
+    width: 100%;
 }
 
 /**
@@ -1307,7 +1320,8 @@ $size: 200px;
 .match-events__time,
 .match-events__description,
 .match-lineup__player,
-.match-lineup__number {
+.match-lineup__number,
+.match-lineup__photo {
     display:       inline-block;
     padding:       15px 20px 15px 15px;
     margin-bottom: 10px;
@@ -1340,7 +1354,8 @@ $size: 200px;
     margin-bottom: 1px;
 }
 
-.match-lineup__player {
+.match-lineup__player,
+.match-lineup__photo {
     border-left: 5px solid #08101c;
 }
 

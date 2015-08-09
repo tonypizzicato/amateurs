@@ -2,13 +2,15 @@
     {{#each squads}}
         <div class="s_overflow_hidden">
             <div class="match-lineup__number column col-md-1 text_color_orange">
-                {{~#if number}}{{~number~}}{{else}}&mdash;{{/if~}}
+                        {{~#if number}}{{~number~}}{{else}}&mdash;{{/if~}}
             </div>
-            <div class="match-lineup__player column col-md-10">
+            <div class="match-lineup__photo column col-md-2" style="background-image: url('http://amateurs.io/api/img/players/{{_id}}.jpg')">
+            </div>
+            <div class="match-lineup__player column col-md-8">
                 {{~name~}}
             </div>
             <div class="match-lineup__player column col-md-1 text_align_c">
-                {{~#if position}}{{~position~}}{{else}}&mdash;{{/if~}}
+                        {{~#if position}}{{~position~}}{{else}}&mdash;{{/if~}}
             </div>
         </div>
     {{/each}}
