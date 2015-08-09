@@ -69,8 +69,7 @@ a:hover,
 a:active,
 a:focus {
     color:      $navbar-default-link-color;
-    transition: color .2s;
-    transition: background-color .2s;
+    transition: color .2s, background-color .2s;
 }
 
 a:hover {
@@ -201,6 +200,10 @@ ul, ol {
 
 .navbar-fixed-top .navbar-link_type_promo {
     display: none;
+    background-color: #131A23;
+    border:           none;
+    border-radius:    0;
+    margin-top:       20px;
 }
 
 .navbar-collapse {
@@ -2054,4 +2057,16 @@ td .tl {
 .navbar-link_type_promo:hover {
     background-color: #F5B367 !important;
     color:            #222 !important;
+}
+.partner__border {
+    overflow: hidden;
+    width:    80%;
+    margin:   0 auto;
+}
+
+.partner__image {
+    width:    100%;
+    position: relative;
+    top:      -2px;
+    left:     -2px;
 }

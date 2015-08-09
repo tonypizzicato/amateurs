@@ -68,23 +68,20 @@ var controller = {
     globals: function (req, res, next) {
         var parallels = [];
         /* Leagues */
-        parallels = parallels.concat(function (cb) {
-            var populateOptions = {path: 'countries', match: {show: true}, options: {sort: {'sort': 1}}};
-            LeagueModel.find({show: true}).sort({sort: 1}).populate(populateOptions).exec(cb);
+        var populateOptions = {path: 'countries', match: {show: true}, options: {sort: {'sort': 1}}};
+        LeagueModel.find({show: true}).sort({sort: 1}).populate(populateOptions).exec(function (err, league) {
+
+            res.locals.globals.leagues = league;
+
+            ContactModel.find({show: true, tournaments: []}).sort({sort: 1}).exec(function (err, contacts) {
+                res.locals.globals.contacts = contacts;
+
+
+                console.log('globals end');
+                next();
+            });
         });
 
-        /* Contacts */
-        parallels = parallels.concat(function (cb) {
-            ContactModel.find({show: true, tournaments: []}).sort({sort: 1}).exec(cb);
-        });
-
-        async.parallel(parallels, function (err, result) {
-            res.locals.globals.leagues  = result[0];
-            res.locals.globals.contacts = result[1];
-
-            console.log('globals end');
-            next();
-        });
     }
 };
 
