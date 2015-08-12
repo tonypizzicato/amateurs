@@ -7,9 +7,7 @@ var _               = require('underscore'),
     TournamentModel = require('../models/tournament'),
     ContactModel    = require('../models/contact'),
     NewsModel       = require('../models/news'),
-    Promise         = require('promise'),
-
-    tz              = 'Europe/Moscow';
+    Promise         = require('promise');
 
 var controller = {
 

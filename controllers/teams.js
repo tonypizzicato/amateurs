@@ -21,9 +21,9 @@ module.exports = {
 
                 /* Table */
                 var table = new Promise(function (resolve, reject) {
-                    remote(remoteConfig.url + '/stats/table?tournamentId=' + tournament.remoteId, function (err, response, table) {
+                    remote(remoteConfig.url + '/stages/' + tournament.stages[0]._id + '/table', function (err, response, table) {
                         table = table.teams.filter(function (item) {
-                            return item._id == req.params.id;
+                            return item.teamId == req.params.id;
                         });
 
                         table = table.map(function (item) {
@@ -38,7 +38,7 @@ module.exports = {
 
                 /* Table */
                 var team = new Promise(function (resolve, reject) {
-                    remote(remoteConfig.url + '/teams/' + req.params.id, function (err, response, team) {
+                    remote(remoteConfig.url + '/teams/' + req.params.id + '/roster', function (err, response, team) {
                         var numSort  = function (a, b) {
                             return a.number < b.number ? -1 : 1;
                         };
@@ -67,13 +67,14 @@ module.exports = {
 
                 /* Recent/comming games widget */
                 var games = new Promise(function (resolve, reject) {
-                    remote(remoteConfig.url + '/games?tournamentId=' + tournament.remoteId, function (err, response, games) {
+                    remote(remoteConfig.url + '/stages/' + tournament.stages[0]._id + '/games', function (err, response, data) {
+                        var games = data.games;
                         games = games.filter(function (item) {
                             return item.teams[0]._id == req.params.id || item.teams[1]._id == req.params.id;
                         });
 
                         games = games.map(function (item) {
-                            item.dateTime = item.date ? moment(item.date + ' ' + item.time, 'DD/MM/YYYY HH:mm') : null;
+                            item.dateTime = item.timestamp ? moment.unix(item.timestamp) : null;
                             return item;
                         });
 
@@ -104,8 +105,7 @@ module.exports = {
                 });
 
                 Promise.all([table, team, games]).then(function (result) {
-
-                    res.title('Клубы: ' + result[1].name);
+                    res.title('Клубы: ' + result[1].teamName);
                     res.render('teams/item',
                         {tournament: tournament, table: result[0], team: result[1], games: result[2], pageTeams: true});
                 });
@@ -124,7 +124,7 @@ module.exports = {
 
             /* Teams list */
             var teams = new Promise(function (resolve, reject) {
-                remote(remoteConfig.url + '/teams?leagueId=' + league.remoteId, function (err, response, teams) {
+                remote(remoteConfig.url + '/league/' + league.remoteId + '/teams', function (err, response, teams) {
                     resolve(teams);
                 });
             });
@@ -132,7 +132,7 @@ module.exports = {
             TournamentModel.findOne({slug: req.params.name, leagueId: league._id, show: true}).lean().exec(function (err, tournament) {
                 /* Table */
                 var table = new Promise(function (resolve, reject) {
-                    remote(remoteConfig.url + '/stats/table?tournamentId=' + tournament.remoteId, function (err, response, table) {
+                    remote(remoteConfig.url + '/stages/' + tournament.stages[0]._id + '/table', function (err, response, table) {
                         resolve(table);
                     });
                 });
@@ -141,7 +141,7 @@ module.exports = {
                     var teams = [];
                     result[0].teams.forEach(function (item) {
                         teams.push(result[1].filter(function (team) {
-                            return team._id == item._id;
+                            return item.teamId == team._id;
                         }).pop());
                     });
 
@@ -154,6 +154,7 @@ module.exports = {
 };
 
 function remote(url, cb) {
+    console.log(url);
     request.get({
         uri:  url,
         auth: remoteConfig.authOptions,
