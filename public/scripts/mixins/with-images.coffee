@@ -20,6 +20,9 @@ WithImages =
             $(el).attr 'src', $(el).data('src')
             el.onload = ()=>
                 $(el).addClass this._class('loaded')
+            el.onerror = ()=>
+                $(el).attr 'src', $(el).data('absent')
+                $(el).addClass this._class('loaded')
 
 
 module.exports = WithImages
