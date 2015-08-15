@@ -3,9 +3,9 @@
 
         <div class="row s_mb_40">
             <div class="column col-md-12 s_mb_20">
-                <img class="s_mb_10" src="http://amateurs.io/api/img/teams/{{this.team.name}}.png" width="96" height="96"/>
+                <img class="s_mb_10" src="http://188.166.105.215/api/img/teams/{{team._id}}.png" height="96"/>
 
-                <h2 class="s_display_inline-block s_ml_20">{{this.team.name}}</h2>
+                <h2 class="s_display_inline-block s_ml_20">{{team.name}}</h2>
             </div>
             <div class="column col-md-12">
 
@@ -30,7 +30,7 @@
                                             <i class="fa fa-list-ol s_mr_10"></i> Турнир
                                         </div>
                                         <div class="panel__body">
-                                            {{> 'teams_table' table=this.table}}
+                                            {{> 'teams_table' table=table}}
                                         </div>
                                     </div>
                                 </div>
@@ -40,7 +40,7 @@
                                             <i class="fa fa-list-ol s_mr_10"></i> Форма
                                         </div>
                                         <div class="panel__body text_align_c">
-                                            {{> 'teams_form' team=this.team games=this.games.form emptyText='Команда ещё не начала турнир'}}
+                                            {{> 'teams_form' team=team games=games.form emptyText='Команда ещё не начала турнир'}}
                                         </div>
                                     </div>
                                 </div>
@@ -52,7 +52,7 @@
                                             <i class="fa fa-list-ol s_mr_10"></i> Последние 6 матчей
                                         </div>
                                         <div class="panel__body">
-                                            {{> 'teams_fixture' games=this.games.recent emptyText='Команда ещё не начала турнир'}}
+                                            {{> 'teams_fixture' games=games.recent emptyText='Команда ещё не начала турнир'}}
                                         </div>
                                     </div>
                                 </div>
@@ -62,7 +62,7 @@
                                             <i class="fa fa-list-ol s_mr_10"></i> Следующие 6 матчей
                                         </div>
                                         <div class="panel__body">
-                                            {{> 'teams_fixture' games=this.games.comming emptyText='Команда закончила участие в турнире'}}
+                                            {{> 'teams_fixture' games=games.comming emptyText='Команда закончила участие в турнире'}}
                                         </div>
                                     </div>
                                 </div>
@@ -73,7 +73,7 @@
                         <div class="tab-pane" id="squad">
                             <div class="panel panel_type_squads panel_type_transparent s_m_0">
                                 <div class="panel__body s_pl_0 s_pr_0 s_pt_0">
-                                    {{> 'teams_squads' squads=this.team.players emptyText='Заявка пуста'}}
+                                    {{> 'teams_squads' squads=team.players emptyText='Заявка пуста'}}
                                 </div>
                             </div>
                         </div>
