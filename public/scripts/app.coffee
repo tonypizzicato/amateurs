@@ -13,6 +13,7 @@ Router = Backbone.Router.extend
         ':city/tournaments/:tournament/fields': 'fields'
         ':city/contacts': 'contacts'
         ':city/fields': 'fields'
+        'about': 'about'
         ':city': 'index'
         'promo/nationals.html': 'promo'
         '*notFound': 'notFound'
@@ -34,6 +35,9 @@ appRouter.on 'route:contacts', ()->
 
 appRouter.on 'route:fields', ()->
     new PageClasses.FieldsPage el: $('.container')
+
+appRouter.on 'route:about', ()->
+    new PageClasses.AboutPage el: $('.container')
 
 appRouter.on 'route:promo', ()->
     new PageClasses.PromoPage el: $('.container')
