@@ -39,7 +39,7 @@ var api = {
 
             function getTournaments(league) {
                 pending += 1;
-                client.get(remoteConfig.url + '/tournaments?leagueId=' + league._id, function (data) {
+                client.get(remoteConfig.url + '/league/' + league._id + '/tournaments/active', function (data) {
                     var parsed = JSON.parse(data),
                         queries = [];
 
