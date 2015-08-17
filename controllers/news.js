@@ -71,7 +71,7 @@ var controller = {
 
             res.locals.globals.leagues = league;
 
-            ContactModel.find({show: true, tournaments: []}).sort({sort: 1}).exec(function (err, contacts) {
+            ContactModel.find({leagueId: res.locals.globals.league._id, show: true, tournaments: []}).sort({sort: 1}).exec(function (err, contacts) {
                 res.locals.globals.contacts = contacts;
 
 
