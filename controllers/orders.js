@@ -1,8 +1,9 @@
 "use strict";
 
-var nodemailer = require('nodemailer');
-var settings   = require('../config/settings');
-var OrderModel = require('../models/order');
+var nodemailer  = require('nodemailer');
+var settings    = require('../config/settings');
+var OrderModel  = require('../models/order');
+var LeagueModel = require('../models/league');
 
 module.exports = {
 
@@ -12,8 +13,6 @@ module.exports = {
      * /orders POST call
      */
     create: function (req, res, next) {
-        console.log('/orders POST handled');
-
         OrderModel.create(req.body, function (err, order) {
             if (err) {
                 console.log(err);
@@ -25,37 +24,41 @@ module.exports = {
 
             res.json(order);
 
-            var transporter = nodemailer.createTransport({
-                service: 'Gmail',
-                auth:    {
-                    user: 'amateurs.io.info@gmail.com',
-                    pass: 'amateurs0908'
-                }
-            });
+            LeagueModel.findOne({_id: order.leagueId}).exec(function (err, league) {
 
-            var mailOptions = {
-                from:    'Amateur Footabll League <amateurs.io.info@gmail.com>',
-                to:      settings.ordersEmail,
-                bcc:     settings.ordersBcc,
-                subject: 'Новая заявка на участие в лиге',
-                html:    '<div>' +
-                         '<span>Имя: ' + order.name + '</span><br />' +
-                         '<span>Email: ' + order.email + '</span><br />' +
-                         '<span>Телефон: ' + order.phone + '</span><br />' +
-                         '<span>Желаемая лига: ' + order.league + '</span><br />' +
-                         '<span>Желаемая команда: ' + order.team + '</span><br />' +
-                         '<span>Источник: ' + order.source + '</span><br />' +
-                         '<span>Комментарий: ' + order.message + '</span><br />' +
-                         '</div>'
-            };
+                var transporter = nodemailer.createTransport({
+                    service: 'Gmail',
+                    auth:    {
+                        user: 'amateurs.io.info@gmail.com',
+                        pass: 'amateurs0908'
+                    }
+                });
 
-            transporter.sendMail(mailOptions, function (error, info) {
-                if (error) {
-                    console.log(error);
-                } else {
-                    console.log('Message sent: ' + info.response);
-                }
-            });
+                var mailOptions = {
+                    from:    'Amateur Football League <amateurs.io.info@gmail.com>',
+                    to:      settings.ordersEmail,
+                    bcc:     settings.ordersBcc,
+                    subject: 'Новая заявка на участие в лиге',
+                    html:    '<div>' +
+                             '<span>Имя: ' + order.name + '</span><br />' +
+                             '<span>Email: ' + order.email + '</span><br />' +
+                             '<span>Телефон: ' + order.phone + '</span><br />' +
+                             '<span>Город: ' + (league.slug.charAt(0).toUpperCase() + league.slug.substr(1)) + '</span><br />' +
+                             '<span>Желаемая лига: ' + order.league + '</span><br />' +
+                             '<span>Желаемая команда: ' + order.team + '</span><br />' +
+                             '<span>Источник: ' + order.source + '</span><br />' +
+                             '<span>Комментарий: ' + order.message + '</span><br />' +
+                             '</div>'
+                };
+
+                transporter.sendMail(mailOptions, function (error, info) {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        console.log('Message sent: ' + info.response);
+                    }
+                });
+            })
         });
     }
 };
