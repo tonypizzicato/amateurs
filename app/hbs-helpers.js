@@ -232,8 +232,9 @@ var helpers = {
         if (!game.score) {
             return false;
         }
+        var teamId = team._id ? team._id : team.teamId;
         var score = game.score.ft;
-        if (game.teams[0]._id == team._id) {
+        if (game.teams[0]._id == teamId) {
             return score[0] > score[1] ? 'w' : (score[0] == score[1] ? 'd' : 'l');
         } else {
             return score[1] > score[0] ? 'w' : (score[0] == score[1] ? 'd' : 'l');

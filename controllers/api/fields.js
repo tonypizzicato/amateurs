@@ -58,7 +58,7 @@ var api = {
 
             leagues.forEach(function (league) {
                 var requestParams = {
-                    uri:  remoteConfig.url + '/leagueId/' + league._id + '/places',
+                    uri:  remoteConfig.url + '/league/' + league._id + '/places',
                     auth: remoteConfig.authOptions,
                     gzip: true,
                     json: true

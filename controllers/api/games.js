@@ -22,12 +22,16 @@ var api = {
             var ids = tournaments.map(function (item) {
                 return item._id;
             });
-            client.get(remoteConfig.url + '/tournaments/games?ids=' + ids.join('&'), function (data) {
-                var parsed = JSON.parse(data);
-git
-                res.json(parsed);
 
-            });
+            if(ids.length) {
+                client.get(remoteConfig.url + '/tournaments/games?ids=' + ids.join('&ids='), function (data) {
+                    var parsed = JSON.parse(data);
+
+                    res.json(parsed);
+                });
+            } else {
+                res.json([]);
+            }
         });
     },
 

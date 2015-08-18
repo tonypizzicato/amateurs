@@ -49,12 +49,10 @@ module.exports = {
 
                     var query = [];
                     ids.forEach(function (item) {
-                        query.push('tournamentId[]=' + item);
+                        query.push('ids=' + item);
                     });
 
-                    log(remoteConfig.url + '/stats/table?' + query.join('&'));
-
-                    client.get(remoteConfig.url + '/stats/table?' + query.join('&'), function (tables) {
+                    client.get(remoteConfig.url + '/tournaments/tables?' + query.join('&'), function (tables) {
 
                         var endTime = new Date().getTime();
                         log('received Tables', (endTime - startTime) + "ms.", tables.length);

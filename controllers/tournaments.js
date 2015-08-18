@@ -17,9 +17,17 @@ module.exports = {
         LeagueModel.findOne({slug: req.params.league}, function (err, doc) {
             TournamentModel.findOne({slug: req.params.name, leagueId: doc._id}, function (err, tournament) {
 
-                remote(remoteConfig.url + '/stages/' + tournament.stages[0]._id + '/games', function (err, response, games) {
-                    games = games.map(function (item) {
-                        item.dateTime = item.date ? moment(item.date + ' ' + item.time, 'DD/MM/YYYY HH:mm') : null;
+                if (!tournament.stages || !tournament.stages.length) {
+                    return res.render('partials/lazy/fixture', {
+                        fixture:   {},
+                        emptyText: 'Нет данных',
+                        layout:    false
+                    });
+                }
+
+                remote(remoteConfig.url + '/stages/' + tournament.stages[0]._id + '/games', function (err, response, result) {
+                    var games = result.games.map(function (item) {
+                        item.dateTime = item.timestamp ? moment.unix(item.timestamp) : null;
                         return item;
                     });
 
@@ -57,9 +65,18 @@ module.exports = {
     restComming: function (req, res, next) {
         LeagueModel.findOne({slug: req.params.league}, function (err, doc) {
             TournamentModel.findOne({slug: req.params.name, leagueId: doc._id}, function (err, tournament) {
-                remote(remoteConfig.url + '/stages/' + tournament.stages[0]._id + '/games', function (err, response, games) {
-                    games = games.map(function (item) {
-                        item.dateTime = item.date ? moment(item.date + ' ' + item.time, 'DD/MM/YYYY HH:mm') : null;
+
+                if (!tournament.stages || !tournament.stages.length) {
+                    return res.render('partials/lazy/fixture', {
+                        fixture:   {},
+                        emptyText: 'Нет данных',
+                        layout:    false
+                    });
+                }
+
+                remote(remoteConfig.url + '/stages/' + tournament.stages[0]._id + '/games', function (err, response, result) {
+                    var games = result.games.map(function (item) {
+                        item.dateTime = item.timestamp ? moment.unix(item.timestamp) : null;
                         return item;
                     });
 
@@ -123,6 +140,16 @@ module.exports = {
     restStats: function (req, res, next) {
         LeagueModel.findOne({slug: req.params.league}, function (err, doc) {
             TournamentModel.findOne({slug: req.params.name, leagueId: doc._id}, function (err, tournament) {
+
+                if (!tournament.stages || !tournament.stages.length) {
+                    return res.render('partials/lazy/stats', {
+                        stats:     {},
+                        emptyText: 'Нет данных',
+                        layout:    false
+                    });
+                }
+
+
                 if (err) {
                     return next(err);
                 }
@@ -131,13 +158,13 @@ module.exports = {
                     return next(null);
                 }
 
-                remote(remoteConfig.url + '/stages/' + tournament.stages[0]._id + '/players', function (err, response, stats) {
-                    stats = stats.filter(function (item) {
+                remote(remoteConfig.url + '/stages/' + tournament.stages[0]._id + '/players', function (err, response, result) {
+                    var stats = result.players.filter(function (item) {
                         return !!item.playerId;
                     });
 
                     stats = stats.sort(function (a, b) {
-                        return a.points >= b.points ? -1 : 1;
+                        return a.goals_assists_hearts_stars >= b.goals_assists_hearts_stars ? -1 : 1;
                     });
 
                     stats = stats.slice(0, 10);
@@ -517,8 +544,6 @@ module.exports = {
             /* Table */
             parallels = parallels.concat(function (cb) {
                 var startTime = new Date().getTime();
-                console.log(tournament);
-                console.log(remoteConfig.url + '/stages/' + tournament.stages[0]._id + '/table');
                 remote(remoteConfig.url + '/stages/' + tournament.stages[0]._id + '/table', function (err, response, table) {
                     var endTime = new Date().getTime();
                     log('received Table', (endTime - startTime) + "ms.", response.body.length);
