@@ -76,13 +76,20 @@ module.exports = {
                             }
                         }
 
+                        console.log(tables.length);
+
                         tournaments.map(function (item) {
-                            item.table = tables[item.remoteId] ? tables[item.remoteId][0] : null;
-                            if (!!item.table) {
-                                item.table.teams = item.table.teams.map(function (item) {
-                                    item.form = item.form.slice(-5);
-                                    return item;
+                            item.tables = tables[item.remoteId] ? tables[item.remoteId] : null;
+                            if (!!item.tables) {
+                                item.tables = item.tables.map(function (table) {
+                                    table.teams = table.teams.map(function (item) {
+                                        item.form = item.form.slice(-5);
+                                        return item;
+                                    });
+
+                                    return table;
                                 });
+
                             }
                         });
 

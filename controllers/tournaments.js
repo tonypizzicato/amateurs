@@ -25,6 +25,7 @@ module.exports = {
                     });
                 }
 
+                //if (tournament.stages.length == 1) {
                 remote(remoteConfig.url + '/stages/' + tournament.stages[0]._id + '/games', function (err, response, result) {
                     var games = result.games.map(function (item) {
                         item.dateTime = item.timestamp ? moment.unix(item.timestamp) : null;
@@ -58,6 +59,7 @@ module.exports = {
                         layout:     false
                     });
                 });
+                //}
             });
         });
     },
@@ -158,8 +160,8 @@ module.exports = {
                     return next(null);
                 }
 
-                remote(remoteConfig.url + '/stages/' + tournament.stages[0]._id + '/players', function (err, response, result) {
-                    var stats = result.players.filter(function (item) {
+                remote(remoteConfig.url + '/tournaments/players?ids=' + tournament._id, function (err, response, result) {
+                    var stats = result.filter(function (item) {
                         return !!item.playerId;
                     });
 
@@ -193,8 +195,7 @@ module.exports = {
                 }
 
                 var stats = new Promise(function (resolve, reject) {
-                    remote(remoteConfig.url + '/stages/' + tournament.stages[0]._id + '/players', function (err, response, stats) {
-                        stats    = stats.players;
+                    remote(remoteConfig.url + '/tournaments/players?ids=' + tournament._id, function (err, response, stats) {
                         var stat = {
                             goals:   [],
                             assists: []
@@ -332,12 +333,13 @@ module.exports = {
 
                 Promise.all([stats, central, articles, photos]).then(function (result) {
                     res.render('tournaments/item', {
-                        tournament: tournament,
-                        stats:      result[0],
-                        central:    result[1],
-                        previews:   result[2].previews,
-                        reviews:    result[2].reviews,
-                        photos:     result[3]
+                        tournament:     tournament,
+                        stats:          result[0],
+                        central:        result[1],
+                        previews:       result[2].previews,
+                        reviews:        result[2].reviews,
+                        photos:         result[3],
+                        pageTournament: true
                     });
                 });
 
@@ -429,9 +431,7 @@ module.exports = {
                     return next(null);
                 }
 
-                remote(remoteConfig.url + '/stages/' + tournament.stages[0]._id + '/players', function (err, response, data) {
-                    var stats = data.players;
-
+                remote(remoteConfig.url + '/tournaments/players?ids=' + tournament._id, function (err, response, stats) {
                     stats = stats.filter(function (item) {
                         return !!item.playerId;
                     });
@@ -575,13 +575,9 @@ module.exports = {
             parallels = parallels.concat(function (cb) {
                 var startTime = new Date().getTime();
 
-                remote(remoteConfig.url + '/stages/' + tournament.stages[0]._id + '/players', function (err, response, stats) {
+                remote(remoteConfig.url + '/tournaments/players?ids=' + tournament._id, function (err, response, stats) {
                     var endTime = new Date().getTime();
                     log('received Stats', (endTime - startTime) + "ms.", response.body.length);
-
-                    stats = stats.players.filter(function (item) {
-                        return !!item.playerId;
-                    });
 
                     var goals = stats.sort(function (a, b) {
                         return a.goals >= b.goals ? -1 : 1;
