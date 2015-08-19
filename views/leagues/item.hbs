@@ -25,15 +25,18 @@
                                                         <a href="#tab-{{slug}}-table" data-toggle="tab">{{noYear name}}</a>
                                                     </li>
                                                     <li class="tab__title tab__title_size_4">
-                                                        <a href="#tab-{{slug}}-recent" class="js-tab-lazy" data-toggle="tab" data-lazy="true" data-league="{{../../league.slug}}" data-name="{{slug}}"
+                                                        <a href="#tab-{{slug}}-recent" class="js-tab-lazy" data-toggle="tab" data-lazy="true"
+                                                           data-league="{{../../league.slug}}" data-name="{{slug}}"
                                                            data-route="recent">Последние матчи</a>
                                                     </li>
                                                     <li class="tab__title tab__title_size_4">
-                                                        <a href="#tab-{{slug}}-comming" class="js-tab-lazy" data-toggle="tab" data-lazy="true" data-league="{{../../league.slug}}" data-name="{{slug}}"
+                                                        <a href="#tab-{{slug}}-comming" class="js-tab-lazy" data-toggle="tab" data-lazy="true"
+                                                           data-league="{{../../league.slug}}" data-name="{{slug}}"
                                                            data-route="comming">Ближайшие матчи</a>
                                                     </li>
                                                     <li class="tab__title tab__title_size_4">
-                                                        <a href="#tab-{{slug}}-stats" class="js-tab-lazy" data-toggle="tab" data-lazy="true" data-league="{{../../league.slug}}" data-name="{{slug}}"
+                                                        <a href="#tab-{{slug}}-stats" class="js-tab-lazy" data-toggle="tab" data-lazy="true"
+                                                           data-league="{{../../league.slug}}" data-name="{{slug}}"
                                                            data-route="stats">Статистика</a>
                                                     </li>
                                                 </ul>
@@ -41,7 +44,14 @@
                                                     <div class="tab-pane active" id="tab-{{slug}}-table">
                                                         <div class="panel s_m_0">
                                                             <div class="panel__body">
-                                                                {{> table table=table league=../../league tournament=this tableFull=true showLogo=true}}
+                                                                {{#each tables}}
+                                                                    {{#gt ../tables.length 1}}
+                                                                        <p class="group-name">{{stageName}}</p>
+                                                                    {{/gt}}
+                                                                <div class="{{#unless @last}}s_mb_20{{/unless}}">
+                                                                    {{> table table=this league=../../../league tournament=../this tableFull=true showLogo=true}}
+                                                                </div>
+                                                                {{/each}}
                                                             </div>
                                                         </div>
                                                         <div class="link_type_full s_mb_10">

@@ -1,9 +1,10 @@
 "use strict";
 
-var RestClient   = require('node-rest-client').Client,
-    remoteConfig = require('../../config/tinyapi'),
-    ArticleModel = require('../../models/game-article'),
-    PhotosModel  = require('../../models/photo');
+var RestClient      = require('node-rest-client').Client,
+    remoteConfig    = require('../../config/tinyapi'),
+    TournamentModel = require('../../models/tournament'),
+    ArticleModel    = require('../../models/game-article'),
+    PhotosModel     = require('../../models/photo');
 
 
 var client = new RestClient(remoteConfig.authOptions);
@@ -17,11 +18,20 @@ var api = {
     list: function (req, res) {
         console.log('/api/games GET handled');
 
-        client.get(remoteConfig.url + '/games?leagueId=' + req.query.leagueId, function (data) {
-            var parsed = JSON.parse(data);
+        TournamentModel.find({leagueId: req.query.leagueId}).exec(function (err, tournaments) {
+            var ids = tournaments.map(function (item) {
+                return item._id;
+            });
 
-            res.json(parsed);
+            if(ids.length) {
+                client.get(remoteConfig.url + '/tournaments/games?ids=' + ids.join('&ids='), function (data) {
+                    var parsed = JSON.parse(data);
 
+                    res.json(parsed);
+                });
+            } else {
+                res.json([]);
+            }
         });
     },
 

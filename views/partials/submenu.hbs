@@ -38,6 +38,9 @@
             </li>
         </ul>
         <ul class="nav navbar-nav navbar_border_left">
+            <li class="navbar__item{{#if pageTournament}} navbar__item_active_yes{{/if}}">
+                <a href="/{{globals.league.slug}}/tournaments/{{globals.tournament.slug}}">Турнир</a>
+            </li>
             <li class="navbar__item{{#if pageNews}} navbar__item_active_yes{{/if}}">
                 <a href="/{{globals.league.slug}}/tournaments/{{globals.tournament.slug}}/news">Новости</a>
             </li>
