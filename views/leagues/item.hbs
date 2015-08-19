@@ -46,9 +46,9 @@
                                                             <div class="panel__body">
                                                                 {{#each tables}}
                                                                     {{#gt ../tables.length 1}}
-                                                                        <p>{{stageName}}</p>
+                                                                        <p class="group-name">{{stageName}}</p>
                                                                     {{/gt}}
-                                                                <div class="{{#gt ../tables.length 1}}s_mb_20{{/gt}}">
+                                                                <div class="{{#unless @last}}s_mb_20{{/unless}}">
                                                                     {{> table table=this league=../../../league tournament=../this tableFull=true showLogo=true}}
                                                                 </div>
                                                                 {{/each}}

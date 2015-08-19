@@ -26,8 +26,8 @@ module.exports = {
                 }
 
                 //if (tournament.stages.length == 1) {
-                remote(remoteConfig.url + '/stages/' + tournament.stages[0]._id + '/games', function (err, response, result) {
-                    var games = result.games.map(function (item) {
+                remote(remoteConfig.url + 'tournaments/games?ids=' + tournament._id, function (err, response, result) {
+                    var games = result.map(function (item) {
                         item.dateTime = item.timestamp ? moment.unix(item.timestamp) : null;
                         return item;
                     });
@@ -76,8 +76,8 @@ module.exports = {
                     });
                 }
 
-                remote(remoteConfig.url + '/stages/' + tournament.stages[0]._id + '/games', function (err, response, result) {
-                    var games = result.games.map(function (item) {
+                remote(remoteConfig.url + '/tournaments/games?ids=' + tournament._id, function (err, response, result) {
+                    var games = result.map(function (item) {
                         item.dateTime = item.timestamp ? moment.unix(item.timestamp) : null;
                         return item;
                     });
@@ -458,9 +458,7 @@ module.exports = {
                     return next(null);
                 }
 
-                remote(remoteConfig.url + '/stages/' + tournament.stages[0]._id + '/games', function (err, response, data) {
-                    var games = data.games;
-
+                remote(remoteConfig.url + '/tournaments/games?ids=' + tournament._id, function (err, response, games) {
                     games = games.map(function (item) {
                         item.dateTime = item.timestamp ? moment.unix(item.timestamp) : null;
                         return item;
@@ -544,19 +542,23 @@ module.exports = {
             /* Table */
             parallels = parallels.concat(function (cb) {
                 var startTime = new Date().getTime();
-                remote(remoteConfig.url + '/stages/' + tournament.stages[0]._id + '/table', function (err, response, table) {
+                remote(remoteConfig.url + '/tournaments/tables?ids=' + tournament._id, function (err, response, tables) {
                     var endTime = new Date().getTime();
                     log('received Table', (endTime - startTime) + "ms.", response.body.length);
 
-                    table.temas = table.teams.map(function (item) {
-                        item.form = item.form.slice(-5);
-                        return item;
+                    tables = tables.map(function (table) {
+                        table.teams = table.teams.map(function (item) {
+                            item.form = item.form.slice(-5);
+                            return item;
+                        });
+
+                        return table;
                     });
 
                     endTime = new Date().getTime();
-                    log('processed Table', (endTime - startTime) + "ms.");
+                    log('processed Tables', (endTime - startTime) + "ms.");
 
-                    cb(null, table);
+                    cb(null, tables);
                 }).on('response', function (response) {
                     // unmodified http.IncomingMessage object
                     var length = 0;
@@ -598,11 +600,11 @@ module.exports = {
             parallels = parallels.concat(function (cb) {
                 var startTime = new Date().getTime();
 
-                remote(remoteConfig.url + '/stages/' + tournament.stages[0]._id + '/games', function (err, response, result) {
+                remote(remoteConfig.url + '/tournaments/games?ids=' + tournament._id, function (err, response, result) {
                     var endTime = new Date().getTime();
                     log('received Games', (endTime - startTime) + "ms.", response.body.length);
 
-                    var games = result.games.map(function (item) {
+                    var games = result.map(function (item) {
                         item.dateTime = item.timestamp ? moment.unix(item.timestamp) : null;
                         return item;
                     });
@@ -666,7 +668,7 @@ module.exports = {
 
                 res.locals.globals.tournament = tournament;
                 res.locals.globals.leagues    = result[0];
-                res.locals.globals.table      = result[1];
+                res.locals.globals.tables     = result[1];
                 res.locals.globals.stats      = result[2];
                 res.locals.globals.recent     = result[3].recent;
                 res.locals.globals.comming    = result[3].comming;

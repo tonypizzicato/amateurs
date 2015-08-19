@@ -7,6 +7,8 @@ var linkRoutes = {
     table: {}
 };
 
+moment.tz.setDefault("America/New_York");
+
 var helpers = {
     eq: function (lvalue, rvalue, options) {
         if (arguments.length < 3)
@@ -58,6 +60,10 @@ var helpers = {
         var f = str.charAt(0)
             .toUpperCase();
         return f + str.substr(1);
+    },
+
+    json: function(data) {
+        return JSON.stringify(data);
     },
 
     debug: function (optionalValue) {

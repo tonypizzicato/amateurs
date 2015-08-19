@@ -199,7 +199,7 @@ ul, ol {
 }
 
 .navbar-fixed-top .navbar-link_type_promo {
-    display: none;
+    display:          none;
     background-color: #131A23;
     border:           none;
     border-radius:    0;
@@ -2036,9 +2036,9 @@ $size: 200px;
 }
 
 .about__header {
-    display:       inline-block;
-    margin:        0 auto;
-    padding:       0 0 24px;
+    display: inline-block;
+    margin:  0 auto;
+    padding: 0 0 24px;
 }
 
 // TEAMS
@@ -2057,6 +2057,7 @@ td .tl {
     background-color: #F5B367 !important;
     color:            #222 !important;
 }
+
 .partner__border {
     overflow: hidden;
     width:    80%;
@@ -2068,4 +2069,36 @@ td .tl {
     position: relative;
     top:      -2px;
     left:     -2px;
+}
+
+// STATS PAGINATOR
+
+.table .reactable-pagination {
+    border-top: 2px solid #2CA5E3;
+}
+
+.reactable-page-button {
+    padding:     10px 17px;
+    margin:      5px;
+    display:     inline-block;
+    text-shadow: none;
+    position:    relative;
+    background:  #2CA5E3;
+}
+
+.reactable-page-button:hover {
+    background: #E7AA63;
+    color:      #fff;
+}
+
+.reactable-page-button.reactable-current-page {
+    background: #C63C3C;
+}
+
+
+
+.group-name {
+    padding-bottom: 10px;
+    margin: 0 8px;
+    border-bottom: 1px solid #2DA6E4;
 }

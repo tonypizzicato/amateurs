@@ -1,47 +1,28 @@
 <div class="row clearfix s_mb_20">
     <div class="col-md-8 column">
 
-        <div class="row clearfix s_mb_20">
-            <div class="col-md-12 column">
-                <div class="tabbable">
-                    {{~#if league.groupsCount ~}}
-                        <ul class="nav nav-tabs">
-                            {{~# each league.groups~}}
-                                <li class="tab__title tab__title_size_{{../league.groupsCount}}{{#eq 0 @index}} active{{/eq}}">
-                                    <a href="#tab-table" data-toggle="tab">Группа {{name}}</a>
-                                </li>
-                            {{~/each~}}
-                        </ul>
-                        <div class="tab-content">
-                            {{~# each league.groups~}}
-                                <div class="tab-pane{{#eq 0 @index}} active{{/eq}}" id="tab-table">
-                                    <div class="panel s_m_0">
-                                        <div class="panel__body s_p_0 s_pb_5">
-                                            {{> 'chess' this tableFull=true league=this}}
-                                        </div>
-                                    </div>
-                                </div>
-                            {{~/each~}}
-                        </div>
-                        {{~else~}}
+        {{~#each globals.tables~}}
+            <div class="row clearfix s_mb_20">
+                <div class="col-md-12 column">
+                    <div class="tabbable">
                         <ul class="nav nav-tabs">
                             <li class="tab__title tab__title_size_full active">
-                                <a href="#tab-table" data-toggle="tab">{{tournament.name}}</a>
+                                <a href="#tab-table" data-toggle="tab"> {{#gt ../tables.length 1}}{{stageName}}{{else}}{{../tournament.name}}{{/gt}}</a>
                             </li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="tab-table">
                                 <div class="panel s_m_0">
                                     <div class="panel__body s_p_0 s_pb_5">
-                                        {{> table table=globals.table league=globals.league tournament=tournament tableFull=true showLogo=true}}
+                                        {{> table table=this league=../globals.league tournament=../tournament tableFull=true showLogo=true}}
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    {{~/if~}}
+                    </div>
                 </div>
             </div>
-        </div>
+        {{~/each~}}
 
     </div>
     <div class="col-md-4 column sidebar">
