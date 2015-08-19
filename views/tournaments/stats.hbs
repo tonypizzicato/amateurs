@@ -5,7 +5,7 @@
                 <i class="fa fa-list-ol s_mr_10"></i> {{tournament.name}}
             </div>
             <div class="panel__body s_p_0 s_pb_5">
-                {{> stats stats=stats emptyText='Нет данных'}}
+                <div class="js-stats-table" data-data="{{json stats}}"></div>
             </div>
         </div>
     </div>
