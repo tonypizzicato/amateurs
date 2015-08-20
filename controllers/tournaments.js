@@ -239,8 +239,7 @@ module.exports = {
                 });
 
                 var articles = new Promise(function (resolve, reject) {
-                    GameArticleModel.find({tournament: tournament.remoteId, show: true}).sort({dc: -1}).limit(30).lean().exec(function (err,
-                                                                                                                                        docs) {
+                    GameArticleModel.find({tournament: tournament.remoteId, show: true}).sort({dc: -1}).limit(30).lean().exec(function (err, docs) {
                         if (err) {
                             return reject(err);
                         }
@@ -338,6 +337,18 @@ module.exports = {
                 });
 
                 function prepareArticles(type, games, docs) {
+                    var comparator;
+                    if (type == 'preview') {
+                        comparator = function (item) {
+                            return item.state.toLowerCase() != 'closed';
+                        };
+                    } else {
+                        comparator = function (item) {
+                            return item.state.toLowerCase() == 'closed';
+                        };
+                    }
+                    games = games.filter(comparator);
+
                     games.forEach(function (item) {
                         var article = docs.filter(function (doc) {
                             return doc.gameId == item._id && doc.type == type;
