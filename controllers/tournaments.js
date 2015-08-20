@@ -251,14 +251,10 @@ module.exports = {
                         }
 
                         var games = docs.map(function (item) {
-                            return 'gameIds[]=' + item.gameId;
+                            return item.gameId;
                         });
 
-
-                        remote(remoteConfig.url + '/games?' + games.join('&'), function (err, response, games) {
-
-                            games = [];
-
+                        remote(remoteConfig.url + '/games?ids=' + games.join('&ids='), function (err, response, games) {
                             var previews = prepareArticles('preview', games, docs.slice());
                             var reviews  = prepareArticles('review', games, docs.slice());
 
@@ -309,14 +305,13 @@ module.exports = {
                         });
 
                         var ids = _.keys(docs).map(function (item) {
-                            return 'gameIds[]=' + item;
+                            return item;
                         });
 
                         for (var game in docs) {
                             docs[game] = docs[game];
                         }
-
-                        remote(remoteConfig.url + '/games?' + ids.join('&'), function (err, response, games) {
+                        remote(remoteConfig.url + '/games?ids=' + ids.join('$ids='), function (err, response, games) {
                             var res = [];
 
                             games.forEach(function (item) {
@@ -344,18 +339,6 @@ module.exports = {
                 });
 
                 function prepareArticles(type, games, docs) {
-                    var comparator;
-                    if (type == 'preview') {
-                        comparator = function (item) {
-                            return item.state.toLowerCase() != 'closed';
-                        };
-                    } else {
-                        comparator = function (item) {
-                            return item.state.toLowerCase() == 'closed';
-                        };
-                    }
-                    games = games.filter(comparator);
-
                     games.forEach(function (item) {
                         var article = docs.filter(function (doc) {
                             return doc.gameId == item._id && doc.type == type;
