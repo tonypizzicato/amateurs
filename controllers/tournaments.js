@@ -378,6 +378,12 @@ module.exports = {
                         item.game.dateTime = item.game.timestamp ? moment.unix(item.game.timestamp) : null;
                     });
 
+                    var week = moment().subtract("days", 8);
+
+                    docs.filter(function(item) {
+                        return moment(item.dc).isAfter(week);
+                    });
+
                     docs = docs.sort(function (a, b) {
                         if (a.game.dateTime) {
                             if (b.game.dateTime) {
