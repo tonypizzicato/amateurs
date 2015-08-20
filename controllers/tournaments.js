@@ -17,9 +17,18 @@ module.exports = {
         LeagueModel.findOne({slug: req.params.league}, function (err, doc) {
             TournamentModel.findOne({slug: req.params.name, leagueId: doc._id}, function (err, tournament) {
 
-                remote(remoteConfig.url + '/games?tournamentId=' + tournament.remoteId, function (err, response, games) {
-                    games = games.map(function (item) {
-                        item.dateTime = item.date ? moment(item.date + ' ' + item.time, 'DD/MM/YYYY HH:mm') : null;
+                if (!tournament.stages || !tournament.stages.length) {
+                    return res.render('partials/lazy/fixture', {
+                        fixture:   {},
+                        emptyText: 'Нет данных',
+                        layout:    false
+                    });
+                }
+
+                //if (tournament.stages.length == 1) {
+                remote(remoteConfig.url + 'tournaments/games?ids=' + tournament._id, function (err, response, result) {
+                    var games = result.map(function (item) {
+                        item.dateTime = item.timestamp ? moment.unix(item.timestamp) : null;
                         return item;
                     });
 
@@ -50,6 +59,7 @@ module.exports = {
                         layout:     false
                     });
                 });
+                //}
             });
         });
     },
@@ -57,9 +67,18 @@ module.exports = {
     restComming: function (req, res, next) {
         LeagueModel.findOne({slug: req.params.league}, function (err, doc) {
             TournamentModel.findOne({slug: req.params.name, leagueId: doc._id}, function (err, tournament) {
-                remote(remoteConfig.url + '/games?tournamentId=' + tournament.remoteId, function (err, response, games) {
-                    games = games.map(function (item) {
-                        item.dateTime = item.date ? moment(item.date + ' ' + item.time, 'DD/MM/YYYY HH:mm') : null;
+
+                if (!tournament.stages || !tournament.stages.length) {
+                    return res.render('partials/lazy/fixture', {
+                        fixture:   {},
+                        emptyText: 'Нет данных',
+                        layout:    false
+                    });
+                }
+
+                remote(remoteConfig.url + '/tournaments/games?ids=' + tournament._id, function (err, response, result) {
+                    var games = result.map(function (item) {
+                        item.dateTime = item.timestamp ? moment.unix(item.timestamp) : null;
                         return item;
                     });
 
@@ -123,6 +142,16 @@ module.exports = {
     restStats: function (req, res, next) {
         LeagueModel.findOne({slug: req.params.league}, function (err, doc) {
             TournamentModel.findOne({slug: req.params.name, leagueId: doc._id}, function (err, tournament) {
+
+                if (!tournament.stages || !tournament.stages.length) {
+                    return res.render('partials/lazy/stats', {
+                        stats:     {},
+                        emptyText: 'Нет данных',
+                        layout:    false
+                    });
+                }
+
+
                 if (err) {
                     return next(err);
                 }
@@ -131,13 +160,13 @@ module.exports = {
                     return next(null);
                 }
 
-                remote(remoteConfig.url + '/stats/players_stats?tournamentId=' + tournament.remoteId, function (err, response, stats) {
-                    stats = stats.filter(function (item) {
+                remote(remoteConfig.url + '/tournaments/players?ids=' + tournament._id, function (err, response, result) {
+                    var stats = result.filter(function (item) {
                         return !!item.playerId;
                     });
 
                     stats = stats.sort(function (a, b) {
-                        return a.points >= b.points ? -1 : 1;
+                        return a.goals_assists_hearts_stars >= b.goals_assists_hearts_stars ? -1 : 1;
                     });
 
                     stats = stats.slice(0, 10);
@@ -166,7 +195,7 @@ module.exports = {
                 }
 
                 var stats = new Promise(function (resolve, reject) {
-                    remote(remoteConfig.url + '/stats/players_stats?tournamentId=' + tournament.remoteId, function (err, response, stats) {
+                    remote(remoteConfig.url + '/tournaments/players?ids=' + tournament._id, function (err, response, stats) {
                         var stat = {
                             goals:   [],
                             assists: []
@@ -203,8 +232,7 @@ module.exports = {
                         remote(remoteConfig.url + '/games/' + article.gameId, function (err, response, game) {
                             article.game = game;
 
-                            article.game.dateTime = article.game.date ? moment(article.game.date + ' ' + article.game.time,
-                                'DD/MM/YYYY HH:mm') : null;
+                            article.game.dateTime = article.game.timestamp ? moment.unix(article.timestamp) : null;
 
                             resolve(article);
                         });
@@ -228,6 +256,9 @@ module.exports = {
 
 
                         remote(remoteConfig.url + '/games?' + games.join('&'), function (err, response, games) {
+
+                            games = [];
+
                             var previews = prepareArticles('preview', games, docs.slice());
                             var reviews  = prepareArticles('review', games, docs.slice());
 
@@ -302,12 +333,13 @@ module.exports = {
 
                 Promise.all([stats, central, articles, photos]).then(function (result) {
                     res.render('tournaments/item', {
-                        tournament: tournament,
-                        stats:      result[0],
-                        central:    result[1],
-                        previews:   result[2].previews,
-                        reviews:    result[2].reviews,
-                        photos:     result[3]
+                        tournament:     tournament,
+                        stats:          result[0],
+                        central:        result[1],
+                        previews:       result[2].previews,
+                        reviews:        result[2].reviews,
+                        photos:         result[3],
+                        pageTournament: true
                     });
                 });
 
@@ -399,13 +431,13 @@ module.exports = {
                     return next(null);
                 }
 
-                remote(remoteConfig.url + '/stats/players_stats?tournamentId=' + tournament.remoteId, function (err, response, stats) {
+                remote(remoteConfig.url + '/tournaments/players?ids=' + tournament._id, function (err, response, stats) {
                     stats = stats.filter(function (item) {
                         return !!item.playerId;
                     });
 
                     stats = stats.sort(function (a, b) {
-                        return a.points >= b.points ? -1 : 1;
+                        return a.goals_assists_hearts_stars >= b.goals_assists_hearts_stars ? -1 : 1;
                     });
 
                     res.title('Статистика');
@@ -426,9 +458,9 @@ module.exports = {
                     return next(null);
                 }
 
-                remote(remoteConfig.url + '/games?tournamentId=' + tournament.remoteId, function (err, response, games) {
+                remote(remoteConfig.url + '/tournaments/games?ids=' + tournament._id, function (err, response, games) {
                     games = games.map(function (item) {
-                        item.dateTime = item.date ? moment(item.date + ' ' + item.time, 'DD/MM/YYYY HH:mm') : null;
+                        item.dateTime = item.timestamp ? moment.unix(item.timestamp) : null;
                         return item;
                     });
 
@@ -510,19 +542,23 @@ module.exports = {
             /* Table */
             parallels = parallels.concat(function (cb) {
                 var startTime = new Date().getTime();
-                remote(remoteConfig.url + '/stats/table?tournamentId=' + tournament.remoteId, function (err, response, table) {
+                remote(remoteConfig.url + '/tournaments/tables?ids=' + tournament._id, function (err, response, tables) {
                     var endTime = new Date().getTime();
                     log('received Table', (endTime - startTime) + "ms.", response.body.length);
 
-                    table.temas = table.teams.map(function (item) {
-                        item.form = item.form.slice(-5);
-                        return item;
+                    tables = tables.map(function (table) {
+                        table.teams = table.teams.map(function (item) {
+                            item.form = item.form.slice(-5);
+                            return item;
+                        });
+
+                        return table;
                     });
 
                     endTime = new Date().getTime();
-                    log('processed Table', (endTime - startTime) + "ms.");
+                    log('processed Tables', (endTime - startTime) + "ms.");
 
-                    cb(null, table);
+                    cb(null, tables);
                 }).on('response', function (response) {
                     // unmodified http.IncomingMessage object
                     var length = 0;
@@ -541,13 +577,9 @@ module.exports = {
             parallels = parallels.concat(function (cb) {
                 var startTime = new Date().getTime();
 
-                remote(remoteConfig.url + '/stats/players_stats?tournamentId=' + tournament.remoteId, function (err, response, stats) {
+                remote(remoteConfig.url + '/tournaments/players?ids=' + tournament._id, function (err, response, stats) {
                     var endTime = new Date().getTime();
                     log('received Stats', (endTime - startTime) + "ms.", response.body.length);
-
-                    stats = stats.filter(function (item) {
-                        return !!item.playerId;
-                    });
 
                     var goals = stats.sort(function (a, b) {
                         return a.goals >= b.goals ? -1 : 1;
@@ -568,12 +600,12 @@ module.exports = {
             parallels = parallels.concat(function (cb) {
                 var startTime = new Date().getTime();
 
-                remote(remoteConfig.url + '/games?tournamentId=' + tournament.remoteId, function (err, response, games) {
+                remote(remoteConfig.url + '/tournaments/games?ids=' + tournament._id, function (err, response, result) {
                     var endTime = new Date().getTime();
                     log('received Games', (endTime - startTime) + "ms.", response.body.length);
 
-                    games = games.map(function (item) {
-                        item.dateTime = item.date ? moment(item.date + ' ' + item.time, 'DD/MM/YYYY HH:mm') : null;
+                    var games = result.map(function (item) {
+                        item.dateTime = item.timestamp ? moment.unix(item.timestamp) : null;
                         return item;
                     });
 
@@ -636,12 +668,12 @@ module.exports = {
 
                 res.locals.globals.tournament = tournament;
                 res.locals.globals.leagues    = result[0];
-                res.locals.globals.table      = result[1];
+                res.locals.globals.tables     = result[1];
                 res.locals.globals.stats      = result[2];
                 res.locals.globals.recent     = result[3].recent;
                 res.locals.globals.comming    = result[3].comming;
 
-                var name         = Handlebars.helpers['noYear'](tournament.name);
+                var name = Handlebars.helpers['noYear'](tournament.name);
                 res.title(name);
 
                 next();

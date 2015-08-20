@@ -15,6 +15,7 @@ var TournamentSchema = new Schema({
     show:     {type: Boolean},
     state:    {type: String, default: 'CREATED'},
     leagueId: {type: ObjectId},
+    stages:   {type: Array},
     remoteId: {type: String}, // change to ObjectId
     country:  {type: ObjectId, ref: 'Country'},
     settings: {type: Object, default: {}},

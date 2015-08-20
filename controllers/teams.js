@@ -21,9 +21,9 @@ module.exports = {
 
                 /* Table */
                 var table = new Promise(function (resolve, reject) {
-                    remote(remoteConfig.url + '/stats/table?tournamentId=' + tournament.remoteId, function (err, response, table) {
-                        table = table.teams.filter(function (item) {
-                            return item._id == req.params.id;
+                    remote(remoteConfig.url + '/tournaments/tables?ids=' + tournament._id, function (err, response, table) {
+                        table = table[0].teams.filter(function (item) {
+                            return item.teamId == req.params.id;
                         });
 
                         table = table.map(function (item) {
@@ -38,7 +38,7 @@ module.exports = {
 
                 /* Table */
                 var team = new Promise(function (resolve, reject) {
-                    remote(remoteConfig.url + '/teams/' + req.params.id, function (err, response, team) {
+                    remote(remoteConfig.url + '/teams/' + req.params.id + '/roster', function (err, response, team) {
                         var numSort  = function (a, b) {
                             return a.number < b.number ? -1 : 1;
                         };
@@ -67,13 +67,13 @@ module.exports = {
 
                 /* Recent/comming games widget */
                 var games = new Promise(function (resolve, reject) {
-                    remote(remoteConfig.url + '/games?tournamentId=' + tournament.remoteId, function (err, response, games) {
+                    remote(remoteConfig.url + '/tournaments/games?ids=' + tournament._id, function (err, response, games) {
                         games = games.filter(function (item) {
                             return item.teams[0]._id == req.params.id || item.teams[1]._id == req.params.id;
                         });
 
                         games = games.map(function (item) {
-                            item.dateTime = item.date ? moment(item.date + ' ' + item.time, 'DD/MM/YYYY HH:mm') : null;
+                            item.dateTime = item.timestamp ? moment.unix(item.timestamp) : null;
                             return item;
                         });
 
@@ -104,8 +104,7 @@ module.exports = {
                 });
 
                 Promise.all([table, team, games]).then(function (result) {
-
-                    res.title('Клубы: ' + result[1].name);
+                    res.title('Клубы: ' + result[1].teamName);
                     res.render('teams/item',
                         {tournament: tournament, table: result[0], team: result[1], games: result[2], pageTeams: true});
                 });
@@ -124,7 +123,7 @@ module.exports = {
 
             /* Teams list */
             var teams = new Promise(function (resolve, reject) {
-                remote(remoteConfig.url + '/teams?leagueId=' + league.remoteId, function (err, response, teams) {
+                remote(remoteConfig.url + '/league/' + league.remoteId + '/teams', function (err, response, teams) {
                     resolve(teams);
                 });
             });
@@ -132,17 +131,19 @@ module.exports = {
             TournamentModel.findOne({slug: req.params.name, leagueId: league._id, show: true}).lean().exec(function (err, tournament) {
                 /* Table */
                 var table = new Promise(function (resolve, reject) {
-                    remote(remoteConfig.url + '/stats/table?tournamentId=' + tournament.remoteId, function (err, response, table) {
-                        resolve(table);
+                    remote(remoteConfig.url + '/tournaments/tables?ids=' + tournament._id, function (err, response, tables) {
+                        resolve(tables);
                     });
                 });
 
                 Promise.all([table, teams]).then(function (result) {
                     var teams = [];
-                    result[0].teams.forEach(function (item) {
-                        teams.push(result[1].filter(function (team) {
-                            return team._id == item._id;
-                        }).pop());
+                    result[0] = result[0].map(function (table) {
+                        return table.teams.forEach(function (item) {
+                            teams.push(result[1].filter(function (team) {
+                                return item.teamId == team._id;
+                            }).pop());
+                        });
                     });
 
                     res.title('Клубы');
@@ -154,6 +155,7 @@ module.exports = {
 };
 
 function remote(url, cb) {
+    console.log(url);
     request.get({
         uri:  url,
         auth: remoteConfig.authOptions,

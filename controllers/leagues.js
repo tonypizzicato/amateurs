@@ -49,12 +49,10 @@ module.exports = {
 
                     var query = [];
                     ids.forEach(function (item) {
-                        query.push('tournamentId[]=' + item);
+                        query.push('ids=' + item);
                     });
 
-                    log(remoteConfig.url + '/stats/table?' + query.join('&'));
-
-                    client.get(remoteConfig.url + '/stats/table?' + query.join('&'), function (tables) {
+                    client.get(remoteConfig.url + '/tournaments/tables?' + query.join('&'), function (tables) {
 
                         var endTime = new Date().getTime();
                         log('received Tables', (endTime - startTime) + "ms.", tables.length);
@@ -78,13 +76,20 @@ module.exports = {
                             }
                         }
 
+                        console.log(tables.length);
+
                         tournaments.map(function (item) {
-                            item.table = tables[item.remoteId] ? tables[item.remoteId][0] : null;
-                            if (!!item.table) {
-                                item.table.teams = item.table.teams.map(function (item) {
-                                    item.form = item.form.slice(-5);
-                                    return item;
+                            item.tables = tables[item.remoteId] ? tables[item.remoteId] : null;
+                            if (!!item.tables) {
+                                item.tables = item.tables.map(function (table) {
+                                    table.teams = table.teams.map(function (item) {
+                                        item.form = item.form.slice(-5);
+                                        return item;
+                                    });
+
+                                    return table;
                                 });
+
                             }
                         });
 

@@ -31,7 +31,7 @@ module.exports = {
 
                     game = JSON.parse(game);
 
-                    game.dateTime = game.date ? moment(game.date + ' ' + game.time, 'DD/MM/YYYY HH:mm') : null;
+                    game.dateTime = game.date ? moment.unix(game.timestamp) : null;
 
                     var gameLength = tournament.settings ? tournament.settings.gameLength : undefined;
                     if (game.state.toLowerCase() == 'closed') {

@@ -1,7 +1,7 @@
 "use strict";
 
 module.exports = {
-    url:         'http://amateurs.io/api',
+    url:         'http://yourprice.ru/api',
     authOptions: {
         user:     "root",
         password: "horseremorse"
