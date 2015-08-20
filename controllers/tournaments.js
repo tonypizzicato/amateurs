@@ -230,9 +230,8 @@ module.exports = {
                         }
 
                         remote(remoteConfig.url + '/games/' + article.gameId, function (err, response, game) {
-                            article.game = game;
-
-                            article.game.dateTime = article.game.timestamp ? moment.unix(article.timestamp) : null;
+                            article.game          = game;
+                            article.game.dateTime = article.game.timestamp ? moment.unix(article.game.timestamp) : null;
 
                             resolve(article);
                         });
@@ -365,7 +364,7 @@ module.exports = {
                     );
 
                     docs.forEach(function (item) {
-                        item.game.dateTime = item.game.date ? moment(item.game.date + ' ' + item.game.time, 'DD/MM/YYYY HH:mm') : null;
+                        item.game.dateTime = item.game.timestamp ? moment.unix(item.game.timestamp) : null;
                     });
 
                     docs = docs.sort(function (a, b) {
