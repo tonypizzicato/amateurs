@@ -7,7 +7,7 @@ var linkRoutes = {
     table: {}
 };
 
-moment.tz.setDefault("America/New_York");
+//moment.tz.setDefault("America/New_York");
 
 var helpers = {
     eq: function (lvalue, rvalue, options) {

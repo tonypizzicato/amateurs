@@ -1,6 +1,6 @@
 {{#notEmptyObject fixture}}
     {{#each fixture}}
-        <h5 class="text_color_orange s_mt_0">{{@key}} Тур</h5>
+        <h5 class="text_color_orange s_mt_0">{{ucfirst @key}}</h5>
 
         {{#each this}}
             <div class="row s_mb_5{{#if @last}} s_mb_20{{/if}}">

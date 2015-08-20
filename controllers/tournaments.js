@@ -49,7 +49,7 @@ module.exports = {
                         return item.dateTime && item.dateTime.isBefore(moment()) && item.state == 'CLOSED';
                     });
 
-                    recent = _.groupBy(recent.slice(-8), 'tourNumber');
+                    recent = _.groupBy(recent.slice(-8), 'tourText');
 
                     res.render('partials/lazy/fixture', {
                         league:     res.locals.globals.league,
@@ -120,12 +120,12 @@ module.exports = {
                     if (dated.length) {
                         comming = dated;
                     } else {
-                        comming = _.values(_.groupBy(comming, 'tourNumber')).reduce(function (a, b) {
+                        comming = _.values(_.groupBy(comming, 'tourText')).reduce(function (a, b) {
                             return a.length > b.length ? a : b;
                         });
                     }
 
-                    comming = _.groupBy(comming.slice(0, 10), 'tourNumber');
+                    comming = _.groupBy(comming.slice(0, 10), 'tourText');
 
                     res.render('partials/lazy/fixture', {
                         league:     res.locals.globals.league,
@@ -468,6 +468,8 @@ module.exports = {
                     sortedGames.sort(function (a, b) {
                         if (a.tourNumber < b.tourNumber) {
                             return -1;
+                        } else if (a.tourNumber > b.tourNumber) {
+                            return 1;
                         } else if ((a.dateTime && !b.dateTime) || (a.dateTime && b.dateTime && a.dateTime.isBefore(b.dateTime))) {
                             return -1;
                         } else {
@@ -477,13 +479,13 @@ module.exports = {
 
                     var fixture = {};
                     sortedGames.forEach(function (item) {
-                        if (Object.prototype.toString.call(fixture[item.tourNumber]) !== '[object Array]') {
-                            fixture[item.tourNumber] = [];
+                        if (Object.prototype.toString.call(fixture[item.tourText]) !== '[object Array]') {
+                            fixture[item.tourText] = [];
                         }
                         if (!item.dateTime) {
                             //console.log('no datetime', item._id, item.dateTime, item.date);
                         }
-                        fixture[item.tourNumber].push(item);
+                        fixture[item.tourText].push(item);
                     });
 
                     res.title('Календарь');
@@ -643,7 +645,7 @@ module.exports = {
                         comming = dated;
                     } else {
                         if (comming.length) {
-                            comming = _.values(_.groupBy(comming, 'tourNumber')).reduce(function (a, b) {
+                            comming = _.values(_.groupBy(comming, 'tourText')).reduce(function (a, b) {
                                 return a.length > b.length ? a : b;
                             });
                         } else {
@@ -651,8 +653,8 @@ module.exports = {
                         }
                     }
 
-                    recent  = _.groupBy(recent.slice(-8), 'tourNumber');
-                    comming = _.groupBy(comming.slice(0, 10), 'tourNumber');
+                    recent  = _.groupBy(recent.slice(-8), 'tourText');
+                    comming = _.groupBy(comming.slice(0, 10), 'tourText');
 
                     endTime = new Date().getTime();
                     log('processed Games', (endTime - startTime) + "ms.");
