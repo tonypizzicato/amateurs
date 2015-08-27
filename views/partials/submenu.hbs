@@ -61,8 +61,10 @@
             </li>
         </ul>
         <ul class="nav navbar-nav pull-right">
-            <li class="navbar__item{{#if promoTournamentPage}} navbar__item_active_yes{{/if}}">
-                <a class="navbar-link_type_promo" href="/{{globals.league.slug}}/contacts#order">Подать заявку</a>
+            <li class="navbar__item{{#if pageContacts}} navbar__item_active_yes{{/if}}">
+                <a class="navbar-link_type_promo navbar-link_type_promo__red" href="/{{globals.league.slug}}/contacts#order">
+                    Вступай в игру!
+                </a>
             </li>
         </ul>
     </div>
