@@ -19,7 +19,6 @@ ContactsPage = ProjectPage.mix(WithMasonry).extend
         this._initForm()
 
     _initForm: ()->
-
         if this._elem('form').length
             new ContactForm
                 el: this._elem('form'),
@@ -32,13 +31,7 @@ ContactsPage = ProjectPage.mix(WithMasonry).extend
             o = {}
             a = @serializeArray()
             $.each a, ->
-                if o[@name] != undefined
-                    if !o[@name].push
-                        o[@name] = [o[@name]]
-                    o[@name].push @value or ''
-                else
-                    o[@name] = @value or ''
-                return
+                o[@name] = @value or ''
             o
 
 

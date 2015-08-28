@@ -367,6 +367,7 @@ input[type=text]::-ms-clear {
 .contact-form textarea {
     max-width: 100%;
     height:    150px;
+    font-size: 14px;
     resize:    none;
 }
 
@@ -429,12 +430,13 @@ input[type=text]::-ms-clear {
     color:      #888;
 
     transition: all 0.4s;
+    top:        -100%;
 }
 
 .contact-form .form-field.error .error {
     opacity:    1;
     visibility: visible;
-    transform:  translateY(110%);
+    transform:  translateY(0%);
 }
 
 .contact-form .form-field.error input,
@@ -479,8 +481,8 @@ input[type=text]::-ms-clear {
     transition:         background-color 0.4s linear;
 }
 
-.contact-form__main {
-    display: none;
+.contact-form__additional {
+    overflow: hidden;
 }
 
 .btn-span-ok {

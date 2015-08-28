@@ -4,16 +4,21 @@ var mongoose = require('mongoose'),
     Schema   = mongoose.Schema;
 
 var OrderSchema = new Schema({
-    dc:       {type: Date, default: Date.now},
-    name:     {type: String},
-    email:    {type: String},
-    phone:    {type: String},
-    region:   {type: String},
-    league:   {type: String},
-    leagueId: {type: Schema.ObjectId},
-    team:     {type: String},
-    message:  {type: String},
-    source:   {type: String}
+    dc:           {type: Date, default: Date.now},
+    name:         {type: String},
+    email:        {type: String},
+    phone:        {type: String},
+    teamOrPlayer: {type: String},
+    region:       {type: String},
+    league:       {type: String},
+    leagueId:     {type: Schema.ObjectId},
+    format:       {type: Number},
+    team:         {type: String},
+    position:     {type: String},
+    age:          {type: String},
+    message:      {type: String},
+    experience:   {type: String},
+    source:       {type: String}
 });
 
 OrderSchema.options.toJSON = {
