@@ -380,7 +380,7 @@ module.exports = {
 
                     var week = moment().subtract("days", 8);
 
-                    docs.filter(function(item) {
+                    docs = docs.filter(function(item) {
                         return moment(item.dc).isAfter(week);
                     });
 
