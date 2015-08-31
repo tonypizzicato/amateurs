@@ -35,20 +35,28 @@ var api = {
             }
 
             var _tournaments = [];
-            var pending = 0;
+            var pending      = 0;
 
             function getTournaments(league) {
                 pending += 1;
                 client.get(remoteConfig.url + '/league/' + league._id + '/tournaments/active', function (data) {
-                    var parsed = JSON.parse(data),
+                    var parsed  = JSON.parse(data),
                         queries = [];
 
                     parsed.forEach(function (item) {
                         item.remoteId = item._id;
+                        item.leagueId = league._id;
+
                         delete item.__v;
 
                         var query = function (cb) {
-                            TournamentModel.findOneAndUpdate({remoteId: item._id}, item, {upsert: true}).exec(cb);
+                            TournamentModel.findOne({remoteId: item._id}).exec(function (err, doc) {
+                                if (doc) {
+                                    TournamentModel.update({remoteId: item._id}, {$set: item}).exec(cb);
+                                } else {
+                                    TournamentModel.create(item);
+                                }
+                            });
                         };
                         queries.push(query);
                     });
