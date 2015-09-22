@@ -127,7 +127,8 @@ module.exports = {
             res.locals.globals.contacts = result[2];
 
             res.title(result[1].name);
-            res.desc(s.sprintf(require('../config/descriptions').league, result[1].name, result[1].slug == 'moscow' ? "Москва" : "Санкт-Петербург"));
+            res.desc(s.sprintf(require('../config/descriptions').league, result[1].name, result[1].slug == 'moscow' ? "Москва" :
+                (result[1].slug == 'spb' ? "Санкт-Петербург" : "Екатеринбург")));
             res.render('leagues/item', {league: result[1]});
         });
 

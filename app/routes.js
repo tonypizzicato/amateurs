@@ -157,7 +157,7 @@ module.exports.initialize = function (app) {
     app.get('/:league/tournaments/:name/fields/:fieldName', t(''), news.pre, tournaments.globals, fields.item);
     app.get('/:league/tournaments/:name', t('Чемпионат'), news.pre, tournaments.globals, tournaments.item);
 
-    app.get('/:league(moscow|spb)', t('Туриниры'), news.pre, leagues.item);
+    app.get('/:league(moscow|spb|ekb)', t('Туриниры'), news.pre, leagues.item);
 
     app.get('/:league/contacts', t('Контакты'), news.pre, news.globals, contacts.list);
     app.get('/:league/fields', t('Поля'), news.pre, news.globals, fields.list);

@@ -165,7 +165,7 @@ app.get('*', function (req, res, next) {
 
         var match = param.match(/^(\w+)\/?(.*|$)/);
 
-        var leaguesNames = ['moscow', 'spb'];
+        var leaguesNames = ['moscow', 'spb', 'ekb'];
         if (match && match.length >= 1 && _.contains(leaguesNames, match[1])) {
             query.slug = match[1];
         } else {
