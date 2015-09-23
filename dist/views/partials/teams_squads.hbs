@@ -1,1 +1,22 @@
-{{#if squads.length}} {{#each squads}}<div class="s_overflow_hidden"><div class="match-lineup__number column col-md-1 text_color_orange">{{~#if number}}{{~number~}}{{else}}&mdash;{{/if~}}</div><img class="match-lineup__photo column col-md-2 js-image" data-src="http://amateurs.io/api/img/players/{{_id}}.jpg" data-absent="https://placeholdit.imgix.net/~text?txtsize=33&txt=%D0%9D%D0%B5%D1%82%20%D1%84%D0%BE%D1%82%D0%BE&w=150&h=150"><div class="match-lineup__player column col-md-8">{{~name~}}</div><div class="match-lineup__player column col-md-1 text_align_c">{{~#if position}}{{~position~}}{{else}}&mdash;{{/if~}}</div></div>{{/each}} {{else}}<p class="text_align_c s_pt_10">{{emptyText}}</p>{{/if}}
+{{#if squads.length}}
+    {{#each squads}}
+        <div class="s_overflow_hidden">
+            <div class="match-lineup__number column col-md-1 text_color_orange">
+                        {{~#if number}}{{~number~}}{{else}}&mdash;{{/if~}}
+            </div>
+            <img class="match-lineup__photo column col-md-2 js-image"
+                 data-src="http://amateurs.io/api/img/players/{{_id}}.jpg"
+                 data-absent="https://placeholdit.imgix.net/~text?txtsize=33&txt=%D0%9D%D0%B5%D1%82%20%D1%84%D0%BE%D1%82%D0%BE&w=150&h=150"
+            >
+
+            <div class="match-lineup__player column col-md-8">
+                {{~name~}}
+            </div>
+            <div class="match-lineup__player column col-md-1 text_align_c">
+                        {{~#if position}}{{~position~}}{{else}}&mdash;{{/if~}}
+            </div>
+        </div>
+    {{/each}}
+{{else}}
+    <p class="text_align_c s_pt_10">{{emptyText}}</p>
+{{/if}}

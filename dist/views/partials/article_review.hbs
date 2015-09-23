@@ -1,1 +1,49 @@
-<div class="row s_mb_20"><div class="col-md-12"><div class="row"><div class="col-md-3 text_align_r s_mt_40"><h4><a href="/{{league.slug}}/tournaments/{{tournament.slug}}/teams/{{article.game.teams.[0]._id}}">{{article.game.teams.[0].name}}</a></h4></div><div class="col-md-2"><img class="s_mr_10" src="http://sharvester.ru/api/img/teams/{{article.game.teams.[0]._id}}.png" height="100"></div><div class="col-md-2 text_color_light text_align_c s_mt_0 s_pl_0 s_pr_0"><a class="text_color_orange text_size_48 text_line-height_58" href="/{{league.slug}}/tournaments/{{tournament.slug}}/matches/{{article.game._id}}"><span>{{article.game.score.ft.[0]}}</span> <span>:</span> <span>{{article.game.score.ft.[1]}}</span></a> {{#if article.game.dateTime}}<p class="text_size_12 text_color_light s_mb_3">{{dateHuman article.game.dateTime}}<br>{{time article.game.dateTime}}</p>{{/if}}</div><div class="col-md-2"><img class="s_mr_10" src="http://sharvester.ru/api/img/teams/{{article.game.teams.[1]._id}}.png" height="100"></div><div class="col-md-3 s_mt_40"><h4><a href="/{{league.slug}}/tournaments/{{tournament.slug}}/teams/{{article.game.teams.[1]._id}}">{{article.game.teams.[1].name}}</a></h4></div></div></div></div><div class="row"><div class="col-md-12"><div class="reading s_pl_10 s_pr_10">{{{article.body}}} {{> video video=article.video}}</div></div></div>
+<div class="row s_mb_20">
+
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-3 text_align_r s_mt_40">
+                <h4>
+                    <a href="/{{league.slug}}/tournaments/{{tournament.slug}}/teams/{{article.game.teams.[0]._id}}">
+                        {{article.game.teams.[0].name}}
+                    </a>
+                </h4>
+            </div>
+            <div class="col-md-2">
+                <img class="s_mr_10" src="http://sharvester.ru/api/img/teams/{{article.game.teams.[0]._id}}.png" height="100"/>
+            </div>
+            <div class="col-md-2 text_color_light text_align_c s_mt_0 s_pl_0 s_pr_0">
+                <a class="text_color_orange text_size_48 text_line-height_58" href="/{{league.slug}}/tournaments/{{tournament.slug}}/matches/{{article.game._id}}">
+                    <span>{{article.game.score.ft.[0]}}</span>
+                    <span>:</span>
+                    <span>{{article.game.score.ft.[1]}}</span>
+                </a>
+                {{#if article.game.dateTime}}
+                    <p class="text_size_12 text_color_light s_mb_3">
+                        {{dateHuman article.game.dateTime}}<br>
+                        {{time article.game.dateTime}}
+                    </p>
+                {{/if}}
+            </div>
+            <div class="col-md-2">
+                <img class="s_mr_10" src="http://sharvester.ru/api/img/teams/{{article.game.teams.[1]._id}}.png" height="100"/>
+            </div>
+            <div class="col-md-3 s_mt_40">
+                <h4>
+                    <a href="/{{league.slug}}/tournaments/{{tournament.slug}}/teams/{{article.game.teams.[1]._id}}">
+                        {{article.game.teams.[1].name}}
+                    </a>
+                </h4>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="reading s_pl_10 s_pr_10">
+            {{{article.body}}}
+
+            {{> video video=article.video}}
+        </div>
+    </div>
+</div>

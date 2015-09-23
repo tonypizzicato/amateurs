@@ -1,1 +1,175 @@
-<!DOCTYPE html><html xmlns="http://www.w3.org/1999/html"><head lang="en"><meta charset="UTF-8"><title>{{#if title}}{{title}} — {{/if}}Любительская Футбольная Лига Amateur Football League. {{#eq globals.league.slug 'spb'}}Санкт-Петербург{{else}}Москва{{/eq}}.</title><meta name="description" content="{{desc}}"><meta name="viewport" content="width=1170"><!-- Place favicon.ico and apple-touch-icon.png in the root directory --><link rel="stylesheet" href="/styles/0d01dc2c.vendor.css"><link rel="stylesheet" href="/styles/21703467.main.css"><body><div class="container"><div class="row clearfix"><div class="col-md-12 column">{{> menu this}}</div></div>{{#if globals.newsSticked.length}}<div class="row clearfix news s_mb_20"><div class="column col-md-12"><div class="news__list js-news"><ul class="news__headlines">{{#each globals.newsSticked}} {{#if stick}} {{#if image}}<li class="{{#eq 0 @index}}selected{{/eq}}"><span class="news__time">{{dateTimeShort dc true}}</span> {{#if ../../../globals.tournament._id}} <a class="news__title" href="/{{../../../../globals.league.slug}}/tournaments/{{../../../../globals.tournament.slug}}/news/{{slug}}">{{title}}</a> {{else}} {{#if ../../../../globals.league._id}} <a class="news__title" href="/{{../../../../../globals.league.slug}}/news/{{slug}}">{{title}}</a> {{else}} <a class="news__title" href="/news/{{slug}}">{{title}}</a> {{/if}} {{/if}}</li>{{/if}} {{/if}} {{/each}}</ul><div class="news__preview">{{#each globals.newsSticked}} {{#if stick}} {{#if image}}<div class="news__content"><div class="news__image" style="background-image: url({{image}}); background-size: cover; background-position: 50% {{imagePosition}}"></div><div class="news__resume">{{#if ../../../globals.tournament._id}} <a class="news__title" href="/{{../../../../globals.league.slug}}/tournaments/{{../../../../globals.tournament.slug}}/news/{{slug}}">{{title}}</a> {{else}} {{#if ../../../../globals.league._id}} <a class="news__title" href="/{{../../../../../globals.league.slug}}/news/{{slug}}">{{title}}</a> {{else}} <a class="news__title" href="/news/{{slug}}">{{title}}</a> {{/if}} {{/if}}<p class="news__description">{{teaser}}</p></div></div>{{/if}} {{/if}} {{/each}}<!-- .news-content --></div><!-- .news-preview --></div><!-- .news-holder --></div></div>{{/if}} {{#if globals.tournament}}<div class="row clearfix"><div class="col-md-12 column">{{> submenu this}}</div></div>{{/if}} {{{body}}} {{#if globals.league}}<div class="row clearfix animated fadeInUp delay-1s"><div class="column col-md-12">{{> federations this}}</div></div>{{/if}}<footer><div class="panel"><div class="panel__body"><p>Разработано <span class="text_color_muted">tony.pizzicato</span> специально для <em>AFL Россия</em></p></div></div></footer></div>{{> photoswipe}}<script>var cb=function(e){var t=document.createElement("link");t.rel="stylesheet",t.href=e;var a=document.getElementsByTagName("head")[0];a.parentNode.insertBefore(t,a)},raf=requestAnimationFrame||mozRequestAnimationFrame||webkitRequestAnimationFrame||msRequestAnimationFrame;raf?(raf(cb.bind(null,"https://fonts.googleapis.com/css?family=Exo+2:400,100,300,600,700,500|Open+Sans:300,400,500,700&subset=latin,cyrillic")),raf(cb.bind(null,"http://sharvester.ru/api/css/tl-sprite20.css"))):window.addEventListener("load",cb);</script><script src="/scripts/vendor/6d15dd2a.modernizr.js"></script><script src="/scripts/e0d73222.out.js"></script><script>!function(e,a,t,n,c,o,s){e.GoogleAnalyticsObject=c,e[c]=e[c]||function(){(e[c].q=e[c].q||[]).push(arguments)},e[c].l=1*new Date,o=a.createElement(t),s=a.getElementsByTagName(t)[0],o.async=1,o.src=n,s.parentNode.insertBefore(o,s)}(window,document,"script","//www.google-analytics.com/analytics.js","ga"),ga("create","UA-56534486-1","auto"),ga("send","pageview");</script>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>
+        {{#if title}}{{title}} — {{/if}}Любительская Футбольная Лига Amateur Football League.
+        {{#eq globals.league.slug 'spb'}}Санкт-Петербург{{else}}Москва{{/eq}}.
+    </title>
+
+    <meta name="description" content="{{desc}}">
+
+    <meta name='viewport' content='width=1170'>
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+
+    <!-- build:css({public,.tmp,node_modules}) /styles/vendor.css -->
+    <link rel="stylesheet" href="/vendor/animate.css/animate.css">
+    <link rel="stylesheet" href="/owl.carousel/dist/assets/owl.carousel.css">
+    <link rel="stylesheet" href="/owl.carousel/dist/assets/owl.theme.default.css">
+    <link rel="stylesheet" href="/photoswipe/dist/photoswipe.css">
+    <link rel="stylesheet" href="/photoswipe/dist/default-skin/default-skin.css">
+    <link rel="stylesheet" href="/styles/fonts/football/flaticon.css">
+    <!-- endbuild -->
+
+    <!-- build:css({public,.tmp}) /styles/main.css -->
+    <link rel="stylesheet" href="/styles/main.css">
+    <!-- endbuild -->
+
+</head>
+<body>
+
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            {{> menu this}}
+        </div>
+    </div>
+    {{#if globals.newsSticked.length}}
+        <div class="row clearfix news s_mb_20">
+            <div class="column col-md-12">
+                <div class="news__list js-news">
+                    <ul class="news__headlines">
+                        {{#each globals.newsSticked}}
+                            {{#if stick}}
+                                {{#if image}}
+                                    <li class="{{#eq 0 @index}}selected{{/eq}}">
+                                        <span class="news__time">{{dateTimeShort dc true}}</span>
+                                        {{#if ../../../globals.tournament._id}}
+                                            <a class="news__title"
+                                               href="/{{../../../../globals.league.slug}}/tournaments/{{../../../../globals.tournament.slug}}/news/{{slug}}">{{title}}</a>
+                                        {{else}}
+                                            {{#if ../../../../globals.league._id}}
+                                                <a class="news__title"
+                                                   href="/{{../../../../../globals.league.slug}}/news/{{slug}}">{{title}}</a>
+                                            {{else}}
+                                                <a class="news__title" href="/news/{{slug}}">{{title}}</a>
+                                            {{/if}}
+                                        {{/if}}
+                                    </li>
+                                {{/if}}
+                            {{/if}}
+                        {{/each}}
+                    </ul>
+                    <div class="news__preview">
+                        {{#each globals.newsSticked}}
+                            {{#if stick}}
+                                {{#if image}}
+                                    <div class="news__content">
+                                        <div class="news__image"
+                                             style="background-image: url({{image}}); background-size: cover; background-position: 50% {{imagePosition}};"></div>
+
+                                        <div class="news__resume">
+                                            {{#if ../../../globals.tournament._id}}
+                                                <a class="news__title"
+                                                   href="/{{../../../../globals.league.slug}}/tournaments/{{../../../../globals.tournament.slug}}/news/{{slug}}">{{title}}</a>
+                                            {{else}}
+                                                {{#if ../../../../globals.league._id}}
+                                                    <a class="news__title"
+                                                       href="/{{../../../../../globals.league.slug}}/news/{{slug}}">{{title}}</a>
+                                                {{else}}
+                                                    <a class="news__title" href="/news/{{slug}}">{{title}}</a>
+                                                {{/if}}
+                                            {{/if}}
+
+                                            <p class="news__description">{{teaser}}</p>
+                                        </div>
+                                    </div>
+                                {{/if}}
+                            {{/if}}
+                        {{/each}}
+                        <!-- .news-content -->
+                    </div>
+                    <!-- .news-preview -->
+                </div>
+                <!-- .news-holder -->
+            </div>
+        </div>
+    {{/if}}
+
+    {{#if globals.tournament}}
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                {{> submenu this}}
+            </div>
+        </div>
+    {{/if}}
+
+    {{{body}}}
+
+    {{#if globals.league}}
+        <div class="row clearfix animated fadeInUp delay-1s">
+            <div class="column col-md-12">
+                {{> federations this}}
+            </div>
+        </div>
+    {{/if}}
+
+    <footer>
+        <div class="panel">
+            <div class="panel__body">
+                <p>Разработано <span class="text_color_muted">tony.pizzicato</span> специально для <em>AFL Россия</em></p>
+            </div>
+        </div>
+    </footer>
+
+</div>
+
+{{> photoswipe}}
+
+<script>
+    var cb = function (href) {
+        var l  = document.createElement('link');
+        l.rel  = 'stylesheet';
+        l.href = href;
+        var h  = document.getElementsByTagName('head')[0];
+        h.parentNode.insertBefore(l, h);
+    };
+    var raf = requestAnimationFrame || mozRequestAnimationFrame ||
+            webkitRequestAnimationFrame || msRequestAnimationFrame;
+    if (raf) {
+        raf(cb.bind(null,
+                'https://fonts.googleapis.com/css?family=Exo+2:400,100,300,600,700,500|Open+Sans:300,400,500,700&subset=latin,cyrillic'));
+        raf(cb.bind(null, 'http://sharvester.ru/api/css/tl-sprite20.css'));
+    }
+    else window.addEventListener('load', cb);
+</script>
+
+<!-- build:js({public,.tmp}) /scripts/vendor/modernizr.js -->
+<script src="/vendor/modernizr/modernizr.js"></script>
+<!-- endbuild -->
+
+<!-- build:js({public,.tmp}) /scripts/out.js -->
+<script src="/scripts/out.js"></script>
+<!-- endbuild -->
+
+
+<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src   = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-56534486-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+</body>
+</html>

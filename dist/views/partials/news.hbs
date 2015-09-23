@@ -1,1 +1,29 @@
-<div class="articles-list articles-list_type_sidebar">{{#each news}}<h5 class="text_color_orange s_mt_0">{{@key}}</h5>{{#each this}}<div class="articles-list__item s_mb_10"><div class="row"><div class="col-md-12"><div class="row"><div class="col-md-2"><span class="articles-list__time text_color_light text_size_12">{{time dc true}}</span></div><div class="col-md-10"><div class="articles-list__content text_size_13">{{#if ../../globals.tournament._id}} <a href="/{{../../../globals.league.slug}}/tournaments/{{../../../globals.tournament.slug}}/news/{{slug}}">{{title}}</a> {{else}} <a href="/{{../../../globals.league.slug}}/news/{{slug}}">{{title}}</a> {{/if}}</div></div></div></div></div></div>{{/each}} {{/each}}</div>
+<div class="articles-list articles-list_type_sidebar">
+    {{#each news}}
+        <h5 class="text_color_orange s_mt_0">{{@key}}</h5>
+        {{#each this}}
+            <div class="articles-list__item s_mb_10">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+
+                            <div class="col-md-2">
+                                <span class="articles-list__time text_color_light text_size_12">{{time dc true}}</span>
+                            </div>
+
+                            <div class="col-md-10">
+                                <div class="articles-list__content text_size_13">
+                                    {{#if ../../globals.tournament._id}}
+                                        <a href="/{{../../../globals.league.slug}}/tournaments/{{../../../globals.tournament.slug}}/news/{{slug}}">{{title}}</a>
+                                    {{else}}
+                                        <a href="/{{../../../globals.league.slug}}/news/{{slug}}">{{title}}</a>
+                                    {{/if}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    {{/each}}
+</div>

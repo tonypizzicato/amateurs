@@ -1,1 +1,52 @@
-<div class="row s_mb_20"><div class="col-md-55 text_align_r text_size_18 s_pr_0"><span class="fixture__team {{~#eq (gameResTeam game.teams.[0] game) 'w'}} fixture__winner{{/eq~}} {{~#eq (gameResTeam game.teams.[0] game) 'l'}} fixture__looser{{/eq~}}"><a href="/{{league.slug}}/tournaments/{{tournament.slug}}/teams/{{game.teams.[0]._id}}">{{~game.teams.[0].name~}}</a></span></div><div class="col-md-1 text_align_c text_size_18"><a class="s_mr_5 s_ml_5" href="/{{league.slug}}/tournaments/{{tournament.slug}}/matches/{{game._id}}#photo" title="Полный фотоотчет">{{game.score.ft.[0]}}:{{game.score.ft.[1]}}</a></div><div class="col-md-55 text_align_l text_size_18 s_pl_0"><span class="fixture__team {{~#eq (gameResTeam game.teams.[0] game) 'l'}} fixture__winner{{/eq~}} {{~#eq (gameResTeam game.teams.[0] game) 'w'}} fixture__looser{{/eq~}}"><a href="/{{league.slug}}/tournaments/{{tournament.slug}}/teams/{{game.teams.[1]._id}}">{{~game.teams.[1].name~}}</a></span> <a class="s_float_r" href="/{{league.slug}}/tournaments/{{tournament.slug}}/matches/{{game._id}}#photo" title="Полный фотоотчет"><i class="fa fa-external-link"></i></a></div></div><div class="row s_mb_10"><div class="col-md-12 s_pl_0 s_pr_0">{{~#if photos.length~}}<div class="pswp-gallery">{{~#each photos~}} {{~#if main.src~}} <a class="photo__item column item s_mb_10 fadeIn animated" href="{{main.src}}" data-size="{{main.w}}x{{main.h}}" {{#if author}}data-author="{{author}}"{{/if}} class="demo-gallery__img--main s_display_inline-block" style="display: inline-block; height: {{previewHeight ../../photos @index 730 1.6}}px">{{#if thumb.src}} <img src="{{thumb.src}}" alt=""> {{else}} <img src="{{main.src}}" alt=""> {{/if}}<figure class="s_display_none">{{../../game.teams.[0].name}} v {{../../game.teams.[1].name}}</figure></a> {{~/if~}} {{~/each~}}</div>{{~else~}}<p class="text_align_c s_mt_10">Фотоотчета пока нет</p>{{~/if~}}</div></div>
+<div class="row s_mb_20">
+    <div class="col-md-55 text_align_r text_size_18 s_pr_0">
+        <span class="fixture__team
+            {{~#eq (gameResTeam game.teams.[0] game) 'w'}} fixture__winner{{/eq~}}
+            {{~#eq (gameResTeam game.teams.[0] game) 'l'}} fixture__looser{{/eq~}}
+                    ">
+            <a href="/{{league.slug}}/tournaments/{{tournament.slug}}/teams/{{game.teams.[0]._id}}">{{~game.teams.[0].name~}}</a>
+        </span>
+    </div>
+    <div class="col-md-1 text_align_c text_size_18">
+        <a class="s_mr_5 s_ml_5" href="/{{league.slug}}/tournaments/{{tournament.slug}}/matches/{{game._id}}#photo" title="Полный фотоотчет">
+            {{game.score.ft.[0]}}:{{game.score.ft.[1]}}
+        </a>
+    </div>
+    <div class="col-md-55 text_align_l text_size_18 s_pl_0">
+        <span class="fixture__team
+            {{~#eq (gameResTeam game.teams.[0] game) 'l'}} fixture__winner{{/eq~}}
+            {{~#eq (gameResTeam game.teams.[0] game) 'w'}} fixture__looser{{/eq~}}
+            ">
+            <a href="/{{league.slug}}/tournaments/{{tournament.slug}}/teams/{{game.teams.[1]._id}}">{{~game.teams.[1].name~}}</a>
+        </span>
+        <a class="s_float_r" href="/{{league.slug}}/tournaments/{{tournament.slug}}/matches/{{game._id}}#photo" title="Полный фотоотчет">
+            <i class="fa fa-external-link"></i>
+        </a>
+    </div>
+</div>
+<div class="row s_mb_10">
+    <div class="col-md-12 s_pl_0 s_pr_0">
+        {{~#if photos.length~}}
+            <div class="pswp-gallery">
+                {{~#each photos~}}
+                    {{~#if main.src~}}
+                        <a class="photo__item column item s_mb_10 fadeIn animated" href="{{main.src}}" data-size="{{main.w}}x{{main.h}}"
+                           {{#if author}}data-author="{{author}}"{{/if}}
+                           class="demo-gallery__img--main s_display_inline-block"
+                           style="display: inline-block; height: {{previewHeight ../../photos @index 730 1.6}}px;"
+                                >
+                            {{#if thumb.src}}
+                                <img src="{{thumb.src}}" alt=""/>
+                            {{else}}
+                                <img src="{{main.src}}" alt=""/>
+                            {{/if}}
+                            <figure class="s_display_none">{{../../game.teams.[0].name}} v {{../../game.teams.[1].name}}</figure>
+                        </a>
+                    {{~/if~}}
+                {{~/each~}}
+            </div>
+        {{~else~}}
+            <p class="text_align_c s_mt_10">Фотоотчета пока нет</p>
+        {{~/if~}}
+    </div>
+</div>

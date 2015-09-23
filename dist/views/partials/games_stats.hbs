@@ -1,1 +1,57 @@
-{{#eq stats.length 2}}<div class="row s_mb_40 game-stats">{{#each stats.[0]}} {{#isNumber (get ../../stats.[0] @key 'value')}}<div class="col-md-12"><div class="col-md-4"><div class="game-stats__bar game-stats__bar_home {{~#gt (get ../../stats.[0] @key 'value') (get ../../stats.[1] @key 'value')}} game-stats__bar_more{{/gt}} {{~#lt (get ../../stats.[0] @key 'value') (get ../../stats.[1] @key 'value')}} game-stats__bar_less{{/lt}}" style="width:{{get ../../stats.[0] @key 'percent'}}%"></div>{{#if ../../stats.[0].firstHalf}}<div class="game-stats__bar game-stats__bar_home_first {{~#gt (get ../../../stats.[0].firstHalf @key 'value') (get ../../../stats.[1].firstHalf @key 'value')}} game-stats__bar_more{{/gt}} {{~#lt (get ../../../stats.[0].firstHalf @key 'value') (get ../../../stats.[1].firstHalf @key 'value')}} game-stats__bar_less{{/lt}}" style="width:{{get ../../../stats.[0].firstHalf @key 'percent'}}%">{{#if (get ../../../stats.[0].firstHalf @key 'value')}}<div class="game-stats__bar__value text_align_l">{{get ../../../../stats.[0].firstHalf @key 'value'}}</div>{{/if}}</div>{{/if}}</div><div class="col-md-1 s_line-height_42 text_size_16 text_align_c">{{get ../../stats.[0] @key 'value'}}</div><div class="col-md-2 text_color_light text_transform_u text_align_c s_line-height_42">{{#eq @key 'opportunity'}}Моменты{{/eq}} {{#eq @key 'foul'}}Фолы{{/eq}} {{#eq @key 'corner'}}Угловые{{/eq}} {{#eq @key 'shotOnGoal'}}В створ{{/eq}} {{#eq @key 'shotMissed'}}Мимо{{/eq}}</div><div class="col-md-1 s_line-height_42 text_size_16 text_align_c">{{get ../../stats.[1] @key 'value'}}</div><div class="col-md-4 s_pl_0"><div class="game-stats__bar game-stats__bar_away {{~#lt (get ../../stats.[0] @key 'value') (get ../../stats.[1] @key 'value')}} game-stats__bar_more{{/lt}} {{~#gt (get ../../stats.[0] @key 'value') (get ../../stats.[1] @key 'value')}} game-stats__bar_less{{/gt}}" style="width:{{get ../../stats.[1] @key 'percent'}}%"></div>{{#if ../../stats.[1].firstHalf}}<div class="game-stats__bar game-stats__bar_away_first {{~#gt (get ../../../stats.[1].firstHalf @key 'value') (get ../../../stats.[0].firstHalf @key 'value')}} game-stats__bar_more{{/gt}} {{~#lt (get ../../../stats.[1].firstHalf @key 'value') (get ../../../stats.[0].firstHalf @key 'value')}} game-stats__bar_less{{/lt}}" style="width:{{get ../../../stats.[1].firstHalf @key 'percent'}}%">{{#if (get ../../../stats.[1].firstHalf @key 'value')}}<div class="game-stats__bar__value text_align_r">{{get ../../../../stats.[1].firstHalf @key 'value'}}</div>{{/if}}</div>{{/if}}</div></div>{{/isNumber}} {{/each}}</div>{{/eq}}
+{{#eq stats.length 2}}
+    <div class="row s_mb_40 game-stats">
+        {{#each stats.[0]}}
+            {{#isNumber (get ../../stats.[0] @key 'value')}}
+                <div class="col-md-12">
+                    <div class="col-md-4">
+                        <div class="game-stats__bar game-stats__bar_home
+                            {{~#gt (get ../../stats.[0] @key 'value') (get ../../stats.[1] @key 'value')}} game-stats__bar_more{{/gt}}
+                            {{~#lt (get ../../stats.[0] @key 'value') (get ../../stats.[1] @key 'value')}} game-stats__bar_less{{/lt}}"
+                             style="width:{{get ../../stats.[0] @key 'percent'}}%;"></div>
+
+                        {{#if ../../stats.[0].firstHalf}}
+                            <div class="game-stats__bar game-stats__bar_home_first
+                                {{~#gt (get ../../../stats.[0].firstHalf @key 'value') (get ../../../stats.[1].firstHalf @key 'value')}} game-stats__bar_more{{/gt}}
+                                {{~#lt (get ../../../stats.[0].firstHalf @key 'value') (get ../../../stats.[1].firstHalf @key 'value')}} game-stats__bar_less{{/lt}}"
+                                 style="width:{{get ../../../stats.[0].firstHalf @key 'percent'}}%;">
+
+                                {{#if (get ../../../stats.[0].firstHalf @key 'value')}}
+                                    <div class="game-stats__bar__value text_align_l">{{get ../../../../stats.[0].firstHalf @key 'value'}}</div>
+                                {{/if}}
+
+                            </div>
+                        {{/if}}
+                    </div>
+                    <div class="col-md-1 s_line-height_42 text_size_16 text_align_c">{{get ../../stats.[0] @key 'value'}}</div>
+                    <div class="col-md-2 text_color_light text_transform_u text_align_c s_line-height_42">
+                        {{#eq @key 'opportunity'}}Моменты{{/eq}}
+                        {{#eq @key 'foul'}}Фолы{{/eq}}
+                        {{#eq @key 'corner'}}Угловые{{/eq}}
+                        {{#eq @key 'shotOnGoal'}}В створ{{/eq}}
+                        {{#eq @key 'shotMissed'}}Мимо{{/eq}}
+                    </div>
+                    <div class="col-md-1 s_line-height_42 text_size_16 text_align_c">{{get ../../stats.[1] @key 'value'}}</div>
+                    <div class="col-md-4 s_pl_0">
+                        <div class="game-stats__bar game-stats__bar_away
+                            {{~#lt (get ../../stats.[0] @key 'value') (get ../../stats.[1] @key 'value')}} game-stats__bar_more{{/lt}}
+                            {{~#gt (get ../../stats.[0] @key 'value') (get ../../stats.[1] @key 'value')}} game-stats__bar_less{{/gt}}"
+                             style="width:{{get ../../stats.[1] @key 'percent'}}%;"></div>
+
+                        {{#if ../../stats.[1].firstHalf}}
+                            <div class="game-stats__bar game-stats__bar_away_first
+                                {{~#gt (get ../../../stats.[1].firstHalf @key 'value') (get ../../../stats.[0].firstHalf @key 'value')}} game-stats__bar_more{{/gt}}
+                                {{~#lt (get ../../../stats.[1].firstHalf @key 'value') (get ../../../stats.[0].firstHalf @key 'value')}} game-stats__bar_less{{/lt}}"
+                                 style="width:{{get ../../../stats.[1].firstHalf @key 'percent'}}%;">
+
+                                {{#if (get ../../../stats.[1].firstHalf @key 'value')}}
+                                    <div class="game-stats__bar__value text_align_r">{{get ../../../../stats.[1].firstHalf @key 'value'}}</div>
+                                {{/if}}
+
+                            </div>
+                        {{/if}}
+                    </div>
+                </div>
+            {{/isNumber}}
+        {{/each}}
+    </div>
+{{/eq}}
