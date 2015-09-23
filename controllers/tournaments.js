@@ -26,7 +26,7 @@ module.exports = {
                 }
 
                 //if (tournament.stages.length == 1) {
-                remote(remoteConfig.url + 'tournaments/games?ids=' + tournament._id, function (err, response, result) {
+                remote(remoteConfig.url + '/tournaments/games?ids=' + tournament._id, function (err, response, result) {
                     var games = result.map(function (item) {
                         item.dateTime = item.timestamp ? moment.unix(item.timestamp) : null;
                         return item;
@@ -120,9 +120,7 @@ module.exports = {
                     if (dated.length) {
                         comming = dated;
                     } else {
-                        comming = _.values(_.groupBy(comming, 'tourText')).reduce(function (a, b) {
-                            return a.length > b.length ? a : b;
-                        });
+                        comming = _.first(_.values(_.groupBy(comming, 'tourText')));
                     }
 
                     comming = _.groupBy(comming.slice(0, 10), 'tourText');
@@ -644,9 +642,7 @@ module.exports = {
                         comming = dated;
                     } else {
                         if (comming.length) {
-                            comming = _.values(_.groupBy(comming, 'tourText')).reduce(function (a, b) {
-                                return a.length > b.length ? a : b;
-                            });
+                            comming = _.first(_.values(_.groupBy(comming, 'tourText')));
                         } else {
                             comming = [];
                         }
