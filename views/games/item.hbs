@@ -9,7 +9,8 @@
                             <div class="col-md-4 text_align_r">
                                 <img class="pull-left" src="http://sharvester.ru/api/img/teams/{{game.teams.[0]._id}}.png" height="64">
 
-                                <p class="text_size_32 text_weight_light s_mb_20">{{#if game.score.ft.[0]}}{{game.score.ft.[0]}}{{else}}0{{/if}}</p>
+                                <p class="text_size_32 text_weight_light s_mb_20">{{#if game.score.ft.[0]}}{{game.score.ft.[0]}}{{else}}
+                                    0{{/if}}</p>
 
                                 <p class="text_color_orange text_size_16">{{game.teams.[0].name}}</p>
 
@@ -53,12 +54,14 @@
                                     </div>
                                 </div>
                                 <p class="match__tour">{{game.tourNumber}} Тур</p>
+
                                 <p class="s_m_0 text_color_light">
                                     {{#if game.dateTime}}{{ucfirst (dateTimeFull game.dateTime)}}{{else}}Время не определено{{/if}}
                                 </p>
                                 {{#if game.placeName}}
                                     <p class="s_m_0 text_color_light s_whitespace_no-wrap">Стадион:
-                                        <a class="text_color_light" href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/fields/{{slugify game.placeName}}">
+                                        <a class="text_color_light"
+                                           href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/fields/{{slugify game.placeName}}">
                                             {{game.placeName}}
                                         </a>
                                     </p>
@@ -70,7 +73,8 @@
                             <div class="col-md-4 text_align_l">
                                 <img class="pull-right" src="http://sharvester.ru/api/img/teams/{{game.teams.[1]._id}}.png" height="64">
 
-                                <p class="text_size_32 text_weight_light s_mb_20">{{#if game.score.ft.[1]}}{{game.score.ft.[1]}}{{else}}0{{/if}}</p>
+                                <p class="text_size_32 text_weight_light s_mb_20">{{#if game.score.ft.[1]}}{{game.score.ft.[1]}}{{else}}
+                                    0{{/if}}</p>
 
                                 <p class="text_color_orange text_size_16">{{game.teams.[1].name}}</p>
 
@@ -159,57 +163,43 @@
                                 {{#if game.events.length}}
                                     {{#each game.events}}
                                         <div class="row">
-                                            <div class="column col-md-2{{#endsWith type '_A'}} s_float_r{{/endsWith}}">
+                                            <div class="column col-md-2{{#eq side 1}} s_float_r{{/eq}}">
                                                 <div class="match-events__time text_align_r">
-                                                    {{#eq type 'SCORED_H'}}
-                                                        <span class="icon_type_event text_color_orange">Гол!</span>
+                                                    {{#eq newtype 'GOAL'}}
+                                                        {{#ne secondField.name 'с пенальти'}}
+                                                            <span class="icon_type_event text_color_orange">Гол!</span>
+                                                        {{/ne}}
                                                     {{/eq}}
-                                                    {{#eq type 'SCORED_A'}}
-                                                        <span class="icon_type_event text_color_orange">Гол!</span>
-                                                    {{/eq}}
-                                                    {{#eq type 'YELLOW_H'}}
+                                                    {{#eq newtype 'YELLOW'}}
                                                         <i class="icon_type_event icon-yellow"></i>
-
-                                                        {{#eq additionalField  2}}
-                                                            <i class="icon_type_event icon-red-yellow"></i>
-                                                        {{/eq}}
                                                     {{/eq}}
-                                                    {{#eq type 'YELLOW_A'}}
-                                                        <i class="icon_type_event icon-yellow"></i>
-
-                                                        {{#eq additionalField  2}}
-                                                            <i class="icon_type_event icon-red-yellow"></i>
-                                                        {{/eq}}
+                                                    {{#eq newtype 'RED_2_YELLOW'}}
+                                                        <i class="icon_type_event icon-red-yellow"></i>
                                                     {{/eq}}
-                                                    {{#eq type 'RED_H'}}
+                                                    {{#eq newtype 'RED'}}
                                                         <i class="icon_type_event icon-red"></i>
                                                     {{/eq}}
-                                                    {{#eq type 'RED_A'}}
-                                                        <i class="icon_type_event icon-red"></i>
-                                                    {{/eq}}
-                                                    {{#eq type 'COMMENT'}}
+                                                    {{#eq newtype 'COMMENT'}}
                                                         <i class="icon_type_event fa fa-comments-o text_color_orange"></i>
                                                     {{/eq}}
-                                                    {{#eq type 'pen'}}
-                                                        <i class="icon_type_event icon-penalty"></i>
-                                                    {{/eq}}
-                                                    {{#eq type 'cor'}}
+                                                    {{#eq newtype 'cor'}}
                                                         <i class="icon_type_event icon-corner"></i>
                                                     {{/eq}}
-                                                    {{#eq type 'inj'}}
+                                                    {{#eq newtype 'inj'}}
                                                         <i class="icon_type_event icon-injury"></i>
                                                     {{/eq}}
                                                     {{#eq secondField.name 'с пенальти'}}
-                                                        <i class="icon_type_event icon-penalty s_ml_20"></i>
+                                                        <i class="icon_type_event icon-penalty"></i>
                                                     {{/eq}}
                                                     {{#if minute}}{{minute}}'{{/if}}
                                                 </div>
                                             </div>
                                             <div class="column col-md-10">
-                                                <div class="match-events__description pull-right {{#endsWith type '_A'}} text_align_r{{/endsWith~}}
+                                                <div class="match-events__description pull-right {{#eq side 1}} text_align_r{{/eq~}}
                                                     {{~#if secondField}} match-events__description_double{{/if}}">
 
-                                                    {{~#if firstField.number}}<span class="text_color_orange">{{firstField.number}}.</span> {{/if~}}
+                                                    {{~#if firstField.number}}<span class="text_color_orange">{{firstField.number}}
+                                                        .</span> {{/if~}}
                                                     {{~ucfirst firstField.name~}}
                                                     {{~#if secondField~}}
                                                         <br>
@@ -254,7 +244,7 @@
                                         <div class="reading s_pl_10 s_pr_10">{{{media.preview.body}}}</div>
 
                                         {{> video video=media.preview.video}}
-                                    {{~else~}}
+                                        {{~else~}}
                                         <p class="text_align_c s_mt_10">Анонса матча пока нет</p>
                                     {{~/if~}}
                                 </div>
@@ -268,7 +258,7 @@
                                         <div class="reading s_pl_10 s_pr_10">{{{media.review.body}}}</div>
 
                                         {{> video video=media.review.video}}
-                                    {{~else~}}
+                                        {{~else~}}
                                         <p class="text_align_c s_mt_10">Обзора матча пока нет</p>
                                     {{~/if~}}
                                 </div>
@@ -277,9 +267,10 @@
 
                         <div class="tab-pane" id="photo">
                             <div class="panel panel_type_photo s_m_0">
-                                <div class="panel__body">                                        <div class="row">
+                                <div class="panel__body">
+                                    <div class="row">
 
-                                    {{~#if media.photos.length~}}
+                                        {{~#if media.photos.length~}}
                                             <div class="js-masonry-js">
                                                 <div class="pswp-gallery">
                                                     {{~#each media.photos~}}
@@ -300,9 +291,9 @@
                                                     {{~/each~}}
                                                 </div>
                                             </div>
-                                    {{~else~}}
-                                        <p class="text_align_c s_mt_10">Фотообзора пока нет</p>
-                                    {{~/if~}}                                        </div>
+                                            {{~else~}}
+                                            <p class="text_align_c s_mt_10">Фотообзора пока нет</p>
+                                        {{~/if~}}                                        </div>
 
                                 </div>
                             </div>

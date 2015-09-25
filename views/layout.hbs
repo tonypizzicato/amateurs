@@ -4,7 +4,15 @@
     <meta charset="UTF-8">
     <title>
         {{#if title}}{{title}} — {{/if}}Любительская Футбольная Лига Amateur Football League.
-        {{#eq globals.league.slug 'spb'}}Санкт-Петербург{{else}}Москва{{/eq}}.
+        {{#eq globals.league.slug 'moscow'}}
+            Москва
+        {{else}}
+            {{#eq globals.league.slug 'spb'}}
+                Санкт-Петербург
+            {{else}}
+                Екатеринбург
+            {{/eq}}
+        {{/eq}}.
     </title>
 
     <meta name="description" content="{{desc}}">
