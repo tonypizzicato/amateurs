@@ -12,7 +12,7 @@ MasonryTabs = Tabs.extend
     _selectors: ()->
         _.defaults {
             "tab-item": '.js-tab'
-            "masonry": '.panel__body .js-masonry-js'
+            "masonry": '.js-masonry-js'
             "masonry-item": '.js-masonry-item'
         }, this._super();
 

@@ -1,0 +1,33 @@
+<div class="panel panel_type_contact contact">
+    <div class="panel__header">
+        <i class="fa fa-user text_size_16 s_mr_10"></i> {{user.username}}
+    </div>
+    <div class="panel__body">
+        <div class="contact">
+            <div class="row">
+                <div class="col-md-4 col-sm-4 col-xs-4">
+                    <div class="contact__photo s_mt_10 s_mb_10" style="background-image: url('{{user.avatar}}')"></div>
+                </div><div class="col-md-8 col-sm-8 col-xs-8">
+                <div class="contact__details">
+                    <div class="contact__name">{{user.username}}</div>
+                    {{~#if user.email~}}
+                        <div class="contact__phone"><i class="fa fa-inbox text_color_orange s_mr_10"></i>
+                            {{user.email}}
+                        </div>
+                    {{/if~}}
+                    {{~#if user.phone~}}
+                        <div class="contact__phone"><i class="fa fa-phone text_color_orange s_mr_10"></i>
+                            {{user.phone}}
+                        </div>
+                    {{~/if~}}
+                    {{~#if user.vk~}}
+                        <div class="contact__vk"><i class="fa fa-vk text_color_orange s_mr_10"></i>
+                            <a href="{{user.vk}}" target="_blank">{{user.username}}</a>
+                        </div>
+                    {{~/if~}}
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>

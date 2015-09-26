@@ -1,6 +1,6 @@
 "use strict";
 
-var _                = require('underscore'),
+var _                = require('lodash'),
     moment           = require('moment'),
     RestClient       = require('node-rest-client').Client,
     LeagueModel      = require('../models/league'),

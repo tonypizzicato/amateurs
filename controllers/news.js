@@ -1,6 +1,6 @@
 "use strict";
 
-var _               = require('underscore'),
+var _               = require('lodash'),
     async           = require('async'),
     moment          = require('moment-timezone'),
     LeagueModel     = require('../models/league'),

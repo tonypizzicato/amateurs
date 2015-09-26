@@ -1,6 +1,6 @@
 "use strict";
 
-var _           = require('underscore'),
+var _           = require('lodash'),
     fs          = require('fs.extra'),
     async       = require('async'),
     Flickr      = require('flickrapi'),
