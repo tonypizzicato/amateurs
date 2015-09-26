@@ -1,67 +1,34 @@
 <div class="row clearfix s_mb_20">
     <div class="col-md-8 column">
         <div class="tabbable">
-            <ul class="nav nav-tabs">
-                <li class="tab__title tab__title_size_third active">
-                    <a href="#photographer" data-toggle="tab">Фотографы</a>
-                </li>
-                <li class="tab__title tab__title_size_third">
-                    <a href="#videographer" data-toggle="tab">Операторы</a>
-                </li>
-                <li class="tab__title tab__title_size_third">
-                    <a href="#referee" data-toggle="tab">Судьи</a>
-                </li>
+            <ul class="nav nav-tabs js-tabs">
+                {{#each positions}}
+                    <li class="tab__title tab__title_size_third{{#if @first}} active{{/if}}">
+                        <a href="#{{@key}}" class="js-tab" data-toggle="tab">{{plural}}</a>
+                    </li>
+                {{/each}}
             </ul>
             <div class="tab-content">
-                <div class="tab-pane active" id="photographer">
-                    <div class="row clearfix masonry-container">
-                        <div class="masonry js-masonry"
-                             data-masonry-options='{"itemSelector": ".js-masonry-item", "columnWidth": 390, "isAnimated": "true", "isFitWidth": "true" }'>
-                            {{#each stuff}}
-                                {{#inArray positions 'photographer'}}
-                                    <div class="masonry-item masonry-item__hidden_yes col-md-6 col-sm-6 col-xs-6 js-masonry-item">
-                                        {{> stuff_item user=../this position='Фотограф'}}
-                                    </div>
-                                {{/inArray}}
-                            {{/each}}
-                        </div>
+                {{#each positions}}
+                    <div class="s_pt_20 tab-pane{{#if @first}} active{{/if}}" id={{@key}}>
+                        {{#if (get ../stuff @key 'length')}}
+                            <div class="row clearfix masonry-container">
+                                <div gitclass="masonry js-masonry-js"
+                                     data-masonry-options='{"itemSelector": ".js-masonry-item", "columnWidth": 390, "isAnimated": "true", "isFitWidth": "true" }'>
+                                    {{#each (get ../../stuff @key)}}
+                                        <div class="masonry-item col-md-6 col-sm-6 col-xs-6 js-masonry-item">
+                                            {{> stuff_item user=this position=@key}}
+                                        </div>
+                                    {{/each}}
+                                </div>
+                            </div>
+                        {{else}}
+                            <p class="text_align_c s_pt_10">Здесь пока пусто</p>
+                        {{/if}}
                     </div>
-                </div>
-                <div class="tab-pane" id="videographer">
-                    <div class="row clearfix masonry-container">
-                        <div class="masonry js-masonry"
-                             data-masonry-options='{"itemSelector": ".js-masonry-item", "columnWidth": 390, "isAnimated": "true", "isFitWidth": "true" }'>
-                            {{#each stuff}}
-                                {{#inArray positions 'videographer'}}
-                                    <div class="masonry-item masonry-item__hidden_yes col-md-6 col-sm-6 col-xs-6 js-masonry-item">
-                                        {{> stuff_item user=../this position='Оператор'}}
-                                    </div>
-                                {{/inArray}}
-                            {{/each}}
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane" id="referee">
-                    <div class="row clearfix masonry-container">
-                        <div class="masonry js-masonry"
-                             data-masonry-options='{"itemSelector": ".js-masonry-item", "columnWidth": 390, "isAnimated": "true", "isFitWidth": "true" }'>
-                            {{#each stuff}}
-                                {{#inArray positions 'referee'}}
-                                    <div class="masonry-item masonry-item__hidden_yes col-md-6 col-sm-6 col-xs-6 js-masonry-item">
-                                        {{> stuff_item user=../this position='Судья'}}
-                                    </div>
-                                {{/inArray}}
-                            {{/each}}
-                        </div>
-                    </div>
-                </div>
+                {{/each}}
             </div>
         </div>
-
-        {{#if stuff.length}}
-        {{else}}
-            <h3>Здесь пока пусто</h3>
-        {{/if}}
     </div>
 
     <!-- SIDEBAR -->

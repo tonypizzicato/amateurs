@@ -1,6 +1,6 @@
 "use strict";
 
-var _               = require('underscore'),
+var _               = require('lodash'),
     LeagueModel     = require('../models/league'),
     TournamentModel = require('../models/tournament'),
     FieldModel      = require('../models/field');
