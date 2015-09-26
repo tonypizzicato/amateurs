@@ -12,6 +12,7 @@ var express          = require('express'),
     teams            = require('../controllers/teams'),
     news             = require('../controllers/news'),
     orders           = require('../controllers/orders'),
+    stuff            = require('../controllers/stuff'),
     promo            = require('../controllers/promo'),
 
     apiNews          = require('../controllers/api/news'),
@@ -24,7 +25,8 @@ var express          = require('express'),
     apiFields        = require('../controllers/api/fields'),
     apiContacts      = require('../controllers/api/contacts'),
     apiCategories    = require('../controllers/api/categories'),
-    apiOrders        = require('../controllers/api/orders');
+    apiOrders        = require('../controllers/api/orders'),
+    apiUsers         = require('../controllers/api/users');
 
 function t(title) {
     return function (req, res, next) {
@@ -127,6 +129,9 @@ module.exports.initialize = function (app) {
     r.route('/orders')
         .get(apiOrders.list);
 
+    r.route('/users/:id')
+        .put(apiUsers.save);
+
     apiRouter.use(r);
 
     app.use('/api', apiRouter);
@@ -162,6 +167,7 @@ module.exports.initialize = function (app) {
     app.get('/:league/contacts', t('Контакты'), news.pre, news.globals, contacts.list);
     app.get('/:league/fields', t('Поля'), news.pre, news.globals, fields.list);
     app.get('/:league/fields/:fieldName', t(''), news.pre, news.globals, fields.item);
+    app.get('/:league/stuff', t('Сотрудники лиги'), news.pre, news.globals, stuff.list);
 
     app.get('/:league/news', t('Новости'), news.pre, news.globals, news.list);
     app.get('/:league/news/:slug', t('Новости'), news.pre, news.globals, news.item);

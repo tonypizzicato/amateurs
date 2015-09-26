@@ -62,7 +62,7 @@ var helpers = {
         return f + str.substr(1);
     },
 
-    json: function(data) {
+    json: function (data) {
         return JSON.stringify(data);
     },
 
@@ -168,7 +168,15 @@ var helpers = {
         return dateFn(date, 'HH:mm', tz);
     },
 
-    contains: function (string, needle) {
+    inArray: function (arr, needle, options) {
+        if (arr.indexOf(needle) > -1) {
+            return options.fn(this);
+        }
+
+        return options.inverse(this);
+    },
+
+    contains: function (string, needle, options) {
         if (string.toLowerCase().indexOf(needle.toLowerCase()) === -1) {
             return options.fn(this);
         }
@@ -218,8 +226,8 @@ var helpers = {
         }
     },
 
-    last: function(arr) {
-        if(!_.isArray(arr)) {
+    last: function (arr) {
+        if (!_.isArray(arr)) {
             return null;
         }
 
@@ -239,7 +247,7 @@ var helpers = {
             return false;
         }
         var teamId = team._id ? team._id : team.teamId;
-        var score = game.score.ft;
+        var score  = game.score.ft;
         if (game.teams[0]._id == teamId) {
             return score[0] > score[1] ? 'w' : (score[0] == score[1] ? 'd' : 'l');
         } else {
