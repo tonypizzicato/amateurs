@@ -25,7 +25,7 @@ module.exports = {
                         return tournament.country._id;
                     });
 
-                    field.countries = _.mapObject(field.countries, function (tournaments) {
+                    field.countries = _.mapValues(field.countries, function (tournaments) {
                         return {
                             country:     tournaments.length ? tournaments[0].country : null,
                             tournaments: tournaments
