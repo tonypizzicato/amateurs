@@ -65,12 +65,12 @@ module.exports = {
                                         percent: val / game.stats.max * 100
                                     };
                                 } else if (_.isObject(val)) {
-                                    return _.mapObject(val, setPercent);
+                                    return _.mapValues(val, setPercent);
                                 }
                             };
 
-                            game.stats[0] = _.mapObject(game.stats[0], setPercent);
-                            game.stats[1] = _.mapObject(game.stats[1], setPercent);
+                            game.stats[0] = _.mapValues(game.stats[0], setPercent);
+                            game.stats[1] = _.mapValues(game.stats[1], setPercent);
                         } else {
                             delete game.stats;
                         }
