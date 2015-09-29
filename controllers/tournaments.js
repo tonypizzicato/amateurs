@@ -192,6 +192,29 @@ module.exports = {
                     return next(null);
                 }
 
+                var stages = new Promise(function (resolve, reject) {
+                    var tournamentId = tournament._id;
+                    remote(remoteConfig.url + '/league/' + league._id + '/tournaments/active', function (err, response, tournaments) {
+                        var tournament = _.find(tournaments, {_id: tournamentId.toString()});
+
+                        var playOff = _.find(tournament.stages, {name: 'Плей-офф'});
+
+                        if (playOff) {
+                            console.log(remoteConfig.url + '/tournaments/games?ids=' + tournamentId);
+                            remote(remoteConfig.url + '/tournaments/games?ids=' + tournamentId, function (err, response, games) {
+                                var games     = games.filter(function (game) {
+                                    return game.stageId == playOff._id
+                                });
+                                playOff.games = games;
+
+                                resolve({stages: tournament.stages, playOff: playOff});
+                            });
+                        } else {
+                            resolve({stages: tournaments.stages, playOff: null});
+                        }
+                    });
+                });
+
                 var stats = new Promise(function (resolve, reject) {
                     remote(remoteConfig.url + '/tournaments/players?ids=' + tournament._id, function (err, response, stats) {
                         var stat = {
@@ -322,7 +345,8 @@ module.exports = {
                     });
                 });
 
-                Promise.all([stats, central, articles, photos]).then(function (result) {
+                Promise.all([stats, central, articles, photos, stages]).then(function (result) {
+                    console.log(result[4].playOff);
                     res.render('tournaments/item', {
                         tournament:     tournament,
                         stats:          result[0],
@@ -330,6 +354,8 @@ module.exports = {
                         previews:       result[2].previews,
                         reviews:        result[2].reviews,
                         photos:         result[3],
+                        stages:         result[4].stages,
+                        playOff:        result[4].playOff,
                         pageTournament: true
                     });
                 });
@@ -378,7 +404,7 @@ module.exports = {
 
                     var week = moment().subtract("days", 8);
 
-                    docs = docs.filter(function(item) {
+                    docs = docs.filter(function (item) {
                         return moment(item.dc).isAfter(week);
                     });
 

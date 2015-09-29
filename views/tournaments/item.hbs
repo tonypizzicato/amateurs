@@ -68,6 +68,47 @@
                 </div>
             </div>
         </div>
+
+        {{#if playOff}}
+            <div class="row clearfix">
+                <div class="col-md-24 column">
+                    <div class="panel s_m_0">
+                        <div class="panel__header">
+                            <i class="fa fa-list-ol s_mr_10"></i> Плей-офф
+                        </div>
+                        <div class="s_overflow_hidden s_p_0 s_pb_5">
+                            {{#each playOff.games}}
+                                <div class="col-md-3 column s_pb_10 s_pt_10 s_pl_10 s_pr_10">
+                                    <div class="panel s_m_0">
+                                        <div class="panel__header">
+                                            {{ucfirst tourText}}
+                                        </div>
+                                        <div class="panel__body s_p_0 s_pb_5">
+                                            <div>
+                                                <span class="s_valign_m tl tl-{{teams.[0]._id}}-20 s_mr_10"></span>
+                                                <a href="/{{../globals.league.slug}}/tournaments/{{../tournament.slug}}/teams/{{teams.[0]._id}}">{{teams.[0].name}}</a>
+                                            </div>
+                                            <div>
+                                                <span class="s_valign_m tl tl-{{teams.[1]._id}}-20 s_mr_10"></span>
+                                                <a href="/{{../globals.league.slug}}/tournaments/{{../tournament.slug}}/teams/{{teams.[1]._id}}">{{teams.[1].name}}</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {{/each}}
+                        </div>
+                    </div>
+
+                    <div class="link_type_full s_mb_20">
+                        <span class="text_color_orange">Календарь</span>
+                        <span class="pull-right">
+                            <a href="/{{../globals.league.slug}}/tournaments/{{../tournament.slug}}/fixture"><i
+                                    class="fa fa-arrow-circle-o-right"></i></a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        {{/if}}
         {{#if central}}
             <div class="row clearfix s_mb_20">
                 <div class="column col-md-12">
