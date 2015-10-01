@@ -618,6 +618,8 @@ module.exports = {
                         return table;
                     });
 
+                    tables = _.sortBy(tables, 'stageName');
+
                     endTime = new Date().getTime();
                     log('processed Tables', (endTime - startTime) + "ms.");
 
