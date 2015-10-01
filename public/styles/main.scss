@@ -198,6 +198,10 @@ ul, ol {
     border-color: #EFAB5B;
 }
 
+.navbar-fixed-top .navbar-link_type_promo {
+    display: none;
+}
+
 .navbar-link_type_promo {
     background-color: $color-red;
 }
@@ -1628,7 +1632,7 @@ $size: 200px;
 
 .s_valign_m {
     position:       relative;
-    vertical-align: middlle;
+    vertical-align: middle;
 }
 
 .s_valign_b {
@@ -2127,4 +2131,46 @@ td .tl {
     padding-bottom: 10px;
     margin:         0 8px;
     border-bottom:  1px solid #2DA6E4;
+}
+
+/** TABLES **/
+.table > tbody > tr > td,
+.table > tbody > tr > th,
+.table > tfoot > tr > td,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > thead > tr > th {
+    padding: 8px 7px;
+}
+
+.row-vertical-align {
+    display:        flex;
+    flex-direction: row;
+}
+
+.row-vertical-align > [class^="col-"],
+.row-vertical-align > [class*=" col-"] {
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+    /* Optional, to align inner items
+                                 horizontally inside the column */
+}
+
+.col-valign-m {
+    display:        inline-block;
+    vertical-align: middle;
+    float:          none;
+}
+
+.col-valign-m:not(:first-child) {
+    padding-left: 0;
+}
+
+.col-valign-m.col-md-3 {
+    width: 24.8%;
+}
+
+.col-valign-m.col-md-4 {
+    width: 33.15%;
 }

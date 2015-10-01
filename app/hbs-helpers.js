@@ -192,12 +192,26 @@ var helpers = {
         return options.inverse(this);
     },
 
+    keys: function (object) {
+        console.log(Object.keys(object));
+        return Object.keys(object);
+    },
+
+    length: function(arr) {
+        console.log(arr.length);
+        return arr.length;
+    },
+
     inc: function (value) {
         return parseInt(value) + 1;
     },
 
     sub: function (value, sub) {
         return value - sub;
+    },
+
+    div: function (value, div) {
+        return div ? value / div : 0;
     },
 
     slugify: function (value) {

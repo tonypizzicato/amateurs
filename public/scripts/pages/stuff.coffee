@@ -1,6 +1,8 @@
 ProjectPage = require './project.coffee'
-WithMasonryTabs = require '../mixins/with-masonry-tabs.coffee'
 
-StuffPage = ProjectPage.mix(WithMasonryTabs).extend {}
+WithTabs = require '../mixins/with-masonry-tabs.coffee'
+WithMasonry = require '../mixins/with-masonry-item.coffee'
+
+StuffPage = ProjectPage.mix(WithTabs, WithMasonry).extend {}
 
 module.exports = StuffPage
