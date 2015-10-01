@@ -2,7 +2,7 @@
     <div class="col-md-8 column">
         <div class="row clearfix masonry-container">
             {{#if fields.length}}
-                <div class="masonry js-masonry"
+                <div class="masonry"
                      data-masonry-options='{"itemSelector": ".js-masonry-item", "columnWidth": 390, "isAnimated": "true", "isFitWidth": "true" }'>
                     {{#each fields}}
                         <div class="masonry-item masonry-item__hidden_yes {{#gt ../fields.length 1}}col-md-6{{else}}col-md-12{{/gt}} s_mb_20 js-masonry-item">

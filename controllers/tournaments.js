@@ -194,25 +194,60 @@ module.exports = {
 
                 var stages = new Promise(function (resolve, reject) {
                     var tournamentId = tournament._id;
-                    remote(remoteConfig.url + '/league/' + league._id + '/tournaments/active', function (err, response, tournaments) {
-                        var tournament = _.find(tournaments, {_id: tournamentId.toString()});
 
-                        var playOff = _.find(tournament.stages, {name: 'Плей-офф'});
+                    var playOff = _.find(tournament.stages, {name: 'Плей-офф'});
 
-                        if (playOff) {
-                            console.log(remoteConfig.url + '/tournaments/games?ids=' + tournamentId);
-                            remote(remoteConfig.url + '/tournaments/games?ids=' + tournamentId, function (err, response, games) {
-                                var games     = games.filter(function (game) {
-                                    return game.stageId == playOff._id
-                                });
-                                playOff.games = games;
+                    if (playOff) {
 
-                                resolve({stages: tournament.stages, playOff: playOff});
+                        var stages = {'1/4 финала': undefined, 'полуфинал': undefined, 'финал': [[{tourText: "полуфинал",teams: [{name: "Не определено"},{name: "Не определено"}]}]]};
+
+                        remote(remoteConfig.url + '/tournaments/games?ids=' + tournamentId, function (err, response, games) {
+                            var games = games.filter(function (game) {
+                                return game.stageId == playOff._id
                             });
-                        } else {
-                            resolve({stages: tournaments.stages, playOff: null});
-                        }
-                    });
+
+                            games = games.map(function (item) {
+                                item.dateTime = item.timestamp ? moment.unix(item.timestamp) : null;
+                                return item;
+                            });
+
+                            games = _.groupBy(games, 'tourText');
+
+                            var gamesDoubled = {};
+
+                            Object.keys(games).forEach(function (stageName) {
+                                gamesDoubled[stageName] = [];
+
+                                games[stageName].forEach(function (game) {
+                                    var doubled = _.find(gamesDoubled[stageName], function (gamesDoubled) {
+                                        return gamesDoubled[0].teams[0]._id == game.teams[0]._id || gamesDoubled[0].teams[0]._id == game.teams[1]._id;
+                                    });
+
+                                    if (doubled) {
+                                        if (doubled[0].dateTime && game.dateTime) {
+                                            if (doubled[0].dateTime < game.datetime) {
+                                                doubled.push(game);
+                                            } else {
+                                                doubled.unshift(game);
+                                            }
+                                        } else if (doubled[0].dateTime && !game.dateTime) {
+                                            doubled.push(game);
+                                        } else {
+                                            doubled.unshift(game);
+                                        }
+                                    } else {
+                                        gamesDoubled[stageName].push([game]);
+                                    }
+                                });
+                            });
+
+                            playOff.stages = _.omit(_.defaults(stages, gamesDoubled), _.isUndefined);
+                            resolve({stages: tournament.stages, playOff: playOff});
+                        });
+                    } else {
+                        console.log('resolved');
+                        resolve({stages: tournament.stages, playOff: null});
+                    }
                 });
 
                 var stats = new Promise(function (resolve, reject) {
@@ -260,7 +295,8 @@ module.exports = {
                 });
 
                 var articles = new Promise(function (resolve, reject) {
-                    GameArticleModel.find({tournament: tournament.remoteId, show: true}).sort({dc: -1}).limit(30).lean().exec(function (err, docs) {
+                    GameArticleModel.find({tournament: tournament.remoteId, show: true}).sort({dc: -1}).limit(30).lean().exec(function (err,
+                                                                                                                                        docs) {
                         if (err) {
                             return reject(err);
                         }
@@ -346,8 +382,10 @@ module.exports = {
                 });
 
                 Promise.all([stats, central, articles, photos, stages]).then(function (result) {
-                    console.log(result[4].playOff);
-                    res.render('tournaments/item', {
+                    var template = (!result[4].playOff ? 'tournaments/item' : 'tournaments/cup');
+
+                    log('in parallel222');
+                    res.render(template, {
                         tournament:     tournament,
                         stats:          result[0],
                         central:        result[1],
@@ -569,7 +607,7 @@ module.exports = {
                 var startTime = new Date().getTime();
                 remote(remoteConfig.url + '/tournaments/tables?ids=' + tournament._id, function (err, response, tables) {
                     var endTime = new Date().getTime();
-                    log('received Table', (endTime - startTime) + "ms.", response.body.length);
+                    log('received Tables', (endTime - startTime) + "ms.", response.body.length);
 
                     tables = tables.map(function (table) {
                         table.teams = table.teams.map(function (item) {

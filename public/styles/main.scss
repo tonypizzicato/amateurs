@@ -2142,3 +2142,35 @@ td .tl {
 .table > thead > tr > th {
     padding: 8px 7px;
 }
+
+.row-vertical-align {
+    display:        flex;
+    flex-direction: row;
+}
+
+.row-vertical-align > [class^="col-"],
+.row-vertical-align > [class*=" col-"] {
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+    /* Optional, to align inner items
+                                 horizontally inside the column */
+}
+
+.col-valign-m {
+    display:        inline-block;
+    vertical-align: middle;
+    float:          none;
+}
+
+.col-valign-m:not(:first-child) {
+    padding-left: 0;
+}
+
+.col-valign-m.col-md-3 {
+    width: 24.8%;
+}
+
+.col-valign-m.col-md-4 {
+    width: 33.15%;
+}

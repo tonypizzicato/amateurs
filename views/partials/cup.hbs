@@ -1,0 +1,100 @@
+<div class="row">
+    <div class="col-md-{{div 12 (inc (length (keys stages)))}}">
+        <h4 class="text_align_c">Групповой этап</h4>
+    </div>
+    {{#each stages}}
+        <div class="col-md-{{div 12 (inc (length (keys ../stages)))}}">
+            <h4 class="text_align_c">{{ucfirst @key}}</h4>
+        </div>
+    {{/each}}
+</div>
+
+<div class="row">
+    <div class="col-md-{{div 12 (inc (length (keys stages)))}} col-valign-m">
+        <div class="row">
+            <div class="col-md-12">
+                {{~#each tables~}}
+                    <div class="panel s_mb_10">
+                        <div class="panel__header">
+                            <i class="fa fa-list-ol s_mr_10"></i> {{#gt ../tables.length 1}}{{stageName}}{{else}}Таблица{{/gt}}
+                        </div>
+                        <div class="panel__body s_p_0 s_pb_5">
+                            {{> table table=this league=../globals.league tournament=../tournament tableFull=false hideHeader=true showLogo=true}}
+                        </div>
+                    </div>
+                {{~/each~}}
+            </div>
+        </div>
+    </div>
+
+
+    {{#each stages}}
+        <div class="col-md-{{div 12 (inc (length (keys ../stages)))}} col-valign-m">
+            {{#each this}}
+                <div class="panel s_mb_20">
+                    <div class="panel__body">
+                        {{#each this}}
+                            <div class="{{#gt ../this.length 1}}{{#if @first}}s_mb_20{{/if}}{{/gt}}">
+                                <div class="row s_mb_10">
+                                    <div class="col-md-12 text_size_12 text_color_light">
+                                        {{~#if dateTime}}
+                                            <span>{{dateTimeShort dateTime}}</span>
+                                        {{else}}
+                                            <span>Время не назначено</span>
+                                        {{/if~}}
+                                        {{#gt ../this.length 1}}
+                                            <span class="s_float_r s_display_inline-block">Матч {{inc @key}}</span>
+                                        {{/gt}}
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <span class="fixture__team s_display_block
+                                            {{~#eq (gameResTeam teams.[0] this) 'w'}} fixture__winner{{/eq~}}
+                                            {{~#eq (gameResTeam teams.[0] this) 'l'}} fixture__looser{{/eq~}}
+                                        ">
+                                            {{#if teams.[0]._id}}
+                                                <span class="tl tl-{{teams.[0]._id}}-20 s_valign_m s_mr_10"></span>
+                                                <a href="/{{../../../../globals.league.slug}}/tournaments/{{../../../../globals.tournament.slug}}/teams/{{teams.[0]._id}}">{{~teams.[0].name~}}</a>
+                                            {{else}}
+                                                {{~teams.[0].name~}}
+                                            {{/if}}
+                                         </span>
+                                        <span class="fixture__team s_display_block
+                                            {{~#eq (gameResTeam teams.[0] this) 'l'}} fixture__winner{{/eq~}}
+                                            {{~#eq (gameResTeam teams.[0] this) 'w'}} fixture__looser{{/eq~}}
+                                        ">
+                                            {{#if teams.[1]._id}}
+                                                <span class="tl tl-{{teams.[1]._id}}-20 s_valign_m s_mr_10"></span>
+                                                <a href="/{{../../../../globals.league.slug}}/tournaments/{{../../../../globals.tournament.slug}}/teams/{{teams.[1]._id}}">{{~teams.[1].name~}}</a>
+                                            {{else}}
+                                                {{~teams.[1].name~}}
+                                            {{/if}}
+                                        </span>
+                                    </div>
+                                    <div class="col-md-2 text_align_r">
+                                        {{#if _id}}
+                                            <a href="/{{../../../../globals.league.slug}}/tournaments/{{../../../../globals.tournament.slug}}/matches/{{_id}}">
+                                                {{#if score}}
+                                                    <div>{{~score.ft.[0]}}</div>
+                                                    <div>{{~score.ft.[1]}}</div>
+                                                {{else}}
+                                                    <div>-</div>
+                                                    <div>-</div>
+                                                {{/if}}
+                                            </a>
+                                        {{else}}
+                                            <div>-</div>
+                                            <div>-</div>
+                                        {{/if}}
+                                    </div>
+                                </div>
+                            </div>
+                        {{/each}}
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    {{/each}}
+</div>
