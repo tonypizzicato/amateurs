@@ -16,9 +16,11 @@
 
                                 <ul>
                                     {{#each game.events}}
-                                        {{#eq type 'SCORED_H'}}
-                                            <li class="text_size_12 text_color_light text_align_r">{{ucfirst firstField.name}}{{#if minute}} {{minute}}
-                                                '{{/if}}</li>
+                                        {{#eq side 0}}
+                                            {{#eq newtype 'GOAL'}}
+                                                <li class="text_size_12 text_color_light text_align_r">{{ucfirst firstField.name}}{{#if minute}} {{minute}}
+                                                    '{{/if}}</li>
+                                            {{/eq}}
                                         {{/eq}}
                                     {{/each}}
                                 </ul>
@@ -80,10 +82,12 @@
 
                                 <ul>
                                     {{#each game.events}}
-                                        {{#eq type 'SCORED_A'}}
-                                            <li class="text_size_12 text_color_light text_align_l">
-                                                {{#if minute}}{{minute}}' {{/if}}{{ucfirst firstField.name}}
-                                            </li>
+                                        {{#eq side 1}}
+                                            {{#eq newtype 'GOAL'}}
+                                                <li class="text_size_12 text_color_light text_align_l">
+                                                    {{#if minute}}{{minute}}' {{/if}}{{ucfirst firstField.name}}
+                                                </li>
+                                            {{/eq}}
                                         {{/eq}}
                                     {{/each}}
                                 </ul>
