@@ -63,6 +63,8 @@ module.exports = {
                             resolve(league);
                         }
 
+                        tables = _.sortBy(tables, 'stageName');
+
                         tables = _.groupBy(tables, function (item) {
                             return item.tournamentId;
                         });
