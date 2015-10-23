@@ -193,12 +193,10 @@ var helpers = {
     },
 
     keys: function (object) {
-        console.log(Object.keys(object));
         return Object.keys(object);
     },
 
     length: function(arr) {
-        console.log(arr.length);
         return arr.length;
     },
 
@@ -212,6 +210,10 @@ var helpers = {
 
     div: function (value, div) {
         return div ? value / div : 0;
+    },
+
+    divO: function (value, div) {
+        return div ? Math.floor(value / div) : 0;
     },
 
     slugify: function (value) {

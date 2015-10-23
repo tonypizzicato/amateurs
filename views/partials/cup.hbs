@@ -1,11 +1,17 @@
 <div class="row">
     {{#if tables.length}}
-        <div class="col-md-{{div 12 (inc (length (keys stages)))}}">
+        <div class="col-md-1" style="width: {{div 100 (inc (length (keys stages)))}}%">
             <h4 class="text_align_c">Групповой этап</h4>
         </div>
     {{/if}}
     {{#each stages}}
-        <div class="col-md-{{div 12 (inc (length (keys ../stages)))}}">
+        <div class="col-md-1"
+             style="width:
+                 {{~#if ../tables.length~}}
+                     {{~div 100 (inc (length (keys ../../stages)))~}}
+                 {{~else~}}
+                     {{~div 100 (length (keys ../../stages))~}}
+                 {{~/if~}}%">
             <h4 class="text_align_c">{{ucfirst @key}}</h4>
         </div>
     {{/each}}
@@ -13,7 +19,8 @@
 
 <div class="row">
     {{#if tables.length}}
-        <div class="col-md-{{div 12 (inc (length (keys stages)))}} col-valign-m">
+        <div class="col-md-1 col-valign-m"
+             style="width: {{div 100 (inc (length (keys stages)))}}%">
             <div class="row">
                 <div class="col-md-12">
                     {{~#each tables~}}
@@ -33,7 +40,14 @@
 
 
     {{#each stages}}
-        <div class="col-md-{{div 12 (inc (length (keys ../stages)))}} col-valign-m">
+        <div class="col-md-1 col-valign-m"
+             style="width:
+                 {{~#if ../tables.length~}}
+                     {{~div 97.4 (inc (length (keys ../../stages)))~}}
+                 {{~else~}}
+                     {{~div 97.4 (length (keys ../../stages))~}}
+                 {{~/if~}}%">
+
             {{#each this}}
                 <div class="panel s_mb_20">
                     <div class="panel__body">

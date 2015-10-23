@@ -199,11 +199,22 @@ module.exports = {
 
                     if (playOff) {
 
-                        var stages = {
-                            '1/8 финала': undefined,
-                            '1/4 финала': undefined,
-                            'полуфинал': undefined,
-                            'финал': [[{tourText: "полуфинал",teams: [{name: "Не определено"},{name: "Не определено"}]}]]};
+                        var stageNames = _.range(0, 10).map(function (i) {
+                            return Math.pow(2, i);
+                        }).reverse().map(function (stage) {
+                            if (stage == 1) return 'финал';
+                            if (stage == 2) return 'полуфинал';
+                            return '1/' + stage + ' финала';
+                        });
+
+                        var stages = {};
+
+                        stageNames.forEach(function (stage) {
+                            stages[stage] = undefined;
+                        });
+
+                        console.log(stages);
+
 
                         remote(remoteConfig.url + '/tournaments/games?ids=' + tournamentId, function (err, response, games) {
                             var games = games.filter(function (game) {
@@ -245,7 +256,31 @@ module.exports = {
                                 });
                             });
 
-                            playOff.stages = _.omit(_.defaults(stages, gamesDoubled), _.isUndefined);
+                            var right      = false;
+                            var keys       = Object.keys(stages);
+                            playOff.stages = {};
+
+                            keys.forEach(function (stage) {
+                                if (!_.isUndefined(gamesDoubled[stage]) || right) {
+                                    right = true;
+                                    if (!_.isUndefined(gamesDoubled[stage])) {
+                                        playOff.stages[stage] = gamesDoubled[stage]
+                                    } else {
+                                        playOff.stages[stage] = [];
+                                        console.log(keys.length - keys.indexOf(stage));
+                                        _.range(0, keys.length - keys.indexOf(stage)).forEach(function () {
+                                            playOff.stages[stage].push([{
+                                                tourText: stage,
+                                                teams:    [{name: "Не определено"}, {name: "Не определено"}]
+                                            }]);
+                                        });
+
+                                    }
+                                }
+                            });
+
+                            console.log(playOff.stages);
+
                             resolve({stages: tournament.stages, playOff: playOff});
                         });
                     } else {
