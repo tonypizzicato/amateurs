@@ -195,11 +195,15 @@ module.exports = {
                 var stages = new Promise(function (resolve, reject) {
                     var tournamentId = tournament._id;
 
-                    var playOff = _.find(tournament.stages, {name: 'Плей-офф'});
+                    var playOff = _.find(tournament.stages, {format: 'CUP'});
 
                     if (playOff) {
 
-                        var stages = {'1/4 финала': undefined, 'полуфинал': undefined, 'финал': [[{tourText: "полуфинал",teams: [{name: "Не определено"},{name: "Не определено"}]}]]};
+                        var stages = {
+                            '1/8 финала': undefined,
+                            '1/4 финала': undefined,
+                            'полуфинал': undefined,
+                            'финал': [[{tourText: "полуфинал",teams: [{name: "Не определено"},{name: "Не определено"}]}]]};
 
                         remote(remoteConfig.url + '/tournaments/games?ids=' + tournamentId, function (err, response, games) {
                             var games = games.filter(function (game) {

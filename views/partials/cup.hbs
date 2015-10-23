@@ -1,7 +1,9 @@
 <div class="row">
-    <div class="col-md-{{div 12 (inc (length (keys stages)))}}">
-        <h4 class="text_align_c">Групповой этап</h4>
-    </div>
+    {{#if tables.length}}
+        <div class="col-md-{{div 12 (inc (length (keys stages)))}}">
+            <h4 class="text_align_c">Групповой этап</h4>
+        </div>
+    {{/if}}
     {{#each stages}}
         <div class="col-md-{{div 12 (inc (length (keys ../stages)))}}">
             <h4 class="text_align_c">{{ucfirst @key}}</h4>
@@ -10,22 +12,24 @@
 </div>
 
 <div class="row">
-    <div class="col-md-{{div 12 (inc (length (keys stages)))}} col-valign-m">
-        <div class="row">
-            <div class="col-md-12">
-                {{~#each tables~}}
-                    <div class="panel s_mb_10">
-                        <div class="panel__header">
-                            <i class="fa fa-list-ol s_mr_10"></i> {{#gt ../tables.length 1}}{{stageName}}{{else}}Таблица{{/gt}}
+    {{#if tables.length}}
+        <div class="col-md-{{div 12 (inc (length (keys stages)))}} col-valign-m">
+            <div class="row">
+                <div class="col-md-12">
+                    {{~#each tables~}}
+                        <div class="panel s_mb_10">
+                            <div class="panel__header">
+                                <i class="fa fa-list-ol s_mr_10"></i> {{#gt ../tables.length 1}}{{stageName}}{{else}}Таблица{{/gt}}
+                            </div>
+                            <div class="panel__body s_p_0 s_pb_5">
+                                {{> table table=this league=../globals.league tournament=../tournament tableFull=false hideHeader=true showLogo=true}}
+                            </div>
                         </div>
-                        <div class="panel__body s_p_0 s_pb_5">
-                            {{> table table=this league=../globals.league tournament=../tournament tableFull=false hideHeader=true showLogo=true}}
-                        </div>
-                    </div>
-                {{~/each~}}
+                    {{~/each~}}
+                </div>
             </div>
         </div>
-    </div>
+    {{/if}}
 
 
     {{#each stages}}
@@ -60,7 +64,7 @@
                                             {{else}}
                                                 {{~teams.[0].name~}}
                                             {{/if}}
-                                         </span>
+                                        </span>
                                         <span class="fixture__team s_display_block
                                             {{~#eq (gameResTeam teams.[0] this) 'l'}} fixture__winner{{/eq~}}
                                             {{~#eq (gameResTeam teams.[0] this) 'w'}} fixture__looser{{/eq~}}
