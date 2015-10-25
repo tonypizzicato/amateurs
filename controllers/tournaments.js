@@ -213,7 +213,7 @@ module.exports = {
                             stages[stage] = undefined;
                         });
 
-                        console.log(stages);
+                        console.log(Object.keys(stages).length);
 
 
                         remote(remoteConfig.url + '/tournaments/games?ids=' + tournamentId, function (err, response, games) {
@@ -267,8 +267,7 @@ module.exports = {
                                         playOff.stages[stage] = gamesDoubled[stage]
                                     } else {
                                         playOff.stages[stage] = [];
-                                        console.log(keys.length - keys.indexOf(stage));
-                                        _.range(0, keys.length - keys.indexOf(stage)).forEach(function () {
+                                        _.range(0, Math.pow(2, keys.length - keys.indexOf(stage) - 1)).forEach(function () {
                                             playOff.stages[stage].push([{
                                                 tourText: stage,
                                                 teams:    [{name: "Не определено"}, {name: "Не определено"}]
@@ -279,12 +278,9 @@ module.exports = {
                                 }
                             });
 
-                            console.log(playOff.stages);
-
                             resolve({stages: tournament.stages, playOff: playOff});
                         });
                     } else {
-                        console.log('resolved');
                         resolve({stages: tournament.stages, playOff: null});
                     }
                 });
@@ -423,7 +419,6 @@ module.exports = {
                 Promise.all([stats, central, articles, photos, stages]).then(function (result) {
                     var template = (!result[4].playOff ? 'tournaments/item' : 'tournaments/cup');
 
-                    log('in parallel222');
                     res.render(template, {
                         tournament:     tournament,
                         stats:          result[0],
@@ -433,6 +428,7 @@ module.exports = {
                         photos:         result[3],
                         stages:         result[4].stages,
                         playOff:        result[4].playOff,
+                        lotStages:      Object.keys(result[4].stages).length > 6,
                         pageTournament: true
                     });
                 });

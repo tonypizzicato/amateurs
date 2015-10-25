@@ -381,6 +381,7 @@ ul, ol {
 
 .nav .dropdown_type_tournaments.open .dropdown-menu_type_tournaments {
     min-height: 310px;
+    width:      100%;
 }
 
 .nav .dropdown-menu_type_tournaments:before {
@@ -771,12 +772,21 @@ ul, ol {
 
 .fixture__winner,
 .fixture__winner a {
-    color: $navbar-default-link-active-color;
+    color:      $navbar-default-link-active-color;
+    transition: color .2s, background-color .2s;
 }
 
 .fixture__looser,
 .fixture__looser a {
     color: #B6B6B6;
+}
+
+a:hover .fixture__winner,
+a:hover .fixture__winner a,
+a:hover .fixture__looser,
+a:hover .fixture__looser a {
+    color:      $navbar-default-link-hover-color;
+    transition: color .2s, background-color .2s;
 }
 
 .panel__body .fixture__time {
