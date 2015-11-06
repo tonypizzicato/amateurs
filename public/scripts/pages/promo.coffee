@@ -1,6 +1,6 @@
 $ = require 'jquery'
 _ = require 'underscore'
-require 'waypoints'
+require '../../../node_modules/waypoints/lib/jquery.waypoints.js'
 
 Backbone = require '../utils/backbone.coffee'
 
