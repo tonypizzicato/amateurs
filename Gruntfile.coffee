@@ -11,9 +11,6 @@ module.exports = (grunt) ->
     # Load grunt tasks automatically
     require("load-grunt-tasks") grunt
 
-    # Time how long tasks take. Can help when optimizing build times
-    require("time-grunt") grunt
-
     # Define the configuration for all the tasks
     grunt.initConfig
 
@@ -51,14 +48,6 @@ module.exports = (grunt) ->
                     "autoprefixer"
                 ]
 
-            livereload:
-                files: [
-                    "<%= yeoman.public %>/**/*.html"
-                    ".tmp/styles/**/*.css"
-                    ".tmp/scripts/**/*.js"
-                    "<%= yeoman.public %>/images/**/*"
-                ]
-
             express:
                 files: [#Files to be watched
                     "<%= yeoman.server %>/server.js"
@@ -75,39 +64,6 @@ module.exports = (grunt) ->
                     livereload: true #Enable LiveReload
 
 
-        # The actual grunt server settings
-        connect:
-            options:
-                port:       8080
-                livereload: true
-
-            # Change this to '0.0.0.0' to access the server from outside
-                hostname:   "localhost"
-
-            livereload:
-                options:
-                    open: true
-                    base: [
-                        ".tmp"
-                        "<%= yeoman.public %>"
-                    ]
-
-            test:
-                options:
-                    port: 9001
-                    base: [
-                        ".tmp"
-                        "test"
-                        "<%= yeoman.public %>"
-                    ]
-
-            dist:
-                options:
-                    open:       true
-                    base:       "<%= yeoman.dist %>"
-                    livereload: false
-
-
     # Empties folders to start fresh
         clean:
             dist:
@@ -120,28 +76,6 @@ module.exports = (grunt) ->
                     ]
                 ]
             server: ".tmp"
-
-
-    # Make sure code styles are up to par and there are no obvious mistakes
-        jshint:
-            options:
-                jshintrc: ".jshintrc"
-                reporter: require("jshint-stylish")
-
-                all: [
-                    "Gruntfile.js"
-                    "<%= yeoman.public %>/scripts/{,*/}*.js"
-                    "!<%= yeoman.public %>/scripts/vendor/*"
-                    "test/spec/{,*/}*.js"
-                ]
-
-
-    # Mocha testing framework configuration options
-        mocha:
-            all:
-                options:
-                    run:  true
-                    urls: ["http://<%= connect.test.options.hostname %>:<%= connect.test.options.port %>/index.html"]
 
     # Compiles Sass to CSS and generates necessary files if requested
         compass:
@@ -395,19 +329,6 @@ module.exports = (grunt) ->
                     script: "<%= yeoman.server %>/server.js"
 
 
-    # mocha command
-        exec:
-            mocha:
-                command: "mocha-phantomjs http://localhost:<%= connect.test.options.port %>/index.html"
-                stdout:  true
-
-
-    # open app and test page
-        open:
-            server:
-                path: "http://localhost:<%= express.options.port %>"
-
-
     # Run some tasks in parallel to speed up build process
         concurrent:
             server: [
@@ -426,65 +347,14 @@ module.exports = (grunt) ->
                 "copy:styles"
             ]
 
-        "mongo-migrate": # mongo-migrate:create --name some_name
-            options:
-                config: "migrations/config.json"
-                dbPropName: "mongo"
-            dbPropName: "amateur"
-            create: ""
-            up: ""
-            down: ""
-
-    grunt.registerTask "serve", (target) ->
-        if target is "dist"
-            grunt.task.run([
-                "build"
-                "connect:dist:keepalive"
-            ])
-        grunt.task.run [
-            "clean:server"
-            "concurrent:server"
-            "autoprefixer"
-            "connect:livereload"
-            "watch"
-        ]
-
-
     # starts express server with live testing via testserver
-    grunt.registerTask "server", (target) ->
-
-        # what is this??
-        if target is "dist"
-            grunt.task.run([
-                "build"
-                "open"
-                "connect:dist:keepalive"
-            ])
-        grunt.option "force", true
-        grunt.task.run [
-            "clean:server"
-            "concurrent:server"
-            "autoprefixer"
-            "express:dev"
-            "watch"
-        ]
-
-
-    #grunt.registerTask('server', function (target) {
-    #    grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
-    #    grunt.task.run([target ? ('serve:' + target) : 'serve']);
-    #});
-    grunt.registerTask "test", (target) ->
-        if target isnt "watch"
-            grunt.task.run [
-                "clean:server"
-                "concurrent:test"
-                "autoprefixer"
-            ]
-        grunt.task.run [
-            "connect:test"
-            "mocha"
-        ]
+    grunt.registerTask "server", [
+        "clean:server"
+        "concurrent:server"
+        "autoprefixer"
+        "express:dev"
+        "watch"
+    ]
 
     grunt.registerTask "build", [
         "clean:dist"
@@ -504,9 +374,4 @@ module.exports = (grunt) ->
         "usemin"
         "htmlmin:dist"
     ]
-    grunt.registerTask "default", [
-        "newer:jshint"
-        "bower"
-        "test"
-        "build"
-    ]
+    grunt.registerTask "default", ["server"]

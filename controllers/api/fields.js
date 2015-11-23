@@ -67,11 +67,10 @@ var api = {
                 var task = function (cb) {
                     request.get(requestParams, function (err, response, fields) {
 
-                        fields.forEach(function (field, index) {
+                        fields.forEach(function (field) {
                             field.remoteId = field._id;
                             field.title    = field.name;
                             field.leagueId = league._id;
-                            field.sort     = index;
 
                             delete field.__v;
 
@@ -188,8 +187,7 @@ var api = {
                 return res.status(500).json({error: err});
             }
 
-            if (field.tournaments.length) {
-                console.log(field.tournaments);
+            if (field.tournaments && field.tournaments.length) {
                 TournamentModel.update({fields: field._id}, {$pull: {fields: field._id}}, {multi: true}).exec();
                 TournamentModel.update({_id: {$in: field.tournaments}}, {$addToSet: {fields: field._id}}, {multi: true}).exec();
             }

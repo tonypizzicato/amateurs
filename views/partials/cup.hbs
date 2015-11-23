@@ -1,7 +1,7 @@
 <div class="row">
     {{#if tables.length}}
         <div class="col-md-1" style="width: {{div 100 (inc (length (keys stages)))}}%">
-            <h4 class="text_align_c">Групповой этап</h4>
+            <h5 class="text_align_c">Групповой этап</h5>
         </div>
     {{/if}}
     {{#each stages}}
@@ -24,7 +24,7 @@
             <div class="row">
                 <div class="col-md-12">
                     {{~#each tables~}}
-                        <div class="panel s_mb_10">
+                        <div class="panel{{#if @last}} s_mb_0{{else}} s_mb_20{{/if}}">
                             <div class="panel__header">
                                 <i class="fa fa-list-ol s_mr_10"></i> {{#gt ../tables.length 1}}{{stageName}}{{else}}Таблица{{/gt}}
                             </div>
@@ -49,7 +49,7 @@
                      {{~/if~}}%">
 
                 {{#each this}}
-                    <div class="panel s_mb_20">
+                    <div class="panel{{#if @last}} s_mb_0{{else}} s_mb_20{{/if}}">
                         <div class="panel__body">
                             {{#each this}}
                                 <div class="{{#gt ../this.length 1}}{{#if @first}}s_mb_20{{/if}}{{/gt}}">

@@ -213,9 +213,6 @@ module.exports = {
                             stages[stage] = undefined;
                         });
 
-                        console.log(Object.keys(stages).length);
-
-
                         remote(remoteConfig.url + '/tournaments/games?ids=' + tournamentId, function (err, response, games) {
                             var games = games.filter(function (game) {
                                 return game.stageId == playOff._id
@@ -417,7 +414,8 @@ module.exports = {
                 });
 
                 Promise.all([stats, central, articles, photos, stages]).then(function (result) {
-                    var template = (!result[4].playOff ? 'tournaments/item' : 'tournaments/cup');
+                    var showCup  = result[4].playOff && Object.keys(result[4].playOff.stages).length;
+                    var template = (showCup ? 'tournaments/cup' : 'tournaments/item');
 
                     res.render(template, {
                         tournament:     tournament,
@@ -428,7 +426,6 @@ module.exports = {
                         photos:         result[3],
                         stages:         result[4].stages,
                         playOff:        result[4].playOff,
-                        lotStages:      Object.keys(result[4].stages).length > 6,
                         pageTournament: true
                     });
                 });
@@ -577,9 +574,6 @@ module.exports = {
                     sortedGames.forEach(function (item) {
                         if (Object.prototype.toString.call(fixture[item.tourText]) !== '[object Array]') {
                             fixture[item.tourText] = [];
-                        }
-                        if (!item.dateTime) {
-                            //console.log('no datetime', item._id, item.dateTime, item.date);
                         }
                         fixture[item.tourText].push(item);
                     });
