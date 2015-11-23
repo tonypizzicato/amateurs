@@ -21,7 +21,7 @@ var FieldSchema = new Schema({
     image:       {type: Object},
     remoteId:    {type: ObjectId},
     leagueId:    {type: ObjectId},
-    tournaments: [{type: ObjectId, ref: 'Tournament'}]
+    tournaments: [{type: ObjectId, ref: 'Tournament', default: []}]
 });
 
 FieldSchema.pre('save', true, function (next) {
