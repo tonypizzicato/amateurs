@@ -497,6 +497,12 @@ ul, ol {
     border-bottom: none;
 }
 
+.nav-tabs > li > span {
+    position: relative;
+    display:  block;
+    padding:  10px 15px;
+}
+
 .nav-tabs .tab__title.tab__title_size_quarter {
     width: 25%;
 }

@@ -18,13 +18,18 @@
                             <div class="accordion__content js-accordion-content">
                                 {{~# each tournaments~}}
                                     <div class="tabbable s_mb_40">
-                                        <div class="tab-pane{{#if @first}} active{{/if}}" id="tab-{{slug}}">
                                             <div class="tabbable s_mb_40">
                                                 <ul class="nav nav-tabs js-tabs">
-                                                    <li class="tab__title active tab__title_size_4">
-                                                        <a href="#tab-{{slug}}-table" data-toggle="tab">{{noYear name}}</a>
-                                                    </li>
-                                                    <li class="tab__title tab__title_size_4">
+                                                    {{#if tables.length}}
+                                                        <li class="tab__title active tab__title_size_4">
+                                                            <a href="#tab-{{slug}}-table" data-toggle="tab">{{noYear name}}</a>
+                                                        </li>
+                                                    {{else}}
+                                                        <li class="tab__title tab__title_size_4">
+                                                            <a href="/{{../../../league.slug}}/tournaments/{{slug}}">{{noYear name}}</a>
+                                                        </li>
+                                                    {{/if}}
+                                                    <li class="tab__title tab__title_size_4{{#unless tables.length}} active{{/unless}}">
                                                         <a href="#tab-{{slug}}-recent" class="js-tab-lazy" data-toggle="tab" data-lazy="true"
                                                            data-league="{{../../league.slug}}" data-name="{{slug}}"
                                                            data-route="recent">Последние матчи</a>
@@ -41,28 +46,30 @@
                                                     </li>
                                                 </ul>
                                                 <div class="tab-content">
-                                                    <div class="tab-pane active" id="tab-{{slug}}-table">
-                                                        <div class="panel s_m_0">
-                                                            <div class="panel__body">
-                                                                {{#each tables}}
-                                                                    {{#gt ../tables.length 1}}
-                                                                        <p class="group-name">{{stageName}}</p>
-                                                                    {{/gt}}
-                                                                <div class="{{#unless @last}}s_mb_20{{/unless}}">
-                                                                    {{> table table=this league=../../../league tournament=../this tableFull=true showLogo=true}}
+                                                    {{#if tables.length}}
+                                                        <div class="tab-pane active" id="tab-{{slug}}-table">
+                                                            <div class="panel s_m_0">
+                                                                <div class="panel__body">
+                                                                    {{#each tables}}
+                                                                        {{#gt ../tables.length 1}}
+                                                                            <p class="group-name">{{stageName}}</p>
+                                                                        {{/gt}}
+                                                                    <div class="{{#unless @last}}s_mb_20{{/unless}}">
+                                                                        {{> table table=this league=../../../league tournament=../this tableFull=true showLogo=true}}
+                                                                    </div>
+                                                                    {{/each}}
                                                                 </div>
-                                                                {{/each}}
+                                                            </div>
+                                                            <div class="link_type_full s_mb_10">
+                                                                <span class="text_color_orange">Таблица</span>
+                                                                  <span class="pull-right">
+                                                                      <a href="/{{../../league.slug}}/tournaments/{{slug}}/table"><i
+                                                                              class="fa fa-arrow-circle-o-right"></i></a>
+                                                                  </span>
                                                             </div>
                                                         </div>
-                                                        <div class="link_type_full s_mb_10">
-                                                            <span class="text_color_orange">Таблица</span>
-                                                              <span class="pull-right">
-                                                                  <a href="/{{../../league.slug}}/tournaments/{{slug}}/table"><i
-                                                                          class="fa fa-arrow-circle-o-right"></i></a>
-                                                              </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="tab-pane" id="tab-{{slug}}-recent">
+                                                    {{/if}}
+                                                    <div class="tab-pane{{#unless tables.length}} active{{/unless}}" id="tab-{{slug}}-recent">
                                                         <div class="panel s_m_0">
                                                             <div class="panel__body">
                                                                 <div class="loader">
@@ -115,7 +122,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
                                     </div>
                                 {{/each}}
                             </div>

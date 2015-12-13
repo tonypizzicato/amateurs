@@ -11,6 +11,7 @@ LazyTabs = Tabs.extend
             "tab-item": '.js-tab-lazy'
             'panel': '.panel__body'
             'accordion': '.js-accordion-item'
+            'activeTab': '.tab__title.active .js-tab-lazy'
         }, this._super()
 
     _initTabs: ()->
@@ -19,6 +20,7 @@ LazyTabs = Tabs.extend
         this._elem('tab-item').on 'shown.bs.tab', (e) =>
             control = $(e.target)
 
+            console.log('tab shown');
             unless control.data 'ready'
                 $.ajax
                     url: '/lazy/' + control.data('league') + '/' + control.data('route') + '/' + control.data('name')
@@ -31,5 +33,7 @@ LazyTabs = Tabs.extend
                         control.data 'ready', true
                     error: =>
                         $(control.attr('href')).find(this._selector 'panel').html 'error'
+
+        this._elem('activeTab').trigger("shown.bs.tab");
 
 module.exports = LazyTabs
