@@ -10,7 +10,15 @@
             {{#eq globals.league.slug 'spb'}}
                 Санкт-Петербург
             {{else}}
-                Екатеринбург
+                {{#eq globals.league.slug 'ekb'}}
+                    Екатеринбург
+                {{else}}
+                    {{#eq globals.league.slug 'kazan'}}
+                        Казань
+                    {{else}}
+                        Йошкар-Ола
+                    {{/eq}}
+                {{/eq}}
             {{/eq}}
         {{/eq}}.
     </title>

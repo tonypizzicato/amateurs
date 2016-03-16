@@ -10,3 +10,4 @@ access.log
 data
 uploads
 auth.js
+npm-debug.log
