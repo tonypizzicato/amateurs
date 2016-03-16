@@ -18,8 +18,8 @@ module.exports = {
 
         /* Leagues */
         var leagues = new Promise(function (resolve, reject) {
-            var populateOptions = {path: 'countries', match: {show: true}, options: {sort: {'sort': 1}}};
-            LeagueModel.find({show: true}).sort({sort: 1}).populate(populateOptions).exec(function (err, docs) {
+            var populateOptions = { path: 'countries', match: { show: true }, options: { sort: { 'sort': 1 } } };
+            LeagueModel.find({ show: true }).sort({ sort: 1 }).populate(populateOptions).exec(function (err, docs) {
                 if (err) {
                     reject(err);
                 }
@@ -30,8 +30,8 @@ module.exports = {
 
         /* League */
         var league = new Promise(function (resolve, reject) {
-            var populateOptions = {path: 'countries', match: {show: true}, options: {sort: {'sort': 1}}};
-            LeagueModel.findOne({slug: req.params.league}).populate(populateOptions).lean().exec(function (err, league) {
+            var populateOptions = { path: 'countries', match: { show: true }, options: { sort: { 'sort': 1 } } };
+            LeagueModel.findOne({ slug: req.params.league }).populate(populateOptions).lean().exec(function (err, league) {
                 if (err) {
                     return next(err);
                 }
@@ -40,7 +40,7 @@ module.exports = {
                     return next(null);
                 }
 
-                TournamentModel.find({leagueId: league._id, show: true}).sort({sort: 1}).lean().exec(function (err, tournaments) {
+                TournamentModel.find({ leagueId: league._id, show: true }).sort({ sort: 1 }).lean().exec(function (err, tournaments) {
                     var startTime = new Date().getTime();
 
                     var ids = tournaments.map(function (item) {
@@ -112,8 +112,8 @@ module.exports = {
 
         /* Contacts */
         var contacts = new Promise(function (resolve, reject) {
-            LeagueModel.findOne({slug: req.params.league}).lean().exec(function (err, league) {
-                ContactModel.find({show: true, leagueId: league._id}).sort({sort: 1}).exec(function (err, docs) {
+            LeagueModel.findOne({ slug: req.params.league }).lean().exec(function (err, league) {
+                ContactModel.find({ show: true, leagueId: league._id }).sort({ sort: 1 }).exec(function (err, docs) {
                     if (err) {
                         reject(err);
                     }
@@ -129,13 +129,35 @@ module.exports = {
             res.locals.globals.contacts = result[2];
 
             res.title(result[1].name);
-            res.desc(s.sprintf(require('../config/descriptions').league, result[1].name, result[1].slug == 'moscow' ? "Москва" :
-                (result[1].slug == 'spb' ? "Санкт-Петербург" : "Екатеринбург")));
-            res.render('leagues/item', {league: result[1]});
+            res.desc(s.sprintf(require('../config/descriptions').league, result[1].name, leagueName(result[1].slug)));
+            res.render('leagues/item', { league: result[1] });
         });
 
     }
 };
+
+function leagueName(slug) {
+    var name = '';
+    switch (slug) {
+        case 'moscow':
+            name = 'Москва';
+            break;
+        case 'spb':
+            name = 'Санкт-Петербург';
+            break;
+        case 'ekb':
+            name = 'Екатеринбург';
+            break;
+        case 'kazan':
+            name = 'Казань';
+            break;
+        case 'y-ola':
+            name = 'Йошкар-Ола';
+            break;
+    }
+
+    return name;
+}
 
 
 function log(log) {
