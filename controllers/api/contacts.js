@@ -23,10 +23,10 @@ var api = {
      * /api/contacts GET call
      */
     list: function (req, res) {
-        console.log('/api/contacts GET handled');
+        console.info('/api/contacts GET handled');
         ContactModel.find().sort({sort: 1}).exec(function (err, contacts) {
             if (err) {
-                console.log(err);
+                console.info(err);
                 res.status(500).json({error: err});
                 return;
             }
@@ -41,12 +41,12 @@ var api = {
      * /api/contacts POST call
      */
     create: function (req, res, next) {
-        console.log('/api/contacts POST handled');
+        console.info('/api/contacts POST handled');
 
         saveContact(req, function (doc) {
             ContactModel.create(doc, function (err, contact) {
                 if (err) {
-                    console.log(err);
+                    console.info(err);
                     res.status(500).json({error: err});
                     return next();
                 }
@@ -65,12 +65,12 @@ var api = {
      * /api/contacts/:id PUT call
      */
     save: function (req, res) {
-        console.log('/api/contacts/:id PUT handled');
+        console.info('/api/contacts/:id PUT handled');
 
         saveContact(req, function (doc) {
             ContactModel.update({_id: req.params.id}, {$set: doc}, function (err, count) {
                 if (err) {
-                    console.log(err);
+                    console.info(err);
                     res.status(500).json({error: err});
                     return;
                 }
@@ -93,7 +93,7 @@ var api = {
      * /api/contacts/:id DELETE call
      */
     delete: function (req, res) {
-        console.log('/api/contacts/:id DELETE handled');
+        console.info('/api/contacts/:id DELETE handled');
 
         ContactModel.remove({_id: req.params.id}, function (err, count) {
             if (err) {
@@ -153,7 +153,7 @@ var saveContact = function (req, save) {
             save(doc);
 
             Flickr.authenticate(flickrOptions, function (err, flickr) {
-                console.log('flickr authed');
+                console.info('flickr authed');
 
                 var file = {title: transliteration.slugify(doc.name), photo: dir + filename};
 
@@ -164,7 +164,7 @@ var saveContact = function (req, save) {
 
                 Flickr.upload(options, flickrOptions, function (err, ids) {
                     if (err) {
-                        console.log('Failed uploading news image to flickr.');
+                        console.info('Failed uploading news image to flickr.');
 
                         return;
                     }
@@ -182,13 +182,13 @@ var saveContact = function (req, save) {
                             }
 
                             if (s.length) {
-                                console.log('flickr uploaded');
+                                console.info('flickr uploaded');
 
                                 doc.image = s[0].source;
 
                                 ContactModel.update({image: imageUrl}, {'$set': {image: s[0].source}}).exec();
                             } else {
-                                console.log('no size found', res.sizes);
+                                console.info('no size found', res.sizes);
                             }
                         });
                     });

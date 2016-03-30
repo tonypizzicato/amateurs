@@ -5,7 +5,7 @@ var passport       = require('passport'),
 
 module.exports = {
     loginPage: function (req, res) {
-        console.log('login page');
+        console.info('login page');
 
         res.render('login', {user: req.user, message: req.session.message});
     },

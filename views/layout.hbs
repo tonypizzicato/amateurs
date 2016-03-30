@@ -30,7 +30,7 @@
 
 
     <!-- build:css({public,.tmp,node_modules}) /styles/vendor.css -->
-    <link rel="stylesheet" href="/vendor/animate.css/animate.css">
+    <link rel="stylesheet" href="/animate.css/animate.css">
     <link rel="stylesheet" href="/owl.carousel/dist/assets/owl.carousel.css">
     <link rel="stylesheet" href="/owl.carousel/dist/assets/owl.theme.default.css">
     <link rel="stylesheet" href="/photoswipe/dist/photoswipe.css">
@@ -61,13 +61,11 @@
                                 {{#if image}}
                                     <li class="{{#eq 0 @index}}selected{{/eq}}">
                                         <span class="news__time">{{dateTimeShort dc true}}</span>
-                                        {{#if ../../../globals.tournament._id}}
-                                            <a class="news__title"
-                                               href="/{{../../../../globals.league.slug}}/tournaments/{{../../../../globals.tournament.slug}}/news/{{slug}}">{{title}}</a>
+                                        {{#if ../globals.tournament._id}}
+                                            <a class="news__title" href="/{{../globals.league.slug}}/tournaments/{{../globals.tournament.slug}}/news/{{slug}}">{{title}}</a>
                                         {{else}}
-                                            {{#if ../../../../globals.league._id}}
-                                                <a class="news__title"
-                                                   href="/{{../../../../../globals.league.slug}}/news/{{slug}}">{{title}}</a>
+                                            {{#if ../globals.league._id}}
+                                                <a class="news__title" href="/{{../globals.league.slug}}/news/{{slug}}">{{title}}</a>
                                             {{else}}
                                                 <a class="news__title" href="/news/{{slug}}">{{title}}</a>
                                             {{/if}}
@@ -82,17 +80,14 @@
                             {{#if stick}}
                                 {{#if image}}
                                     <div class="news__content">
-                                        <div class="news__image"
-                                             style="background-image: url({{image}}); background-size: cover; background-position: 50% {{imagePosition}};"></div>
+                                        <div class="news__image" style="background-image: url({{image}}); background-size: cover; background-position: 50% {{imagePosition}};"></div>
 
                                         <div class="news__resume">
-                                            {{#if ../../../globals.tournament._id}}
-                                                <a class="news__title"
-                                                   href="/{{../../../../globals.league.slug}}/tournaments/{{../../../../globals.tournament.slug}}/news/{{slug}}">{{title}}</a>
+                                            {{#if ../globals.tournament._id}}
+                                                <a class="news__title" href="/{{../globals.league.slug}}/tournaments/{{../globals.tournament.slug}}/news/{{slug}}">{{title}}</a>
                                             {{else}}
-                                                {{#if ../../../../globals.league._id}}
-                                                    <a class="news__title"
-                                                       href="/{{../../../../../globals.league.slug}}/news/{{slug}}">{{title}}</a>
+                                                {{#if ../globals.league._id}}
+                                                    <a class="news__title" href="/{{../globals.league.slug}}/news/{{slug}}">{{title}}</a>
                                                 {{else}}
                                                     <a class="news__title" href="/news/{{slug}}">{{title}}</a>
                                                 {{/if}}
@@ -161,10 +156,6 @@
     }
     else window.addEventListener('load', cb);
 </script>
-
-<!-- build:js({public,.tmp}) /scripts/vendor/modernizr.js -->
-<script src="/vendor/modernizr/modernizr.js"></script>
-<!-- endbuild -->
 
 <!-- build:js({public,.tmp}) /scripts/out.js -->
 <script src="/scripts/out.js"></script>

@@ -23,7 +23,7 @@ var api = {
      * /api/game-articles/:id GET call
      */
     item: function (req, res) {
-        console.log('/api/game-articles/:id GET handled');
+        console.info('/api/game-articles/:id GET handled');
         ArticleModel.findOne(req.params.id).exec(function (err, article) {
             if (err) {
                 res.status(500).json({error: err});
@@ -39,7 +39,7 @@ var api = {
      * /api/game-articles/:type/:gameId GET call
      */
     byGame: function (req, res) {
-        console.log('/api/game-articles/:type/:gameId GET handled');
+        console.info('/api/game-articles/:type/:gameId GET handled');
 
         var query = {gameId: req.params.gameId};
         if (req.params.type || req.query.type) {
@@ -61,7 +61,7 @@ var api = {
      * /api/game-articles GET call
      */
     list: function (req, res) {
-        console.log('/api/game-articles GET handled');
+        console.info('/api/game-articles GET handled');
         ArticleModel.find().sort('-dc').exec(function (err, news) {
             if (err) {
                 res.status(500).json({error: err});
@@ -77,12 +77,12 @@ var api = {
      * /api/game-articles POST call
      */
     create: function (req, res, next) {
-        console.log('/api/game-articles POST handled');
+        console.info('/api/game-articles POST handled');
 
         saveArticle(req, function (doc) {
             ArticleModel.create(doc, function (err, article) {
                 if (err) {
-                    console.log(err);
+                    console.info(err);
                     res.status(500).json({error: err});
                     return next();
                 }
@@ -98,14 +98,14 @@ var api = {
      * /api/game-articles/:id PUT call
      */
     save: function (req, res) {
-        console.log('/api/game-articles PUT handled');
+        console.info('/api/game-articles PUT handled');
 
         saveArticle(req, function (doc) {
             /** pre save hack(( */
             doc.du = new Date();
             ArticleModel.update({_id: req.params.id}, {$set: doc}, function (err, count) {
                 if (err) {
-                    console.log(err);
+                    console.info(err);
                     res.status(500).json({error: err});
                     return;
                 }
@@ -125,7 +125,7 @@ var api = {
      * /api/game-articles/:id DELETE call
      */
     delete: function (req, res, next) {
-        console.log('/api/game-articles/:id DELETE handled');
+        console.info('/api/game-articles/:id DELETE handled');
 
         ArticleModel.remove({_id: req.params.id}, function (err, count) {
             if (err) {
@@ -184,7 +184,7 @@ var saveArticle = function (req, save) {
             doc[image.title] = imageUrl;
 
             Flickr.authenticate(flickrOptions, function (err, flickr) {
-                console.log('flickr authed');
+                console.info('flickr authed');
 
                 var file = {title: transliteration.slugify(doc.gameId + image.title), photo: dir + filename};
 
@@ -196,7 +196,7 @@ var saveArticle = function (req, save) {
 
                 Flickr.upload(options, flickrOptions, function (err, ids) {
                     if (err) {
-                        console.log('Failed uploading news image to flickr.');
+                        console.info('Failed uploading news image to flickr.');
 
                         return;
                     }
@@ -214,7 +214,7 @@ var saveArticle = function (req, save) {
                             }
 
                             if (s.length) {
-                                console.log('flickr uploaded');
+                                console.info('flickr uploaded');
 
                                 doc[image.title] = s[0].source;
 
@@ -225,7 +225,7 @@ var saveArticle = function (req, save) {
 
                                 ArticleModel.update(m, {'$set': set}).exec();
                             } else {
-                                console.log('no size found', res.sizes);
+                                console.info('no size found', res.sizes);
                             }
                         });
                     });

@@ -1,9 +1,9 @@
 "use strict";
 
 var express          = require('express'),
+    multer           = require('multer'),
 
     auth             = require('../controllers/auth'),
-    index            = require('../controllers/index'),
     leagues          = require('../controllers/leagues'),
     tournaments      = require('../controllers/tournaments'),
     games            = require('../controllers/games'),
@@ -34,6 +34,8 @@ function t(title) {
         next();
     }
 }
+
+var upload  = multer({ dest: __dirname + '/../public/uploads/' });
 
 module.exports.initialize = function (app) {
     var apiRouter = express.Router(),
@@ -81,10 +83,7 @@ module.exports.initialize = function (app) {
 
     r.route('/:type/:postId/images')
         .get(apiPhotos.list)
-        .post(require('multer')({
-            dest:     __dirname + '/../public/uploads/',
-            inMemory: true
-        }), apiPhotos.create);
+        .post(upload.array(), apiPhotos.create);
 
     r.route('/:type/:postId/images/:id')
         .get(apiPhotos.list)
@@ -138,7 +137,7 @@ module.exports.initialize = function (app) {
 
 
     app.get('/about', t('О Лиге'), function (req, res) {
-        res.render('static/about', {pageAbout: true});
+        res.render('static/about', { pageAbout: true });
     });
 
     app.get('/login', auth.loginPage);

@@ -15,7 +15,7 @@ module.exports = {
     create: function (req, res, next) {
         OrderModel.create(req.body, function (err, order) {
                 if (err) {
-                    console.log(err);
+                    console.info(err);
                     res.status(500).json({error: err});
                     return;
                 }
@@ -64,9 +64,9 @@ module.exports = {
 
                     transporter.sendMail(mailOptions, function (error, info) {
                         if (error) {
-                            console.log(error);
+                            console.info(error);
                         } else {
-                            console.log('Message sent: ' + info.response);
+                            console.info('Message sent: ' + info.response);
                         }
                     });
                 })

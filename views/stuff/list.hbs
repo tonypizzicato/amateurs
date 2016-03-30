@@ -15,7 +15,7 @@
                             <div class="row clearfix masonry-container">
                                 <div gitclass="masonry js-masonry-js"
                                      data-masonry-options='{"itemSelector": ".js-masonry-item", "columnWidth": 390, "isAnimated": "true", "isFitWidth": "true" }'>
-                                    {{#each (get ../../stuff @key)}}
+                                    {{#each (get ../stuff @key)}}
                                         <div class="masonry-item col-md-6 col-sm-6 col-xs-6 js-masonry-item">
                                             {{> stuff_item user=this position=@key}}
                                         </div>

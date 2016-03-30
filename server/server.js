@@ -14,43 +14,42 @@ var cookieParser = require('cookie-parser');
 var favicon      = require('serve-favicon');
 
 var morgan  = require('morgan');
-var helpers = require('./app/hbs-helpers');
+var helpers = require('./../app/hbs-helpers');
 
-var routes = require('./app/routes');
+var routes = require('./../app/routes');
 
 var app = express();
 
 var SessionMongoStore = require('connect-mongo')(session);
 
-var LeagueModel     = require('./models/league');
-var CountryModel    = require('./models/country');
-var TournamentModel = require('./models/tournament');
+var LeagueModel = require('./../models/league');
+
+/** init extended console */
+require('./../utils/console').initConsole();
 
 // Configure server
 var port = process.env.NODE_PORT || 9000;
-
-console.log(port);
 
 // connect to Mongo when the app initializes
 mongoose.connect('mongodb://localhost/amateur');
 
 app.set('port', port);
-app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(favicon(path.join(__dirname, '..', '/public/favicon.ico')));
 app.use(cookieParser());
 
 app.use(busboy());
 // parse application/json
-app.use(bodyParser.json({limit: '10mb'}));
+app.use(bodyParser.json({ limit: '10mb' }));
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({limit: '10mb', extended: false}))
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }))
 
 app.use(session({
     secret:            'test secret',
     resave:            false,
     name:              'ssid',
     saveUninitialized: true,
-    store:             new SessionMongoStore({mongooseConnection: mongoose.connection})
+    store:             new SessionMongoStore({ mongooseConnection: mongoose.connection })
 }));
 
 // Initialize Passport!  Also use passport.session() middleware, to support
@@ -59,10 +58,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // create a write stream (in append mode)
-var accessLogStream = fs.createWriteStream(__dirname + '/access.log', {flags: 'a'});
+var accessLogStream = fs.createWriteStream(path.join(__dirname, '..', '/access.log'), { flags: 'a' });
 
 // setup the logger
-app.use(morgan('combined', {stream: accessLogStream}));
+app.use(morgan('combined', { stream: accessLogStream }));
 
 var clientDir, viewsDir;
 /**
@@ -72,12 +71,12 @@ if (app.get('env') === 'development') {
     clientDir = '/public';
     viewsDir  = '/views';
 
-    app.use(express.static(path.join(__dirname, '.tmp')));
-    app.use(express.static(path.join(__dirname, 'public')));
-    app.use(express.static(path.join(__dirname, 'node_modules')));
+    app.use(express.static(path.join(__dirname, '..', '.tmp')));
+    app.use(express.static(path.join(__dirname, '..', 'public')));
+    app.use(express.static(path.join(__dirname, '..', 'node_modules')));
 
     app.use(function (err, req, res, next) {
-        console.log(err);
+        console.error(err);
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,
@@ -93,9 +92,9 @@ if (app.get('env') === 'production') {
     clientDir = '/dist';
     viewsDir  = '/dist/views';
 
-    app.use(express.static(path.join(__dirname, 'dist')));
+    app.use(express.static(path.join(__dirname, '..', 'dist')));
 
-    app.use(function (err, req, res, next) {
+    app.use(function (err, req, res) {
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,
@@ -104,19 +103,22 @@ if (app.get('env') === 'production') {
     });
 }
 
+var publicDir    = path.join(__dirname, '..', clientDir);
+var templatesDir = path.join(__dirname, '..', viewsDir);
+var partialsDir  = path.join(templatesDir, 'partials');
+
 app.set('view engine', 'hbs');
-app.set('views', __dirname + viewsDir);
-app.set('public', __dirname + clientDir);
+
+app.set('views', templatesDir);
+app.set('public', publicDir);
 
 helpers.initialize(hbs);
-hbs.registerPartials(__dirname + viewsDir + '/partials');
-
 
 app.use(function (req, res, next) {
     res.title = function (title) {
         res.locals.title = res.locals.title ? title + ' — ' + res.locals.title : title;
     }.bind(res);
-    res.desc = function (desc) {
+    res.desc  = function (desc) {
         res.locals.desc = res.locals.desc ? desc + ' — ' + res.locals.desc : desc;
     }.bind(res);
 
@@ -147,7 +149,7 @@ app.get('*', function (req, res, next) {
         return next();
     }
 
-    res.locals.opts = require('./config/settings.js');
+    res.locals.opts = require('./../config/settings.js');
 
     res.locals.globals = res.locals.globals || {};
 
@@ -155,7 +157,7 @@ app.get('*', function (req, res, next) {
     res.locals.globals.hasOrder = false;
 
 
-    var query = {show: true};
+    var query = { show: true };
     var path  = req.params[0];
 
     /** Dirty hack */
@@ -173,17 +175,17 @@ app.get('*', function (req, res, next) {
         }
     }
 
-    var populateOptions = {path: 'countries', match: {show: true}, options: {sort: {'sort': 1}}};
+    var populateOptions = { path: 'countries', match: { show: true }, options: { sort: { 'sort': 1 } } };
     LeagueModel.findOne(query).populate(populateOptions).exec(function (err, doc) {
         if (err) {
             return next(err);
         }
 
-        var populateTournaments = {path: 'countries.tournaments', model: 'Tournament', match: {show: true}, options: {sort: {'sort': 1}}};
-        var populateCountries   = {path: 'countries', match: {show: true}, options: {sort: {'sort': 1}}};
+        var populateTournaments = { path: 'countries.tournaments', model: 'Tournament', match: { show: true }, options: { sort: { 'sort': 1 } } };
+        var populateCountries   = { path: 'countries', match: { show: true }, options: { sort: { 'sort': 1 } } };
 
         if (!doc) {
-            LeagueModel.find({show: true}).sort({sort: 1})
+            LeagueModel.find({ show: true }).sort({ sort: 1 })
                 .populate(populateCountries)
                 .lean()
                 .exec(function (err, leagues) {
@@ -202,7 +204,7 @@ app.get('*', function (req, res, next) {
             return;
         }
 
-        LeagueModel.find({show: true}).sort({sort: 1}).populate(populateCountries).lean().exec(function (err, leagues) {
+        LeagueModel.find({ show: true }).sort({ sort: 1 }).populate(populateCountries).lean().exec(function (err, leagues) {
             if (err) {
                 return next(err);
             }
@@ -223,15 +225,19 @@ app.get('*', function (req, res, next) {
 routes.initialize(app);
 
 
-app.use(function(req, res, next) {
+app.use(function (req, res) {
     res.status(404).render('404');
 });
 
-var server = app.listen(port, function () {
+/** registering partials for hbs is async, so starting server only after that */
+hbs.registerPartials(partialsDir, start);
 
-    var host = server.address().address;
-    var port = server.address().port;
+var server;
 
-    console.log('Example app listening at http://%s:%s', host, port)
+function start() {
+    server = app.listen(port, function () {
+        const { address, port } = server.address();
 
-});
+        console.info('Example app listening at http://%s:%s', address, port)
+    });
+}

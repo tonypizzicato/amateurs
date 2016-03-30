@@ -86,7 +86,7 @@ module.exports = (grunt) ->
                 imagesDir:               "<%= yeoman.public %>/images"
                 javascriptsDir:          "<%= yeoman.public %>/scripts"
                 fontsDir:                "<%= yeoman.public %>/styles/fonts"
-                importPath:              "<%= yeoman.public %>/vendor"
+                importPath:              "node_modules"
                 httpImagesPath:          "/images"
                 httpGeneratedImagesPath: "/images/generated"
                 httpFontsPath:           "/styles/fonts"
@@ -316,17 +316,17 @@ module.exports = (grunt) ->
 
             dev:
                 options:
-                    script: "<%= yeoman.server %>/server.js"
+                    script: "<%= yeoman.server %>/server/boot.js"
 
             prod:
                 options:
                     port:   "8081"
                     env:    "production"
-                    script: "<%= yeoman.server %>/server.js"
+                    script: "<%= yeoman.server %>/server/boot.js"
 
             test:
                 options:
-                    script: "<%= yeoman.server %>/server.js"
+                    script: "<%= yeoman.server %>/server/boot.js"
 
 
     # Run some tasks in parallel to speed up build process

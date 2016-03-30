@@ -16,7 +16,7 @@ var api = {
      * /api/games GET call
      */
     list: function (req, res) {
-        console.log('/api/games GET handled');
+        console.info('/api/games GET handled');
 
         TournamentModel.find({leagueId: req.query.leagueId}).exec(function (err, tournaments) {
             var ids = tournaments.map(function (item) {
@@ -36,7 +36,7 @@ var api = {
     },
 
     save: function (req, res) {
-        console.log('/api/games PUT handled');
+        console.info('/api/games PUT handled');
         var newGameId       = req.body.gameId;
         var newTournamentId = req.body.tournament;
 

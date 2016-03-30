@@ -75,7 +75,7 @@ var controller = {
                 res.locals.globals.contacts = contacts;
 
 
-                console.log('globals end');
+                console.info('globals end');
                 next();
             });
         });
