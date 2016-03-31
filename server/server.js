@@ -74,15 +74,6 @@ if (app.get('env') === 'development') {
     app.use(express.static(path.join(__dirname, '..', '.tmp')));
     app.use(express.static(path.join(__dirname, '..', 'public')));
     app.use(express.static(path.join(__dirname, '..', 'node_modules')));
-
-    app.use(function (err, req, res, next) {
-        console.error(err);
-        res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error:   err
-        });
-    });
 }
 
 /**
@@ -93,14 +84,6 @@ if (app.get('env') === 'production') {
     viewsDir  = '/dist/views';
 
     app.use(express.static(path.join(__dirname, '..', 'dist')));
-
-    app.use(function (err, req, res) {
-        res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error:   {}
-        });
-    });
 }
 
 var publicDir    = path.join(__dirname, '..', clientDir);
@@ -228,6 +211,18 @@ routes.initialize(app);
 app.use(function (req, res) {
     res.status(404).render('404');
 });
+
+
+app.use(function (err, req, res, next) {
+    console.error(err);
+
+    res.status(err.status || 500);
+    res.render('error', {
+        message: err.message,
+        error:   err
+    });
+});
+
 
 /** registering partials for hbs is async, so starting server only after that */
 hbs.registerPartials(partialsDir, start);
