@@ -57,8 +57,6 @@ module.exports = {
                         var endTime = new Date().getTime();
                         log('received Tables', (endTime - startTime) + "ms.", tables.length);
 
-                        tables = JSON.parse(tables);
-
                         if (!tables.length) {
                             resolve(league);
                         }
@@ -78,7 +76,7 @@ module.exports = {
                             }
                         }
 
-                        console.log(tables.length);
+                        console.info(tables.length);
 
                         tournaments.map(function (item) {
                             item.tables = tables[item.remoteId] ? tables[item.remoteId] : null;
@@ -151,6 +149,9 @@ function leagueName(slug) {
         case 'kazan':
             name = 'Казань';
             break;
+        case 'rostov':
+            name = 'Ростов-на-Дону';
+            break;
         case 'y-ola':
             name = 'Йошкар-Ола';
             break;
@@ -163,5 +164,5 @@ function leagueName(slug) {
 function log(log) {
     var args = Array.prototype.slice.call(arguments, 0);
     args     = Array.prototype.concat.call([moment().format('HH:mm:ss:SSS')], args);
-    return console.log.apply(null, args);
+    return console.info.apply(null, args);
 }

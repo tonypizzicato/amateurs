@@ -155,7 +155,7 @@ module.exports = {
 };
 
 function remote(url, cb) {
-    console.log(url);
+    console.info(url);
     request.get({
         uri:  url,
         auth: remoteConfig.authOptions,

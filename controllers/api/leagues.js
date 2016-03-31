@@ -16,7 +16,7 @@ var api = {
      * /api/leagues/:id GET call
      */
     item: function (req, res) {
-        console.log('/api/leagues/:id GET handled');
+        console.info('/api/leagues/:id GET handled');
         /**
          * if has league in db
          *   continue
@@ -26,7 +26,7 @@ var api = {
 
         LeagueModel.findOne(req.params.id, function (err, league) {
             if (err) {
-                console.log(err);
+                console.info(err);
                 res.status(500).json({error: err});
                 return;
             }
@@ -41,13 +41,12 @@ var api = {
      * /api/leagues GET call
      */
     list: function (req, res) {
-        console.log('/api/leagues GET handled');
+        console.info('/api/leagues GET handled');
 
-        client.get(remoteConfig.url + '/leagues', function (data) {
-            var parsed = JSON.parse(data),
-                queries = [];
+        client.get(remoteConfig.url + '/leagues', function (leagues) {
+            var queries = [];
 
-            parsed.forEach(function (league) {
+            leagues.forEach(function (league) {
                 league.remoteId = league._id;
                 delete league.__v;
 
@@ -77,7 +76,7 @@ var api = {
      * /api/leagues/:id POST call
      */
     save: function (req, res, next) {
-        console.log('/api/leagues/:id PUT handled');
+        console.info('/api/leagues/:id PUT handled');
 
         LeagueModel.update({_id: req.params.id}, {$set: req.body}, function (err, count) {
             if (err) {

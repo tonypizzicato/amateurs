@@ -29,8 +29,6 @@ module.exports = {
                         return res.status(404).render('404');
                     }
 
-                    game = JSON.parse(game);
-
                     game.dateTime = game.date ? moment.unix(game.timestamp) : null;
 
                     var gameLength = tournament.settings ? tournament.settings.gameLength : undefined;

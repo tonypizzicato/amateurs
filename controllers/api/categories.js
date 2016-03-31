@@ -12,10 +12,10 @@ var api = {
      * /api/categories GET call
      */
     list: function (req, res) {
-        console.log('/api/categories GET handled');
+        console.info('/api/categories GET handled');
         CategoryModel.find().sort({sort: 1}).exec(function (err, categories) {
             if (err) {
-                console.log(err);
+                console.info(err);
                 res.status(500).json({error: err});
                 return;
             }
@@ -30,7 +30,7 @@ var api = {
      * /api/categories POST call
      */
     create: function (req, res) {
-        console.log('/api/categories POST handled');
+        console.info('/api/categories POST handled');
 
         CategoryModel.create(req.body, function (err, category) {
             if (err) {
@@ -47,7 +47,7 @@ var api = {
      * /api/categories/:id PUT call
      */
     save: function (req, res) {
-        console.log('/api/categories/:id PUT handled');
+        console.info('/api/categories/:id PUT handled');
 
         CategoryModel.update({_id: req.params.id}, {$set: req.body}, function (err, count) {
             if (err) {
@@ -68,7 +68,7 @@ var api = {
      * /api/categories/:id DELETE call
      */
     delete: function (req, res) {
-        console.log('/api/categories/:id DELETE handled');
+        console.info('/api/categories/:id DELETE handled');
 
         CategoryModel.remove({_id: req.params.id}, function (err, count) {
             if (err) {

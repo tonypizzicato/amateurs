@@ -17,7 +17,7 @@ var api = {
      * /api/tournaments/:id GET call
      */
     item: function (req, res) {
-        console.log('/api/tournaments/:id GET handled');
+        console.info('/api/tournaments/:id GET handled');
     },
 
     /**
@@ -26,7 +26,7 @@ var api = {
      * /api/tournaments GET call
      */
     list: function (req, res) {
-        console.log('/api/tournaments GET handled');
+        console.info('/api/tournaments GET handled');
 
         LeagueModel.find({}, function (err, leagues) {
             if (err) {
@@ -39,11 +39,10 @@ var api = {
 
             function getTournaments(league) {
                 pending += 1;
-                client.get(remoteConfig.url + '/league/' + league._id + '/tournaments/active', function (data) {
-                    var parsed  = JSON.parse(data),
-                        queries = [];
+                client.get(remoteConfig.url + '/league/' + league._id + '/tournaments/active', function (tournaments) {
+                    var queries = [];
 
-                    parsed.forEach(function (item) {
+                    tournaments.forEach(function (item) {
                         item.remoteId = item._id;
                         item.leagueId = league._id;
 
@@ -94,7 +93,7 @@ var api = {
      * /api/tournaments POST call
      */
     create: function (req, res, next) {
-        console.log('/api/tournaments POST handled');
+        console.info('/api/tournaments POST handled');
 
         TournamentModel.create(req.body, function (err, article) {
             if (err) {
@@ -112,7 +111,7 @@ var api = {
      * /api/tournaments/:id PUT call
      */
     save: function (req, res, next) {
-        console.log('/api/tournaments/:id PUT handled');
+        console.info('/api/tournaments/:id PUT handled');
 
         TournamentModel.update({_id: req.params.id}, {$set: req.body}, function (err, count) {
             if (err) {
@@ -137,7 +136,7 @@ var api = {
      * /api/tournaments/:id DELETE call
      */
     delete: function (req, res) {
-        console.log('/api/tournaments/:id DELETE handled');
+        console.info('/api/tournaments/:id DELETE handled');
 
         TournamentModel.remove({_id: req.params.id}, function (err, count) {
             if (err) {

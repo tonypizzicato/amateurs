@@ -1,8 +1,9 @@
-$icon-font-path: "/vendor/bootstrap-sass/vendor/assets/fonts/";
-$fa-font-path: "/vendor/fontawesome/fonts/";
+$icon-font-path: "/bootstrap-sass/assets/fonts/";
+$fa-font-path: "/font-awesome/fonts/";
 
-@import 'fontawesome/scss/font-awesome';
-@import 'bootstrap-sass/vendor/assets/stylesheets/bootstrap';
+
+@import 'font-awesome/scss/font-awesome';
+@import 'bootstrap-sass/assets/stylesheets/bootstrap';
 @import 'flags';
 
 /* ==========================================================================

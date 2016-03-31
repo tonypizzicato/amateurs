@@ -786,5 +786,5 @@ function remote(url, cb) {
 function log(log) {
     var args = Array.prototype.slice.call(arguments, 0);
     args     = Array.prototype.concat.call([moment().format('HH:mm:ss:SSS')], args);
-    return console.log.apply(null, args);
+    return console.info.apply(null, args);
 }

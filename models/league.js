@@ -13,9 +13,9 @@ var LeagueSchema = new Schema({
     name:      {type: String},
     slug:      {type: String},
     show:      {type: Boolean, default: false},
-    sort:      {type: Number},
+    sort:      {type: Number, default: 99},
     remoteId:  {type: ObjectId},
-    countries: [{type: ObjectId, ref: 'Country'}]
+    countries: [{type: ObjectId, ref: 'Country', default: []}]
 });
 
 LeagueSchema.pre('save', function (next) {

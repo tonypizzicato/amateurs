@@ -86,7 +86,7 @@ module.exports = (grunt) ->
                 imagesDir:               "<%= yeoman.public %>/images"
                 javascriptsDir:          "<%= yeoman.public %>/scripts"
                 fontsDir:                "<%= yeoman.public %>/styles/fonts"
-                importPath:              "<%= yeoman.public %>/vendor"
+                importPath:              "node_modules"
                 httpImagesPath:          "/images"
                 httpGeneratedImagesPath: "/images/generated"
                 httpFontsPath:           "/styles/fonts"
@@ -290,23 +290,6 @@ module.exports = (grunt) ->
                 dest:   ".tmp/styles/"
                 src:    "{,*/}*.css"
 
-
-    # Generates a custom Modernizr build that includes only the tests you
-    # reference in your app
-        modernizr:
-            dist:
-                devFile:    "<%= yeoman.public %>/vendor/modernizr/modernizr.js"
-                outputFile: "<%= yeoman.dist %>/scripts/vendor/modernizr.js"
-                files:
-                            src: [
-                                "<%= yeoman.dist %>/scripts/{,*/}*.js"
-                                "<%= yeoman.dist %>/styles/{,*/}*.css"
-                            ]
-
-                excludeFiles: ["!<%= yeoman.dist %>/scripts/vendor/*"]
-                uglify:       true
-
-
     # express app
         express:
             options:
@@ -316,17 +299,17 @@ module.exports = (grunt) ->
 
             dev:
                 options:
-                    script: "<%= yeoman.server %>/server.js"
+                    script: "<%= yeoman.server %>/server/boot.js"
 
             prod:
                 options:
                     port:   "8081"
                     env:    "production"
-                    script: "<%= yeoman.server %>/server.js"
+                    script: "<%= yeoman.server %>/server/boot.js"
 
             test:
                 options:
-                    script: "<%= yeoman.server %>/server.js"
+                    script: "<%= yeoman.server %>/server/boot.js"
 
 
     # Run some tasks in parallel to speed up build process
@@ -367,7 +350,6 @@ module.exports = (grunt) ->
         "cssmin"
         "uglify"
         "copy:dist"
-        "modernizr"
         "imagemin"
         "svgmin"
         "rev"

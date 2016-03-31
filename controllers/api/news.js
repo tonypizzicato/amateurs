@@ -24,7 +24,7 @@ var api = {
      * /api/news/:id GET call
      */
     item: function (req, res) {
-        console.log('/api/news/:id GET handled');
+        console.info('/api/news/:id GET handled');
     },
 
     /**
@@ -33,7 +33,7 @@ var api = {
      * /api/news GET call
      */
     list: function (req, res) {
-        console.log('/api/news GET handled');
+        console.info('/api/news GET handled');
         NewsModel.find().sort('-dc').exec(function (err, news) {
             if (err) {
                 res.status(500).json({error: err});
@@ -49,7 +49,7 @@ var api = {
      * /api/news POST call
      */
     create: function (req, res, next) {
-        console.log('/api/news POST handled');
+        console.info('/api/news POST handled');
 
         saveArticle(req, function (doc) {
             NewsModel.create(doc, function (err, article) {
@@ -72,12 +72,12 @@ var api = {
      * /api/news/:id PUT call
      */
     save: function (req, res, next) {
-        console.log('/api/news PUT handled');
+        console.info('/api/news PUT handled');
 
         saveArticle(req, function (doc) {
             NewsModel.update({_id: req.params.id}, {$set: doc}, function (err, count) {
                 if (err) {
-                    console.log(err);
+                    console.info(err);
                     res.status(500).json({error: err});
                     return;
                 }
@@ -99,7 +99,7 @@ var api = {
      * /api/news/:id DELETE call
      */
     delete: function (req, res, next) {
-        console.log('/api/news/:id DELETE handled');
+        console.info('/api/news/:id DELETE handled');
 
         NewsModel.remove({_id: req.params.id}, function (err, count) {
             if (err) {
@@ -151,7 +151,7 @@ var saveArticle = function (req, cb) {
         require("fs").writeFile(dir + filename, base64Data, 'base64', function (err) {
 
             if (err) {
-                console.log(err);
+                console.info(err);
                 cb(doc);
                 next();
             }
@@ -161,7 +161,7 @@ var saveArticle = function (req, cb) {
             cb(doc);
 
             Flickr.authenticate(flickrOptions, function (err, flickr) {
-                console.log('flickr authed');
+                console.info('flickr authed');
 
                 var file = {title: transliteration.slugify(doc.title), photo: dir + filename};
 
@@ -172,7 +172,7 @@ var saveArticle = function (req, cb) {
 
                 Flickr.upload(options, flickrOptions, function (err, ids) {
                     if (err) {
-                        console.log('Failed uploading news image to flickr.');
+                        console.info('Failed uploading news image to flickr.');
 
                         return;
                     }
@@ -190,13 +190,13 @@ var saveArticle = function (req, cb) {
                             }
 
                             if (s.length) {
-                                console.log('flickr uploaded');
+                                console.info('flickr uploaded');
 
                                 doc.image = s[0].source;
 
                                 NewsModel.update({image: imageUrl}, {'$set': {image: s[0].source}}).exec();
                             } else {
-                                console.log('no size found', res.sizes);
+                                console.info('no size found', res.sizes);
                             }
                         });
                     });

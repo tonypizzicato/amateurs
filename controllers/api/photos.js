@@ -52,7 +52,7 @@ var api = {
      * /api/games/:id/images POST call
      */
     create: function (req, res, next) {
-        console.log('/api/games/:id/images POST handled');
+        console.info('/api/games/:id/images POST handled');
 
         var files  = [],
             result = {},
@@ -61,7 +61,7 @@ var api = {
         PhotosModel.getByGame(req.params.postId, function (err, docs) {
             photosCount = docs.length;
 
-            console.log('Got ' + _.values(req.files).length + ' files from admin app. Processing images');
+            console.info('Got ' + _.values(req.files).length + ' files from admin app. Processing images');
 
             /** Process images and get array of photos for flickr */
             async.mapSeries(_.values(req.files), function (file, callback) {
@@ -74,7 +74,7 @@ var api = {
                     },
                     function (filepath, cb) {
                         cb(null, {
-                            filename: file.name,
+                            filename: file.originalname,
                             path:     filepath,
                             index:    file.index
                         });
@@ -117,10 +117,10 @@ var api = {
         });
 
         function prepareImage(file, cb) {
-            var img = gm(file.buffer, file.name);
-            img.size({bufferStream: true}, function (err, size) {
+            var img = gm(file.path);
+            img.size(function (err, size) {
                 if (err || !size || !size.width || !size.height) {
-                    console.warn('error getting size', file.name);
+                    console.error('Error getting size', file.originalname);
                     return cb(null, false);
                 }
 
@@ -140,14 +140,13 @@ var api = {
                 }
 
                 img.resize(w, h);
-                console.log('Resized image. ' + file.name, 'Trying to save image to ' + file.path);
 
                 img.write(file.path, function (err) {
                     if (err) {
                         return cb(null, false);
                     }
 
-                    console.log('Processed image. ' + file.name);
+                    console.info('Processed image. ' + file.originalname);
                     cb(null, file.path);
                 });
             });
@@ -160,7 +159,7 @@ var api = {
      * /api/games/:postId/images/:id PUT call
      */
     save: function (req, res, next) {
-        console.log('/api/games/:postId/images/:id PUT handled');
+        console.info('/api/games/:postId/images/:id PUT handled');
         if (req.params.tournament) {
             req.body.tournament = req.params.tournament;
         }
@@ -184,7 +183,7 @@ var api = {
      * /api/games/:postId/images/:id DELETE call
      */
     delete: function (req, res) {
-        console.log('/api/games/:postId/images/:id DELETE handled');
+        console.info('/api/games/:postId/images/:id DELETE handled');
 
         PhotosModel.findOne({_id: req.params.id}).exec(function (err, doc) {
             if (err || !doc) {
@@ -212,7 +211,7 @@ var api = {
 
 var _toFlickr = function (files, cb) {
     Flickr.authenticate(flickrOptions, function (err, flickr) {
-        console.log('flickr authed');
+        console.info('flickr authed');
 
         var getSize = function (sizes, label) {
             var image = _.findWhere(sizes, {label: label});
@@ -251,7 +250,7 @@ var _toFlickr = function (files, cb) {
                     return cb(null, {path: photo.path, index: photo.index});
                 }
 
-                console.log('Uploaded ' + ++uploaded + ' photos of ' + photosCount, ids);
+                console.info('Uploaded ' + ++uploaded + ' photos of ' + photosCount, ids);
 
                 ids.forEach(function (id) {
                     flickr.photos.getSizes({photo_id: id}, function (err, res) {

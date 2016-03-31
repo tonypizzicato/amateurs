@@ -16,7 +16,7 @@ var api = {
      * /api/games GET call
      */
     list: function (req, res) {
-        console.log('/api/games GET handled');
+        console.info('/api/games GET handled');
 
         TournamentModel.find({leagueId: req.query.leagueId}).exec(function (err, tournaments) {
             var ids = tournaments.map(function (item) {
@@ -24,11 +24,7 @@ var api = {
             });
 
             if(ids.length) {
-                client.get(remoteConfig.url + '/tournaments/games?ids=' + ids.join('&ids='), function (data) {
-                    var parsed = JSON.parse(data);
-
-                    res.json(parsed);
-                });
+                client.get(remoteConfig.url + '/tournaments/games?ids=' + ids.join('&ids='), games => res.json(games));
             } else {
                 res.json([]);
             }
@@ -36,7 +32,7 @@ var api = {
     },
 
     save: function (req, res) {
-        console.log('/api/games PUT handled');
+        console.info('/api/games PUT handled');
         var newGameId       = req.body.gameId;
         var newTournamentId = req.body.tournament;
 

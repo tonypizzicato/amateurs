@@ -10,7 +10,7 @@ var api = {
      * /api/users/:id PUT call
      */
     save: function (req, res) {
-        console.log('/api/users/:id PUT handled');
+        console.info('/api/users/:id PUT handled');
 
         UserModel.update({_id: req.params.id}, {$set: req.body}, {upsert: true}, function (err, count) {
             if (err) {

@@ -38,7 +38,7 @@ var api = {
      * /api/fields/:id GET call
      */
     item: function (req, res) {
-        console.log('/api/fields/:id GET handled');
+        console.info('/api/fields/:id GET handled');
     },
 
     /**
@@ -47,7 +47,7 @@ var api = {
      * /api/fields GET call
      */
     list: function (req, res) {
-        console.log('/api/fields GET handled');
+        console.info('/api/fields GET handled');
 
         LeagueModel.find().exec(function (err, leagues) {
             if (err) {
@@ -102,7 +102,7 @@ var api = {
      * /api/fields POST call
      */
     create: function (req, res, next) {
-        console.log('/api/fields POST handled');
+        console.info('/api/fields POST handled');
 
         var field = req.body;
 
@@ -126,7 +126,7 @@ var api = {
      * /api/fields/:id PUT call
      */
     save: function (req, res, next) {
-        console.log('/api/fields/:id PUT handled');
+        console.info('/api/fields/:id PUT handled');
 
         var field = req.body;
 
@@ -137,7 +137,7 @@ var api = {
             if (format && format.length >= 2) {
                 format = format[1];
 
-                console.log('uploading image');
+                console.info('uploading image');
 
                 var base64Data   = field.image.replace(/^data:image\/(.+);base64,/, "");
                 var decodedImage = new Buffer(base64Data, 'base64');
@@ -161,7 +161,7 @@ var api = {
                             };
 
                             FieldModel.update({_id: req.params.id}, {$set: {image: image}}, function (err, count) {
-                                console.log('Field "' + field.title + '" image uploaded')
+                                console.info('Field "' + field.title + '" image uploaded')
                             });
                         }
                     });
@@ -202,7 +202,7 @@ var api = {
      * /api/fields/:id DELETE call
      */
     delete: function (req, res) {
-        console.log('/api/fields/:id DELETE handled');
+        console.info('/api/fields/:id DELETE handled');
 
         FieldModel.remove({_id: req.params.id}, function (err, count) {
             if (err) {
@@ -245,7 +245,7 @@ var processImage = function (img, params, cb) {
 
 var _toFlickr = function (files, cb) {
     Flickr.authenticate(flickrOptions, function (err, flickr) {
-        console.log('flickr authed');
+        console.info('flickr authed');
 
         var getSize = function (sizes, label) {
             var image = _.findWhere(sizes, {label: label});
@@ -284,7 +284,7 @@ var _toFlickr = function (files, cb) {
                     return cb(null, {path: photo.path, index: photo.index});
                 }
 
-                console.log('Uploaded ' + ++uploaded + ' photos of ' + photosCount, ids);
+                console.info('Uploaded ' + ++uploaded + ' photos of ' + photosCount, ids);
 
                 ids.forEach(function (id) {
                     flickr.photos.getSizes({photo_id: id}, function (err, res) {
