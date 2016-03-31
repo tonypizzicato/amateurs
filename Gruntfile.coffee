@@ -50,7 +50,7 @@ module.exports = (grunt) ->
 
             express:
                 files: [#Files to be watched
-                    "<%= yeoman.server %>/server.js"
+                    "<%= yeoman.server %>/server/server.js"
                     "<%= yeoman.server %>/config/*.js"
                     "<%= yeoman.server %>/app/*.js"
                     "<%= yeoman.server %>/controllers/*.js"
@@ -242,19 +242,33 @@ module.exports = (grunt) ->
                         ]
                     }
                     {
-                    # server app files
                         expand: true
-                        dot:    true
-                        cwd:    "<%= yeoman.public %>"
-                        dest:   "<%= yeoman.dist %>"
+                        flatten: true
+                        cwd:    "<%= yeoman.server %>"
+                        dest:   "<%= yeoman.dist %>/bootstrap-sass/assets/fonts/bootstrap/"
                         src:    [
-                            "vendor/bootstrap-sass/vendor/assets/fonts/bootstrap/*.*"
-                            "vendor/fontawesome/fonts/*.*"
+                            "node_modules/bootstrap-sass/assets/fonts/bootstrap/*.*"
+                        ]
+                    }
+                    {
+                        expand: true
+                        flatten: true
+                        cwd:    "<%= yeoman.server %>"
+                        dest:   "<%= yeoman.dist %>/font-awesome/fonts"
+                        src:    [
+                            "node_modules/font-awesome/fonts/*.*"
+                        ]
+                    }
+                    {
+                        expand: true
+                        flatten: true
+                        cwd:    "<%= yeoman.server %>"
+                        dest:   "<%= yeoman.dist %>/styles"
+                        src:    [
                             "node_modules/photoswipe/dist/default-skin/*.{png,svg,gif}"
                         ]
                     }
                     {
-                    # server app files
                         expand: true
                         flatten: true
                         dot:    true
