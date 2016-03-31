@@ -149,6 +149,9 @@ function leagueName(slug) {
         case 'kazan':
             name = 'Казань';
             break;
+        case 'rostov':
+            name = 'Ростов-на-Дону';
+            break;
         case 'y-ola':
             name = 'Йошкар-Ола';
             break;

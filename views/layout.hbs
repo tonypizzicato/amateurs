@@ -16,7 +16,11 @@
                     {{#eq globals.league.slug 'kazan'}}
                         Казань
                     {{else}}
-                        Йошкар-Ола
+                        {{#eq globals.league.slug 'rostov'}}
+                            Ростов
+                        {{else}}
+                            Йошкар-Ола
+                        {{/eq}}
                     {{/eq}}
                 {{/eq}}
             {{/eq}}

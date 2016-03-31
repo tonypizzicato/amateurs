@@ -74,7 +74,7 @@ var api = {
                     },
                     function (filepath, cb) {
                         cb(null, {
-                            filename: file.name,
+                            filename: file.originalname,
                             path:     filepath,
                             index:    file.index
                         });
@@ -117,10 +117,10 @@ var api = {
         });
 
         function prepareImage(file, cb) {
-            var img = gm(file.buffer, file.name);
-            img.size({bufferStream: true}, function (err, size) {
+            var img = gm(file.path);
+            img.size(function (err, size) {
                 if (err || !size || !size.width || !size.height) {
-                    console.warn('error getting size', file.name);
+                    console.error('Error getting size', file.originalname);
                     return cb(null, false);
                 }
 
@@ -140,14 +140,13 @@ var api = {
                 }
 
                 img.resize(w, h);
-                console.info('Resized image. ' + file.name, 'Trying to save image to ' + file.path);
 
                 img.write(file.path, function (err) {
                     if (err) {
                         return cb(null, false);
                     }
 
-                    console.info('Processed image. ' + file.name);
+                    console.info('Processed image. ' + file.originalname);
                     cb(null, file.path);
                 });
             });

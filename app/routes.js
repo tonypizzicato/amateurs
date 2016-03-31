@@ -83,7 +83,7 @@ module.exports.initialize = function (app) {
 
     r.route('/:type/:postId/images')
         .get(apiPhotos.list)
-        .post(upload.array(), apiPhotos.create);
+        .post(upload.any(), apiPhotos.create);
 
     r.route('/:type/:postId/images/:id')
         .get(apiPhotos.list)
@@ -161,7 +161,7 @@ module.exports.initialize = function (app) {
     app.get('/:league/tournaments/:name/fields/:fieldName', t(''), news.pre, tournaments.globals, fields.item);
     app.get('/:league/tournaments/:name', t('Чемпионат'), news.pre, tournaments.globals, tournaments.item);
 
-    app.get('/:league(moscow|spb|ekb|kazan|y-ola)', t('Турниры'), news.pre, leagues.item);
+    app.get('/:league(moscow|spb|ekb|kazan|y-ola|rostov)', t('Турниры'), news.pre, leagues.item);
 
     app.get('/:league/contacts', t('Контакты'), news.pre, news.globals, contacts.list);
     app.get('/:league/fields', t('Поля'), news.pre, news.globals, fields.list);

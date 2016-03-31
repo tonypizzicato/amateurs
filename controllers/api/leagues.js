@@ -43,11 +43,10 @@ var api = {
     list: function (req, res) {
         console.info('/api/leagues GET handled');
 
-        client.get(remoteConfig.url + '/leagues', function (data) {
-            var parsed = JSON.parse(data),
-                queries = [];
+        client.get(remoteConfig.url + '/leagues', function (leagues) {
+            var queries = [];
 
-            parsed.forEach(function (league) {
+            leagues.forEach(function (league) {
                 league.remoteId = league._id;
                 delete league.__v;
 

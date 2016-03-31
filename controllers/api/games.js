@@ -24,11 +24,7 @@ var api = {
             });
 
             if(ids.length) {
-                client.get(remoteConfig.url + '/tournaments/games?ids=' + ids.join('&ids='), function (data) {
-                    var parsed = JSON.parse(data);
-
-                    res.json(parsed);
-                });
+                client.get(remoteConfig.url + '/tournaments/games?ids=' + ids.join('&ids='), games => res.json(games));
             } else {
                 res.json([]);
             }

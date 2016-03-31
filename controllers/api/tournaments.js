@@ -39,11 +39,10 @@ var api = {
 
             function getTournaments(league) {
                 pending += 1;
-                client.get(remoteConfig.url + '/league/' + league._id + '/tournaments/active', function (data) {
-                    var parsed  = JSON.parse(data),
-                        queries = [];
+                client.get(remoteConfig.url + '/league/' + league._id + '/tournaments/active', function (tournaments) {
+                    var queries = [];
 
-                    parsed.forEach(function (item) {
+                    tournaments.forEach(function (item) {
                         item.remoteId = item._id;
                         item.leagueId = league._id;
 
