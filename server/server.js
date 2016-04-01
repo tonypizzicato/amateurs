@@ -8,6 +8,7 @@ var mongoose = require('mongoose');
 
 var passport = require('passport');
 
+var compression = require('compression');
 var bodyParser   = require('body-parser');
 var busboy       = require('connect-busboy');
 var cookieParser = require('cookie-parser');
@@ -28,211 +29,211 @@ var LeagueModel = require('./../models/league');
 require('./../utils/console').initConsole();
 
 // Configure server
-var port = process.env.NODE_PORT || 9000;
+var port = process.env.NOD_PORT || 9000;
 
+export function init() {
 // connect to Mongo when the app initializes
-mongoose.connect('mongodb://localhost/amateur');
+    mongoose.connect('mongodb://localhost/amateur');
 
-app.set('port', port);
-app.use(favicon(path.join(__dirname, '..', '/public/favicon.ico')));
-app.use(cookieParser());
+    app.set('port', port);
+    app.use(favicon(path.join(__dirname, '..', '/public/favicon.ico')));
+    app.use(cookieParser());
 
-app.use(busboy());
+    app.use(busboy());
 // parse application/json
-app.use(bodyParser.json({ limit: '10mb' }));
+    app.use(bodyParser.json({ limit: '10mb' }));
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }))
+    app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }))
 
-app.use(session({
-    secret:            'test secret',
-    resave:            false,
-    name:              'ssid',
-    saveUninitialized: true,
-    store:             new SessionMongoStore({ mongooseConnection: mongoose.connection })
-}));
+    app.use(session({
+        secret:            'test secret',
+        resave:            false,
+        name:              'ssid',
+        saveUninitialized: true,
+        store:             new SessionMongoStore({ mongooseConnection: mongoose.connection })
+    }));
+// compress all requests
+    app.use(compression());
 
 // Initialize Passport!  Also use passport.session() middleware, to support
 // persistent login sessions (recommended).
-app.use(passport.initialize());
-app.use(passport.session());
+    app.use(passport.initialize());
+    app.use(passport.session());
 
 // create a write stream (in append mode)
-var accessLogStream = fs.createWriteStream(path.join(__dirname, '..', '/access.log'), { flags: 'a' });
+    var accessLogStream = fs.createWriteStream(path.join(__dirname, '..', '/access.log'), { flags: 'a' });
 
 // setup the logger
-app.use(morgan('combined', { stream: accessLogStream }));
+    app.use(morgan('combined', { stream: accessLogStream }));
 
-var clientDir, viewsDir;
-/**
- * Development Settings
- */
-if (app.get('env') === 'development') {
-    clientDir = '/public';
-    viewsDir  = '/views';
+    var clientDir, viewsDir;
+    /**
+     * Development Settings
+     */
+    if (app.get('env') === 'development') {
+        clientDir = '/public';
+        viewsDir  = '/views';
 
-    app.use(express.static(path.join(__dirname, '..', '.tmp')));
-    app.use(express.static(path.join(__dirname, '..', 'public')));
-    app.use(express.static(path.join(__dirname, '..', 'node_modules')));
-}
-
-/**
- * Production Settings
- */
-if (app.get('env') === 'production') {
-    clientDir = '/dist';
-    viewsDir  = '/dist/views';
-
-    app.use(express.static(path.join(__dirname, '..', 'dist')));
-}
-
-var publicDir    = path.join(__dirname, '..', clientDir);
-var templatesDir = path.join(__dirname, '..', viewsDir);
-var partialsDir  = path.join(templatesDir, 'partials');
-
-app.set('view engine', 'hbs');
-
-app.set('views', templatesDir);
-app.set('public', publicDir);
-
-helpers.initialize(hbs);
-
-app.use(function (req, res, next) {
-    res.title = function (title) {
-        res.locals.title = res.locals.title ? title + ' — ' + res.locals.title : title;
-    }.bind(res);
-    res.desc  = function (desc) {
-        res.locals.desc = res.locals.desc ? desc + ' — ' + res.locals.desc : desc;
-    }.bind(res);
-
-    if (req.url.substr(-1) == '/' && req.url.length > 1) {
-        res.redirect(301, req.url.slice(0, -1));
-    } else {
-        next();
+        app.use(express.static(path.join(__dirname, '..', '.tmp')));
+        app.use(express.static(path.join(__dirname, '..', 'public')));
+        app.use(express.static(path.join(__dirname, '..', 'node_modules')));
     }
-});
+
+    /**
+     * Production Settings
+     */
+    if (app.get('env') === 'production') {
+        clientDir = '/dist';
+        viewsDir  = '/dist/views';
+
+        app.use(express.static(path.join(__dirname, '..', 'dist')));
+    }
+
+    var publicDir    = path.join(__dirname, '..', clientDir);
+    var templatesDir = path.join(__dirname, '..', viewsDir);
+    var partialsDir  = path.join(templatesDir, 'partials');
+
+    app.set('view engine', 'hbs');
+
+    app.set('views', templatesDir);
+    app.set('public', publicDir);
+
+    helpers.initialize(hbs);
+
+    app.use(function (req, res, next) {
+        res.title = function (title) {
+            res.locals.title = res.locals.title ? title + ' — ' + res.locals.title : title;
+        }.bind(res);
+        res.desc  = function (desc) {
+            res.locals.desc = res.locals.desc ? desc + ' — ' + res.locals.desc : desc;
+        }.bind(res);
+
+        if (req.url.substr(-1) == '/' && req.url.length > 1) {
+            res.redirect(301, req.url.slice(0, -1));
+        } else {
+            next();
+        }
+    });
 
 //CORS middleware
-app.use('/api', function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, Cache-Control');
+    app.use('/api', function (req, res, next) {
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+        res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, Cache-Control');
 
-    next();
-});
-
-
-app.get('/', function (req, res) {
-    res.redirect('/' + (req.session.league ? req.session.league.slug : 'moscow'));
-});
-
-app.get('*', function (req, res, next) {
-
-    if (req.url.indexOf('/api') === 0) {
-        return next();
-    }
-
-    res.locals.opts = require('./../config/settings.js');
-
-    res.locals.globals = res.locals.globals || {};
-
-    res.locals.globals.hasOrder = !!req.session.order;
-    res.locals.globals.hasOrder = false;
+        next();
+    });
 
 
-    var query = { show: true };
-    var path  = req.params[0];
+    app.get('/', function (req, res) {
+        res.redirect('/' + (req.session.league ? req.session.league.slug : 'moscow'));
+    });
 
-    /** Dirty hack */
-    path = path.replace('/lazy/', '/');
-    if (typeof path == 'string') {
-        var param = path.slice(1);
+    app.get('*', function (req, res, next) {
 
-        var match = param.match(/^(\w+)\/?(.*|$)/);
-
-        var leaguesNames = ['moscow', 'spb', 'ekb', 'kazan', 'rostov', 'y-ola'];
-        if (match && match.length >= 1 && _.contains(leaguesNames, match[1])) {
-            query.slug = match[1];
-        } else {
-            query.slug = req.session.league ? req.session.league.slug : 'moscow';
-        }
-    }
-
-    var populateOptions = { path: 'countries', match: { show: true }, options: { sort: { 'sort': 1 } } };
-    LeagueModel.findOne(query).populate(populateOptions).exec(function (err, doc) {
-        if (err) {
-            return next(err);
+        if (req.url.indexOf('/api') === 0) {
+            return next();
         }
 
-        var populateTournaments = { path: 'countries.tournaments', model: 'Tournament', match: { show: true }, options: { sort: { 'sort': 1 } } };
-        var populateCountries   = { path: 'countries', match: { show: true }, options: { sort: { 'sort': 1 } } };
+        res.locals.opts = require('./../config/settings.js');
 
-        if (!doc) {
-            LeagueModel.find({ show: true }).sort({ sort: 1 })
-                .populate(populateCountries)
-                .lean()
-                .exec(function (err, leagues) {
-                    res.locals.globals.leagues = leagues;
-                    if (leagues.length == 1) {
-                        res.locals.globals.league = leagues[0];
-                    }
+        res.locals.globals = res.locals.globals || {};
 
-                    LeagueModel.populate(leagues, populateTournaments, function (err, leagues) {
-                        res.locals.globals.leagues = leagues;
+        res.locals.globals.hasOrder = !!req.session.order;
+        res.locals.globals.hasOrder = false;
 
-                        res.status(404).render('404');
-                    });
-                });
 
-            return;
+        var query = { show: true };
+        var path  = req.params[0];
+
+        /** Dirty hack */
+        path = path.replace('/lazy/', '/');
+        if (typeof path == 'string') {
+            var param = path.slice(1);
+
+            var match = param.match(/^(\w+)\/?(.*|$)/);
+
+            var leaguesNames = ['moscow', 'spb', 'ekb', 'kazan', 'rostov', 'y-ola'];
+            if (match && match.length >= 1 && _.contains(leaguesNames, match[1])) {
+                query.slug = match[1];
+            } else {
+                query.slug = req.session.league ? req.session.league.slug : 'moscow';
+            }
         }
 
-        LeagueModel.find({ show: true }).sort({ sort: 1 }).populate(populateCountries).lean().exec(function (err, leagues) {
+        var populateOptions = { path: 'countries', match: { show: true }, options: { sort: { 'sort': 1 } } };
+        LeagueModel.findOne(query).populate(populateOptions).exec(function (err, doc) {
             if (err) {
                 return next(err);
             }
 
-            res.locals.globals.leagues = leagues;
-        });
+            var populateTournaments = { path: 'countries.tournaments', model: 'Tournament', match: { show: true }, options: { sort: { 'sort': 1 } } };
+            var populateCountries   = { path: 'countries', match: { show: true }, options: { sort: { 'sort': 1 } } };
 
-        LeagueModel.populate(doc, populateTournaments, function (err, doc) {
-            req.session.league        = doc;
-            res.locals.globals.league = doc;
+            if (!doc) {
+                LeagueModel.find({ show: true }).sort({ sort: 1 })
+                    .populate(populateCountries)
+                    .lean()
+                    .exec(function (err, leagues) {
+                        res.locals.globals.leagues = leagues;
+                        if (leagues.length == 1) {
+                            res.locals.globals.league = leagues[0];
+                        }
 
-            next();
+                        LeagueModel.populate(leagues, populateTournaments, function (err, leagues) {
+                            res.locals.globals.leagues = leagues;
+
+                            res.status(404).render('404');
+                        });
+                    });
+
+                return;
+            }
+
+            LeagueModel.find({ show: true }).sort({ sort: 1 }).populate(populateCountries).lean().exec(function (err, leagues) {
+                if (err) {
+                    return next(err);
+                }
+
+                res.locals.globals.leagues = leagues;
+            });
+
+            LeagueModel.populate(doc, populateTournaments, function (err, doc) {
+                req.session.league        = doc;
+                res.locals.globals.league = doc;
+
+                next();
+            });
         });
     });
-});
 
 //routes list:
-routes.initialize(app);
+    routes.initialize(app);
 
 
-app.use(function (req, res) {
-    res.status(404).render('404');
-});
-
-
-app.use(function (err, req, res, next) {
-    console.error(err);
-
-    res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error:   err
+    app.use(function (req, res) {
+        res.status(404).render('404');
     });
-});
 
 
-/** registering partials for hbs is async, so starting server only after that */
-hbs.registerPartials(partialsDir, start);
+    app.use(function (err, req, res, next) {
+        console.error(err);
 
-var server;
-
-function start() {
-    server = app.listen(port, function () {
-        const { address, port } = server.address();
-
-        console.info('Example app listening at http://%s:%s', address, port)
+        res.status(err.status || 500);
+        res.render('error', {
+            message: err.message,
+            error:   err
+        });
     });
+
+
+    /** registering partials for hbs is async, so starting server only after that */
+    hbs.registerPartials(partialsDir, start);
+
+    var server;
+
+    function start() {
+        server = app.listen(port);
+    }
 }
