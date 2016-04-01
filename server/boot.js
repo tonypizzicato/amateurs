@@ -15,7 +15,6 @@ const moment = require('moment');
 const exec = require('child_process').exec;
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
-process.env.SOME_PORT = process.env.SOME_PORT || 'http://localhost:9090';
 
 let forks = process.env.NODE_ENV === 'production' ? cpus : 1;
 

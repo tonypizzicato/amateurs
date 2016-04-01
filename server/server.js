@@ -29,7 +29,7 @@ var LeagueModel = require('./../models/league');
 require('./../utils/console').initConsole();
 
 // Configure server
-var port = process.env.NOD_PORT || 9000;
+var port = process.env.NODE_PORT || 9000;
 
 export function init() {
     // connect to Mongo when the app initializes
