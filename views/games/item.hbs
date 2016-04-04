@@ -273,7 +273,6 @@
                             <div class="panel panel_type_photo s_m_0">
                                 <div class="panel__body">
                                     <div class="row">
-
                                         {{~#if media.photos.length~}}
                                             <div class="js-masonry-js">
                                                 <div class="pswp-gallery">
@@ -288,17 +287,16 @@
                                                                 {{else}}
                                                                     <img src="{{main.src}}" alt=""/>
                                                                 {{/if}}
-                                                                <figure class="s_display_none">{{../../game.teams.[0].name}}
-                                                                    v {{../../game.teams.[1].name}}</figure>
+                                                                <figure class="s_display_none">{{../game.teams.[0].name}} v {{../game.teams.[1].name}}</figure>
                                                             </a>
                                                         {{~/if~}}
                                                     {{~/each~}}
                                                 </div>
                                             </div>
-                                            {{~else~}}
+                                        {{~else~}}
                                             <p class="text_align_c s_mt_10">Фотообзора пока нет</p>
-                                        {{~/if~}}                                        </div>
-
+                                        {{~/if~}}
+                                    </div>
                                 </div>
                             </div>
                         </div>

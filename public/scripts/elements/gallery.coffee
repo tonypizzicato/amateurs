@@ -125,17 +125,17 @@ initPhotoSwipeFromDOM = (gallerySelector) ->
                 y: rect.top + pageYScroll
                 w: rect.width
                 }
-            addCaptionHTMLFn: (item, captionEl, isFake) ->
+            addCaptionHTMLFn: (item, captionEl) ->
                 if !item.title
                     captionEl.children[0].innerText = ''
                     return false
                 captionEl.children[0].innerHTML = item.title + '<br/><small>Photo: ' + item.author + '</small>'
                 true
             shareButtons: [
-                {id: 'facebook', label: 'Поделиться на Facebook', url: 'https://www.facebook.com/sharer/sharer.php?u='},
-                {id: 'twitter', label: 'Оставить Tweet', url: 'https://twitter.com/intent/tweet?text=&url='},
-                {id: 'pinterest', label: 'Закрепить Pin', url: 'http://www.pinterest.com/pin/create/button/?url=&media=&description='},
-                {id: 'download', label: 'Сохранить изображение', url: '', download: true}
+#                {id: 'facebook', label: 'Поделиться на Facebook', url: 'https://www.facebook.com/sharer/sharer.php?u='},
+#                {id: 'twitter', label: 'Оставить Tweet', url: 'https://twitter.com/intent/tweet?text=&url='},
+#                {id: 'pinterest', label: 'Закрепить Pin', url: 'http://www.pinterest.com/pin/create/button/?url=&media=&description='},
+                {id: 'download', label: 'Сохранить изображение', url: items[index].src, download: true}
             ]
         radios = document.getElementsByName('gallery-style')
         i = 0

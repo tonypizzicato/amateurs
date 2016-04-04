@@ -351,7 +351,7 @@ module.exports = {
                 });
 
                 var photos = new Promise(function (resolve, reject) {
-                    var date = moment().subtract(7, 'days').format('YYYY-MM-DD');
+                    var date = moment().subtract(8, 'days');
                     PhotoModel.find({
                         tournament: tournament.remoteId,
                         type:       'games',
@@ -391,13 +391,8 @@ module.exports = {
                             return item.postId;
                         });
 
-                        var ids = _.keys(docs).map(function (item) {
-                            return item;
-                        });
+                        var ids = _.keys(docs);
 
-                        for (var game in docs) {
-                            docs[game] = docs[game];
-                        }
                         remote(remoteConfig.url + '/games?ids=' + ids.join('$ids='), function (err, response, games) {
                             var res = [];
 
@@ -472,7 +467,7 @@ module.exports = {
                         item.game.dateTime = item.game.timestamp ? moment.unix(item.game.timestamp) : null;
                     });
 
-                    var week = moment().subtract("days", 8);
+                    var week = moment().subtract(8, 'days');
 
                     docs = docs.filter(function (item) {
                         return moment(item.dc).isAfter(week);
