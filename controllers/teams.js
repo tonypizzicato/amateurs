@@ -104,9 +104,9 @@ module.exports = {
                 });
 
                 Promise.all([table, team, games]).then(function (result) {
-                    res.title('Клубы: ' + result[1].teamName);
-                    res.render('teams/item',
-                        {tournament: tournament, table: result[0], team: result[1], games: result[2], pageTeams: true});
+                    res.title(result[1].teamName);
+
+                    res.render('teams/item', {tournament: tournament, table: result[0], team: result[1], games: result[2], pageTeams: true});
                 });
             });
         });
