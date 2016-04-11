@@ -18,7 +18,7 @@
                                     {{#each game.events}}
                                         {{#eq side 0}}
                                             {{#eq newtype 'GOAL'}}
-                                                <li class="text_size_12 text_color_light text_align_r">{{ucfirst firstField.name}}{{#if minute}} {{minute}}
+                                                <li class="text_size_12 text_color_light text_align_r">{{noSecondName (ucfirst firstField.name)}}{{#if minute}} {{minute}}
                                                     '{{/if}}</li>
                                             {{/eq}}
                                         {{/eq}}
@@ -85,7 +85,7 @@
                                         {{#eq side 1}}
                                             {{#eq newtype 'GOAL'}}
                                                 <li class="text_size_12 text_color_light text_align_l">
-                                                    {{#if minute}}{{minute}}' {{/if}}{{ucfirst firstField.name}}
+                                                    {{#if minute}}{{minute}}' {{/if}}{{noSecondName (ucfirst firstField.name)}}
                                                 </li>
                                             {{/eq}}
                                         {{/eq}}
@@ -126,7 +126,7 @@
                                                                     {{#if number}}{{~number~}}{{else}}&mdash;{{/if}}
                                                         </div>
                                                         <div class="match-lineup__player column col-md-8">
-                                                            {{~name~}}
+                                                            {{~noSecondName name~}}
                                                         </div>
                                                         <div class="match-lineup__player column col-md-2 text_align_c">
                                                                     {{#if position}}{{~position~}}{{else}}&mdash;{{/if}}
@@ -147,7 +147,7 @@
                                                                     {{#if number}}{{~number~}}{{else}}&mdash;{{/if}}
                                                         </div>
                                                         <div class="match-lineup__player column col-md-8">
-                                                            {{~name~}}
+                                                            {{~noSecondName name~}}
                                                         </div>
                                                         <div class="match-lineup__player column col-md-2 text_align_c">
                                                                     {{#if position}}{{~position~}}{{else}}&mdash;{{/if}}
@@ -204,12 +204,12 @@
 
                                                     {{~#if firstField.number}}<span class="text_color_orange">{{firstField.number}}
                                                         .</span> {{/if~}}
-                                                    {{~ucfirst firstField.name~}}
+                                                    {{~noSecondName (ucfirst firstField.name)~}}
                                                     {{~#if secondField~}}
                                                         <br>
                                                         {{~#if secondField~}}
                                                             <span class="text_color_light">{{~#if secondField.number~}}{{~secondField.number~}}
-                                                                . {{/if}}{{ucfirst secondField.name}}</span>
+                                                                . {{/if}}{{noSecondName (ucfirst secondField.name)}}</span>
                                                         {{~/if~}}
                                                     {{~/if~}}
                                                 </div>

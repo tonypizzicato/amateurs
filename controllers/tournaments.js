@@ -351,7 +351,7 @@ module.exports = {
                 });
 
                 var photos = new Promise(function (resolve, reject) {
-                    var date = moment().subtract(8, 'days');
+                    var date = moment().subtract(7, 'days');
                     PhotoModel.find({
                         tournament: tournament.remoteId,
                         type:       'games',
@@ -393,7 +393,7 @@ module.exports = {
 
                         var ids = _.keys(docs);
 
-                        remote(remoteConfig.url + '/games?ids=' + ids.join('$ids='), function (err, response, games) {
+                        remote(remoteConfig.url + '/games?ids=' + ids.join('&ids='), function (err, response, games) {
                             var res = [];
 
                             games.forEach(function (item) {
@@ -467,7 +467,7 @@ module.exports = {
                         item.game.dateTime = item.game.timestamp ? moment.unix(item.game.timestamp) : null;
                     });
 
-                    var week = moment().subtract(8, 'days');
+                    var week = moment().subtract(7, 'days');
 
                     docs = docs.filter(function (item) {
                         return moment(item.dc).isAfter(week);

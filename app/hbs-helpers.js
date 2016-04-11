@@ -196,7 +196,7 @@ var helpers = {
         return Object.keys(object);
     },
 
-    length: function(arr) {
+    length: function (arr) {
         return arr.length;
     },
 
@@ -315,11 +315,21 @@ var helpers = {
     },
 
     noYear: function (name) {
+        if(!_.isString(name)) {
+            console.warn(`Can not apply "noYear". "${name}" is not a string.`);
+            return '';
+        }
         if (name.indexOf(' - ') > 0) {
             return name.slice(0, name.indexOf(' - '));
         }
 
+        name = name.split(' ').filter(part => isNaN(part)).join(' ');
+
         return name;
+    },
+
+    noSecondName: function (name) {
+        return _.isString(name) ? name.split(' ').slice(0, 2).join(' ') : '';
     },
 
     previewHeight: function (photos, index, width, def) {
