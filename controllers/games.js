@@ -24,6 +24,7 @@ module.exports = {
                     return res.status(404).render('404');
                 }
 
+                console.log(remoteConfig.url + '/games/' + req.params.id);
                 client.get(remoteConfig.url + '/games/' + req.params.id, function (game, response) {
                     if(response.statusCode >= 400) {
                         return res.status(404).render('404');
