@@ -154,7 +154,7 @@ export function init() {
 
             var match = param.match(/^(\w+)\/?(.*|$)/);
 
-            var leaguesNames = ['moscow', 'spb', 'ekb', 'kazan', 'rostov', 'y-ola'];
+            var leaguesNames = ['moscow', 'spb', 'ekb', 'kazan', 'rostov', 'y-ola', 'anapa'];
             if (match && match.length >= 1 && _.contains(leaguesNames, match[1])) {
                 query.slug = match[1];
             } else {
