@@ -34,12 +34,12 @@
                             <div class="link_type_full s_mb_10">
                                 <span class="text_color_orange">Подробнее</span>
                                     <span class="pull-right">
-                                        {{#if ../../globals.tournament._id}}
-                                            <a href="/{{../../globals.league.slug}}/tournaments/{{../../globals.tournament.slug}}/fields/{{slug}}">
+                                        {{#if ../globals.tournament._id}}
+                                            <a href="/{{../globals.league.slug}}/tournaments/{{../globals.tournament.slug}}/fields/{{slug}}">
                                                 <i class="fa fa-arrow-circle-o-right"></i>
                                             </a>
                                         {{else}}
-                                            <a href="/{{../../globals.league.slug}}/fields/{{slug}}"><i class="fa fa-arrow-circle-o-right"></i></a>
+                                            <a href="/{{../globals.league.slug}}/fields/{{slug}}"><i class="fa fa-arrow-circle-o-right"></i></a>
                                         {{/if}}
                                     </span>
                             </div>
@@ -154,7 +154,7 @@
                         <ul>
                             {{#each tournaments}}
                                 <li class="s_ml_20 s_mb_5">
-                                    <a href="/{{../../globals.league.slug}}/tournaments/{{slug}}">{{noYear name}}</a>
+                                    <a href="/{{../globals.league.slug}}/tournaments/{{slug}}">{{noYear name}}</a>
                                 </li>
                             {{/each}}
                         </ul>

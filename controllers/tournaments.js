@@ -770,6 +770,8 @@ module.exports = {
 };
 
 function remote(url, cb) {
+    console.info(`[API CALL] ${url}`);
+
     return request.get({
         uri:  url,
         auth: remoteConfig.authOptions,
