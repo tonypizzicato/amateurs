@@ -323,7 +323,7 @@ var helpers = {
             return name.slice(0, name.indexOf(' - '));
         }
 
-        name = name.split(' ').filter(part => isNaN(part)).join(' ');
+        name = name.split(' ').filter(part => isNaN(part) || part.length === 1).join(' ');
 
         return name;
     },

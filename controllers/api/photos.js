@@ -117,7 +117,7 @@ var api = {
         });
 
         function prepareImage(file, cb) {
-            var img = gm(file.path);
+            var img = gm(file.path).quality(100);
             img.size(function (err, size) {
                 if (err || !size || !size.width || !size.height) {
                     console.error('Error getting size', file.originalname);

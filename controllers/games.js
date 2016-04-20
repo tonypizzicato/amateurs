@@ -30,7 +30,7 @@ module.exports = {
                         return res.status(404).render('404');
                     }
 
-                    game.dateTime = game.date ? moment.unix(game.timestamp) : null;
+                    game.dateTime = !!game.timestamp ? moment.unix(game.timestamp) : null;
 
                     var gameLength = tournament.settings ? tournament.settings.gameLength : undefined;
                     if (game.state.toLowerCase() == 'closed') {

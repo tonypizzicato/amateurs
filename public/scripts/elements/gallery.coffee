@@ -135,27 +135,8 @@ initPhotoSwipeFromDOM = (gallerySelector) ->
 #                {id: 'facebook', label: 'Поделиться на Facebook', url: 'https://www.facebook.com/sharer/sharer.php?u='},
 #                {id: 'twitter', label: 'Оставить Tweet', url: 'https://twitter.com/intent/tweet?text=&url='},
 #                {id: 'pinterest', label: 'Закрепить Pin', url: 'http://www.pinterest.com/pin/create/button/?url=&media=&description='},
-                {id: 'download', label: 'Сохранить изображение', url: items[index].src, download: true}
+                {id: 'download', label: 'Сохранить изображение', url: '{{raw_image_url}}', download: true}
             ]
-        radios = document.getElementsByName('gallery-style')
-        i = 0
-        length = radios.length
-        while i < length
-            if radios[i].checked
-                if radios[i].id == 'radio-all-controls'
-                else if radios[i].id == 'radio-minimal-black'
-                    options.mainClass = 'pswp--minimal--dark'
-                    options.barsSize =
-                        top: 0
-                        bottom: 0
-                    options.captionEl = false
-                    options.fullscreenEl = false
-                    options.shareEl = false
-                    options.bgOpacity = 0.85
-                    options.tapToClose = true
-                    options.tapToToggleControls = false
-                break
-            i++
         if disableAnimation
             options.showAnimationDuration = 0
         # Pass data to PhotoSwipe and initialize it
