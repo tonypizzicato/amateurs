@@ -19,3 +19,53 @@
 .pswp__button--arrow--right:before {
     right: 20px;
 }
+
+.mobile {
+    .pswp__top-bar {
+        height: 132px;
+    }
+
+    .pswp__button {
+        background-size: 792px 264px;
+        width:           132px;
+        height:          132px;
+    }
+
+    .pswp__button--close {
+        background-position: 0 -132px;
+    }
+
+    .pswp__button--share {
+        background-position: -132px -132px
+    }
+
+    .pswp__counter {
+        font-size:   48px;
+        line-height: 132px;
+    }
+
+    .pswp__caption {
+        min-height: 132px;
+    }
+
+    .pswp__caption__center {
+        font-size:   48px;
+        line-height: 48px;
+        min-width:   100%;
+
+        small {
+            font-size: 32px;
+        }
+    }
+
+    .pswp__share-tooltip {
+        top:           132px;
+        border-radius: 10px;
+
+        a {
+            font-size:   36px;
+            line-height: 48px;
+        }
+    }
+}
+

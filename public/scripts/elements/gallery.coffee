@@ -1,7 +1,10 @@
 $ = require 'jquery'
 PhotoSwipe = require 'photoswipe'
 PhotoSwipeUI = require 'photoswipe/dist/photoswipe-ui-default'
+isMobile = require '../utils/isMobile'
 
+if isMobile.any
+    $('.pswp').addClass 'mobile'
 #  if $('.pswp-gallery').length > 0
 #    gallery = new PhotoSwipe $('.pswp-gallery')[0], PhotoSwipeUi
 #    gallery.init()
