@@ -1,0 +1,21 @@
+.pswp__button--arrow--left,
+.pswp__button--arrow--right {
+    margin-top: 50px;
+    width:      270px;
+    top:        0;
+    height:     100%;
+}
+
+.pswp__button--arrow--left:before,
+.pswp__button--arrow--right:before {
+    top:        50%;
+    margin-top: -50px;
+}
+
+.pswp__button--arrow--left:before {
+    left: 20px;
+}
+
+.pswp__button--arrow--right:before {
+    right: 20px;
+}

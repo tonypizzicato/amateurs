@@ -144,7 +144,7 @@ var api = {
 
                 var path = __dirname + '/../../public/uploads/';
 
-                var img    = gm(decodedImage);
+                var img    = gm(decodedImage).quality(100);
                 var params = {
                     w:    760,
                     h:    null,
