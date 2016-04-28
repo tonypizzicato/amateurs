@@ -329,7 +329,11 @@ var helpers = {
     },
 
     noSecondName: function (name) {
-        return _.isString(name) ? name.split(' ').slice(0, 2).join(' ') : '';
+        if(!_.isString(name)) {
+            return '';
+        }
+
+        return name.replace(/\s\s+/g, ' ').split(' ').slice(0, 2).join(' ');
     },
 
     previewHeight: function (photos, index, width, def) {

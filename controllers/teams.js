@@ -1,6 +1,7 @@
 "use strict";
 
-var moment          = require('moment'),
+var _               = require('lodash'),
+    moment          = require('moment'),
     request         = require('request'),
     TournamentModel = require('../models/tournament'),
     LeagueModel     = require('../models/league'),
@@ -9,8 +10,8 @@ var moment          = require('moment'),
 
 module.exports = {
     item: function (req, res, next) {
-        LeagueModel.findOne({slug: req.params.league}, function (err, league) {
-            TournamentModel.findOne({slug: req.params.name, leagueId: league._id, show: true}).lean().exec(function (err, tournament) {
+        LeagueModel.findOne({ slug: req.params.league }, function (err, league) {
+            TournamentModel.findOne({ slug: req.params.name, leagueId: league._id, show: true }).lean().exec(function (err, tournament) {
                 if (err) {
                     return next(err);
                 }
@@ -19,24 +20,31 @@ module.exports = {
                     return next();
                 }
 
-                /* Table */
-                var table = new Promise(function (resolve, reject) {
-                    remote(remoteConfig.url + '/tournaments/tables?ids=' + tournament._id, function (err, response, table) {
-                        table = table[0].teams.filter(function (item) {
-                            return item.teamId == req.params.id;
-                        });
 
-                        table = table.map(function (item) {
-                            item.form = item.form.slice(-9);
-                            return item;
-                        });
+                var leagueStage = _.find(tournament.stages, { format: 'LEAGUE' });
 
-                        resolve(table[0]);
+                if (leagueStage) {
+                    /* Table */
+                    var table = new Promise(function (resolve, reject) {
+                        remote(remoteConfig.url + '/tournaments/tables?ids=' + tournament._id, function (err, response, table) {
+                            table = table[0].teams.filter(function (item) {
+                                return item.teamId == req.params.id;
+                            });
+
+                            table = table.map(function (item) {
+                                item.form = item.form.slice(-9);
+                                return item;
+                            });
+
+                            resolve(table[0]);
+                        });
                     });
-                });
+                } else {
+                    var table = Promise.resolve();
+                }
 
 
-                /* Table */
+                /* Team */
                 var team = new Promise(function (resolve, reject) {
                     remote(remoteConfig.url + '/teams/' + req.params.id + '/roster', function (err, response, team) {
                         var numSort  = function (a, b) {
@@ -99,21 +107,21 @@ module.exports = {
                         recent   = recent.slice(-6);
                         comming  = comming.slice(0, 6);
 
-                        resolve({recent: recent, comming: comming, form: form});
+                        resolve({ recent: recent, comming: comming, form: form });
                     });
                 });
 
                 Promise.all([table, team, games]).then(function (result) {
                     res.title(result[1].teamName);
 
-                    res.render('teams/item', {tournament: tournament, table: result[0], team: result[1], games: result[2], pageTeams: true});
+                    res.render('teams/item', { tournament: tournament, table: result[0], team: result[1], games: result[2], pageTeams: true });
                 });
             });
         });
     },
 
     list: function (req, res, next) {
-        LeagueModel.findOne({slug: req.params.league}).lean().exec(function (err, league) {
+        LeagueModel.findOne({ slug: req.params.league }).lean().exec(function (err, league) {
             if (err) {
                 return next(err);
             }
@@ -121,33 +129,18 @@ module.exports = {
                 return res.sendStatus(404);
             }
 
-            /* Teams list */
-            var teams = new Promise(function (resolve, reject) {
-                remote(remoteConfig.url + '/league/' + league.remoteId + '/teams', function (err, response, teams) {
-                    resolve(teams);
+            TournamentModel.findOne({ slug: req.params.name, leagueId: league._id, show: true }).lean().exec(function (err, tournament) {
+                /* Teams list */
+                var teams = new Promise(function (resolve) {
+                    remote(remoteConfig.url + '/tournaments/teams?ids=' + tournament._id, function (err, response, teams) {
+                        resolve(_.sortBy(teams, 'name'));
+                    });
                 });
-            });
 
-            TournamentModel.findOne({slug: req.params.name, leagueId: league._id, show: true}).lean().exec(function (err, tournament) {
                 /* Table */
-                var table = new Promise(function (resolve, reject) {
-                    remote(remoteConfig.url + '/tournaments/tables?ids=' + tournament._id, function (err, response, tables) {
-                        resolve(tables);
-                    });
-                });
-
-                Promise.all([table, teams]).then(function (result) {
-                    var teams = [];
-                    result[0] = result[0].map(function (table) {
-                        return table.teams.forEach(function (item) {
-                            teams.push(result[1].filter(function (team) {
-                                return item.teamId == team._id;
-                            }).pop());
-                        });
-                    });
-
+                teams.then(function (teams) {
                     res.title('Клубы');
-                    res.render('teams/list', {league: tournament, teams: teams, pageTeams: true});
+                    res.render('teams/list', { league: tournament, teams: teams, pageTeams: true });
                 });
             });
         });
@@ -155,7 +148,8 @@ module.exports = {
 };
 
 function remote(url, cb) {
-    console.info(url);
+    console.info(`[API CALL] ${url}`);
+
     request.get({
         uri:  url,
         auth: remoteConfig.authOptions,
