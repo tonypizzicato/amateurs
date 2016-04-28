@@ -712,7 +712,7 @@ module.exports = {
                     });
 
                     var recent = games.filter(function (item) {
-                        return item.dateTime && item.dateTime.isBefore(moment()) && item.state == 'CLOSED';
+                        return item.dateTime && item.state == 'CLOSED';
                     });
 
                     var comming = games.filter(function (item) {
