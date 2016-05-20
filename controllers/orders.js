@@ -1,5 +1,6 @@
 "use strict";
 
+var s           = require('underscore.string');
 var nodemailer  = require('nodemailer');
 var settings    = require('../config/settings');
 var OrderModel  = require('../models/order');
@@ -16,7 +17,7 @@ module.exports = {
         OrderModel.create(req.body, function (err, order) {
                 if (err) {
                     console.info(err);
-                    res.status(500).json({error: err});
+                    res.status(500).json({ error: err });
                     return;
                 }
 
@@ -24,7 +25,13 @@ module.exports = {
 
                 res.json(order);
 
-                LeagueModel.findOne({_id: order.leagueId}).exec(function (err, league) {
+                LeagueModel.findOne({ _id: order.leagueId }).exec(function (err, league) {
+
+                    var toField = `orders${league.slug.charAt(0).toUpperCase() + league.slug.substr(1)}`;
+
+                    if (!settings.hasOwnProperty(toField)) {
+                        toField = settings.ordersEmail;
+                    }
 
                     var transporter = nodemailer.createTransport({
                         service: 'Gmail',
@@ -36,7 +43,7 @@ module.exports = {
 
                     var mailOptions = {
                         from:    'Amateur Football League <amateurs.io.info@gmail.com>',
-                        to:      settings.ordersEmail,
+                        to:      settings[toField],
                         bcc:     settings.ordersBcc,
                         subject: 'Новая заявка на участие в лиге',
                         html:    '<div>' +
