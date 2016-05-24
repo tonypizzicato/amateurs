@@ -161,12 +161,13 @@ module.exports.initialize = function (app) {
     app.get('/:league/tournaments/:name/fields/:fieldName', t(''), news.pre, tournaments.globals, fields.item);
     app.get('/:league/tournaments/:name', t('Чемпионат'), news.pre, tournaments.globals, tournaments.item);
 
-    app.get('/:league(moscow|spb|ekb|kazan|y-ola|rostov|anapa)', t('Турниры'), news.pre, leagues.item);
+    app.get('/:league(moscow|spb|ekb|kazan|y-ola|rostov|anapa|izhevsk|kiev)', t('Турниры'), news.pre, leagues.item);
 
     app.get('/:league/contacts', t('Контакты'), news.pre, news.globals, contacts.list);
     app.get('/:league/fields', t('Поля'), news.pre, news.globals, fields.list);
     app.get('/:league/fields/:fieldName', t(''), news.pre, news.globals, fields.item);
     app.get('/:league/stuff', t('Сотрудники лиги'), news.pre, news.globals, stuff.list);
+    app.get('/:league/bosses', t('Руководители лиги'), news.pre, news.globals, stuff.bosses);
 
     app.get('/:league/news', t('Новости'), news.pre, news.globals, news.list);
     app.get('/:league/news/:slug', t('Новости'), news.pre, news.globals, news.item);

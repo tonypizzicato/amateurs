@@ -1,0 +1,23 @@
+<div class="boss text_align_c">
+
+    {{#if flag}}
+        <div class="flag__wrapper flag__wrapper_{{flag}}">
+            <div class="contact__photo s_display_block" style="background-image: url('{{image}}')"></div>
+        </div>
+    {{else}}
+        <div class="contact__photo" style="background-image: url('{{image}}')"></div>
+    {{/if}}
+    <div class="contact__details s_display_block">
+        <div class="contact__name text_color_blue text_size_16"><a class="text_color_blue" href="{{vk}}" target="_blank">{{name}}</a></div>
+        <div class="contact__name text_color_orange text_size_14">{{{title}}}</div>
+
+        {{#if icons}}
+            <span class="contact__phone s_mr_20"><i class="fa fa-inbox text_color_orange s_mr_10"></i>{{email}}</span>
+            <span class="contact__phone s_mr_20"><i class="fa fa-phone text_color_orange s_mr_10"></i>{{phone}}</span>
+            <span class="contact__vk"><i class="fa fa-vk text_color_orange s_mr_10"></i><a href="{{vk}}" target="_blank">{{name}}</a></span>
+        {{else}}
+            <span class="contact__phone">{{email}}</span>
+            <span class="contact__phone">{{phone}}</span>
+        {{/if}}
+    </div>
+</div>

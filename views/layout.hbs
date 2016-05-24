@@ -21,7 +21,20 @@
                             {{~#eq globals.league.slug 'y-ola'~}}
                                 Йошкар-Ола
                             {{~else~}}
-                                Анапа
+                                {{~#eq globals.league.slug 'anapa'~}}
+                                    Анапа
+                                {{~else~}}
+                                    {{~#eq globals.league.slug 'izhevsk'~}}
+                                        Ижевск
+                                    {{~else~}}
+                                        {{~#eq globals.league.slug 'kiev'~}}
+                                            Киев
+                                        {{~else~}}
+                                            NoNname
+                                        {{~/eq~}}
+                                        Киев
+                                    {{~/eq~}}
+                                {{~/eq~}}
                             {{~/eq~}}
                         {{~/eq~}}
                     {{~/eq~}}

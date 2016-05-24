@@ -12,7 +12,7 @@ var api = {
     save: function (req, res) {
         console.info('/api/users/:id PUT handled');
 
-        UserModel.update({_id: req.params.id}, {$set: req.body}, {upsert: true}, function (err, count) {
+        UserModel.update({_id: req.params.id}, {$set: req.body}, {new: true, upsert: true, setDefaultsOnInsert: true}, function (err, count) {
             if (err) {
                 return res.status(500).json({error: err});
             }

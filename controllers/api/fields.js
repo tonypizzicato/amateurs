@@ -74,7 +74,7 @@ var api = {
 
                             delete field.__v;
 
-                            FieldModel.findOneAndUpdate({remoteId: field._id}, field, {upsert: true}).exec();
+                            FieldModel.findOneAndUpdate({remoteId: field._id}, field, {new: true, upsert: true, setDefaultsOnInsert: true}).exec();
                         });
                         cb();
                     });

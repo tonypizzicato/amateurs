@@ -57,7 +57,7 @@ h1, h2, h3,
 h1 {
     margin-bottom:  40px;
     font-size:      36px;
-    letter-spacing: 5px;
+    letter-spacing: 3px;
 }
 
 a:hover,
@@ -706,8 +706,8 @@ ul, ol {
 
 .contact__name {
     font-weight:   bold;
-    line-height:   1;
-    margin-bottom: 10px;
+    line-height:   1.4;
+    margin-bottom: 5px;
 }
 
 .contact__title {
@@ -1091,30 +1091,31 @@ a:hover .fixture__looser a {
  */
 
 .panel_type_federations .nav.nav-tabs {
-    width:    50%;
+    width:    85%;
     position: absolute;
     right:    0;
     top:      0;
+    display: flex;
+
+    li {
+        flex-grow: 1;
+    }
+
+    a {
+        line-height: 1.5;
+        white-space: nowrap;
+        text-align: right;
+    }
 }
 
-.panel_type_federations .nav.nav-tabs .tab__title.federations_count_1 {
-    width: 100%;
-}
-
-.panel_type_federations .nav.nav-tabs .tab__title.federations_count_2 {
-    width: 50%;
-}
-
-.panel_type_federations .nav.nav-tabs .tab__title.federations_count_3 {
-    width: 33.3%;
-}
-
-.panel_type_federations .nav.nav-tabs .tab__title.federations_count_4 {
-    width: 25%;
-}
-
-.panel_type_federations .nav.nav-tabs a {
-    line-height: 1.5;
+.panel_type_federations .nav.nav-tabs .tab__title.federations_count_9,
+.panel_type_federations .nav.nav-tabs .tab__title.federations_count_10,
+.panel_type_federations .nav.nav-tabs .tab__title.federations_count_11,
+.panel_type_federations .nav.nav-tabs .tab__title.federations_count_12 {
+    a {
+        line-height: 1.8;
+        font-size: 12px;
+    }
 }
 
 .panel_type_federations [class^="col-"] {
@@ -1777,6 +1778,14 @@ $size: 200px;
     margin-bottom: 40px;
 }
 
+.s_mb_50 {
+    margin-bottom: 50px;
+}
+
+.s_mb_60 {
+    margin-bottom: 60px;
+}
+
 .s_mt_0 {
     margin-top: 0;
 }
@@ -2190,4 +2199,43 @@ td .tl {
 
 .col-valign-m.col-md-4 {
     width: 33.15%;
+}
+
+.bosses {
+    .col-md-6 {
+        span {
+            display: block;
+        }
+    }
+
+    a:hover {
+        color: #F5B367 !important;
+    }
+
+    .flag__wrapper {
+        display:         block;
+        position:        relative;
+        margin:          10px auto;
+        width:           100px;
+        height:          100px;
+        padding:         2px;
+        background-size: contain;
+
+        &:before,
+        &:after {
+            content: none;
+        }
+
+        .contact__photo {
+            height:          100%;
+            width:           100%;
+            margin:          0;
+            background-size: cover;
+            box-shadow:      inset 0px 0px 20px 0px rgba(0, 0, 0, 0.9);
+        }
+    }
+
+    .contact__photo {
+        margin: 10px 0;
+    }
 }

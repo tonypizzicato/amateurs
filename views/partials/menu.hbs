@@ -16,12 +16,6 @@
                                     <a href="/{{slug}}">{{name}}</a>
                                 </li>
                             {{~/each~}}
-
-                            {{# if opts.showKiev }}
-                                <li class="dropdown-header">
-                                    <a href="http://amateurs.com.ua/" target="_blank">AFL Kiev</a>
-                                </li>
-                            {{/if}}
                         </ul>
                     </li>
                 </ul>
@@ -80,6 +74,12 @@
         <li class="navbar__item{{#if pageStuff}} navbar__item_active_yes{{/if}}">
             <a href="/{{globals.league.slug}}/stuff">Сотрудники</a>
         </li>
+
+        {{#eq globals.league.slug 'moscow'}}
+            <li class="navbar__item{{#if pageBosses}} navbar__item_active_yes{{/if}}">
+                <a href="/{{globals.league.slug}}/bosses">Руководство</a>
+            </li>
+        {{/eq}}
     </ul>
     <ul class="nav navbar-nav pull-right">
         {{# if opts.showPromoTournamentLink }}

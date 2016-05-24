@@ -12,5 +12,6 @@ module.exports = {
     // "ordersY-ola": 'umerov.ervin2013@yandex.ru',
     // ordersAnapa: 'umerov.ervin2013@yandex.ru',
     // ordersIzhevsk: 'umerov.ervin2013@yandex.ru',
+    // ordersKiev: 'firstenko95@mail.ru',
     api: 'http://sharvester.ru/api'
 };

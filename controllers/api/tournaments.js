@@ -72,7 +72,7 @@ var api = {
             }
 
             var result = function () {
-                TournamentModel.find({state: {$in: ['CREATED', 'IN_PROGRESS']}}).sort({sort: 1}).populate('country').exec(function (err, docs) {
+                TournamentModel.find({state: {$in: ['CREATED', 'IN_PROGRESS']}}).sort({show: -1, sort: 1}).populate('country').exec(function (err, docs) {
                     if (err) {
                         res.status(500).json({error: err});
                         return;
