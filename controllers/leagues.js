@@ -158,6 +158,12 @@ function leagueName(slug) {
         case 'anapa':
             name = 'Анапа';
             break;
+        case 'izhevsk':
+            name = 'Ижевск';
+            break;
+        case 'kiev':
+            name = 'Киев';
+            break;
     }
 
     return name;

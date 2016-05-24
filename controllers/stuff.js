@@ -28,5 +28,11 @@ module.exports = {
             });
 
         });
+    },
+
+    bosses: function(req, res) {
+        LeagueModel.findOne({slug: req.params.league}).exec(function (err, league) {
+            res.render('stuff/bosses', {pageBosses: true});
+        });
     }
 };

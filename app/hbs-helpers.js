@@ -336,6 +336,14 @@ var helpers = {
         return name.replace(/\s\s+/g, ' ').split(' ').slice(0, 2).join(' ');
     },
 
+    noAfl: function(name) {
+        if(!_.isString(name)) {
+            return '';
+        }
+
+        return name.replace('AFL ', '');
+    },
+
     previewHeight: function (photos, index, width, def) {
         var padding = (photos.length - 1) * 5 * 2;
 

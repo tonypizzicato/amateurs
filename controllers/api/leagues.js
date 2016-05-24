@@ -51,7 +51,7 @@ var api = {
                 delete league.__v;
 
                 var query = function (cb) {
-                    LeagueModel.findOneAndUpdate({remoteId: league._id}, league, {upsert: true}).exec(cb);
+                    LeagueModel.findOneAndUpdate({remoteId: league._id}, league, {new: true, upsert: true, setDefaultsOnInsert: true}).exec(cb);
                 };
                 queries.push(query);
             });
