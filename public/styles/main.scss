@@ -7,9 +7,11 @@ $fa-font-path: "/font-awesome/fonts";
 
 // Navbar links
 $navbar-default-link-color: #ecf0f1 !default;
+$text-color: #070F19 !default;
 $navbar-default-link-hover-color: #2DA6E4 !default;
 $navbar-default-link-hover-bg: transparent !default;
 $navbar-default-link-active-color: #F5B367 !default;
+$text-orange: #FF8800 !default;
 $navbar-default-link-active-bg: transparent !default;
 $color-red: #C63C3C !default;
 
@@ -37,21 +39,18 @@ html, html a {
 
 body {
     background:  #f6f6f6;
-    color:       $navbar-default-link-color;
-    font-family: "Exo 2", "Open Sans", sans-serif;
+    color:       $text-color;
+    font-family: "Open Sans", sans-serif;
 }
 
 html, body {
-    background: -webkit-linear-gradient(90deg, #101621 10%, #060e18 90%); /* Chrome 10+, Saf5.1+ */
-    background: -moz-linear-gradient(90deg, #101621 10%, #060e18 90%); /* FF3.6+ */
-    background: -ms-linear-gradient(90deg, #101621 10%, #060e18 90%); /* IE10 */
-    background: -o-linear-gradient(90deg, #101621 10%, #060e18 90%); /* Opera 11.10+ */
-    background: linear-gradient(90deg, #101621 10%, #060e18 90%); /* W3C */
+    //background: linear-gradient(90deg, #101621 10%, #060e18 90%); /* W3C */
 }
 
 h1, h2, h3,
 .h1, .h2, .h3 {
     font-weight: 300;
+    color:       #131A24;
 }
 
 h1 {
@@ -69,7 +68,7 @@ a,
 a:hover,
 a:active,
 a:focus {
-    color:      $navbar-default-link-color;
+    color:      $text-color;
     transition: color .2s, background-color .2s;
 }
 
@@ -86,7 +85,7 @@ a:hover {
 }
 
 .text_color_orange {
-    color: $navbar-default-link-active-color;
+    color: $text-orange;
 }
 
 .text_color_muted {
@@ -94,7 +93,7 @@ a:hover {
 }
 
 .text_color_light {
-    color: #888;
+    color: #999;
 }
 
 .text_color_blue {
@@ -115,11 +114,13 @@ ul, ol {
 \*------------------------------------*/
 
 .link_type_full {
-    position:      relative;
-    padding:       10px 15px;
-    background:    #131A23;
-    border-top:    1px solid #060D17;
-    border-bottom: 1px solid #060D17;
+    position:                   relative;
+    padding:                    10px 15px;
+    background:                 #FFFFFF;
+    border-top:                 1px solid #CCCCCC;
+    box-shadow:                 0 4px 10px rgba(0, 0, 0, 0.15);
+    border-bottom-left-radius:  3px;
+    border-bottom-right-radius: 3px;
 }
 
 .link_type_full a {
@@ -127,13 +128,12 @@ ul, ol {
 }
 
 .link_type_full .pull-right a {
-    position:    absolute;
-    right:       0;
-    top:         0;
-    padding:     0 20px;
-    border-left: 1px solid #060D17;
-    font-size:   26px;
-    color:       #060D17;
+    position:  absolute;
+    right:     0;
+    top:       0;
+    padding:   0 20px;
+    font-size: 26px;
+    color:     #F7C184;
 }
 
 .link_type_full .pull-right a:hover {
@@ -142,7 +142,7 @@ ul, ol {
 }
 
 .reading {
-    color:       #ccc;
+    color:       #1D242D;
     line-height: 1.7;
 }
 
@@ -153,14 +153,31 @@ ul, ol {
 .navbar {
     background-color:   #131A23;
     border:             none;
-    border-radius:      0;
+    border-radius:      3px;
     margin-top:         20px;
     -webkit-transition: all 0.3s ease;
     transition:         all 0.3s ease;
 }
 
-.navbar-default {
-    z-index: 500;
+.navbar {
+    z-index: 499;
+
+    &.navbar-default {
+        z-index: 500;
+    }
+
+    .navbar-nav {
+        a {
+            color: #fff;
+        }
+
+        &.pull-right {
+            a {
+                border-top-right-radius:    3px;
+                border-bottom-right-radius: 3px;
+            }
+        }
+    }
 }
 
 .navbar.navbar-fixed-top {
@@ -208,7 +225,7 @@ ul, ol {
 }
 
 .navbar-link_type_promo:hover {
-    background-color: #F5B367 !important;
+    background-color: $text-orange !important;
     color:            #222 !important;
 }
 
@@ -219,7 +236,7 @@ ul, ol {
 }
 
 .navbar-link_type_promo__orange {
-    background-color: #F5B367;
+    background-color: $text-orange;
     color:            #222;
 }
 
@@ -296,9 +313,9 @@ ul, ol {
     overflow:      hidden;
     padding:       5px 10px;
     margin-top:    20px;
-    border-radius: 0;
+    border-radius: 3px;
     opacity:       0;
-    background:    rgba(43, 48, 59, .95);
+    background:    rgba(43, 48, 59, .98);
     transition:    all .16s ease-in;
 }
 
@@ -308,7 +325,7 @@ ul, ol {
 }
 
 .nav .dropdown .dropdown-menu li {
-    border-bottom: $navbar-default-link-color;
+    border-bottom: $text-color;
 }
 
 .nav .dropdown .dropdown-menu a,
@@ -381,8 +398,6 @@ ul, ol {
 }
 
 .nav .dropdown_type_tournaments.open .dropdown-menu_type_tournaments {
-    min-height: 310px;
-    width:      100%;
 }
 
 .nav .dropdown-menu_type_tournaments:before {
@@ -488,6 +503,16 @@ ul, ol {
  * Tabs
  */
 
+.tabbable {
+    box-shadow:    0 4px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 3px;
+
+    .panel,
+    .link_type_full {
+        box-shadow: none;
+    }
+}
+
 .tabbable .nav-tabs {
     position:      relative;
     z-index:       1;
@@ -547,11 +572,18 @@ ul, ol {
 .nav-tabs .tab__title a:hover,
 .nav-tabs .tab__title.tab__title_active_yes a:hover,
 .nav-tabs .tab__title.active a:hover {
-    border:        none;
-    border-radius: 0;
-    margin-right:  0;
-    background:    transparent;
-    color:         $navbar-default-link-color;
+    border:       none;
+    margin-right: 0;
+    color:        $text-color;
+    background:   #fff;
+
+    &:first-child {
+        border-top-left-radius: 3px;
+    }
+
+    &:last-child {
+        border-top-right-radius: 3px;
+    }
 }
 
 .nav-tabs .tab__title.tab__title_active_yes a,
@@ -559,8 +591,7 @@ ul, ol {
     &,
     &:hover,
     &:focus {
-        color:         $navbar-default-link-color;
-        background:    #131A23;
+        color:         $text-color;
         border:        none;
         border-bottom: 2px solid $navbar-default-link-hover-color;
     }
@@ -576,7 +607,7 @@ ul, ol {
 }
 
 .tab-content .table {
-    color: $navbar-default-link-color;
+    color: $text-color;
 }
 
 .tab-content .table th,
@@ -636,7 +667,7 @@ ul, ol {
 }
 
 .table__form.table__form_d {
-    background-color: #F5B367;
+    background-color: $text-orange;
 }
 
 .table .col-md-05 {
@@ -666,7 +697,6 @@ ul, ol {
     position:       relative;
     vertical-align: middle;
     padding:        20px 0;
-    border-bottom:  1px solid #060D17;
 }
 
 .contact div[class*='col-md'] {
@@ -734,9 +764,17 @@ ul, ol {
  */
 
 .panel {
-    border:        none;
-    border-radius: 0;
-    background:    #131A23;
+    border:                     none;
+    border-radius:              3px;
+    border-bottom-left-radius:  0;
+    border-bottom-right-radius: 0;
+    background:                 #fff;
+    box-shadow:                 0 4px 10px rgba(0, 0, 0, 0.15);
+
+    &:last-child {
+        border-bottom-left-radius:  3px;
+        border-bottom-right-radius: 3px;
+    }
 }
 
 .panel_type_transparent {
@@ -752,8 +790,9 @@ ul, ol {
 }
 
 .panel__header {
-    padding:       12px 10px;
-    border-bottom: 1px solid #060D17;
+    padding:       0 10px;
+    line-height:   39px;
+    border-bottom: 2px solid #2DA6E4;
 }
 
 .panel__header [class*="flaticon-"] {
@@ -779,13 +818,13 @@ ul, ol {
 
 .fixture__winner,
 .fixture__winner a {
-    color:      $navbar-default-link-active-color;
+    color:      $text-orange;
     transition: color .2s, background-color .2s;
 }
 
 .fixture__looser,
 .fixture__looser a {
-    color: #B6B6B6;
+    color: #555;
 }
 
 a:hover .fixture__winner,
@@ -895,7 +934,7 @@ a:hover .fixture__looser a {
 
 .form_type_signin .btn {
     background: #30a8e6;
-    color:      $navbar-default-link-color;
+    color:      $text-color;
 }
 
 .form_type_signin .btn:hover {
@@ -1095,7 +1134,7 @@ a:hover .fixture__looser a {
     position: absolute;
     right:    0;
     top:      0;
-    display: flex;
+    display:  flex;
 
     li {
         flex-grow: 1;
@@ -1104,7 +1143,7 @@ a:hover .fixture__looser a {
     a {
         line-height: 1.5;
         white-space: nowrap;
-        text-align: right;
+        text-align:  right;
     }
 }
 
@@ -1114,7 +1153,7 @@ a:hover .fixture__looser a {
 .panel_type_federations .nav.nav-tabs .tab__title.federations_count_12 {
     a {
         line-height: 1.8;
-        font-size: 12px;
+        font-size:   12px;
     }
 }
 
@@ -1198,11 +1237,11 @@ ul.social-buttons li:last-child {
 
 .socials__button:hover {
     background: $navbar-default-link-active-color;
-    color:      $navbar-default-link-color !important;
+    color:      $text-color !important;
 }
 
 .socials__button:active {
-    color: $navbar-default-link-color;
+    color: $text-color;
 }
 
 /**
@@ -1231,7 +1270,7 @@ ul.social-buttons li:last-child {
 .subscription__form .form-control {
     padding:     20px;
     background:  transparent;
-    border:      1px solid $navbar-default-link-color;
+    border:      1px solid $text-color;
     line-height: 18px;
 }
 
@@ -1245,7 +1284,7 @@ ul.social-buttons li:last-child {
 
 .subscription__form .btn:hover {
     background: $navbar-default-link-active-color;
-    color:      $navbar-default-link-color;
+    color:      $text-color;
 }
 
 .subscription__form .form-group .fa {
@@ -1360,7 +1399,7 @@ $size: 200px;
 .match__tour {
     display:        inline-block;
     padding:        0 24px 12px;
-    border-bottom:  1px dashed #F5B367;
+    border-bottom:  1px dashed $text-orange;
     color:          #bababa;
     font-size:      24px;
     font-weight:    bold;
@@ -1457,7 +1496,7 @@ $size: 200px;
     min-width:     4px;
     height:        32px;
     width:         100px;
-    background:    #F5B367;
+    background:    $text-orange;
     border-radius: 5px;
     position:      absolute;
     top:           6px;
@@ -2060,7 +2099,7 @@ $size: 200px;
 .loader__ball {
     width:            30px;
     height:           30px;
-    background-color: #f5b367;
+    background-color: $text-orange;
     border-radius:    50%;
     display:          inline-block;
     animation:        loader_motion 2s infinite;
@@ -2209,7 +2248,7 @@ td .tl {
     }
 
     a:hover {
-        color: #F5B367 !important;
+        color: $text-orange !important;
     }
 
     .flag__wrapper {

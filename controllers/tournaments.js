@@ -14,7 +14,7 @@ var _                = require('lodash'),
 
 module.exports = {
     restRecent: function (req, res, next) {
-        LeagueModel.findOne({slug: req.params.league}, function (err, doc) {
+        LeagueModel.findOne({slug: req.league}, function (err, doc) {
             TournamentModel.findOne({slug: req.params.name, leagueId: doc._id}, function (err, tournament) {
 
                 if (!tournament.stages || !tournament.stages.length) {
@@ -65,7 +65,7 @@ module.exports = {
     },
 
     restComming: function (req, res, next) {
-        LeagueModel.findOne({slug: req.params.league}, function (err, doc) {
+        LeagueModel.findOne({slug: req.league}, function (err, doc) {
             TournamentModel.findOne({slug: req.params.name, leagueId: doc._id}, function (err, tournament) {
 
                 if (!tournament.stages || !tournament.stages.length) {
@@ -138,7 +138,7 @@ module.exports = {
     },
 
     restStats: function (req, res, next) {
-        LeagueModel.findOne({slug: req.params.league}, function (err, doc) {
+        LeagueModel.findOne({slug: req.league}, function (err, doc) {
             TournamentModel.findOne({slug: req.params.name, leagueId: doc._id}, function (err, tournament) {
 
                 if (!tournament.stages || !tournament.stages.length) {
@@ -182,7 +182,7 @@ module.exports = {
     },
 
     item: function (req, res, next) {
-        LeagueModel.findOne({slug: req.params.league}, function (err, league) {
+        LeagueModel.findOne({slug: req.league}, function (err, league) {
             TournamentModel.findOne({slug: req.params.name, leagueId: league._id}, function (err, tournament) {
                 if (err) {
                     return next(err);
@@ -492,7 +492,7 @@ module.exports = {
     },
 
     table: function (req, res) {
-        LeagueModel.findOne({slug: req.params.league}, function (err, league) {
+        LeagueModel.findOne({slug: req.league}, function (err, league) {
             TournamentModel.findOne({slug: req.params.name, leagueId: league._id}, function (err, tournament) {
                 if (err) {
                     return next(err);
@@ -509,7 +509,7 @@ module.exports = {
     },
 
     stats: function (req, res) {
-        LeagueModel.findOne({slug: req.params.league}, function (err, league) {
+        LeagueModel.findOne({slug: req.league}, function (err, league) {
             TournamentModel.findOne({slug: req.params.name, leagueId: league._id}, function (err, tournament) {
                 if (err) {
                     return next(err);
@@ -536,7 +536,7 @@ module.exports = {
     },
 
     fixture: function (req, res) {
-        LeagueModel.findOne({slug: req.params.league}, function (err, league) {
+        LeagueModel.findOne({slug: req.league}, function (err, league) {
             TournamentModel.findOne({slug: req.params.name, leagueId: league._id}, function (err, tournament) {
                 if (err) {
                     return next(err);
@@ -588,9 +588,9 @@ module.exports = {
         var glbsStartTime = new Date().getTime();
 
         /** Get league if defined in request */
-        if (req.params.league) {
+        if (req.league) {
             series = series.concat(function (cb) {
-                LeagueModel.findOne({slug: req.params.league}).lean().exec(cb);
+                LeagueModel.findOne({slug: req.league}).lean().exec(cb);
             });
         }
 

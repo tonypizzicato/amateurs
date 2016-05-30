@@ -3,7 +3,6 @@
 }
 
 .accordion__item {
-    overflow:      hidden;
 }
 
 .accordion__item:first-child {
@@ -17,6 +16,8 @@
     position:    relative;
     line-height: 75px;
     outline:     none;
+    padding:     0 7px 20px;
+    overflow:    hidden;
 }
 
 .accordion__item_opened .accordion__header {
@@ -54,11 +55,13 @@
 }
 
 .accordion__content {
-  display: none;
+    display:       none;
+    background:    #fff;
+    border-radius: 3px;
 }
 
 .accordion__item_opened .accordion__content {
-  display: block;
+    display: block;
 }
 
 @media screen and (max-width: 320px) {

@@ -13,9 +13,9 @@
                         {{~#eq (gameResTeam teams.[0] this) 'w'}} fixture__winner{{/eq~}}
                         {{~#eq (gameResTeam teams.[0] this) 'l'}} fixture__looser{{/eq~}}
                                         ">
-                        <a href="/{{../../league.slug}}/tournaments/{{../../tournament.slug}}/teams/{{teams.[0]._id}}">{{~teams.[0].name~}}</a>
+                        <a href="/tournaments/{{../../tournament.slug}}/teams/{{teams.[0]._id}}">{{~teams.[0].name~}}</a>
                     <td class="col-md-1 text_align_c">
-                        <a href="/{{../../league.slug}}/tournaments/{{../../tournament.slug}}/matches/{{_id}}">
+                        <a href="/tournaments/{{../../tournament.slug}}/matches/{{_id}}">
                             {{#if score}}{{~score.ft.[0]}}:{{score.ft.[1]~}}{{else}}-:-{{/if}}
                         </a>
                     </td>
@@ -23,13 +23,13 @@
                         {{~#eq (gameResTeam teams.[0] this) 'l'}} fixture__winner{{/eq~}}
                         {{~#eq (gameResTeam teams.[0] this) 'w'}} fixture__looser{{/eq~}}
                                         ">
-                        <a href="/{{../../league.slug}}/tournaments/{{../../tournament.slug}}/teams/{{teams.[1]._id}}">{{~teams.[1].name~}}</a>
+                        <a href="/tournaments/{{../../tournament.slug}}/teams/{{teams.[1]._id}}">{{~teams.[1].name~}}</a>
                     </td>
                     </td>
 
                     <td class="col-md-3 text_align_r text_size_12 text_color_light">
                         {{#if placeName}}
-                            <a class="text_color_light" href="/{{../../league.slug}}/tournaments/{{../../tournament.slug}}/fields/{{slugify placeName}}">
+                            <a class="text_color_light" href="/tournaments/{{../../tournament.slug}}/fields/{{slugify placeName}}">
                                 {{placeName}}
                             </a>
                         {{/if}}

@@ -15,7 +15,7 @@ var client = new RestClient(remoteConfig.authOptions);
 
 module.exports = {
     item: function (req, res, next) {
-        LeagueModel.findOne({slug: req.params.league}, function (err, league) {
+        LeagueModel.findOne({slug: req.league}, function (err, league) {
             TournamentModel.findOne({slug: req.params.name, leagueId: league._id, show: true}).lean().exec(function (err, tournament) {
                 if (err) {
                     return next(err);

@@ -148,33 +148,30 @@ module.exports.initialize = function (app) {
     app.post('/orders', orders.create);
 
 
-    /** Delete after 1 month */
-    app.get('/:league/tournaments/promo/vdv-day', t(''), promo.vdv);
+    app.get('/tournaments/:name/fixture', t(''), news.pre, tournaments.globals, tournaments.fixture);
+    app.get('/tournaments/:name/table', t(''), news.pre, tournaments.globals, tournaments.table);
+    app.get('/tournaments/:name/matches/:id', t(''), news.pre, tournaments.globals, games.item);
+    app.get('/tournaments/:name/stats', t(''), news.pre, tournaments.globals, tournaments.stats);
+    app.get('/tournaments/:name/teams/', t(''), news.pre, tournaments.globals, teams.list);
+    app.get('/tournaments/:name/teams/:id', t(''), news.pre, tournaments.globals, teams.item);
+    app.get('/tournaments/:name/fields/', t('Поля'), news.pre, tournaments.globals, fields.list);
+    app.get('/tournaments/:name/fields/:fieldName', t(''), news.pre, tournaments.globals, fields.item);
+    app.get('/tournaments/:name', t('Чемпионат'), news.pre, tournaments.globals, tournaments.item);
 
-    app.get('/:league/tournaments/:name/fixture', t(''), news.pre, tournaments.globals, tournaments.fixture);
-    app.get('/:league/tournaments/:name/table', t(''), news.pre, tournaments.globals, tournaments.table);
-    app.get('/:league/tournaments/:name/matches/:id', t(''), news.pre, tournaments.globals, games.item);
-    app.get('/:league/tournaments/:name/stats', t(''), news.pre, tournaments.globals, tournaments.stats);
-    app.get('/:league/tournaments/:name/teams/', t(''), news.pre, tournaments.globals, teams.list);
-    app.get('/:league/tournaments/:name/teams/:id', t(''), news.pre, tournaments.globals, teams.item);
-    app.get('/:league/tournaments/:name/fields/', t('Поля'), news.pre, tournaments.globals, fields.list);
-    app.get('/:league/tournaments/:name/fields/:fieldName', t(''), news.pre, tournaments.globals, fields.item);
-    app.get('/:league/tournaments/:name', t('Чемпионат'), news.pre, tournaments.globals, tournaments.item);
+    app.get('/', t('Турниры'), news.pre, leagues.item);
 
-    app.get('/:league(moscow|spb|ekb|kazan|y-ola|rostov|anapa|izhevsk|kiev)', t('Турниры'), news.pre, leagues.item);
+    app.get('/contacts', t('Контакты'), news.pre, news.globals, contacts.list);
+    app.get('/fields', t('Поля'), news.pre, news.globals, fields.list);
+    app.get('/fields/:fieldName', t(''), news.pre, news.globals, fields.item);
+    app.get('/stuff', t('Сотрудники лиги'), news.pre, news.globals, stuff.list);
+    app.get('/bosses', t('Руководители лиги'), news.pre, news.globals, stuff.bosses);
 
-    app.get('/:league/contacts', t('Контакты'), news.pre, news.globals, contacts.list);
-    app.get('/:league/fields', t('Поля'), news.pre, news.globals, fields.list);
-    app.get('/:league/fields/:fieldName', t(''), news.pre, news.globals, fields.item);
-    app.get('/:league/stuff', t('Сотрудники лиги'), news.pre, news.globals, stuff.list);
-    app.get('/:league/bosses', t('Руководители лиги'), news.pre, news.globals, stuff.bosses);
+    app.get('/news', t('Новости'), news.pre, news.globals, news.list);
+    app.get('/news/:slug', t('Новости'), news.pre, news.globals, news.item);
+    app.get('/tournaments/:name/news', t('Новости'), news.pre, tournaments.globals, news.list);
+    app.get('/tournaments/:name/news/:slug', t('Новости'), news.pre, tournaments.globals, news.item);
 
-    app.get('/:league/news', t('Новости'), news.pre, news.globals, news.list);
-    app.get('/:league/news/:slug', t('Новости'), news.pre, news.globals, news.item);
-    app.get('/:league/tournaments/:name/news', t('Новости'), news.pre, tournaments.globals, news.list);
-    app.get('/:league/tournaments/:name/news/:slug', t('Новости'), news.pre, tournaments.globals, news.item);
-
-    app.get('/lazy/:league/recent/:name', tournaments.restRecent);
-    app.get('/lazy/:league/comming/:name', tournaments.restComming);
-    app.get('/lazy/:league/stats/:name', tournaments.restStats);
+    app.get('/lazy/recent/:name', tournaments.restRecent);
+    app.get('/lazy/comming/:name', tournaments.restComming);
+    app.get('/lazy/stats/:name', tournaments.restStats);
 };

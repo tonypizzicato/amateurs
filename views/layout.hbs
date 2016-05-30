@@ -3,44 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>
-        {{#if title}}{{title}} — {{/if}} Amateur Football League. Любительская Футбольная Лига Аматеур {{#eq globals.league.slug 'moscow'~}}
-            Москва
-        {{~else~}}
-            {{~#eq globals.league.slug 'spb'~}}
-                Санкт-Петербург
-            {{~else~}}
-                {{~#eq globals.league.slug 'ekb'~}}
-                    Екатеринбург
-                {{~else~}}
-                    {{~#eq globals.league.slug 'kazan'~}}
-                        Казань
-                    {{~else~}}
-                        {{~#eq globals.league.slug 'rostov'~}}
-                            Ростов
-                        {{~else~}}
-                            {{~#eq globals.league.slug 'y-ola'~}}
-                                Йошкар-Ола
-                            {{~else~}}
-                                {{~#eq globals.league.slug 'anapa'~}}
-                                    Анапа
-                                {{~else~}}
-                                    {{~#eq globals.league.slug 'izhevsk'~}}
-                                        Ижевск
-                                    {{~else~}}
-                                        {{~#eq globals.league.slug 'kiev'~}}
-                                            Киев
-                                        {{~else~}}
-                                            NoNname
-                                        {{~/eq~}}
-                                        Киев
-                                    {{~/eq~}}
-                                {{~/eq~}}
-                            {{~/eq~}}
-                        {{~/eq~}}
-                    {{~/eq~}}
-                {{~/eq~}}
-            {{~/eq~}}
-        {{~/eq~}}.
+        {{#if title}}{{title}} — {{/if}} Amateur Football League. Любительская Футбольная Лига Аматеур Киев
     </title>
 
     <meta name="description" content="{{desc}}">
@@ -82,10 +45,10 @@
                                     <li class="{{#eq 0 @index}}selected{{/eq}}">
                                         <span class="news__time">{{dateTimeShort dc true}}</span>
                                         {{#if ../globals.tournament._id}}
-                                            <a class="news__title" href="/{{../globals.league.slug}}/tournaments/{{../globals.tournament.slug}}/news/{{slug}}">{{title}}</a>
+                                            <a class="news__title" href="/tournaments/{{../globals.tournament.slug}}/news/{{slug}}">{{title}}</a>
                                         {{else}}
                                             {{#if ../globals.league._id}}
-                                                <a class="news__title" href="/{{../globals.league.slug}}/news/{{slug}}">{{title}}</a>
+                                                <a class="news__title" href="/news/{{slug}}">{{title}}</a>
                                             {{else}}
                                                 <a class="news__title" href="/news/{{slug}}">{{title}}</a>
                                             {{/if}}
@@ -104,10 +67,10 @@
 
                                         <div class="news__resume">
                                             {{#if ../globals.tournament._id}}
-                                                <a class="news__title" href="/{{../globals.league.slug}}/tournaments/{{../globals.tournament.slug}}/news/{{slug}}">{{title}}</a>
+                                                <a class="news__title" href="/tournaments/{{../globals.tournament.slug}}/news/{{slug}}">{{title}}</a>
                                             {{else}}
                                                 {{#if ../globals.league._id}}
-                                                    <a class="news__title" href="/{{../globals.league.slug}}/news/{{slug}}">{{title}}</a>
+                                                    <a class="news__title" href="/news/{{slug}}">{{title}}</a>
                                                 {{else}}
                                                     <a class="news__title" href="/news/{{slug}}">{{title}}</a>
                                                 {{/if}}
@@ -149,7 +112,7 @@
     <footer>
         <div class="panel">
             <div class="panel__body">
-                <p>Разработано <span class="text_color_muted">tony.pizzicato</span> специально для <em>AFL Россия</em></p>
+                <p>Разработано <span class="text_color_muted">tony.pizzicato</span> специально для <em>AFL Украина</em></p>
             </div>
         </div>
     </footer>
@@ -170,7 +133,7 @@
             webkitRequestAnimationFrame || msRequestAnimationFrame;
     if (raf) {
         raf(cb.bind(null,
-                'https://fonts.googleapis.com/css?family=Exo+2:400,100,300,600,700,500|Open+Sans:300,400,500,700&subset=latin,cyrillic'));
+                'https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,700&subset=latin,cyrillic'));
         raf(cb.bind(null, 'http://sharvester.ru/api/css/tl-sprite20.css'));
         raf(cb.bind(null, 'http://sharvester.ru/api/css/tl-sprite35.css'));
     }

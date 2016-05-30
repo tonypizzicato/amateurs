@@ -7,7 +7,7 @@
                     <div class="col-md-3 s_mb_40 text_align_c">
                         <img class="s_mb_10" src="http://sharvester.ru/api/img/teams/{{_id}}.png" height="96"/>
                         <br>
-                        <a href="/{{../globals.league.slug}}/tournaments/{{../globals.tournament.slug}}/teams/{{_id}}">{{name}}</a>
+                        <a href="/tournaments/{{../globals.tournament.slug}}/teams/{{_id}}">{{name}}</a>
                     </div>
                 {{/each}}
             </div>
@@ -31,7 +31,7 @@
             <div class="link_type_full s_mb_10">
                 <span class="text_color_orange">Полная таблица</span>
                 <span class="pull-right">
-                    <a href="/{{globals.league.slug}}/tournaments/{{globals.tournament.slug}}/table">
+                    <a href="/tournaments/{{globals.tournament.slug}}/table">
                         <i class="fa fa-arrow-circle-o-right"></i>
                     </a>
                 </span>
@@ -49,7 +49,7 @@
         <div class="link_type_full s_mb_10">
             <span class="text_color_orange">Календарь</span>
             <span class="pull-right">
-                <a href="/{{globals.league.slug}}/tournaments/{{globals.tournament.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
+                <a href="/tournaments/{{globals.tournament.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
             </span>
         </div>
         <div class="panel panel_type_fixture s_m_0">
@@ -63,7 +63,7 @@
         <div class="link_type_full s_mb_10">
             <span class="text_color_orange">Календарь</span>
             <span class="pull-right">
-                <a href="/{{globals.league.slug}}/tournaments/{{globals.tournament.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
+                <a href="/tournaments/{{globals.tournament.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
             </span>
         </div>
 
@@ -81,7 +81,7 @@
             <div class="link_type_full s_mb_10">
                 <span class="text_color_orange">Все новости</span>
                 <span class="pull-right">
-                    <a href="/{{globals.league.slug}}/tournaments/{{globals.tournament.slug}}/news"><i class="fa fa-arrow-circle-o-right"></i></a>
+                    <a href="/tournaments/{{globals.tournament.slug}}/news"><i class="fa fa-arrow-circle-o-right"></i></a>
                 </span>
             </div>
         {{/notEmptyObject}}
@@ -100,7 +100,7 @@
             <div class="link_type_full s_mb_10">
                 <span class="text_color_orange">Все контакты</span>
                 <span class="pull-right">
-                    <a href="/{{globals.league.slug}}/contacts"><i class="fa fa-arrow-circle-o-right"></i></a>
+                    <a href="/contacts"><i class="fa fa-arrow-circle-o-right"></i></a>
                 </span>
             </div>
         {{/if}}

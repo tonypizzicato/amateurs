@@ -39,7 +39,7 @@ module.exports = {
     },
 
     list: function (req, res) {
-        LeagueModel.findOne({ slug: req.params.league }).exec(function (err, league) {
+        LeagueModel.findOne({ slug: req.league }).exec(function (err, league) {
             var query = { show: true, leagueId: league._id };
             if (req.params.name) {
                 TournamentModel.findOne({ slug: req.params.name, leagueId: league._id }).exec(function (err, tournament) {

@@ -102,6 +102,9 @@ export function init() {
     helpers.initialize(hbs);
 
     app.use(function (req, res, next) {
+        req.league = 'kiev';
+        console.log(req.league);
+
         res.title = function (title) {
             res.locals.title = res.locals.title ? title + ' — ' + res.locals.title : title;
         }.bind(res);
@@ -125,16 +128,7 @@ export function init() {
         next();
     });
 
-
-    app.get('/', function (req, res) {
-        res.redirect('/' + (req.session.league ? req.session.league.slug : 'moscow'));
-    });
-
     app.get('*', function (req, res, next) {
-
-        if (req.url.indexOf('/api') === 0) {
-            return next();
-        }
 
         res.locals.opts = require('./../config/settings.js');
 
@@ -144,22 +138,13 @@ export function init() {
         res.locals.globals.hasOrder = false;
 
 
-        var query = { show: true };
+        var query = { slug: 'kiev' };
         var path  = req.params[0];
 
         /** Dirty hack */
         path = path.replace('/lazy/', '/');
         if (typeof path == 'string') {
-            var param = path.slice(1);
-
-            var match = param.match(/^(\w+)\/?(.*|$)/);
-
-            var leaguesNames = ['moscow', 'spb', 'ekb', 'kazan', 'rostov', 'y-ola', 'anapa', 'izhevsk', 'kiev'];
-            if (match && match.length >= 1 && _.contains(leaguesNames, match[1])) {
-                query.slug = match[1];
-            } else {
-                query.slug = req.session.league ? req.session.league.slug : 'moscow';
-            }
+            query.slug = 'kiev';
         }
 
         var populateOptions = { path: 'countries', match: { show: true }, options: { sort: { 'sort': 1 } } };
@@ -171,27 +156,7 @@ export function init() {
             var populateTournaments = { path: 'countries.tournaments', model: 'Tournament', match: { show: true }, options: { sort: { 'sort': 1 } } };
             var populateCountries   = { path: 'countries', match: { show: true }, options: { sort: { 'sort': 1 } } };
 
-            if (!doc) {
-                LeagueModel.find({ show: true }).sort({ sort: 1 })
-                    .populate(populateCountries)
-                    .lean()
-                    .exec(function (err, leagues) {
-                        res.locals.globals.leagues = leagues;
-                        if (leagues.length == 1) {
-                            res.locals.globals.league = leagues[0];
-                        }
-
-                        LeagueModel.populate(leagues, populateTournaments, function (err, leagues) {
-                            res.locals.globals.leagues = leagues;
-
-                            res.status(404).render('404');
-                        });
-                    });
-
-                return;
-            }
-
-            LeagueModel.find({ show: true }).sort({ sort: 1 }).populate(populateCountries).lean().exec(function (err, leagues) {
+            LeagueModel.find(query).sort({ sort: 1 }).populate(populateCountries).lean().exec(function (err, leagues) {
                 if (err) {
                     return next(err);
                 }

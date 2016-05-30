@@ -1,6 +1,6 @@
 {{#if games.length}}
     {{#each games~}}
-        <a href="/{{../globals.league.slug}}/tournaments/{{../globals.tournament.slug}}/matches/{{_id}}">
+        <a href="/tournaments/{{../globals.tournament.slug}}/matches/{{_id}}">
             <span class="table__form table__form_{{gameResTeam ../team this}}"
                   title="{{teams.[0].name}} v {{teams.[1].name}} {{score.ft.[0]}}:{{score.ft.[1]}}">
 

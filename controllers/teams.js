@@ -10,7 +10,7 @@ var _               = require('lodash'),
 
 module.exports = {
     item: function (req, res, next) {
-        LeagueModel.findOne({ slug: req.params.league }, function (err, league) {
+        LeagueModel.findOne({ slug: req.league }, function (err, league) {
             TournamentModel.findOne({ slug: req.params.name, leagueId: league._id, show: true }).lean().exec(function (err, tournament) {
                 if (err) {
                     return next(err);
@@ -121,7 +121,7 @@ module.exports = {
     },
 
     list: function (req, res, next) {
-        LeagueModel.findOne({ slug: req.params.league }).lean().exec(function (err, league) {
+        LeagueModel.findOne({ slug: req.league }).lean().exec(function (err, league) {
             if (err) {
                 return next(err);
             }

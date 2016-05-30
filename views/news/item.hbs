@@ -38,9 +38,9 @@
                 <span class="text_color_orange">Все новости</span>
                 <span class="pull-right">
                     {{#if globals.tournament._id}}
-                        <a href="/{{globals.league.slug}}/tournaments/{{globals.tournament.slug}}/news"><i class="fa fa-arrow-circle-o-right"></i></a>
+                        <a href="/tournaments/{{globals.tournament.slug}}/news"><i class="fa fa-arrow-circle-o-right"></i></a>
                     {{else}}
-                        <a href="/{{globals.league.slug}}/news"><i class="fa fa-arrow-circle-o-right"></i></a>
+                        <a href="/news"><i class="fa fa-arrow-circle-o-right"></i></a>
                     {{/if}}
                 </span>
             </div>
@@ -64,7 +64,7 @@
                 <div class="link_type_full s_mb_10">
                     <span class="text_color_orange">Полная таблица</span>
                 <span class="pull-right">
-                    <a href="/{{globals.league.slug}}/tournaments/{{globals.tournament.slug}}/table"><i
+                    <a href="/tournaments/{{globals.tournament.slug}}/table"><i
                             class="fa fa-arrow-circle-o-right"></i></a>
                 </span>
                 </div>
@@ -81,7 +81,7 @@
             <div class="link_type_full s_mb_10">
                 <span class="text_color_orange">Календарь</span>
                 <span class="pull-right">
-                    <a href="/{{globals.league.slug}}/tournaments/{{globals.tournament.slug}}/fixture"><i
+                    <a href="/tournaments/{{globals.tournament.slug}}/fixture"><i
                             class="fa fa-arrow-circle-o-right"></i></a>
                 </span>
             </div>
@@ -96,7 +96,7 @@
             <div class="link_type_full s_mb_10">
                 <span class="text_color_orange">Календарь</span>
                 <span class="pull-right">
-                    <a href="/{{globals.league.slug}}/tournaments/{{globals.tournament.slug}}/fixture"><i
+                    <a href="/tournaments/{{globals.tournament.slug}}/fixture"><i
                             class="fa fa-arrow-circle-o-right"></i></a>
                 </span>
             </div>
@@ -115,7 +115,7 @@
                 <div class="link_type_full s_mb_10">
                     <span class="text_color_orange">Все новости</span>
                 <span class="pull-right">
-                    <a href="/{{globals.league.slug}}/tournaments/{{globals.tournament.slug}}/news"><i class="fa fa-arrow-circle-o-right"></i></a>
+                    <a href="/tournaments/{{globals.tournament.slug}}/news"><i class="fa fa-arrow-circle-o-right"></i></a>
                 </span>
                 </div>
             {{/notEmptyObject}}
@@ -134,7 +134,7 @@
                 <div class="link_type_full s_mb_10">
                     <span class="text_color_orange">Все контакты</span>
                 <span class="pull-right">
-                    <a href="/{{globals.league.slug}}/contacts"><i class="fa fa-arrow-circle-o-right"></i></a>
+                    <a href="/contacts"><i class="fa fa-arrow-circle-o-right"></i></a>
                 </span>
                 </div>
             {{/if}}
@@ -149,7 +149,7 @@
                         <ul>
                             {{#each tournaments}}
                                 <li class="s_ml_20 s_mb_5">
-                                    <a href="/{{../../globals.league.slug}}/tournaments/{{slug}}">{{noYear name}}</a>
+                                    <a href="/tournaments/{{slug}}">{{noYear name}}</a>
                                 </li>
                             {{/each}}
                         </ul>
@@ -171,7 +171,7 @@
                 <div class="link_type_full s_mb_10">
                     <span class="text_color_orange">Все новости</span>
                 <span class="pull-right">
-                    <a href="/{{globals.league.slug}}/news"><i class="fa fa-arrow-circle-o-right"></i></a>
+                    <a href="/news"><i class="fa fa-arrow-circle-o-right"></i></a>
                 </span>
                 </div>
             {{/notEmptyObject}}
@@ -190,7 +190,7 @@
                 <div class="link_type_full s_mb_10">
                     <span class="text_color_orange">Все контакты</span>
                 <span class="pull-right">
-                    <a href="/{{globals.league.slug}}/contacts"><i class="fa fa-arrow-circle-o-right"></i></a>
+                    <a href="/contacts"><i class="fa fa-arrow-circle-o-right"></i></a>
                 </span>
                 </div>
             {{/if}}

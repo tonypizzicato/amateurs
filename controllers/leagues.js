@@ -31,7 +31,7 @@ module.exports = {
         /* League */
         var league = new Promise(function (resolve, reject) {
             var populateOptions = { path: 'countries', match: { show: true }, options: { sort: { 'sort': 1 } } };
-            LeagueModel.findOne({ slug: req.params.league }).populate(populateOptions).lean().exec(function (err, league) {
+            LeagueModel.findOne({ slug: req.league }).populate(populateOptions).lean().exec(function (err, league) {
                 if (err) {
                     return next(err);
                 }
@@ -110,7 +110,8 @@ module.exports = {
 
         /* Contacts */
         var contacts = new Promise(function (resolve, reject) {
-            LeagueModel.findOne({ slug: req.params.league }).lean().exec(function (err, league) {
+            console.log(req.league);
+            LeagueModel.findOne({ slug: req.league }).lean().exec(function (err, league) {
                 ContactModel.find({ show: true, leagueId: league._id }).sort({ sort: 1 }).exec(function (err, docs) {
                     if (err) {
                         reject(err);

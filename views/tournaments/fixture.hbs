@@ -20,18 +20,18 @@
                                             {{~#eq (gameResTeam teams.[0] this) 'w'}} fixture__winner{{/eq~}}
                                             {{~#eq (gameResTeam teams.[0] this) 'l'}} fixture__looser{{/eq~}}
                                             ">
-                                            <a href="/{{../../globals.league.slug}}/tournaments/{{../../globals.tournament.slug}}/teams/{{teams.[0]._id}}">{{~teams.[0].name~}}</a>
+                                            <a href="/tournaments/{{../../globals.tournament.slug}}/teams/{{teams.[0]._id}}">{{~teams.[0].name~}}</a>
                                         <td class="text_align_c col-md-1">v</td>
                                         <td class="fixture__team col-md-4 text_align_l s_pl_0
                                             {{~#eq (gameResTeam teams.[0] this) 'l'}} fixture__winner{{/eq~}}
                                             {{~#eq (gameResTeam teams.[0] this) 'w'}} fixture__looser{{/eq~}}
                                             ">
-                                            <a href="/{{../../globals.league.slug}}/tournaments/{{../../globals.tournament.slug}}/teams/{{teams.[1]._id}}">{{~teams.[1].name~}}</a>
+                                            <a href="/tournaments/{{../../globals.tournament.slug}}/teams/{{teams.[1]._id}}">{{~teams.[1].name~}}</a>
                                         </td>
                                         </td>
 
                                         <td class="col-md-1">
-                                            <a href="/{{../../globals.league.slug}}/tournaments/{{../../globals.tournament.slug}}/matches/{{_id}}">
+                                            <a href="/tournaments/{{../../globals.tournament.slug}}/matches/{{_id}}">
                                                 {{#if score}}{{~score.ft.[0]}}:{{score.ft.[1]~}}{{else}}-:-{{/if}}
                                             </a>
                                         </td>
@@ -63,7 +63,7 @@
             <div class="link_type_full s_mb_10">
                 <span class="text_color_orange">Полная таблица</span>
                 <span class="pull-right">
-                    <a href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/table"><i class="fa fa-arrow-circle-o-right"></i></a>
+                    <a href="/tournaments/{{tournament.slug}}/table"><i class="fa fa-arrow-circle-o-right"></i></a>
                 </span>
             </div>
         {{/if}}
@@ -80,7 +80,7 @@
         <div class="link_type_full s_mb_10">
             <span class="text_color_orange">Календарь</span>
             <span class="pull-right">
-                <a href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
+                <a href="/tournaments/{{tournament.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
             </span>
         </div>
 
@@ -96,7 +96,7 @@
         <div class="link_type_full s_mb_10">
             <span class="text_color_orange">Календарь</span>
             <span class="pull-right">
-                <a href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
+                <a href="/tournaments/{{tournament.slug}}/fixture"><i class="fa fa-arrow-circle-o-right"></i></a>
             </span>
         </div>
 
@@ -114,7 +114,7 @@
             <div class="link_type_full s_mb_10">
                 <span class="text_color_orange">Все новости</span>
                 <span class="pull-right">
-                    <a href="/{{globals.league.slug}}/tournaments/{{tournament.slug}}/news"><i class="fa fa-arrow-circle-o-right"></i></a>
+                    <a href="/tournaments/{{tournament.slug}}/news"><i class="fa fa-arrow-circle-o-right"></i></a>
                 </span>
             </div>
         {{/notEmptyObject}}
@@ -133,7 +133,7 @@
             <div class="link_type_full s_mb_10">
                 <span class="text_color_orange">Все контакты</span>
                 <span class="pull-right">
-                    <a href="/{{globals.league.slug}}/contacts"><i class="fa fa-arrow-circle-o-right"></i></a>
+                    <a href="/contacts"><i class="fa fa-arrow-circle-o-right"></i></a>
                 </span>
             </div>
         {{/if}}

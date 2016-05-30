@@ -89,7 +89,7 @@ var getNewsList = function (req, cb) {
 
     /** Get league if defined in request */
     series = series.concat(function (cb) {
-        LeagueModel.findOne({slug: req.params.league}).lean().exec(cb);
+        LeagueModel.findOne({slug: req.league}).lean().exec(cb);
     });
 
     /** Get tournament if defined in request */
@@ -117,7 +117,7 @@ var getNewsList = function (req, cb) {
         if (req.params.name) {
             query.leagueId = res.leagueId;
             query.country  = res.country;
-        } else if (req.params.league) {
+        } else if (req.league) {
             query.leagueId = res._id;
         }
 

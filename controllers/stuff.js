@@ -13,7 +13,7 @@ var positions = {
 
 module.exports = {
     list: function (req, res) {
-        LeagueModel.findOne({slug: req.params.league}).exec(function (err, league) {
+        LeagueModel.findOne({slug: req.league}).exec(function (err, league) {
 
             UserModel.find({leagueId: league._id, avatar: {$ne: null}}).exec(function (err, users) {
                 var stuff = {};
@@ -31,7 +31,7 @@ module.exports = {
     },
 
     bosses: function(req, res) {
-        LeagueModel.findOne({slug: req.params.league}).exec(function (err, league) {
+        LeagueModel.findOne({slug: req.league}).exec(function (err, league) {
             res.render('stuff/bosses', {pageBosses: true});
         });
     }
