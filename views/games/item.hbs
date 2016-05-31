@@ -57,13 +57,12 @@
                                 </div>
                                 <p class="match__tour">{{game.tourText}}</p>
 
-                                <p class="s_m_0 text_color_light">
+                                <p class="s_m_0">
                                     {{#if game.dateTime}}{{ucfirst (dateTimeFull game.dateTime)}}{{else}}Время не определено{{/if}}
                                 </p>
                                 {{#if game.placeName}}
-                                    <p class="s_m_0 text_color_light s_whitespace_no-wrap">Стадион:
-                                        <a class="text_color_light"
-                                           href="/tournaments/{{tournament.slug}}/fields/{{slugify game.placeName}}">
+                                    <p class="s_m_0 s_whitespace_no-wrap">Стадион:
+                                        <a href="/tournaments/{{tournament.slug}}/fields/{{slugify game.placeName}}">
                                             {{game.placeName}}
                                         </a>
                                     </p>
