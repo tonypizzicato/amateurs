@@ -2226,6 +2226,12 @@ td .tl {
             content: none;
         }
 
+        &.flag__wrapper_gr,
+        &.flag__wrapper_sp,
+        &.flag__wrapper_ru {
+            background-size: cover;
+        }
+
         .contact__photo {
             height:          100%;
             width:           100%;

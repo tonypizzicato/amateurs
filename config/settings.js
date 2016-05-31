@@ -2,6 +2,7 @@ module.exports = {
     showPromoTournamentLink: false,
     showKiev: true,
     ordersEmail: 'umerov.ervin2013@yandex.ru',
+    ordersEmailPlayer: 'eumerov.afl@gmail.com',
     // ordersEmail: 'tony.grebnev@gmail.com',
     ordersBcc: 'tony.grebnev@gmail.com',
     ordersMoscow: 'umerov.ervin2013@yandex.ru',
@@ -12,6 +13,6 @@ module.exports = {
     // "ordersY-ola": 'umerov.ervin2013@yandex.ru',
     // ordersAnapa: 'umerov.ervin2013@yandex.ru',
     // ordersIzhevsk: 'umerov.ervin2013@yandex.ru',
-    // ordersKiev: 'firstenko95@mail.ru',
+    ordersKiev: 'firstenko95@mail.ru',
     api: 'http://sharvester.ru/api'
 };

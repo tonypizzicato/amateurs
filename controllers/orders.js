@@ -29,6 +29,10 @@ module.exports = {
 
                     var toField = `orders${league.slug.charAt(0).toUpperCase() + league.slug.substr(1)}`;
 
+                    if (league.slug === 'moscow' && order.teamOrPlayer === 'player') {
+                        toField = 'ordersEmailPlayer';
+                    }
+
                     if (!settings.hasOwnProperty(toField)) {
                         toField = settings.ordersEmail;
                     }
