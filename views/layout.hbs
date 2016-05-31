@@ -63,7 +63,8 @@
                             {{#if stick}}
                                 {{#if image}}
                                     <div class="news__content">
-                                        <div class="news__image" style="background-image: url({{image}}); background-size: cover; background-position: 50% {{imagePosition}};"></div>
+                                        <div class="news__image"
+                                             style="background-image: url({{image}}); background-size: cover; background-position: 50% {{imagePosition}};"></div>
 
                                         <div class="news__resume">
                                             {{#if ../globals.tournament._id}}
@@ -122,7 +123,7 @@
 {{> photoswipe}}
 
 <script>
-    var cb = function (href) {
+    var cb  = function (href) {
         var l  = document.createElement('link');
         l.rel  = 'stylesheet';
         l.href = href;
@@ -156,9 +157,9 @@
         a.async = 1;
         a.src   = g;
         m.parentNode.insertBefore(a, m)
-    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
-    ga('create', 'UA-56534486-1', 'auto');
+    ga('create', 'UA-56534486-2', 'auto');
     ga('send', 'pageview');
 
 </script>
@@ -166,31 +167,37 @@
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
     (function (d, w, c) {
-        (w[c] = w[c] || []).push(function() {
+        (w[c] = w[c] || []).push(function () {
             try {
-                w.yaCounter32568270 = new Ya.Metrika({
-                    id:32568270,
-                    clickmap:true,
-                    trackLinks:true,
-                    accurateTrackBounce:true,
-                    webvisor:true
+                w.yaCounter37682105 = new Ya.Metrika({
+                    id:                  37682105,
+                    clickmap:            true,
+                    trackLinks:          true,
+                    accurateTrackBounce: true
                 });
-            } catch(e) { }
+            } catch (e) {
+            }
         });
 
-        var n = d.getElementsByTagName("script")[0],
-            s = d.createElement("script"),
-            f = function () { n.parentNode.insertBefore(s, n); };
-        s.type = "text/javascript";
+        var n   = d.getElementsByTagName("script")[0],
+            s   = d.createElement("script"),
+            f   = function () {
+                n.parentNode.insertBefore(s, n);
+            };
+        s.type  = "text/javascript";
         s.async = true;
-        s.src = "https://mc.yandex.ru/metrika/watch.js";
+        s.src   = "https://mc.yandex.ru/metrika/watch.js";
 
         if (w.opera == "[object Opera]") {
             d.addEventListener("DOMContentLoaded", f, false);
-        } else { f(); }
+        } else {
+            f();
+        }
     })(document, window, "yandex_metrika_callbacks");
 </script>
-<noscript><div><img src="https://mc.yandex.ru/watch/32568270" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<noscript>
+    <div><img src="https://mc.yandex.ru/watch/37682105" style="position:absolute; left:-9999px;" alt=""/></div>
+</noscript>
 <!-- /Yandex.Metrika counter -->
 
 

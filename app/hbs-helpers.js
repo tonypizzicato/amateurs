@@ -315,7 +315,7 @@ var helpers = {
     },
 
     noYear: function (name) {
-        if(!_.isString(name)) {
+        if (!_.isString(name)) {
             console.warn(`Can not apply "noYear". "${name}" is not a string.`);
             return '';
         }
@@ -329,15 +329,15 @@ var helpers = {
     },
 
     noSecondName: function (name) {
-        if(!_.isString(name)) {
+        if (!_.isString(name)) {
             return '';
         }
 
         return name.replace(/\s\s+/g, ' ').split(' ').slice(0, 2).join(' ');
     },
 
-    noAfl: function(name) {
-        if(!_.isString(name)) {
+    noAfl: function (name) {
+        if (!_.isString(name)) {
             return '';
         }
 

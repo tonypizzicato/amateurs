@@ -9,7 +9,7 @@
             </div>
             <div class="column col-md-12">
 
-                <div class="tabbable" id="tabs-992576">
+                <div class="tabbable tabbable_type_transparent">
                     <ul class="nav nav-tabs">
                         <li class="tab__title tab__title_size_half active">
                             <a href="#overview" data-toggle="tab">Обзор</a>
@@ -74,11 +74,7 @@
 
                         <!-- Squads tab -->
                         <div class="tab-pane" id="squad">
-                            <div class="panel panel_type_squads panel_type_transparent s_m_0">
-                                <div class="panel__body s_pl_0 s_pr_0 s_pt_0">
-                                    {{> 'teams_squads' squads=team.players emptyText='Заявка пуста'}}
-                                </div>
-                            </div>
+                            {{> 'teams_squads' squads=team.players emptyText='Заявка пуста'}}
                         </div>
                     </div>
                 </div>

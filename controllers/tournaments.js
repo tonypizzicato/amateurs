@@ -642,7 +642,15 @@ module.exports = {
                         return table;
                     });
 
-                    tables = _.sortBy(tables, 'stageName');
+                    tables.sort((t1, t2) => {
+                        const tn1 = _.last(t1.stageName.split(' '));
+                        const tn2 = _.last(t2.stageName.split(' '));
+
+                        if (tn1.length < tn2.length) return -1;
+                        if (tn1.length > tn2.length) return 1;
+
+                        return tn1 < tn2 ? -1 : 1;
+                    });
 
                     endTime = new Date().getTime();
                     log('processed Tables', (endTime - startTime) + "ms.");

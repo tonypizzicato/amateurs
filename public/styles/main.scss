@@ -507,6 +507,15 @@ ul, ol {
     box-shadow:    0 4px 10px rgba(0, 0, 0, 0.15);
     border-radius: 3px;
 
+    &.tabbable_type_transparent {
+        box-shadow: none;
+
+        .panel,
+        .link_type_full {
+            box-shadow:    0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+    }
+
     .panel,
     .link_type_full {
         box-shadow: none;
@@ -779,6 +788,7 @@ ul, ol {
 
 .panel_type_transparent {
     background: transparent;
+    box-shadow: none;
 }
 
 .panel__header,
@@ -878,6 +888,10 @@ a:hover .fixture__looser a {
 .panel_type_squads .match-lineup__photo {
     padding:     15px;
     line-height: 3;
+}
+
+.match-lineup__player.col-md-8 {
+    width: 73%;
 }
 
 .panel_type_squads .match-lineup__photo {
@@ -1400,7 +1414,7 @@ $size: 200px;
     display:        inline-block;
     padding:        0 24px 12px;
     border-bottom:  1px dashed $text-orange;
-    color:          #bababa;
+    color:          #08101C;
     font-size:      24px;
     font-weight:    bold;
     text-transform: uppercase;
@@ -1417,8 +1431,6 @@ $size: 200px;
 .match-lineup__photo {
     display:       inline-block;
     padding:       15px 20px 15px 15px;
-    margin-bottom: 10px;
-    background:    #131A23;
 }
 
 .match-events__time,
@@ -1444,12 +1456,6 @@ $size: 200px;
 
 .match-lineup__player, .match-lineup__number {
     padding:       7px 15px;
-    margin-bottom: 1px;
-}
-
-.match-lineup__player,
-.match-lineup__photo {
-    border-left: 5px solid #08101c;
 }
 
 .icon_type_event {
