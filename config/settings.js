@@ -2,7 +2,7 @@ module.exports = {
     showPromoTournamentLink: false,
     showKiev: true,
     ordersEmail: 'umerov.ervin2013@yandex.ru',
-    ordersEmailPlayer: 'eumerov.afl@gmail.com',
+    ordersEmailPlayer: 'lozovoy@s-inn.ru',
     // ordersEmail: 'tony.grebnev@gmail.com',
     ordersBcc: 'tony.grebnev@gmail.com',
     ordersMoscow: 'umerov.ervin2013@yandex.ru',
