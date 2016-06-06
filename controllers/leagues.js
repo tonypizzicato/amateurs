@@ -6,15 +6,12 @@ var _               = require('lodash'),
     LeagueModel     = require('../models/league'),
     TournamentModel = require('../models/tournament'),
     ContactModel    = require('../models/contact'),
-    RestClient      = require('node-rest-client').Client,
-    remoteConfig    = require('../config/tinyapi'),
     Promise         = require('promise');
 
-var client = new RestClient(remoteConfig.authOptions);
+import request from '../utils/request';
 
 module.exports = {
     item: function (req, res, next) {
-
 
         /* Leagues */
         var leagues = new Promise(function (resolve, reject) {
@@ -41,8 +38,6 @@ module.exports = {
                 }
 
                 TournamentModel.find({ leagueId: league._id, show: true }).sort({ sort: 1 }).lean().exec(function (err, tournaments) {
-                    var startTime = new Date().getTime();
-
                     var ids = tournaments.map(function (item) {
                         return item._id;
                     });
@@ -52,57 +47,50 @@ module.exports = {
                         query.push('ids=' + item);
                     });
 
-                    client.get(remoteConfig.url + '/tournaments/tables?' + query.join('&'), function (tables) {
+                    request(`/tournaments/tables?${query.join('&')}`)
+                        .then(response => {
+                            let tables = response.data;
 
-                        var endTime = new Date().getTime();
-                        log('received Tables', (endTime - startTime) + "ms.", tables.length);
-
-                        if (!tables.length) {
-                            resolve(league);
-                        }
-
-                        tables = _.sortBy(tables, 'stageName');
-
-                        tables = _.groupBy(tables, function (item) {
-                            return item.tournamentId;
-                        });
-
-                        var format = 'DD/MM/YYYY';
-                        for (var id in tables) {
-                            if (tables[id].length > 1) {
-                                tables[id] = tables[id].sort(function (a, b) {
-                                    return moment(a.date, format).isBefore(moment(b.date, format)) ? 1 : -1;
-                                });
+                            if (!tables.length) {
+                                resolve(league);
                             }
-                        }
 
-                        console.info(tables.length);
+                            tables = _.sortBy(tables, 'stageName');
 
-                        tournaments.map(function (item) {
-                            item.tables = tables[item.remoteId] ? tables[item.remoteId] : null;
-                            if (!!item.tables) {
-                                item.tables = item.tables.map(function (table) {
-                                    table.teams = table.teams.map(function (item) {
-                                        item.form = item.form.slice(-5);
-                                        return item;
+                            tables = _.groupBy(tables, item => item.tournamentId);
+
+                            var format = 'DD/MM/YYYY';
+                            for (var id in tables) {
+                                if (tables[id].length > 1) {
+                                    tables[id] = tables[id].sort(function (a, b) {
+                                        return moment(a.date, format).isBefore(moment(b.date, format)) ? 1 : -1;
+                                    });
+                                }
+                            }
+
+                            tournaments.map(function (item) {
+                                item.tables = tables[item.remoteId] ? tables[item.remoteId] : null;
+                                if (!!item.tables) {
+                                    item.tables = item.tables.map(function (table) {
+                                        table.teams = table.teams.map(function (item) {
+                                            item.form = item.form.slice(-5);
+                                            return item;
+                                        });
+
+                                        return table;
                                     });
 
-                                    return table;
-                                });
+                                }
+                            });
 
-                            }
+                            league.countries.forEach(function (country) {
+                                country.tournaments = tournaments.filter(function (item) {
+                                    return item.country.toString() == country._id.toString();
+                                })
+                            });
+
+                            resolve(league);
                         });
-
-                        league.countries.forEach(function (country) {
-                            country.tournaments = tournaments.filter(function (item) {
-                                return item.country.toString() == country._id.toString();
-                            })
-                        });
-
-                        log('processed Tables', (endTime - startTime) + "ms.");
-
-                        resolve(league);
-                    });
                 });
 
             });
@@ -167,11 +155,4 @@ function leagueName(slug) {
     }
 
     return name;
-}
-
-
-function log(log) {
-    var args = Array.prototype.slice.call(arguments, 0);
-    args     = Array.prototype.concat.call([moment().format('HH:mm:ss:SSS')], args);
-    return console.info.apply(null, args);
 }

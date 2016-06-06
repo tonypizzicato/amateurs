@@ -1095,7 +1095,7 @@ a:hover .fixture__looser a {
     position: absolute;
     right:    0;
     top:      0;
-    display: flex;
+    display:  flex;
 
     li {
         flex-grow: 1;
@@ -1104,7 +1104,7 @@ a:hover .fixture__looser a {
     a {
         line-height: 1.5;
         white-space: nowrap;
-        text-align: right;
+        text-align:  right;
     }
 }
 
@@ -1114,7 +1114,7 @@ a:hover .fixture__looser a {
 .panel_type_federations .nav.nav-tabs .tab__title.federations_count_12 {
     a {
         line-height: 1.8;
-        font-size: 12px;
+        font-size:   12px;
     }
 }
 

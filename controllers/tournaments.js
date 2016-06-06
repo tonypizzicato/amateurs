@@ -1,21 +1,21 @@
 'use strict';
 
 var _                = require('lodash'),
-    request          = require('request'),
     moment           = require('moment'),
     async            = require('async'),
     LeagueModel      = require('../models/league'),
     TournamentModel  = require('../models/tournament'),
     GameArticleModel = require('../models/game-article'),
     PhotoModel       = require('../models/photo'),
-    remoteConfig     = require('../config/tinyapi'),
     Promise          = require('promise'),
     Handlebars       = require('hbs').handlebars;
 
+import request from '../utils/request';
+
 module.exports = {
     restRecent: function (req, res, next) {
-        LeagueModel.findOne({slug: req.params.league}, function (err, doc) {
-            TournamentModel.findOne({slug: req.params.name, leagueId: doc._id}, function (err, tournament) {
+        LeagueModel.findOne({ slug: req.params.league }, function (err, doc) {
+            TournamentModel.findOne({ slug: req.params.name, leagueId: doc._id }, function (err, tournament) {
 
                 if (!tournament.stages || !tournament.stages.length) {
                     return res.render('partials/lazy/fixture', {
@@ -26,47 +26,48 @@ module.exports = {
                 }
 
                 //if (tournament.stages.length == 1) {
-                remote(remoteConfig.url + '/tournaments/games?ids=' + tournament._id, function (err, response, result) {
-                    var games = result.map(function (item) {
-                        item.dateTime = item.timestamp ? moment.unix(item.timestamp) : null;
-                        return item;
+                request(`/tournaments/games?ids=${tournament._id}`)
+                    .then(response => {
+                        var games = response.data.map(function (item) {
+                            item.dateTime = item.timestamp ? moment.unix(item.timestamp) : null;
+                            return item;
+                        });
+
+                        // TODO: replace with dateTime
+                        games.sort(function (a, b) {
+                            if (!a.dateTime && !b.dateTime) {
+                                return a.tourNumber < b.tourNumber ? -1 : 1;
+                            }
+
+                            if ((a.dateTime && !b.dateTime) || (a.dateTime && b.dateTime && a.dateTime.isBefore(b.dateTime))) {
+                                return -1;
+                            } else {
+                                return 1;
+                            }
+                        });
+
+                        var recent = games.filter(function (item) {
+                            return item.dateTime && item.dateTime.isBefore(moment()) && item.state == 'CLOSED';
+                        });
+
+                        recent = _.groupBy(recent.slice(-8), 'tourText');
+
+                        res.render('partials/lazy/fixture', {
+                            league:     res.locals.globals.league,
+                            tournament: tournament,
+                            fixture:    recent,
+                            emptyText:  'Нет данных',
+                            layout:     false
+                        });
                     });
-
-                    // TODO: replace with dateTime
-                    games.sort(function (a, b) {
-                        if (!a.dateTime && !b.dateTime) {
-                            return a.tourNumber < b.tourNumber ? -1 : 1;
-                        }
-
-                        if ((a.dateTime && !b.dateTime) || (a.dateTime && b.dateTime && a.dateTime.isBefore(b.dateTime))) {
-                            return -1;
-                        } else {
-                            return 1;
-                        }
-                    });
-
-                    var recent = games.filter(function (item) {
-                        return item.dateTime && item.dateTime.isBefore(moment()) && item.state == 'CLOSED';
-                    });
-
-                    recent = _.groupBy(recent.slice(-8), 'tourText');
-
-                    res.render('partials/lazy/fixture', {
-                        league:     res.locals.globals.league,
-                        tournament: tournament,
-                        fixture:    recent,
-                        emptyText:  'Нет данных',
-                        layout:     false
-                    });
-                });
                 //}
             });
         });
     },
 
     restComming: function (req, res, next) {
-        LeagueModel.findOne({slug: req.params.league}, function (err, doc) {
-            TournamentModel.findOne({slug: req.params.name, leagueId: doc._id}, function (err, tournament) {
+        LeagueModel.findOne({ slug: req.params.league }, function (err, doc) {
+            TournamentModel.findOne({ slug: req.params.name, leagueId: doc._id }, function (err, tournament) {
 
                 if (!tournament.stages || !tournament.stages.length) {
                     return res.render('partials/lazy/fixture', {
@@ -76,70 +77,71 @@ module.exports = {
                     });
                 }
 
-                remote(remoteConfig.url + '/tournaments/games?ids=' + tournament._id, function (err, response, result) {
-                    var games = result.map(function (item) {
-                        item.dateTime = item.timestamp ? moment.unix(item.timestamp) : null;
-                        return item;
-                    });
-
-                    // TODO: replace with dateTime
-                    games.sort(function (a, b) {
-                        if (!a.dateTime && !b.dateTime) {
-                            return a.tourNumber < b.tourNumber ? -1 : 1;
-                        }
-
-                        if ((a.dateTime && !b.dateTime) || (a.dateTime && b.dateTime && a.dateTime.isBefore(b.dateTime))) {
-                            return -1;
-                        } else {
-                            return 1;
-                        }
-                    });
-
-                    var comming = games.filter(function (item) {
-                        if (item.teams[0].name.toLowerCase() == 'tbd' || item.teams[1].name.toLowerCase() == 'tbd') {
-                            return false;
-                        }
-                        return !item.dateTime || (item.dateTime && item.state != 'CLOSED');
-                    });
-
-
-                    if (!comming.length) {
-                        return res.render('partials/lazy/fixture', {
-                            fixture:   {},
-                            emptyText: 'Нет данных',
-                            layout:    false
+                request(`/tournaments/games?ids=${tournament._id}`)
+                    .then(response => {
+                        var games = response.data.map(function (item) {
+                            item.dateTime = item.timestamp ? moment.unix(item.timestamp) : null;
+                            return item;
                         });
-                    }
 
-                    comming = comming.slice(0, 12);
+                        // TODO: replace with dateTime
+                        games.sort(function (a, b) {
+                            if (!a.dateTime && !b.dateTime) {
+                                return a.tourNumber < b.tourNumber ? -1 : 1;
+                            }
 
-                    var dated = comming.filter(function (item) {
-                        return !!item.dateTime;
+                            if ((a.dateTime && !b.dateTime) || (a.dateTime && b.dateTime && a.dateTime.isBefore(b.dateTime))) {
+                                return -1;
+                            } else {
+                                return 1;
+                            }
+                        });
+
+                        var comming = games.filter(function (item) {
+                            if (item.teams[0].name.toLowerCase() == 'tbd' || item.teams[1].name.toLowerCase() == 'tbd') {
+                                return false;
+                            }
+                            return !item.dateTime || (item.dateTime && item.state != 'CLOSED');
+                        });
+
+
+                        if (!comming.length) {
+                            return res.render('partials/lazy/fixture', {
+                                fixture:   {},
+                                emptyText: 'Нет данных',
+                                layout:    false
+                            });
+                        }
+
+                        comming = comming.slice(0, 12);
+
+                        var dated = comming.filter(function (item) {
+                            return !!item.dateTime;
+                        });
+
+                        if (dated.length) {
+                            comming = dated;
+                        } else {
+                            comming = _.first(_.values(_.groupBy(comming, 'tourText')));
+                        }
+
+                        comming = _.groupBy(comming.slice(0, 10), 'tourText');
+
+                        res.render('partials/lazy/fixture', {
+                            league:     res.locals.globals.league,
+                            tournament: tournament,
+                            fixture:    comming,
+                            emptyText:  'Нет данных',
+                            layout:     false
+                        });
                     });
-
-                    if (dated.length) {
-                        comming = dated;
-                    } else {
-                        comming = _.first(_.values(_.groupBy(comming, 'tourText')));
-                    }
-
-                    comming = _.groupBy(comming.slice(0, 10), 'tourText');
-
-                    res.render('partials/lazy/fixture', {
-                        league:     res.locals.globals.league,
-                        tournament: tournament,
-                        fixture:    comming,
-                        emptyText:  'Нет данных',
-                        layout:     false
-                    });
-                });
             });
         });
     },
 
     restStats: function (req, res, next) {
-        LeagueModel.findOne({slug: req.params.league}, function (err, doc) {
-            TournamentModel.findOne({slug: req.params.name, leagueId: doc._id}, function (err, tournament) {
+        LeagueModel.findOne({ slug: req.params.league }, function (err, doc) {
+            TournamentModel.findOne({ slug: req.params.name, leagueId: doc._id }, function (err, tournament) {
 
                 if (!tournament.stages || !tournament.stages.length) {
                     return res.render('partials/lazy/stats', {
@@ -158,32 +160,28 @@ module.exports = {
                     return next(null);
                 }
 
-                remote(remoteConfig.url + '/tournaments/players?ids=' + tournament._id, function (err, response, result) {
-                    var stats = result.filter(function (item) {
-                        return !!item.playerId;
-                    });
+                request(`/tournaments/players?ids=${tournament._id}`)
+                    .then(response => {
+                        const stats = response.data
+                            .filter(item => !!item.playerId)
+                            .sort((a, b) => a.goals_assists_hearts_stars >= b.goals_assists_hearts_stars ? -1 : 1)
+                            .slice(0, 10);
 
-                    stats = stats.sort(function (a, b) {
-                        return a.goals_assists_hearts_stars >= b.goals_assists_hearts_stars ? -1 : 1;
+                        res.render('partials/lazy/stats', {
+                            league:    res.locals.globals.league,
+                                       tournament,
+                                       stats,
+                            emptyText: 'Нет данных',
+                            layout:    false
+                        });
                     });
-
-                    stats = stats.slice(0, 10);
-
-                    res.render('partials/lazy/stats', {
-                        league:     res.locals.globals.league,
-                        tournament: tournament,
-                        stats:      stats,
-                        emptyText:  'Нет данных',
-                        layout:     false
-                    });
-                });
             });
         });
     },
 
     item: function (req, res, next) {
-        LeagueModel.findOne({slug: req.params.league}, function (err, league) {
-            TournamentModel.findOne({slug: req.params.name, leagueId: league._id}, function (err, tournament) {
+        LeagueModel.findOne({ slug: req.params.league }, function (err, league) {
+            TournamentModel.findOne({ slug: req.params.name, leagueId: league._id }, function (err, tournament) {
                 if (err) {
                     return next(err);
                 }
@@ -193,9 +191,7 @@ module.exports = {
                 }
 
                 var stages = new Promise(function (resolve, reject) {
-                    var tournamentId = tournament._id;
-
-                    var playOff = _.find(tournament.stages, {format: 'CUP'});
+                    var playOff = _.find(tournament.stages, { format: 'CUP' });
 
                     if (playOff) {
 
@@ -213,94 +209,89 @@ module.exports = {
                             stages[stage] = undefined;
                         });
 
-                        remote(remoteConfig.url + '/tournaments/games?ids=' + tournamentId, function (err, response, games) {
-                            var games = games.filter(function (game) {
-                                return game.stageId == playOff._id
-                            });
-
-                            games = games.map(function (item) {
-                                item.dateTime = item.timestamp ? moment.unix(item.timestamp) : null;
-                                return item;
-                            });
-
-                            games = _.groupBy(games, 'tourText');
-
-                            var gamesDoubled = {};
-
-                            Object.keys(games).forEach(function (stageName) {
-                                gamesDoubled[stageName] = [];
-
-                                games[stageName].forEach(function (game) {
-                                    var doubled = _.find(gamesDoubled[stageName], function (gamesDoubled) {
-                                        return gamesDoubled[0].teams[0]._id == game.teams[0]._id || gamesDoubled[0].teams[0]._id == game.teams[1]._id;
+                        request(`/tournaments/games?ids=${tournament._id}`)
+                            .then(response => {
+                                var games = response.data
+                                    .filter(game => game.stageId == playOff._id)
+                                    .map(game => {
+                                        game.dateTime = game.timestamp ? moment.unix(game.timestamp) : null;
+                                        return game;
                                     });
 
-                                    if (doubled) {
-                                        if (doubled[0].dateTime && game.dateTime) {
-                                            if (doubled[0].dateTime < game.datetime) {
+                                games = _.groupBy(games, 'tourText');
+
+                                var gamesDoubled = {};
+
+                                Object.keys(games).forEach(function (stageName) {
+                                    gamesDoubled[stageName] = [];
+
+                                    games[stageName].forEach(function (game) {
+                                        var doubled = _.find(gamesDoubled[stageName], function (gamesDoubled) {
+                                            return gamesDoubled[0].teams[0]._id == game.teams[0]._id || gamesDoubled[0].teams[0]._id == game.teams[1]._id;
+                                        });
+
+                                        if (doubled) {
+                                            if (doubled[0].dateTime && game.dateTime) {
+                                                if (doubled[0].dateTime < game.datetime) {
+                                                    doubled.push(game);
+                                                } else {
+                                                    doubled.unshift(game);
+                                                }
+                                            } else if (doubled[0].dateTime && !game.dateTime) {
                                                 doubled.push(game);
                                             } else {
                                                 doubled.unshift(game);
                                             }
-                                        } else if (doubled[0].dateTime && !game.dateTime) {
-                                            doubled.push(game);
                                         } else {
-                                            doubled.unshift(game);
+                                            gamesDoubled[stageName].push([game]);
                                         }
-                                    } else {
-                                        gamesDoubled[stageName].push([game]);
+                                    });
+                                });
+
+                                var right      = false;
+                                var keys       = Object.keys(stages);
+                                playOff.stages = {};
+
+                                keys.forEach(function (stage) {
+                                    if (!_.isUndefined(gamesDoubled[stage]) || right) {
+                                        right = true;
+                                        if (!_.isUndefined(gamesDoubled[stage])) {
+                                            playOff.stages[stage] = gamesDoubled[stage]
+                                        } else {
+                                            playOff.stages[stage] = [];
+                                            _.range(0, Math.pow(2, keys.length - keys.indexOf(stage) - 1)).forEach(function () {
+                                                playOff.stages[stage].push([{
+                                                    tourText: stage,
+                                                    teams:    [{ name: "Не определено" }, { name: "Не определено" }]
+                                                }]);
+                                            });
+
+                                        }
                                     }
                                 });
+
+                                resolve({ stages: tournament.stages, playOff: playOff });
                             });
-
-                            var right      = false;
-                            var keys       = Object.keys(stages);
-                            playOff.stages = {};
-
-                            keys.forEach(function (stage) {
-                                if (!_.isUndefined(gamesDoubled[stage]) || right) {
-                                    right = true;
-                                    if (!_.isUndefined(gamesDoubled[stage])) {
-                                        playOff.stages[stage] = gamesDoubled[stage]
-                                    } else {
-                                        playOff.stages[stage] = [];
-                                        _.range(0, Math.pow(2, keys.length - keys.indexOf(stage) - 1)).forEach(function () {
-                                            playOff.stages[stage].push([{
-                                                tourText: stage,
-                                                teams:    [{name: "Не определено"}, {name: "Не определено"}]
-                                            }]);
-                                        });
-
-                                    }
-                                }
-                            });
-
-                            resolve({stages: tournament.stages, playOff: playOff});
-                        });
                     } else {
-                        resolve({stages: tournament.stages, playOff: null});
+                        resolve({ stages: tournament.stages, playOff: null });
                     }
                 });
 
-                var stats = new Promise(function (resolve, reject) {
-                    remote(remoteConfig.url + '/tournaments/players?ids=' + tournament._id, function (err, response, stats) {
-                        var stat = {
-                            goals:   [],
-                            assists: []
-                        };
+                var stats = new Promise(resolve => {
+                    request(`/tournaments/players?ids=${tournament._id}`)
+                        .then(response => {
+                            const stat = { goals: [], assists: [] };
 
-                        stats      = stats.sort(function (a, b) {
-                            return a.goals >= b.goals ? -1 : 1;
+                            stat.goals = [...response.data]
+                                .sort((a, b) => a.goals >= b.goals ? -1 : 1)
+                                .slice(0, 20);
+
+                            stat.assists = [...response.data]
+                                .sort((a, b) => a.assists >= b.assists ? -1 : 1)
+                                .slice(0, 20);
+
+                            resolve(stat);
                         });
-                        stat.goals = stats.slice(0, 10);
-
-                        stats        = stats.sort(function (a, b) {
-                            return a.assists >= b.assists ? -1 : 1;
-                        });
-                        stat.assists = stats.slice(0, 10);
-
-                        resolve(stats);
-                    });
                 });
 
                 var central = new Promise(function (resolve, reject) {
@@ -309,7 +300,7 @@ module.exports = {
                         type:        'preview',
                         show:        true,
                         centralGame: true
-                    }).sort({dc: -1}).lean().exec(function (err, article) {
+                    }).sort({ dc: -1 }).lean().exec(function (err, article) {
                         if (err) {
                             return reject(err);
                         }
@@ -317,36 +308,38 @@ module.exports = {
                             return resolve(null);
                         }
 
-                        remote(remoteConfig.url + '/games/' + article.gameId, function (err, response, game) {
-                            article.game          = game;
-                            article.game.dateTime = article.game.timestamp ? moment.unix(article.game.timestamp) : null;
+                        request(`/games/${article.gameId}`)
+                            .then(response => {
+                                article.game          = response.data;
+                                article.game.dateTime = article.game.timestamp ? moment.unix(article.game.timestamp) : null;
 
-                            resolve(article);
-                        });
+                                resolve(article);
+                            });
                     });
                 });
 
                 var articles = new Promise(function (resolve, reject) {
-                    GameArticleModel.find({tournament: tournament.remoteId, show: true}).sort({dc: -1}).limit(30).lean().exec(function (err,
-                                                                                                                                        docs) {
+                    GameArticleModel.find({ tournament: tournament.remoteId, show: true }).sort({ dc: -1 }).limit(30).lean().exec(function (err,
+                                                                                                                                            docs) {
                         if (err) {
                             return reject(err);
                         }
 
                         if (!docs.length) {
-                            return resolve({previews: [], reviews: []});
+                            return resolve({ previews: [], reviews: [] });
                         }
 
                         var games = docs.map(function (item) {
                             return item.gameId;
                         });
 
-                        remote(remoteConfig.url + '/games?ids=' + games.join('&ids='), function (err, response, games) {
-                            var previews = prepareArticles('preview', games, docs.slice());
-                            var reviews  = prepareArticles('review', games, docs.slice());
+                        request(`/games?ids=${games.join('&ids=')}`)
+                            .then(response => {
+                                var previews = prepareArticles('preview', response.data, docs.slice());
+                                var reviews  = prepareArticles('review', response.data, docs.slice());
 
-                            resolve({previews: previews, reviews: reviews});
-                        });
+                                resolve({ previews: previews, reviews: reviews });
+                            });
                     })
                 });
 
@@ -355,9 +348,9 @@ module.exports = {
                     PhotoModel.find({
                         tournament: tournament.remoteId,
                         type:       'games',
-                        main:       {'$ne': null},
-                        dc:         {$gte: date}
-                    }).sort({sort: 1}).exec(function (err, docs) {
+                        main:       { '$ne': null },
+                        dc:         { $gte: date }
+                    }).sort({ sort: 1 }).exec(function (err, docs) {
                         if (err) {
                             return reject(err);
                         }
@@ -387,24 +380,23 @@ module.exports = {
                             }
                         });
 
-                        docs = _.groupBy(docs, function (item) {
-                            return item.postId;
-                        });
+                        docs = _.groupBy(docs, item => item.postId);
 
-                        var ids = _.keys(docs);
+                        const ids = _.keys(docs);
 
-                        remote(remoteConfig.url + '/games?ids=' + ids.join('&ids='), function (err, response, games) {
-                            var res = [];
+                        request(`/games?ids=${ids.join('&ids=')}`)
+                            .then(response => {
+                                const res = [];
 
-                            games.forEach(function (item) {
-                                res.push({
-                                    game:   item,
-                                    photos: docs[item._id].slice(0, 5)
-                                })
+                                response.data.forEach(function (item) {
+                                    res.push({
+                                        game:   item,
+                                        photos: docs[item._id].slice(0, 5)
+                                    })
+                                });
+
+                                resolve(res);
                             });
-
-                            resolve(res);
-                        });
                     });
                 });
 
@@ -492,8 +484,8 @@ module.exports = {
     },
 
     table: function (req, res) {
-        LeagueModel.findOne({slug: req.params.league}, function (err, league) {
-            TournamentModel.findOne({slug: req.params.name, leagueId: league._id}, function (err, tournament) {
+        LeagueModel.findOne({ slug: req.params.league }, function (err, league) {
+            TournamentModel.findOne({ slug: req.params.name, leagueId: league._id }, function (err, tournament) {
                 if (err) {
                     return next(err);
                 }
@@ -503,14 +495,14 @@ module.exports = {
                 }
 
                 res.title('Турнирная Таблица');
-                res.render('tournaments/table', {tournament: tournament, pageTable: true});
+                res.render('tournaments/table', { tournament: tournament, pageTable: true });
             });
         });
     },
 
     stats: function (req, res) {
-        LeagueModel.findOne({slug: req.params.league}, function (err, league) {
-            TournamentModel.findOne({slug: req.params.name, leagueId: league._id}, function (err, tournament) {
+        LeagueModel.findOne({ slug: req.params.league }, function (err, league) {
+            TournamentModel.findOne({ slug: req.params.name, leagueId: league._id }, function (err, tournament) {
                 if (err) {
                     return next(err);
                 }
@@ -519,25 +511,22 @@ module.exports = {
                     return next(null);
                 }
 
-                remote(remoteConfig.url + '/tournaments/players?ids=' + tournament._id, function (err, response, stats) {
-                    stats = stats.filter(function (item) {
-                        return !!item.playerId;
-                    });
+                request(`/tournaments/players?ids=${tournament._id}`)
+                    .then(response => {
+                        const stats = response.data
+                            .filter(item => !!item.playerId)
+                            .sort((a, b) => a.goals_assists_hearts_stars >= b.goals_assists_hearts_stars ? -1 : 1);
 
-                    stats = stats.sort(function (a, b) {
-                        return a.goals_assists_hearts_stars >= b.goals_assists_hearts_stars ? -1 : 1;
+                        res.title('Статистика');
+                        res.render('tournaments/stats', { tournament: tournament, stats: stats, pageStats: true });
                     });
-
-                    res.title('Статистика');
-                    res.render('tournaments/stats', {tournament: tournament, stats: stats, pageStats: true});
-                });
             });
         });
     },
 
     fixture: function (req, res) {
-        LeagueModel.findOne({slug: req.params.league}, function (err, league) {
-            TournamentModel.findOne({slug: req.params.name, leagueId: league._id}, function (err, tournament) {
+        LeagueModel.findOne({ slug: req.params.league }, function (err, league) {
+            TournamentModel.findOne({ slug: req.params.name, leagueId: league._id }, function (err, tournament) {
                 if (err) {
                     return next(err);
                 }
@@ -546,43 +535,43 @@ module.exports = {
                     return next(null);
                 }
 
-                remote(remoteConfig.url + '/tournaments/games?ids=' + tournament._id, function (err, response, games) {
-                    games = games.map(function (item) {
-                        item.dateTime = item.timestamp ? moment.unix(item.timestamp) : null;
-                        return item;
-                    });
+                request(`/tournaments/games?ids=${tournament._id}`)
+                    .then(response => {
+                        const games = response.data
+                            .map(game => {
+                                game.dateTime = game.timestamp ? moment.unix(game.timestamp) : null;
 
-                    var sortedGames = games.slice(0);
-                    sortedGames.sort(function (a, b) {
-                        if (a.tourNumber < b.tourNumber) {
-                            return -1;
-                        } else if (a.tourNumber > b.tourNumber) {
-                            return 1;
-                        } else if ((a.dateTime && !b.dateTime) || (a.dateTime && b.dateTime && a.dateTime.isBefore(b.dateTime))) {
-                            return -1;
-                        } else {
-                            return 1;
-                        }
-                    });
+                                return game;
+                            }).sort((a, b) => {
+                                if (a.tourNumber < b.tourNumber) {
+                                    return -1;
+                                } else if (a.tourNumber > b.tourNumber) {
+                                    return 1;
+                                } else if ((a.dateTime && !b.dateTime) || (a.dateTime && b.dateTime && a.dateTime.isBefore(b.dateTime))) {
+                                    return -1;
+                                } else {
+                                    return 1;
+                                }
+                            });
 
-                    var fixture = {};
-                    sortedGames.forEach(function (item) {
-                        if (Object.prototype.toString.call(fixture[item.tourText]) !== '[object Array]') {
-                            fixture[item.tourText] = [];
-                        }
-                        fixture[item.tourText].push(item);
-                    });
+                        var fixture = {};
+                        games.forEach(function (item) {
+                            if (Object.prototype.toString.call(fixture[item.tourText]) !== '[object Array]') {
+                                fixture[item.tourText] = [];
+                            }
+                            fixture[item.tourText].push(item);
+                        });
 
-                    res.title('Календарь');
-                    res.render('tournaments/fixture', {tournament: tournament, fixture: fixture, pageFixture: true});
-                });
+                        res.title('Календарь');
+                        res.render('tournaments/fixture', { tournament: tournament, fixture: fixture, pageFixture: true });
+                    });
             });
         });
     },
 
     globals: function (req, res, next) {
-        var populateCountry  = {path: 'country'};
-        var populateContacts = {path: 'contacts', match: {show: true}, options: {sort: {sort: 1}}};
+        var populateCountry  = { path: 'country' };
+        var populateContacts = { path: 'contacts', match: { show: true }, options: { sort: { sort: 1 } } };
         var series           = [];
 
         var glbsStartTime = new Date().getTime();
@@ -590,13 +579,13 @@ module.exports = {
         /** Get league if defined in request */
         if (req.params.league) {
             series = series.concat(function (cb) {
-                LeagueModel.findOne({slug: req.params.league}).lean().exec(cb);
+                LeagueModel.findOne({ slug: req.params.league }).lean().exec(cb);
             });
         }
 
         /** Get tournament if defined in request */
         series = series.concat(function (league, cb) {
-            var query = {slug: req.params.name};
+            var query = { slug: req.params.name };
 
             if (typeof(league) === 'function') {
                 cb = league;
@@ -619,139 +608,106 @@ module.exports = {
             var tournament = result,
                 parallels  = [];
 
-
             /* Leagues */
             parallels = parallels.concat(function (cb) {
-                var populateOptions = {path: 'countries', match: {show: true}, options: {sort: {'sort': 1}}};
-                LeagueModel.find({show: true}).sort({sort: 1}).populate(populateOptions).exec(cb);
+                var populateOptions = { path: 'countries', match: { show: true }, options: { sort: { 'sort': 1 } } };
+                LeagueModel.find({ show: true }).sort({ sort: 1 }).populate(populateOptions).exec(cb);
             });
 
             /* Table */
             parallels = parallels.concat(function (cb) {
-                var startTime = new Date().getTime();
-                remote(remoteConfig.url + '/tournaments/tables?ids=' + tournament._id, function (err, response, tables) {
-                    var endTime = new Date().getTime();
-                    log('received Tables', (endTime - startTime) + "ms.", response.body.length);
+                request(`/tournaments/tables?ids=${tournament._id}`)
+                    .then(response => {
+                        let tables = response.data.map(function (table) {
+                            table.teams = table.teams.map(function (item) {
+                                item.form = item.form.slice(-5);
+                                return item;
+                            });
 
-                    tables = tables.map(function (table) {
-                        table.teams = table.teams.map(function (item) {
-                            item.form = item.form.slice(-5);
-                            return item;
+                            return table;
                         });
 
-                        return table;
+                        tables = _.sortBy(tables, 'stageName');
+
+                        cb(null, tables);
                     });
-
-                    tables = _.sortBy(tables, 'stageName');
-
-                    endTime = new Date().getTime();
-                    log('processed Tables', (endTime - startTime) + "ms.");
-
-                    cb(null, tables);
-                }).on('response', function (response) {
-                    // unmodified http.IncomingMessage object
-                    var length = 0;
-                    response.on('data', function (data) {
-                        // compressed data as it is received
-                        length += data.length;
-                    });
-                    response.on('end', function (data) {
-                        // compressed data as it is received
-                        log('received ' + length + ' bytes of compressed data')
-                    })
-                });
             });
 
             /* Stats */
             parallels = parallels.concat(function (cb) {
-                var startTime = new Date().getTime();
+                request(`/tournaments/players?ids=${tournament._id}`)
+                    .then(response => {
+                        const goals = response.data
+                            .sort((a, b) => a.goals >= b.goals ? -1 : 1)
+                            .slice(0, 15);
 
-                remote(remoteConfig.url + '/tournaments/players?ids=' + tournament._id, function (err, response, stats) {
-                    var endTime = new Date().getTime();
-                    log('received Stats', (endTime - startTime) + "ms.", response.body.length);
+                        const assists = response.data
+                            .sort((a, b) => a.assists >= b.assists ? -1 : 1)
+                            .slice(0, 15);
 
-                    var goals = stats.sort(function (a, b) {
-                        return a.goals >= b.goals ? -1 : 1;
-                    }).slice(0, 10);
-
-                    var assists = stats.sort(function (a, b) {
-                        return a.assists >= b.assists ? -1 : 1;
-                    }).slice(0, 10);
-
-                    endTime = new Date().getTime();
-                    log('processed Stats', (endTime - startTime) + "ms.");
-
-                    cb(null, {goals: goals, assists: assists});
-                });
+                        cb(null, { goals: goals, assists: assists });
+                    });
             });
 
             /* Recent/comming games widget */
             parallels = parallels.concat(function (cb) {
-                var startTime = new Date().getTime();
+                request(`/tournaments/games?ids=${tournament._id}`)
+                    .then(response => {
 
-                remote(remoteConfig.url + '/tournaments/games?ids=' + tournament._id, function (err, response, result) {
-                    var endTime = new Date().getTime();
-                    log('received Games', (endTime - startTime) + "ms.", response.body.length);
+                        var games = response.data
+                            .map(game => {
+                                game.dateTime = game.timestamp ? moment.unix(game.timestamp) : null;
+                                return game;
+                            }).sort((a, b) => {
+                                if (!a.dateTime && !b.dateTime) {
+                                    return a.tourNumber < b.tourNumber ? -1 : 1;
+                                }
 
-                    var games = result.map(function (item) {
-                        item.dateTime = item.timestamp ? moment.unix(item.timestamp) : null;
-                        return item;
-                    });
+                                if ((a.dateTime && !b.dateTime) || (a.dateTime && b.dateTime && a.dateTime.isBefore(b.dateTime))) {
+                                    return -1;
+                                } else {
+                                    return 1;
+                                }
+                            });
 
-                    // TODO: replace with dateTime
-                    games.sort(function (a, b) {
-                        if (!a.dateTime && !b.dateTime) {
-                            return a.tourNumber < b.tourNumber ? -1 : 1;
-                        }
+                        let recent = games.filter(function (item) {
+                            return item.dateTime && item.state == 'CLOSED';
+                        });
 
-                        if ((a.dateTime && !b.dateTime) || (a.dateTime && b.dateTime && a.dateTime.isBefore(b.dateTime))) {
-                            return -1;
+                        let comming = games
+                            .filter(function (item) {
+                                if (item.teams[0].name.toLowerCase() == 'tbd' || item.teams[1].name.toLowerCase() == 'tbd') {
+                                    return false;
+                                }
+                                return !item.dateTime || (item.dateTime && item.state != 'CLOSED');
+                            })
+                            .slice(0, 12);
+
+                        var dated = comming.filter(function (item) {
+                            return !!item.dateTime;
+                        });
+
+                        if (dated.length) {
+                            comming = dated;
                         } else {
-                            return 1;
+                            if (comming.length) {
+                                comming = _.first(_.values(_.groupBy(comming, 'tourText')));
+                            } else {
+                                comming = [];
+                            }
                         }
+
+                        recent  = _.groupBy(recent.slice(-8), 'tourText');
+                        comming = _.groupBy(comming.slice(0, 10), 'tourText');
+
+                        cb(null, { recent: recent, comming: comming });
                     });
-
-                    var recent = games.filter(function (item) {
-                        return item.dateTime && item.state == 'CLOSED';
-                    });
-
-                    var comming = games.filter(function (item) {
-                        if (item.teams[0].name.toLowerCase() == 'tbd' || item.teams[1].name.toLowerCase() == 'tbd') {
-                            return false;
-                        }
-                        return !item.dateTime || (item.dateTime && item.state != 'CLOSED');
-                    });
-
-                    comming = comming.slice(0, 12);
-
-                    var dated = comming.filter(function (item) {
-                        return !!item.dateTime;
-                    });
-
-                    if (dated.length) {
-                        comming = dated;
-                    } else {
-                        if (comming.length) {
-                            comming = _.first(_.values(_.groupBy(comming, 'tourText')));
-                        } else {
-                            comming = [];
-                        }
-                    }
-
-                    recent  = _.groupBy(recent.slice(-8), 'tourText');
-                    comming = _.groupBy(comming.slice(0, 10), 'tourText');
-
-                    endTime = new Date().getTime();
-                    log('processed Games', (endTime - startTime) + "ms.");
-
-                    cb(null, {recent: recent, comming: comming});
-                });
             });
 
             async.parallel(parallels, function (err, result) {
+                const endTime = new Date().getTime();
 
-                var endTime = new Date().getTime();
-                log('in parallel', (endTime - glbsStartTime) + "ms.");
+                console.info(`Globals finished in ${endTime - glbsStartTime}ms.`);
 
                 res.locals.globals.tournament = tournament;
                 res.locals.globals.leagues    = result[0];
@@ -760,28 +716,10 @@ module.exports = {
                 res.locals.globals.recent     = result[3].recent;
                 res.locals.globals.comming    = result[3].comming;
 
-                var name = Handlebars.helpers['noYear'](tournament.name);
-                res.title(name);
+                res.title(Handlebars.helpers['noYear'](tournament.name));
 
                 next();
             });
         });
     }
 };
-
-function remote(url, cb) {
-    console.info(`[API CALL] ${url}`);
-
-    return request.get({
-        uri:  url,
-        auth: remoteConfig.authOptions,
-        gzip: true,
-        json: true
-    }, cb);
-}
-
-function log(log) {
-    var args = Array.prototype.slice.call(arguments, 0);
-    args     = Array.prototype.concat.call([moment().format('HH:mm:ss:SSS')], args);
-    return console.info.apply(null, args);
-}

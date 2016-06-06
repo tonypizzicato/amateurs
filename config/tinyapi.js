@@ -1,9 +1,9 @@
 "use strict";
 
 module.exports = {
-    url:         'http://sharvester.ru/api',
+    url:         'http://sharvester.ru/api/public',
     authOptions: {
-        user:     "root",
+        username: "root",
         password: "horseremorse"
     }
 };
