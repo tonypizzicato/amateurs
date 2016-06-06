@@ -56,6 +56,7 @@ module.exports = (grunt) ->
                     "<%= yeoman.server %>/controllers/*.js"
                     "<%= yeoman.server %>/controllers/api/*.js"
                     "<%= yeoman.server %>/models/*.js"
+                    "<%= yeoman.server %>/utils/*.js"
                     "<%= yeoman.server %>/views/**/*.hbs"
                 ]
                 tasks: ["express:dev"] #(Re)start the server
