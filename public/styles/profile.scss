@@ -1,0 +1,113 @@
+.profile {
+    .profile__hero {
+        position:   relative;
+        height:     500px;
+        padding:    60px 0 0;
+        text-align: center;
+
+        &:before {
+            content:             '';
+            position:            absolute;
+            top:                 0;
+            bottom:              0;
+            left:                0;
+            right:               0;
+            opacity:             .6;
+
+            background-position: center bottom;
+            filter:              blur(0px) sepia(0.71);
+        }
+
+        &.sc1:before {
+            background-image: url("/images/sc/sc1.jpeg");
+        }
+        &.sc2:before {
+            background-image: url("/images/sc/sc2.jpeg");
+        }
+        &.sc3:before {
+            background-image: url("/images/sc/sc3.jpeg");
+        }
+        &.sc4:before {
+            background-image: url("/images/sc/sc3.jpeg");
+        }
+        &.sc5:before {
+            background-image: url("/images/sc/sc5.jpeg");
+        }
+        &.sc6:before {
+            background-image: url("/images/sc/sc6.jpeg");
+        }
+        &.sc7:before {
+            background-image: url("/images/sc/sc7.jpeg");
+        }
+        &.sc8:before {
+            background-image: url("/images/sc/sc8.jpeg");
+        }
+        &.sc9:before {
+            background-image: url("/images/sc/sc9.jpeg");
+        }
+    }
+
+    .profile__pic-wrapper {
+        position:      relative;
+        display:       inline-block;
+        margin-bottom: 10px;
+    }
+
+    .profile__pic-shadow {
+        display:       inline-block;
+        position:      absolute;
+        width:         100%;
+        height:        100%;
+        box-shadow:    inset 0px 10px 22px 0px rgba(0, 0, 0, 0.78);
+        border-radius: 50%;
+        top:           0;
+        left:          0;
+        z-index:       1;
+    }
+
+    .profile__pic {
+        position:      relative;
+        width:         160px;
+        height:        160px;
+        margin:        15px;
+        border-radius: 50%;
+        z-index:       1;
+        box-shadow:    0px 1px 1px rgba(255, 255, 255, 0.2), 0 0 8px rgba(0, 0, 0, 0.5) inset;
+    }
+
+    .profile__info {
+        position: relative;
+
+        .name {
+            display:        inline-block;
+            font-size:      36px;
+            color:          #fff;
+            text-transform: uppercase;
+            text-shadow:    1px 1px #000;
+        }
+
+        .team {
+            font-size:     24px;
+            margin-bottom: 10px;
+            text-shadow:   1px 1px #000;
+        }
+
+        .info {
+            display:         flex;
+            justify-content: space-between;
+            align-items:     center;
+            font-size:       24px;
+            padding:         25px 100px 24px;
+            background:      rgba(0, 0, 0, .72);
+
+            div {
+                font-size: 48px;
+            }
+
+            .title {
+                width:     100px;
+                font-size: 18px;
+            }
+        }
+    }
+}

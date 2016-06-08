@@ -14,7 +14,8 @@
             <tr>
                 <td class="text_align_c">{{inc @index}}</td>
                 <td class="text_align_l text_overflow_ellipsis">
-                    <span class="tl tl-{{teams.[0]._id}}-20 s_mr_10"></span>{{noSecondName playerName}}
+                    <span class="tl tl-{{teams.[0]._id}}-20 s_mr_10"></span>
+                    <a href="/{{../globals.league.slug}}/players/{{playerId}}">{{noSecondName playerName}}</a>
                 </td>
                 <td class="text_align_c">{{position}}</td>
                 <td class="text_align_c">{{goals}}</td>

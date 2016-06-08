@@ -13,6 +13,7 @@ Router = Backbone.Router.extend
         ':city/tournaments/:tournament/teams/:id': 'team'
         ':city/tournaments/:tournament/fields': 'fields'
         ':city/tournaments/:tournament/stuff': 'stuff'
+        ':city/players/:id': 'player'
         ':city/contacts': 'contacts'
         ':city/fields': 'fields'
         ':city/stuff': 'stuff'
@@ -32,6 +33,9 @@ appRouter.on 'route:tournament', ()->
 
 appRouter.on 'route:team', ()->
     new PageClasses.TeamPage el: $('.container')
+
+appRouter.on 'route:player', ()->
+    new PageClasses.PlayerPage el: $('.container')
 
 appRouter.on 'route:match', ()->
     new PageClasses.MatchPage el: $('.container')
