@@ -7,6 +7,7 @@ module.exports = {
     FieldsPage: require './pages/fields.coffee'
     StuffPage: require './pages/stuff.coffee'
     TeamPage: require './pages/team.coffee'
+    PlayerPage: require './pages/player.coffee'
     AboutPage: require './pages/about.coffee'
     PromoPage: require './pages/promo.coffee'
 }

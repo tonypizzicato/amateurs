@@ -360,6 +360,10 @@ var helpers = {
         }, 0);
 
         return Math.floor((width - padding) / sum);
+    },
+
+    sc: function() {
+        return ` sc${_.random(1, 9)}`;
     }
 };
 

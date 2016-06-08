@@ -10,6 +10,7 @@ var express          = require('express'),
     fields           = require('../controllers/fields'),
     contacts         = require('../controllers/contacts'),
     teams            = require('../controllers/teams'),
+    players          = require('../controllers/players'),
     news             = require('../controllers/news'),
     orders           = require('../controllers/orders'),
     stuff            = require('../controllers/stuff'),
@@ -35,7 +36,7 @@ function t(title) {
     }
 }
 
-var upload  = multer({ dest: __dirname + '/../public/uploads/' });
+var upload = multer({ dest: __dirname + '/../public/uploads/' });
 
 module.exports.initialize = function (app) {
     var apiRouter = express.Router(),
@@ -163,6 +164,7 @@ module.exports.initialize = function (app) {
 
     app.get('/:league(moscow|spb|ekb|kazan|y-ola|rostov|anapa|izhevsk|kiev)', t('Турниры'), news.pre, leagues.item);
 
+    app.get('/:league/players/:id', t(''), news.pre, news.globals, players.item);
     app.get('/:league/contacts', t('Контакты'), news.pre, news.globals, contacts.list);
     app.get('/:league/fields', t('Поля'), news.pre, news.globals, fields.list);
     app.get('/:league/fields/:fieldName', t(''), news.pre, news.globals, fields.item);

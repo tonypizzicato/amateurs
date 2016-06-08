@@ -2,7 +2,7 @@
 
 <div class="row clearfix s_mb_20">
     <div class="col-md-8">
-        <div class="row clearfix">
+        <div class="row clearfix s_mb_20">
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-md-12 s_mb_20">
@@ -169,7 +169,7 @@
             </div>
         {{/if}}
 
-        {{#if reviews}}
+        {{#if reviews.length}}
             <div class="row clearfix s_mb_20">
                 <div class="col-md-12">
                     <div class="panel panel_type_article s_m_0">
@@ -302,16 +302,6 @@
         {{/if}}
 
         <!-- PARTNERS -->
-
-        {{#eq globals.league.slug 'moscow'}}
-            <div class="panel s_m_0">
-                <div class="panel__header">
-                    <i class="fa fa-suitcase text_size_16 s_mr_10"></i> Партнеры
-                </div>
-                <div class="panel__body">
-                    {{> partners}}
-                </div>
-            </div>
-        {{/eq}}
+        {{> partners}}
     </div>
 </div>

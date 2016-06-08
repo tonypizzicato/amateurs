@@ -338,7 +338,7 @@ module.exports = {
                                 var previews = prepareArticles('preview', response.data, docs.slice());
                                 var reviews  = prepareArticles('review', response.data, docs.slice());
 
-                                resolve({ previews: previews, reviews: reviews });
+                                resolve({ previews, reviews });
                             });
                     })
                 });
@@ -442,7 +442,7 @@ module.exports = {
                     });
 
                     docs = docs.filter(function (item) {
-                        return !!item.game;
+                        return !!item.game && item.type == type;
                     });
 
                     var grouped = _.groupBy(docs, function (item) {

@@ -22,7 +22,7 @@
         {{#each stats}}
             <tr class="table__position" data-pos="{{inc @index}}">
                 <td class="text_align_l">{{inc @index}}.</td>
-                <td class="text_align_l text_overflow_ellipsis">{{noSecondName playerName}}</td>
+                <td class="text_align_l text_overflow_ellipsis"><a href="/{{../globals.league.slug}}/players/{{playerId}}">{{noSecondName playerName}}</a></td>
                 <td class="text_align_l text_overflow_ellipsis"><span class="tl tl-{{get (last teams) '_id'}}-20 s_mr_10"></span>{{get (last teams) 'name'}}</td>
                 <td class="text_align_c">{{played}}</td>
                 <td class="text_align_c">{{goals}}</td>

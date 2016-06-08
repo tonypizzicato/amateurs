@@ -18,8 +18,9 @@
                                     {{#each game.events}}
                                         {{#eq side 0}}
                                             {{#eq newtype 'GOAL'}}
-                                                <li class="text_size_12 text_color_light text_align_r">{{noSecondName (ucfirst firstField.name)}}{{#if minute}} {{minute}}
-                                                    '{{/if}}</li>
+                                                <li class="text_size_12 text_color_light text_align_r">
+                                                    <a href="/{{../globals.league.slug}}/players/{{firstField._id}}">{{noSecondName (ucfirst firstField.name)}}</a>
+                                                    {{#if minute}} {{minute}}'{{/if}}</li>
                                             {{/eq}}
                                         {{/eq}}
                                     {{/each}}
@@ -85,7 +86,8 @@
                                         {{#eq side 1}}
                                             {{#eq newtype 'GOAL'}}
                                                 <li class="text_size_12 text_color_light text_align_l">
-                                                    {{#if minute}}{{minute}}' {{/if}}{{noSecondName (ucfirst firstField.name)}}
+                                                    {{#if minute}}{{minute}}' {{/if}}
+                                                    <a href="/{{../globals.league.slug}}/players/{{firstField._id}}">{{noSecondName (ucfirst firstField.name)}}</a>
                                                 </li>
                                             {{/eq}}
                                         {{/eq}}
@@ -126,7 +128,7 @@
                                                                     {{#if number}}{{~number~}}{{else}}&mdash;{{/if}}
                                                         </div>
                                                         <div class="match-lineup__player column col-md-8">
-                                                            {{~noSecondName name~}}
+                                                            <a href="/{{../globals.league.slug}}/players/{{_id}}">{{noSecondName name}}</a>
                                                         </div>
                                                         <div class="match-lineup__player column col-md-2 text_align_c">
                                                                     {{#if position}}{{~position~}}{{else}}&mdash;{{/if}}
@@ -147,7 +149,7 @@
                                                                     {{#if number}}{{~number~}}{{else}}&mdash;{{/if}}
                                                         </div>
                                                         <div class="match-lineup__player column col-md-8">
-                                                            {{~noSecondName name~}}
+                                                            <a href="/{{../globals.league.slug}}/players/{{_id}}">{{noSecondName name}}</a>
                                                         </div>
                                                         <div class="match-lineup__player column col-md-2 text_align_c">
                                                                     {{#if position}}{{~position~}}{{else}}&mdash;{{/if}}
@@ -202,15 +204,12 @@
                                                 <div class="match-events__description pull-right {{#eq side 1}} text_align_r{{/eq~}}
                                                     {{~#if secondField}} match-events__description_double{{/if}}">
 
-                                                    {{~#if firstField.number}}<span class="text_color_orange">{{firstField.number}}
-                                                        .</span> {{/if~}}
-                                                    {{~noSecondName (ucfirst firstField.name)~}}
+                                                    {{~#if firstField.number}}<span class="text_color_orange">{{firstField.number}}.</span> {{/if~}}
+                                                    <a href="/{{../globals.league.slug}}/players/{{firstField._id}}">{{noSecondName (ucfirst firstField.name)}}</a>
                                                     {{~#if secondField~}}
                                                         <br>
-                                                        {{~#if secondField~}}
-                                                            <span class="text_color_light">{{~#if secondField.number~}}{{~secondField.number~}}
-                                                                . {{/if}}{{noSecondName (ucfirst secondField.name)}}</span>
-                                                        {{~/if~}}
+                                                        <span class="text_color_light">{{~#if secondField.number~}}{{~secondField.number~}}. {{/if}}
+                                                        <a href="/{{../globals.league.slug}}/players/{{secondField._id}}">{{noSecondName (ucfirst secondField.name)}}</a>
                                                     {{~/if~}}
                                                 </div>
                                             </div>
@@ -397,5 +396,8 @@
                 </span>
             </div>
         {{/if}}
+
+        <!-- PARTNERS -->
+        {{> partners}}
     </div>
 </div>
