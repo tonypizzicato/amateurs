@@ -319,8 +319,7 @@ module.exports = {
                 });
 
                 var articles = new Promise(function (resolve, reject) {
-                    GameArticleModel.find({ tournament: tournament.remoteId, show: true }).sort({ dc: -1 }).limit(30).lean().exec(function (err,
-                                                                                                                                            docs) {
+                    GameArticleModel.find({ tournament: tournament.remoteId, show: true }).sort({ dc: -1 }).limit(30).lean().exec(function (err, docs) {
                         if (err) {
                             return reject(err);
                         }
@@ -434,6 +433,7 @@ module.exports = {
                         var article = docs.filter(function (doc) {
                             return doc.gameId == item._id && doc.type == type;
                         }).pop();
+
                         if (!article) {
                             return;
                         }
@@ -445,15 +445,15 @@ module.exports = {
                         return !!item.game && item.type == type;
                     });
 
-                    var grouped = _.groupBy(docs, function (item) {
-                        return item.gameId;
-                    });
-
-                    docs = _.flatten(
-                        _.values(grouped).filter(function (item) {
-                            return item.length == 1 && item[0].type == type;
-                        })
-                    );
+                    // var grouped = _.groupBy(docs, function (item) {
+                    //     return item.gameId;
+                    // });
+                    //
+                    // docs = _.flatten(
+                    //     _.values(grouped).filter(function (item) {
+                    //         return item.length == 1 && item[0].type == type;
+                    //     })
+                    // );
 
                     docs.forEach(function (item) {
                         item.game.dateTime = item.game.timestamp ? moment.unix(item.game.timestamp) : null;

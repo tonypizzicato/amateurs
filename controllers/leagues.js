@@ -152,6 +152,9 @@ function leagueName(slug) {
         case 'kiev':
             name = 'Киев';
             break;
+        case 'beach':
+            name = 'Москва. Пляжный футбол';
+            break;
     }
 
     return name;
