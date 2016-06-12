@@ -4,43 +4,47 @@
     <meta charset="UTF-8">
     <title>
         {{#if title}}{{title}} — {{/if}} Amateur Football League. Любительская Футбольная Лига Аматеур {{#eq globals.league.slug 'moscow'~}}
-            Москва
+        Москва
         {{~else~}}
-            {{~#eq globals.league.slug 'spb'~}}
-                Санкт-Петербург
+        {{~#eq globals.league.slug 'spb'~}}
+            Санкт-Петербург
             {{~else~}}
-                {{~#eq globals.league.slug 'ekb'~}}
-                    Екатеринбург
+            {{~#eq globals.league.slug 'ekb'~}}
+                Екатеринбург
                 {{~else~}}
-                    {{~#eq globals.league.slug 'kazan'~}}
-                        Казань
+                {{~#eq globals.league.slug 'kazan'~}}
+                    Казань
                     {{~else~}}
-                        {{~#eq globals.league.slug 'rostov'~}}
-                            Ростов
+                    {{~#eq globals.league.slug 'rostov'~}}
+                        Ростов
                         {{~else~}}
-                            {{~#eq globals.league.slug 'y-ola'~}}
-                                Йошкар-Ола
+                        {{~#eq globals.league.slug 'y-ola'~}}
+                            Йошкар-Ола
                             {{~else~}}
-                                {{~#eq globals.league.slug 'anapa'~}}
-                                    Анапа
+                            {{~#eq globals.league.slug 'anapa'~}}
+                                Анапа
                                 {{~else~}}
-                                    {{~#eq globals.league.slug 'izhevsk'~}}
-                                        Ижевск
+                                {{~#eq globals.league.slug 'izhevsk'~}}
+                                    Ижевск
                                     {{~else~}}
-                                        {{~#eq globals.league.slug 'kiev'~}}
-                                            Киев
+                                    {{~#eq globals.league.slug 'kiev'~}}
+                                        Киев
                                         {{~else~}}
+                                        {{~#eq globals.league.slug 'beach'~}}
+                                            Москва. Пляжный Футбол
+                                            {{~else~}}
                                             NoNname
                                         {{~/eq~}}
-                                        Киев
                                     {{~/eq~}}
+                                    Киев
                                 {{~/eq~}}
                             {{~/eq~}}
                         {{~/eq~}}
                     {{~/eq~}}
                 {{~/eq~}}
             {{~/eq~}}
-        {{~/eq~}}.
+        {{~/eq~}}
+    {{~/eq~}}.
     </title>
 
     <meta name="description" content="{{desc}}">
@@ -82,7 +86,8 @@
                                     <li class="{{#eq 0 @index}}selected{{/eq}}">
                                         <span class="news__time">{{dateTimeShort dc true}}</span>
                                         {{#if ../globals.tournament._id}}
-                                            <a class="news__title" href="/{{../globals.league.slug}}/tournaments/{{../globals.tournament.slug}}/news/{{slug}}">{{title}}</a>
+                                            <a class="news__title"
+                                               href="/{{../globals.league.slug}}/tournaments/{{../globals.tournament.slug}}/news/{{slug}}">{{title}}</a>
                                         {{else}}
                                             {{#if ../globals.league._id}}
                                                 <a class="news__title" href="/{{../globals.league.slug}}/news/{{slug}}">{{title}}</a>
@@ -100,11 +105,13 @@
                             {{#if stick}}
                                 {{#if image}}
                                     <div class="news__content">
-                                        <div class="news__image" style="background-image: url({{image}}); background-size: cover; background-position: 50% {{imagePosition}};"></div>
+                                        <div class="news__image"
+                                             style="background-image: url({{image}}); background-size: cover; background-position: 50% {{imagePosition}};"></div>
 
                                         <div class="news__resume">
                                             {{#if ../globals.tournament._id}}
-                                                <a class="news__title" href="/{{../globals.league.slug}}/tournaments/{{../globals.tournament.slug}}/news/{{slug}}">{{title}}</a>
+                                                <a class="news__title"
+                                                   href="/{{../globals.league.slug}}/tournaments/{{../globals.tournament.slug}}/news/{{slug}}">{{title}}</a>
                                             {{else}}
                                                 {{#if ../globals.league._id}}
                                                     <a class="news__title" href="/{{../globals.league.slug}}/news/{{slug}}">{{title}}</a>
@@ -159,7 +166,7 @@
 {{> photoswipe}}
 
 <script>
-    var cb = function (href) {
+    var cb  = function (href) {
         var l  = document.createElement('link');
         l.rel  = 'stylesheet';
         l.href = href;
@@ -203,31 +210,38 @@
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
     (function (d, w, c) {
-        (w[c] = w[c] || []).push(function() {
+        (w[c] = w[c] || []).push(function () {
             try {
                 w.yaCounter32568270 = new Ya.Metrika({
-                    id:32568270,
-                    clickmap:true,
-                    trackLinks:true,
-                    accurateTrackBounce:true,
-                    webvisor:true
+                    id:                  32568270,
+                    clickmap:            true,
+                    trackLinks:          true,
+                    accurateTrackBounce: true,
+                    webvisor:            true
                 });
-            } catch(e) { }
+            } catch (e) {
+            }
         });
 
-        var n = d.getElementsByTagName("script")[0],
-            s = d.createElement("script"),
-            f = function () { n.parentNode.insertBefore(s, n); };
-        s.type = "text/javascript";
+        var n   = d.getElementsByTagName("script")[0],
+            s   = d.createElement("script"),
+            f   = function () {
+                n.parentNode.insertBefore(s, n);
+            };
+        s.type  = "text/javascript";
         s.async = true;
-        s.src = "https://mc.yandex.ru/metrika/watch.js";
+        s.src   = "https://mc.yandex.ru/metrika/watch.js";
 
         if (w.opera == "[object Opera]") {
             d.addEventListener("DOMContentLoaded", f, false);
-        } else { f(); }
+        } else {
+            f();
+        }
     })(document, window, "yandex_metrika_callbacks");
 </script>
-<noscript><div><img src="https://mc.yandex.ru/watch/32568270" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<noscript>
+    <div><img src="https://mc.yandex.ru/watch/32568270" style="position:absolute; left:-9999px;" alt=""/></div>
+</noscript>
 <!-- /Yandex.Metrika counter -->
 
 
