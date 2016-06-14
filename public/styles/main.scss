@@ -1586,6 +1586,15 @@ $size: 200px;
     border-color: #09509E;
 }
 
+.field__metro_purple {
+    border-bottom-color: #83239e;
+}
+
+.field__metro_purple:after {
+    background:   #570c9e;
+    border-color: #83239e;
+}
+
 .field__metro_grey {
     border-bottom-color: #838383;
 }
