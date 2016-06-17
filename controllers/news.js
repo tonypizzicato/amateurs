@@ -47,31 +47,40 @@ var controller = {
                 return moment(item.dc).locale('ru').format('Do MMMM YYYY, dddd');
             });
 
-            res.render('news/list', {news: docs, pageNews: true});
+            res.render('news/list', { news: docs, pageNews: true });
         });
     },
 
     item: function (req, res, next) {
-        var populateOptions = {path: 'country'};
-        NewsModel.findOne({slug: req.params.slug}).populate(populateOptions).exec(function (err, article) {
-            if (err) {
-                return next(err);
-            }
+        var populateOptions = { path: 'country' };
+        const dateFrom      = moment(req.params.date, "DD-MM-YYYY");
+        const dateTill      = moment(dateFrom).add(1, 'd');
+        console.log(req.params.date, dateFrom.toDate(), dateTill.toDate());
 
-            res.title(article.title);
-            res.render('news/item', {article: article, pageNews: true});
-        })
+        LeagueModel.findOne({ slug: req.params.league }).exec(function (err, league) {
+            NewsModel
+                .findOne({ leagueId: league._id, slug: req.params.slug, dc: { $gte: dateFrom.toDate(), $lte: dateTill.toDate() } })
+                .populate(populateOptions)
+                .exec(function (err, article) {
+                    if (err) {
+                        return next(err);
+                    }
+
+                    res.title(article.title);
+                    res.render('news/item', { article: article, pageNews: true });
+                });
+        });
     },
 
     globals: function (req, res, next) {
         var parallels = [];
         /* Leagues */
-        var populateOptions = {path: 'countries', match: {show: true}, options: {sort: {'sort': 1}}};
-        LeagueModel.find({show: true}).sort({sort: 1}).populate(populateOptions).exec(function (err, league) {
+        var populateOptions = { path: 'countries', match: { show: true }, options: { sort: { 'sort': 1 } } };
+        LeagueModel.find({ show: true }).sort({ sort: 1 }).populate(populateOptions).exec(function (err, league) {
 
             res.locals.globals.leagues = league;
 
-            ContactModel.find({leagueId: res.locals.globals.league._id, show: true, tournaments: []}).sort({sort: 1}).exec(function (err, contacts) {
+            ContactModel.find({ leagueId: res.locals.globals.league._id, show: true, tournaments: [] }).sort({ sort: 1 }).exec(function (err, contacts) {
                 res.locals.globals.contacts = contacts;
 
                 next();
@@ -87,7 +96,7 @@ var getNewsList = function (req, cb) {
 
     /** Get league if defined in request */
     series = series.concat(function (cb) {
-        LeagueModel.findOne({slug: req.params.league}).lean().exec(cb);
+        LeagueModel.findOne({ slug: req.params.league }).lean().exec(cb);
     });
 
     /** Get tournament if defined in request */
@@ -123,10 +132,10 @@ var getNewsList = function (req, cb) {
     });
 
     function findNews(query, cb) {
-        var populateOptions = {path: 'country'};
+        var populateOptions = { path: 'country' };
         query.show          = true;
 
-        NewsModel.find(query).sort({dc: -1}).lean().populate(populateOptions).exec(function (err, docs) {
+        NewsModel.find(query).sort({ dc: -1 }).lean().populate(populateOptions).exec(function (err, docs) {
             cb(err, docs);
         });
     }
