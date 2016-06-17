@@ -172,9 +172,13 @@ module.exports.initialize = function (app) {
     app.get('/:league/bosses', t('Руководители лиги'), news.pre, news.globals, stuff.bosses);
 
     app.get('/:league/news', t('Новости'), news.pre, news.globals, news.list);
-    app.get('/:league/news/:slug', t('Новости'), news.pre, news.globals, news.item);
+    app.get('/:league/news/:date/:slug', t('Новости'), news.pre, news.globals, news.item);
     app.get('/:league/tournaments/:name/news', t('Новости'), news.pre, tournaments.globals, news.list);
-    app.get('/:league/tournaments/:name/news/:slug', t('Новости'), news.pre, tournaments.globals, news.item);
+    app.get('/:league/tournaments/:name/news/:date/:slug', t('Новости'), news.pre, tournaments.globals, news.item);
+
+    // moved
+    app.get('/:league/news/:slug', (req, res) => res.redirect(301, `/${req.params.league}/news`));
+    app.get('/:league/tournaments/:name/news/:slug', (req, res) => res.redirect(301, `/${req.params.league}/tournaments/${req.params.name}/news`));
 
     app.get('/lazy/:league/recent/:name', tournaments.restRecent);
     app.get('/lazy/:league/comming/:name', tournaments.restComming);

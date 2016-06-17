@@ -87,12 +87,12 @@
                                         <span class="news__time">{{dateTimeShort dc true}}</span>
                                         {{#if ../globals.tournament._id}}
                                             <a class="news__title"
-                                               href="/{{../globals.league.slug}}/tournaments/{{../globals.tournament.slug}}/news/{{slug}}">{{title}}</a>
+                                               href="/{{../globals.league.slug}}/tournaments/{{../globals.tournament.slug}}/news/{{dateNews dc}}/{{slug}}">{{title}}</a>
                                         {{else}}
                                             {{#if ../globals.league._id}}
-                                                <a class="news__title" href="/{{../globals.league.slug}}/news/{{slug}}">{{title}}</a>
+                                                <a class="news__title" href="/{{../globals.league.slug}}/news/{{dateNews dc}}/{{slug}}">{{title}}</a>
                                             {{else}}
-                                                <a class="news__title" href="/news/{{slug}}">{{title}}</a>
+                                                <a class="news__title" href="/news/{{dateNews dc}}/{{slug}}">{{title}}</a>
                                             {{/if}}
                                         {{/if}}
                                     </li>
@@ -111,12 +111,12 @@
                                         <div class="news__resume">
                                             {{#if ../globals.tournament._id}}
                                                 <a class="news__title"
-                                                   href="/{{../globals.league.slug}}/tournaments/{{../globals.tournament.slug}}/news/{{slug}}">{{title}}</a>
+                                                   href="/{{../globals.league.slug}}/tournaments/{{../globals.tournament.slug}}/news/{{dateNews dc}}/{{slug}}">{{title}}</a>
                                             {{else}}
                                                 {{#if ../globals.league._id}}
-                                                    <a class="news__title" href="/{{../globals.league.slug}}/news/{{slug}}">{{title}}</a>
+                                                    <a class="news__title" href="/{{../globals.league.slug}}/news/{{dateNews dc}}/{{slug}}">{{title}}</a>
                                                 {{else}}
-                                                    <a class="news__title" href="/news/{{slug}}">{{title}}</a>
+                                                    <a class="news__title" href="/news/{{dateNews dc}}/{{slug}}">{{title}}</a>
                                                 {{/if}}
                                             {{/if}}
 

@@ -152,6 +152,10 @@ var helpers = {
         return dateFn(date, 'Do MMMM YYYY', tz);
     },
 
+    dateNews: function (date) {
+        return dateFn(date, 'DD-MM-YYYY');
+    },
+
     dateDay: function (date, tz) {
         return dateFn(date, 'dddd', tz);
     },
