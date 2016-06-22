@@ -10,7 +10,7 @@
             >
 
             <div class="match-lineup__player column col-md-8">
-                {{~name~}}
+                <a href="/{{../globals.league.slug}}/players/{{_id}}">{{name}}</a>
             </div>
             <div class="match-lineup__player column col-md-1 text_align_c">
                         {{~#if position}}{{~position~}}{{else}}&mdash;{{/if~}}
