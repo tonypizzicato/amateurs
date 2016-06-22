@@ -56,7 +56,7 @@ module.exports = {
         });
 
         var fields = function (query) {
-            FieldModel.find(query).exec(function (err, fields) {
+            FieldModel.find(query).sort({ sort: 1 }).exec(function (err, fields) {
                 res.render('fields/list', { fields: fields, pageFields: true });
             });
         }
