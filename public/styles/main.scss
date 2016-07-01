@@ -147,7 +147,9 @@ ul, ol {
     line-height: 1.7;
 
     img {
+        display: block;
         max-width: 100%;
+        margin: 20px auto;
     }
 }
 
