@@ -241,7 +241,7 @@ function processImage(path, name) {
         img.resize(w, h);
 
         img.write(path, function (err) {
-            console.info('Processed image. ' + path);
+            console.info('Processed image. ' + name);
         });
     });
 }
@@ -254,7 +254,7 @@ function extractImages(doc, req) {
         index = 0;
 
     var path = '/uploads/' + doc.country + '/';
-    var dir  = __dirname + '/../../' + (process.env == 'production' ? 'dist' : 'public') + path;
+    var dir  = __dirname + '/../../' + (process.env.NODE_ENV == 'production' ? 'dist' : 'public') + path;
 
     doc.body = doc.body.replace(regex, function (src, format, data) {
         if (!fs.existsSync(dir)) {
