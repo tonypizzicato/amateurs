@@ -1,6 +1,8 @@
 "use strict";
 
-var fs              = require('fs.extra'),
+var _               = require('lodash'),
+    fs              = require('fs.extra'),
+    moment          = require('moment'),
     transliteration = require('transliteration'),
     NewsModel       = require('../../models/news'),
     CategoryModel   = require('../../models/category'),
@@ -76,7 +78,7 @@ var api = {
         console.info('/api/news PUT handled');
 
         saveArticle(req, function (doc) {
-            NewsModel.update({ _id: req.params.id }, { $set: doc }, function (err, count) {
+            NewsModel.update({ _id: req.params.id }, { $set: _.omit(doc, ['author']) }, function (err, count) {
                 if (err) {
                     console.info(err);
                     res.status(500).json({ error: err });
@@ -255,13 +257,14 @@ function extractImages(doc, req) {
 
     var path = '/uploads/' + doc.country + '/';
     var dir  = __dirname + '/../../' + (process.env.NODE_ENV == 'production' ? 'dist' : 'public') + path;
+    var date = doc.dc ? moment(doc.dc) : moment();
 
     doc.body = doc.body.replace(regex, function (src, format, data) {
         if (!fs.existsSync(dir)) {
             fs.mkdirRecursiveSync(dir);
         }
 
-        filename = transliteration.slugify(doc.title) + '-' + index++ + "." + format;
+        filename = transliteration.slugify(doc.title) + '-' + date.format('DD-MM-YYYY-HH-mm') + '-' + index++ + "." + format;
         fullPath = dir + filename;
         imageUrl = req.protocol + '://' + req.headers.host + path + filename;
 
