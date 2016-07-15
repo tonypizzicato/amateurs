@@ -140,6 +140,9 @@ module.exports.initialize = function (app) {
     app.get('/about', t('О Лиге'), function (req, res) {
         res.render('static/about', { pageAbout: true });
     });
+    app.get('/landing', t('О Лиге'), function (req, res) {
+        res.render('landing', { layout: false });
+    });
 
     app.get('/login', auth.loginPage);
     app.get('/account', auth.account);

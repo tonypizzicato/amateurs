@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head lang="en">
+
+    <meta charset="UTF-8">
+
+    <meta name="description" content="{{desc}}">
+
+    <meta name='viewport' content='width=1170'>
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+
+    <!-- build:css({public,.tmp,node_modules}) /styles/landing_vendor.css -->
+    <link rel="stylesheet" href="/animate.css/animate.css">
+    <link rel="stylesheet" href="/normalize.css/normalize.css">
+    <!-- endbuild -->
+
+    <!-- build:css({public,.tmp}) /styles/landing_main.css -->
+    <link rel="stylesheet" href="/styles/landing.css">
+    <!-- endbuild -->
+</head>
+<body>
+    <header class="header">
+        <div class="header__arrow">
+            <div class="header__arrow">
+                <div class="header__bg">
+                    <span class="header__title">amateursio</span>
+                    <span class="header__join animated fade">
+                        <span class="header__join__label">Присоединяйся</span>
+                        <span class="header__join__text"><span>Футбольная</span> <span>Революция</span></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section id="join" class="section-join">
+            <div class="section-join__content animated fade">
+                <div class="section-join__title">Стань частью <span class="underscore">команды</span></div>
+                <div class="section-join__text">
+                    Моделирование крупнейших мировых лиг и международных футбольных соревнований в «игровой форме», когда множество любительских команд
+                    организовано в соревновательной футбольной среде под видом известных команд и сборных европейских, американских и пр. стран.
+                    (Названия команд и стран сочетаются с оригинальными именами конкретных лиц, участвующих в соревнованиях).
+                    Предоставление удобной, недорогой, интересной и спортивно-конкурентной базы для занятия любительским футболом той группы молодежи
+                    и лиц среднего возраста, у которых либо было «футбольное прошлое», либо есть расчет на «футбольное будущее» любительского уровня.
+                </div>
+                <a href="http://amateurs.io/moscow" class="section-join__button" target="_blank">Вступай в игру</a>
+            </div>
+            <div class="section-join__video animated fade">
+                <iframe width="518" height="290" src="https://www.youtube.com/embed/gm4fHMnBCWQ" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section id="members" class="section-members">
+            <div class="section-members__title animated fade">
+                <div class="section-members__label">Стань</div>
+                <div class="section-members__text">
+                    <span>Рево</span>
+                    <span>люц</span>
+                    <span>ионе</span>
+                    <span>ром</span>
+                </div>
+            </div>
+
+            <div id="members-list" class="section-member__list">
+                <div class="section-member__item-wrapper animated fade">
+                    <div class="section-member__item"><span>Фотограф</span></div>
+                </div>
+                <div class="section-member__item-wrapper animated fade">
+                    <div class="section-member__item"><span>Судья</span></div>
+                </div>
+                <div class="section-member__item-wrapper animated fade">
+                    <div class="section-member__item"><span>Игрок</span></div>
+                </div>
+                <div class="section-member__item-wrapper animated fade">
+                    <div class="section-member__item"><span>Тренер</span></div>
+                </div>
+                <div class="section-member__item-wrapper animated fade">
+                    <div class="section-member__item"><span>Оператор</span></div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <span>logo</span>
+        <span>handcrafted by tonypizzicato</span>
+    </footer>
+
+    <script>
+        var cb  = function (href) {
+            var l  = document.createElement('link');
+            l.rel  = 'stylesheet';
+            l.href = href;
+            var h  = document.getElementsByTagName('head')[0];
+            h.parentNode.insertBefore(l, h);
+        };
+        var raf = requestAnimationFrame || mozRequestAnimationFrame ||
+                webkitRequestAnimationFrame || msRequestAnimationFrame;
+        if (raf) {
+            raf(cb.bind(null, 'https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&subset=latin,cyrillic'));
+        }
+        else window.addEventListener('load', cb);
+    </script>
+
+    <!-- build:js({public,.tmp}) /scripts/landing_out.js -->
+    <script src="/scripts/landing_out.js"></script>
+    <!-- endbuild -->
+
+
+</body>
+</html>
