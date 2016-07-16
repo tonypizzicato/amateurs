@@ -121,9 +121,10 @@ module.exports = (grunt) ->
                 files: [{
                     src: ["<%= yeoman.public %>/scripts/app.coffee"]
                     dest: ".tmp/scripts/out.js"
+                },{
+                    src: ["<%= yeoman.public %>/scripts/landing/landing.coffee"]
+                    dest: ".tmp/scripts/landing_out.js"
                 }]
-                options:
-                    debug: true
 
 
     #uglify2: {} // https://github.com/mishoo/UglifyJS2
@@ -162,6 +163,7 @@ module.exports = (grunt) ->
             html: [
                 "<%= yeoman.public %>/promo/nationals.html"
                 "<%= yeoman.server %>/views/layout.hbs"
+                "<%= yeoman.server %>/views/landing.hbs"
             ]
 
 
