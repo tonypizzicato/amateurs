@@ -27,13 +27,21 @@
                                 {{~#eq globals.league.slug 'izhevsk'~}}
                                     Ижевск
                                     {{~else~}}
-                                    {{~#eq globals.league.slug 'kiev'~}}
-                                        Киев
+                                    {{~#eq globals.league.slug 'chita'~}}
+                                        Чита
                                         {{~else~}}
-                                        {{~#eq globals.league.slug 'beach'~}}
-                                            Москва. Пляжный Футбол
+                                        {{~#eq globals.league.slug 'sochi'~}}
+                                            Сочи
                                             {{~else~}}
-                                            NoNname
+                                            {{~#eq globals.league.slug 'kiev'~}}
+                                                Киев
+                                                {{~else~}}
+                                                {{~#eq globals.league.slug 'beach'~}}
+                                                    Москва. Пляжный Футбол
+                                                    {{~else~}}
+                                                    NoNname
+                                                {{~/eq~}}
+                                            {{~/eq~}}
                                         {{~/eq~}}
                                     {{~/eq~}}
                                     Киев

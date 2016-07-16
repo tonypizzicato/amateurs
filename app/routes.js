@@ -140,6 +140,9 @@ module.exports.initialize = function (app) {
     app.get('/about', t('О Лиге'), function (req, res) {
         res.render('static/about', { pageAbout: true });
     });
+    app.get('/intro', t('Любительская футбольная лига Аматеур'), function (req, res) {
+        res.render('landing', { layout: false });
+    });
 
     app.get('/login', auth.loginPage);
     app.get('/account', auth.account);
@@ -162,7 +165,7 @@ module.exports.initialize = function (app) {
     app.get('/:league/tournaments/:name/fields/:fieldName', t(''), news.pre, tournaments.globals, fields.item);
     app.get('/:league/tournaments/:name', t('Чемпионат'), news.pre, tournaments.globals, tournaments.item);
 
-    app.get('/:league(moscow|spb|ekb|kazan|y-ola|rostov|anapa|izhevsk|kiev|beach)', t('Турниры'), news.pre, leagues.item);
+    app.get('/:league(moscow|spb|ekb|kazan|y-ola|rostov|anapa|izhevsk|chita|sochi|kiev|beach)', t('Турниры'), news.pre, leagues.item);
 
     app.get('/:league/players/:id', t(''), news.pre, news.globals, players.item);
     app.get('/:league/contacts', t('Контакты'), news.pre, news.globals, contacts.list);

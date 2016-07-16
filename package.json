@@ -45,6 +45,7 @@
     "multer": "^1.1.0",
     "node-rest-client": "^1.8.0",
     "nodemailer": "^2.3.0",
+    "normalize.css": "^4.2.0",
     "owl.carousel": "git+https://github.com/tonypizzicato/OwlCarousel2#master",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
