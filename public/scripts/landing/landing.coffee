@@ -21,9 +21,15 @@ $ ->
         element: document.getElementById('members-list'),
         offset: '50%'
         handler: () ->
-            $('.section-member__item-wrapper').addClass 'fadeInUp'
+            $('.section-members__item-wrapper').addClass 'fadeInUp'
     )
-
+    new Waypoint(
+        element: document.getElementById('map'),
+        offset: '50%'
+        handler: () ->
+            $('.section-map__content').addClass 'fadeInUp'
+            $('.section-map__pointer').addClass 'fadeInDown'
+    )
 
 #    $('#join').waypoint () ->
 #        console.log 'wp 1 reached'

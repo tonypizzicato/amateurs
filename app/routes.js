@@ -140,7 +140,7 @@ module.exports.initialize = function (app) {
     app.get('/about', t('О Лиге'), function (req, res) {
         res.render('static/about', { pageAbout: true });
     });
-    app.get('/landing', t('О Лиге'), function (req, res) {
+    app.get('/intro', t('Любительская футбольная лига Аматеур'), function (req, res) {
         res.render('landing', { layout: false });
     });
 

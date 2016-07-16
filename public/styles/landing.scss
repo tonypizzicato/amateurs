@@ -15,7 +15,8 @@ body {
 }
 
 header {
-    height: calc(100vh - 50px);
+    height:     calc(100vh - 50px);
+    min-height: 900px;
 }
 
 main {
@@ -141,7 +142,9 @@ footer {
 //                     Section Join                       //
 // ====================================================== //
 
-.section-join {
+.section-join,
+.section-map,
+.section-plans {
     height:          900px;
     padding:         0 50px;
     background:      #fff url("/images/landing/join.jpg");
@@ -153,18 +156,21 @@ footer {
 }
 
 @media (min-width: 1360px) {
-    .section-join {
+    .section-join,
+    .section-map {
         padding: 0 100px;
     }
 }
 
 @media (min-width: 1600px) {
-    .section-join {
+    .section-join,
+    .section-map {
         padding: 0 200px;
     }
 }
 
-.section-join__content {
+.section-join__content,
+.section-map__content {
     width: 500px;
 }
 
@@ -173,7 +179,8 @@ footer {
     animation-delay: .3s;
 }
 
-.section-join__title {
+.section-join__title,
+.section-map__title {
     text-transform: uppercase;
     font-size:      28px;
     font-weight:    bold;
@@ -181,13 +188,15 @@ footer {
     line-height:    2;
 }
 
-.section-join__text {
+.section-join__text,
+.section-map__text {
     font-size:   14px;
     line-height: 2;
     text-align:  justify;
 }
 
-.section-join__button {
+.section-join__button,
+.section-map__button {
     display:         inline-block;
     overflow-y:      hidden;
     position:        relative;
@@ -201,28 +210,24 @@ footer {
     text-transform:  uppercase;
 
     &:hover::before {
-        transform: scale3d(9, 9, 1);
+        transform: scale3d(12, 9, 1);
     }
 
     &::before {
-        content:                            '';
-        z-index:                            -1;
-        position:                           absolute;
-        top:                                50%;
-        right:                              0;
-        margin:                             -15px 0 0 1px;
-        width:                              30px;
-        height:                             30px;
-        border-radius:                      50%;
-        background:                         #eed679;
-        -webkit-transform-origin:           100% 50%;
-        transform-origin:                   100% 50%;
-        -webkit-transform:                  scale3d(1, 2, 1);
-        transform:                          scale3d(1, 2, 1);
-        -webkit-transition:                 -webkit-transform 0.3s, opacity 0.3s;
-        transition:                         transform 0.3s, opacity 0.3s;
-        -webkit-transition-timing-function: cubic-bezier(0.7, 0, 0.9, 1);
-        transition-timing-function:         cubic-bezier(0.7, 0, 0.9, 1);
+        content:                    '';
+        z-index:                    -1;
+        position:                   absolute;
+        top:                        50%;
+        right:                      0;
+        margin:                     -15px 0 0 1px;
+        width:                      30px;
+        height:                     30px;
+        border-radius:              50%;
+        background:                 #eed679;
+        transform-origin:           100% 50%;
+        transform:                  scale3d(1, 2, 1);
+        transition:                 transform 0.3s, opacity 0.3s;
+        transition-timing-function: cubic-bezier(0.7, 0, 0.9, 1);
     }
 
     &::after {
@@ -245,7 +250,7 @@ footer {
 // ====================================================== //
 
 .section-members {
-    height:          900px;
+    height:          1000px;
     background:      #fff url("/images/landing/members.jpg");
     background-size: cover;
 
@@ -276,27 +281,38 @@ footer {
     flex-direction: column;
 
     :nth-child(1) {
-        letter-spacing: 13px;
+        letter-spacing: 18px;
     }
     :nth-child(2) {
-        letter-spacing: 32px;
+        letter-spacing: 30px;
     }
     :nth-child(4) {
-        letter-spacing: 38px;
+        letter-spacing: 37px;
     }
 }
 
-.section-member__list {
-    display: flex;
+.section-members__question {
+    color:      #fff;
+    font-size:  18px;
+    font-style: italic;
+
+    .underscore {
+        border-width: 2px;
+    }
 }
 
-.section-member__item-wrapper {
+.section-members__list {
+    display:       flex;
+    margin-bottom: 60px;
+}
+
+.section-members__item-wrapper {
     position: relative;
     height:   420px;
     width:    260px;
     z-index:  2;
 
-    .section-member__item {
+    .section-members__item {
         position:       relative;
         height:         100%;
         background:     #fff;
@@ -333,19 +349,19 @@ footer {
         }
     }
 
-    &:nth-child(1) .section-member__item {
+    &:nth-child(1) .section-members__item {
         background: #1C262F url("/images/landing/photographer.jpg");
     }
-    &:nth-child(2) .section-member__item {
+    &:nth-child(2) .section-members__item {
         background: #1C262F url("/images/landing/ref.jpg");
     }
-    &:nth-child(3) .section-member__item {
+    &:nth-child(3) .section-members__item {
         background: #1C262F url("/images/landing/player.jpg");
     }
-    &:nth-child(4) .section-member__item {
+    &:nth-child(4) .section-members__item {
         background: #1C262F url("/images/landing/coach.jpg");
     }
-    &:nth-child(5) .section-member__item {
+    &:nth-child(5) .section-members__item {
         background: #1C262F url("/images/landing/operator.jpg");
     }
 
@@ -362,7 +378,7 @@ footer {
     &:nth-child(3) {
         z-index: 3;
 
-        .section-member__item {
+        .section-members__item {
             transform: scale(.95);
         }
     }
@@ -380,7 +396,7 @@ footer {
     &:nth-child(5) {
         animation-delay: .5s;
 
-        .section-member__item {
+        .section-members__item {
             transform: scale(.75);
         }
     }
@@ -388,27 +404,27 @@ footer {
     &:nth-child(4) {
         animation-delay: .3s;
 
-        .section-member__item {
+        .section-members__item {
             transform: scale(.85);
         }
     }
 
     &:nth-child(1),
     &:nth-child(2) {
-        .section-member__item {
+        .section-members__item {
             transform-origin: 100% 50%;
         }
     }
 
     &:nth-child(4),
     &:nth-child(5) {
-        .section-member__item {
+        .section-members__item {
             transform-origin: 0 50%;
         }
     }
 
     &:hover {
-        .section-member__item {
+        .section-members__item {
             font-size: 28px;
 
             &::after {
@@ -419,25 +435,160 @@ footer {
         transition: transform .34s cubic-bezier(0.44, 0.53, 0.19, 1.57);
 
         &:nth-child(3) {
-            .section-member__item {
+            .section-members__item {
                 transform: scale(1);
             }
         }
 
         &:nth-child(2),
         &:nth-child(4) {
-            .section-member__item {
+            .section-members__item {
                 transform: scale(.9);
             }
         }
 
         &:nth-child(1),
         &:nth-child(5) {
-            .section-member__item {
+            .section-members__item {
                 transform: scale(.8);
             }
         }
     }
+}
+
+// ====================================================== //
+//                     Section map                        //
+// ====================================================== //
+
+.section-map {
+    position:   relative;
+    height:     900px;
+    padding:    0 30px;
+    background: transparent url("/images/landing/map.png") right top no-repeat;
+
+    &::before {
+        content:    "";
+        position:   absolute;
+        left:       0;
+        top:        0;
+        right:      0;
+        bottom:     0;
+        z-index:    -1;
+        background: #fff url("/images/landing/map-abstract.jpg") -780px 400px no-repeat;
+    }
+}
+
+@media (min-width: 1360px) {
+    .section-map {
+        padding: 0 80px;
+
+        &::before {
+            background-position: -720px 360px;
+        }
+    }
+}
+
+@media (min-width: 1600px) {
+    .section-map {
+        padding: 0 80px;
+    }
+}
+
+.section-map__content {
+    padding:       20px;
+    width:         540px;
+    background:    rgba(255, 255, 255, .5);
+    border-radius: 20px;
+    z-index:       1;
+}
+
+.section-map__pointer {
+    height:                    80px;
+    width:                     56px;
+    position:                  absolute;
+
+    animation-duration:        .4s;
+    animation-timing-function: cubic-bezier(0.65, 0.05, 0.32, 1.14);
+
+    &::before {
+        display:       block;
+        width:         19px;
+        height:        6px;
+        border-radius: 50%;
+        background:    #847b7b;
+        content:       "";
+        position:      absolute;
+        bottom:        -4px;
+        left:          19px;
+        z-index:       -1;
+    }
+
+    &::after {
+        content:         "";
+        width:           100%;
+        height:          100%;
+        display:         block;
+        background:      transparent url("/images/landing/pointer.png");
+        background-size: cover;
+    }
+
+    &.section-map__pointer_type_moscow {
+        top:             156px;
+        right:           685px;
+
+        animation-delay: .52s;
+    }
+    &.section-map__pointer_type_spb {
+        top:             -67px;
+        right:           893px;
+
+        animation-delay: .87s;
+    }
+    &.section-map__pointer_type_kiev {
+        top:             406px;
+        right:           887px;
+
+        animation-delay: .34s;
+    }
+    &.section-map__pointer_type_ekb {
+        top:             100px;
+        right:           31px;
+
+        animation-delay: .66s;
+    }
+    &.section-map__pointer_type_anapa {
+        top:             644px;
+        right:           694px;
+
+        animation-delay: 1s;
+    }
+    &.section-map__pointer_type_sochi {
+        top:             697px;
+        right:           625px;
+
+        animation-delay: .91s;
+    }
+    &.section-map__pointer_type_kazan {
+        right:           358px;
+        top:             153px;
+
+        animation-delay: .37s;
+    }
+    &.section-map__pointer_type_rostov {
+        top:             548px;
+        right:           626px;
+
+        animation-delay: 1.2s;
+    }
+}
+
+// ====================================================== //
+//                    Section plans                       //
+// ====================================================== //
+
+.section-plans {
+    background:      transparent url("/images/landing/plans.jpg");
+    background-size: cover;
 }
 
 // ====================================================== //
@@ -500,8 +651,25 @@ footer {
     }
 }
 
+@keyframes fadeInDown {
+    from {
+        opacity:   0;
+        transform: translate3d(0, -100%, 0);
+    }
+
+    to {
+        opacity:   1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
 .fadeInUp {
     animation-duration:        .4s;
     animation-timing-function: ease-in;
     animation-name:            fadeInUp;
+}
+
+.fadeInDown {
+    animation-duration: .4s;
+    animation-name:     fadeInDown;
 }
