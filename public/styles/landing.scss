@@ -15,23 +15,30 @@ body {
 }
 
 header {
-    height:     calc(100vh - 50px);
-    min-height: 900px;
+    height: 1020px;
 }
 
 main {
     flex: 1;
 }
 
-footer {
+.footer {
     display:         flex;
     justify-content: space-between;
     align-items:     center;
 
-    padding:         50px;
+    padding:         20px 50px;
     font-size:       12px;
     background:      #171E28;
     color:           #AFB6BC;
+}
+
+.footer__logo {
+    display:         inline-block;
+    width:           70px;
+    height:          100px;
+    background:      transparent url("/images/landing/pointer.png");
+    background-size: cover;
 }
 
 .header__arrow,
@@ -73,13 +80,12 @@ footer {
 }
 
 .header__bg {
-    background:      #171e28 url("https://images.unsplash.com/photo-1428200698796-38743f953a43?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=4ba2cfe3e298784ac3962ab7bf8d99b1");
-    background-size: contain;
-    transition:      0.4s cubic-bezier(1, -1, 0, 2);
-    clip-path:       polygon(0 0, 100% 0, 100% 40%, 50% 80%, 0 40%);
+    background:     #1b2531 url("/images/landing/header_ball.jpg") center top no-repeat;
+    transition:     0.4s cubic-bezier(1, -1, 0, 2);
+    clip-path:      polygon(0 0, 100% 0, 100% 40%, 50% 80%, 0 40%);
 
-    display:         flex;
-    flex-direction:  column;
+    display:        flex;
+    flex-direction: column;
 }
 
 .header__title {
@@ -145,7 +151,7 @@ footer {
 .section-join,
 .section-map,
 .section-plans {
-    height:          900px;
+    height:          800px;
     padding:         0 50px;
     background:      #fff url("/images/landing/join.jpg");
     background-size: cover;
@@ -254,6 +260,10 @@ footer {
     background:      #fff url("/images/landing/members.jpg");
     background-size: cover;
 
+    position:        relative;
+    z-index:         2;
+    clip-path:       polygon(0 0, 100% 0, 100% 95%, 0 100%);
+
     display:         flex;
     flex-direction:  column;
     align-items:     center;
@@ -303,7 +313,7 @@ footer {
 
 .section-members__list {
     display:       flex;
-    margin-bottom: 60px;
+    margin-bottom: 100px;
 }
 
 .section-members__item-wrapper {
@@ -462,8 +472,9 @@ footer {
 
 .section-map {
     position:   relative;
-    height:     900px;
+    height:     980px;
     padding:    0 30px;
+    margin-top: -80px;
     background: transparent url("/images/landing/map.png") right top no-repeat;
 
     &::before {
@@ -474,7 +485,7 @@ footer {
         right:      0;
         bottom:     0;
         z-index:    -1;
-        background: #fff url("/images/landing/map-abstract.jpg") -780px 400px no-repeat;
+        background: #fff url("/images/landing/map-abstract.jpg") -320px 500px no-repeat;
     }
 }
 
@@ -483,14 +494,18 @@ footer {
         padding: 0 80px;
 
         &::before {
-            background-position: -720px 360px;
+            background-position: -180px 480px;
         }
     }
 }
 
-@media (min-width: 1600px) {
+@media (min-width: 1560px) {
     .section-map {
         padding: 0 80px;
+
+        &::before {
+            background-position: -40px bottom;
+        }
     }
 }
 
@@ -499,7 +514,16 @@ footer {
     width:         540px;
     background:    rgba(255, 255, 255, .5);
     border-radius: 20px;
-    z-index:       1;
+    z-index:       3;
+}
+
+.section-map__pointers {
+    position: absolute;
+    left:     0;
+    top:      0;
+    right:    0;
+    bottom:   0;
+    z-index:  2;
 }
 
 .section-map__pointer {
@@ -533,49 +557,65 @@ footer {
     }
 
     &.section-map__pointer_type_moscow {
-        top:             156px;
+        top:             226px;
         right:           685px;
 
         animation-delay: .52s;
     }
     &.section-map__pointer_type_spb {
-        top:             -67px;
+        top:             3px;
         right:           893px;
 
         animation-delay: .87s;
     }
     &.section-map__pointer_type_kiev {
-        top:             406px;
+        top:             476px;
         right:           887px;
 
         animation-delay: .34s;
     }
     &.section-map__pointer_type_ekb {
-        top:             100px;
+        top:             170px;
         right:           31px;
 
         animation-delay: .66s;
     }
     &.section-map__pointer_type_anapa {
-        top:             644px;
+        top:             714px;
         right:           694px;
 
         animation-delay: 1s;
     }
     &.section-map__pointer_type_sochi {
-        top:             697px;
+        top:             767px;
         right:           625px;
 
         animation-delay: .91s;
     }
     &.section-map__pointer_type_kazan {
+        top:             223px;
         right:           358px;
-        top:             153px;
 
         animation-delay: .37s;
+
+        &::after {
+            transform:        rotate(8deg);
+            transform-origin: 50% 100%;
+        }
+    }
+    &.section-map__pointer_type_ola {
+        top:             184px;
+        right:           394px;
+
+        animation-delay: .97s;
+
+        &::after {
+            transform:        rotate(-8deg);
+            transform-origin: 50% 100%;
+        }
     }
     &.section-map__pointer_type_rostov {
-        top:             548px;
+        top:             618px;
         right:           626px;
 
         animation-delay: 1.2s;
@@ -583,12 +623,74 @@ footer {
 }
 
 // ====================================================== //
+//                   Section devices                      //
+// ====================================================== //
+
+.section-devices {
+    height:          660px;
+    margin-top:      -20px;
+
+    color:           #fff;
+    background:      #1a2430 url("/images/landing/plans.jpg");
+    background-size: cover;
+    clip-path:       polygon(0 0, 100% 7%, 100% 100%, 0 100%);
+
+}
+
+.section-devices__devices {
+}
+
+.section-devices__book {
+    width:      570px;
+    height:     694px;
+    background: transparent url("/images/landing/book.png");
+}
+
+.section-devices__phone {
+    width:      120px;
+    height:     320px;
+    background: transparent url("/images/landing/phone.png");
+}
+
+// ====================================================== //
 //                    Section plans                       //
 // ====================================================== //
 
 .section-plans {
-    background:      transparent url("/images/landing/plans.jpg");
+    padding:         120px 0;
+    color:           #fff;
+    background:      #1a2430 url("/images/landing/plans.jpg");
     background-size: cover;
+    clip-path:       polygon(0 0, 100% 7%, 100% 100%, 0 100%);
+
+    display:         flex;
+    flex-direction:  column;
+    justify-content: space-around;
+    align-items:     center;
+}
+
+.section-plans__title {
+    font-size:      48px;
+    text-transform: uppercase;
+}
+
+.section-plans__text {
+    width:       600px;
+    line-height: 2;
+    font-size:   13px;
+    text-align:  center;
+    text-shadow: 0 1px #000;
+    position:    relative;
+
+    &::after {
+        content:       "";
+        display:       block;
+        position:      absolute;
+        width:         300px;
+        bottom:        -60px;
+        margin:        0 150px;
+        border-bottom: 1px solid #5f6a75;
+    }
 }
 
 // ====================================================== //
