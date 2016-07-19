@@ -12,6 +12,44 @@ var _                = require('lodash'),
     Promise          = require('promise'),
     Handlebars       = require('hbs').handlebars;
 
+const playerFieldsToSum = [
+    'played',
+    'goals',
+    'assists',
+    'goals_assists',
+    'hearts',
+    'stars',
+    'hearts_stars',
+    'goals_assists_hearts_stars',
+    'penGoals',
+    'fkGoals',
+    'noAssistGoals',
+    'assistGoals',
+    'yellowCards',
+    'redCards'
+];
+
+
+const sumStats = stats => {
+    const result = {};
+
+    stats.forEach(player => {
+        if (result.hasOwnProperty(player.playerId)) {
+            var summed = playerFieldsToSum.reduce((player, field) => _.merge(player, { [field]: player[field] + result[player.playerId][field]}), player);
+
+            player     = {
+                ...player,
+                ...summed
+            }
+        }
+
+        result[player.playerId] = player;
+    });
+
+    return _.values(result);
+};
+
+
 module.exports = {
     restRecent: function (req, res, next) {
         LeagueModel.findOne({slug: req.league}, function (err, doc) {
@@ -159,15 +197,12 @@ module.exports = {
                 }
 
                 remote(remoteConfig.url + '/tournaments/players?ids=' + tournament._id, function (err, response, result) {
-                    var stats = result.filter(function (item) {
-                        return !!item.playerId;
-                    });
+                    let stats = result.filter(item => !!item.playerId);
 
-                    stats = stats.sort(function (a, b) {
-                        return a.goals_assists_hearts_stars >= b.goals_assists_hearts_stars ? -1 : 1;
-                    });
-
-                    stats = stats.slice(0, 10);
+                    stats = sumStats(stats);
+                    stats = stats
+                        .sort((a, b) => a.goals_assists_hearts_stars >= b.goals_assists_hearts_stars ? -1 : 1)
+                        .slice(0, 10);
 
                     res.render('partials/lazy/stats', {
                         league:     res.locals.globals.league,
@@ -282,27 +317,6 @@ module.exports = {
                     }
                 });
 
-                var stats = new Promise(function (resolve, reject) {
-                    remote(remoteConfig.url + '/tournaments/players?ids=' + tournament._id, function (err, response, stats) {
-                        var stat = {
-                            goals:   [],
-                            assists: []
-                        };
-
-                        stats      = stats.sort(function (a, b) {
-                            return a.goals >= b.goals ? -1 : 1;
-                        });
-                        stat.goals = stats.slice(0, 10);
-
-                        stats        = stats.sort(function (a, b) {
-                            return a.assists >= b.assists ? -1 : 1;
-                        });
-                        stat.assists = stats.slice(0, 10);
-
-                        resolve(stats);
-                    });
-                });
-
                 var central = new Promise(function (resolve, reject) {
                     GameArticleModel.findOne({
                         tournament:  tournament.remoteId,
@@ -408,19 +422,18 @@ module.exports = {
                     });
                 });
 
-                Promise.all([stats, central, articles, photos, stages]).then(function (result) {
-                    var showCup  = result[4].playOff && Object.keys(result[4].playOff.stages).length;
+                Promise.all([central, articles, photos, stages]).then(function (result) {
+                    var showCup  = result[3].playOff && Object.keys(result[3].playOff.stages).length;
                     var template = (showCup ? 'tournaments/cup' : 'tournaments/item');
 
                     res.render(template, {
                         tournament:     tournament,
-                        stats:          result[0],
-                        central:        result[1],
-                        previews:       result[2].previews,
-                        reviews:        result[2].reviews,
-                        photos:         result[3],
-                        stages:         result[4].stages,
-                        playOff:        result[4].playOff,
+                        central:        result[0],
+                        previews:       result[1].previews,
+                        reviews:        result[1].reviews,
+                        photos:         result[2],
+                        stages:         result[3].stages,
+                        playOff:        result[3].playOff,
                         pageTournament: true
                     });
                 });
@@ -442,6 +455,7 @@ module.exports = {
                         var article = docs.filter(function (doc) {
                             return doc.gameId == item._id && doc.type == type;
                         }).pop();
+
                         if (!article) {
                             return;
                         }
@@ -520,13 +534,10 @@ module.exports = {
                 }
 
                 remote(remoteConfig.url + '/tournaments/players?ids=' + tournament._id, function (err, response, stats) {
-                    stats = stats.filter(function (item) {
-                        return !!item.playerId;
-                    });
+                    stats = stats.filter(item => !!item.playerId);
 
-                    stats = stats.sort(function (a, b) {
-                        return a.goals_assists_hearts_stars >= b.goals_assists_hearts_stars ? -1 : 1;
-                    });
+                    stats = sumStats(stats);
+                    stats = stats.sort((a, b) => a.goals_assists_hearts_stars >= b.goals_assists_hearts_stars ? -1 : 1);
 
                     res.title('Статистика');
                     res.render('tournaments/stats', {tournament: tournament, stats: stats, pageStats: true});
@@ -672,22 +683,15 @@ module.exports = {
 
             /* Stats */
             parallels = parallels.concat(function (cb) {
-                var startTime = new Date().getTime();
-
                 remote(remoteConfig.url + '/tournaments/players?ids=' + tournament._id, function (err, response, stats) {
-                    var endTime = new Date().getTime();
-                    log('received Stats', (endTime - startTime) + "ms.", response.body.length);
+                    const summed = sumStats(stats);
+                    const goals = summed
+                        .sort((a, b) => a.goals >= b.goals ? -1 : 1)
+                        .slice(0, 15);
 
-                    var goals = stats.sort(function (a, b) {
-                        return a.goals >= b.goals ? -1 : 1;
-                    }).slice(0, 10);
-
-                    var assists = stats.sort(function (a, b) {
-                        return a.assists >= b.assists ? -1 : 1;
-                    }).slice(0, 10);
-
-                    endTime = new Date().getTime();
-                    log('processed Stats', (endTime - startTime) + "ms.");
+                    const assists = summed
+                        .sort((a, b) => a.assists >= b.assists ? -1 : 1)
+                        .slice(0, 15);
 
                     cb(null, {goals: goals, assists: assists});
                 });
