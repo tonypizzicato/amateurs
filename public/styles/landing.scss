@@ -202,7 +202,8 @@ main {
 }
 
 .section-join__button,
-.section-map__button {
+.section-map__button,
+.section-devices__button {
     display:         inline-block;
     overflow-y:      hidden;
     position:        relative;
@@ -627,17 +628,17 @@ main {
 // ====================================================== //
 
 .section-devices {
-    position:        relative;
-    height:          660px;
-    margin-top:      -20px;
-    padding:         0 30px;
+    position:    relative;
+    height:      660px;
+    margin-top:  -20px;
+    padding:     0 30px;
 
-    color:           #fff;
-    background:      #1a2430 url("/images/landing/teams.jpg") left 18px repeat-x;
-    clip-path:       polygon(0 0, 100% 7%, 100% 100%, 0 100%);
+    color:       #fff;
+    background:  #1a2430 url("/images/landing/teams.jpg") left 18px repeat-x;
+    clip-path:   polygon(0 0, 100% 7%, 100% 100%, 0 100%);
 
-    display:         flex;
-    align-items:     center;
+    display:     flex;
+    align-items: center;
 
     &::after {
         content:         '';
@@ -700,10 +701,16 @@ main {
 }
 
 .section-devices__text {
-    font-size:   13px;
-    line-height: 2;
-    text-align:  justify;
-    margin:      0 20px;
+    font-size:       13px;
+    line-height:     2;
+    text-align:      justify;
+    margin:          20px 0;
+
+    animation-delay: .5s;
+}
+
+.section-devices__button {
+    animation-delay: .6s;
 }
 
 .section-devices__book {
