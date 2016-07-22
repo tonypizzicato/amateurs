@@ -627,17 +627,83 @@ main {
 // ====================================================== //
 
 .section-devices {
+    position:        relative;
     height:          660px;
     margin-top:      -20px;
+    padding:         0 30px;
 
     color:           #fff;
-    background:      #1a2430 url("/images/landing/plans.jpg");
-    background-size: cover;
+    background:      #1a2430 url("/images/landing/teams.jpg") left 18px repeat-x;
     clip-path:       polygon(0 0, 100% 7%, 100% 100%, 0 100%);
 
+    display:         flex;
+    align-items:     center;
+
+    &::after {
+        content:         '';
+        position:        absolute;
+        top:             0;
+        bottom:          0;
+        left:            0;
+        right:           0;
+        background:      url("/images/landing/devices.png") 650px bottom no-repeat;
+        background-size: 1150px;
+        transform:       translateZ(0);
+        z-index:         -1;
+    }
 }
 
-.section-devices__devices {
+@media (min-width: 1360px) {
+    .section-devices {
+        padding: 0 80px;
+
+        &::after {
+            background-position: 700px bottom;
+        }
+    }
+}
+
+@media (min-width: 1560px) {
+    .section-devices {
+        padding: 0 80px;
+
+        &::after {
+            background-position: 700px bottom;
+        }
+    }
+}
+
+.section-devices__content {
+    width: 560px;
+}
+
+.section-devices__title {
+    font-size:      48px;
+    line-height:    60px;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+
+    display:        flex;
+    flex-direction: column;
+
+    :nth-child(1) {
+        letter-spacing: .5px;
+    }
+
+    :nth-child(2) {
+        letter-spacing: .01px;
+    }
+
+    :nth-child(3) {
+        letter-spacing: 41.3px;
+    }
+}
+
+.section-devices__text {
+    font-size:   13px;
+    line-height: 2;
+    text-align:  justify;
+    margin:      0 20px;
 }
 
 .section-devices__book {
@@ -662,7 +728,7 @@ main {
     color:           #fff;
     background:      #1a2430 url("/images/landing/plans.jpg");
     background-size: cover;
-    clip-path:       polygon(0 0, 100% 7%, 100% 100%, 0 100%);
+    //clip-path:       polygon(0 0, 100% 7%, 100% 100%, 0 100%);
 
     display:         flex;
     flex-direction:  column;
