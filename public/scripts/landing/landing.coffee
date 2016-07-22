@@ -30,6 +30,14 @@ $ ->
             $('.section-map__content').addClass 'fadeInUp'
             $('.section-map__pointer').addClass 'fadeInDown'
     )
+    new Waypoint(
+        element: document.getElementById('devices'),
+        offset: '50%'
+        handler: () ->
+            $('.section-devices__title').addClass 'fadeIn'
+            $('.section-devices__text').addClass 'fadeIn'
+            $('.section-devices__button').addClass 'fadeInUp'
+    )
 
 #    $('#join').waypoint () ->
 #        console.log 'wp 1 reached'
