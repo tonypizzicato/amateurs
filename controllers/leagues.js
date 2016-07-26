@@ -155,6 +155,12 @@ function leagueName(slug) {
         case 'sochi':
             name = 'Сочи';
             break;
+        case 'tagil':
+            name = 'Нижний Тагил';
+            break;
+        case 'almaty':
+            name = 'Алматы';
+            break;
         case 'kiev':
             name = 'Киев';
             break;
