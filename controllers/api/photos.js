@@ -4,6 +4,7 @@ var _           = require('lodash'),
     fs          = require('fs.extra'),
     async       = require('async'),
     Flickr      = require('flickrapi'),
+    mongoose    = require('mongoose'),
     PhotosModel = require('../../models/photo'),
     gm          = require('gm');
 
@@ -36,13 +37,13 @@ var api = {
         if (req.params.type == 'games') {
             PhotosModel.getByGame(req.params.postId, function (err, docs) {
                 if (err) {
-                    res.status(500).json({error: err});
+                    res.status(500).json({ error: err });
                 }
 
                 res.json(docs);
             });
         } else {
-            res.status(500).json({err: 'Undefined photos type "' + req.params.type + '"'});
+            res.status(500).json({ err: 'Undefined photos type "' + req.params.type + '"' });
         }
     },
 
@@ -163,9 +164,9 @@ var api = {
         if (req.params.tournament) {
             req.body.tournament = req.params.tournament;
         }
-        PhotosModel.update({_id: req.params.id}, {$set: req.body}, function (err, count) {
+        PhotosModel.update({ _id: req.params.id }, { $set: req.body }, function (err, count) {
             if (err) {
-                res.status(500).json({error: err});
+                res.status(500).json({ error: err });
                 return;
             }
 
@@ -185,12 +186,12 @@ var api = {
     delete: function (req, res) {
         console.info('/api/games/:postId/images/:id DELETE handled');
 
-        PhotosModel.findOne({_id: req.params.id}).exec(function (err, doc) {
+        PhotosModel.findOne({ _id: req.params.id }).exec(function (err, doc) {
             if (err || !doc) {
-                return res.status(500).json({error: err});
+                return res.status(500).json({ error: err });
             }
 
-            PhotosModel.remove({_id: req.params.id}, function (err, count) {
+            PhotosModel.remove({ _id: req.params.id }, function (err, count) {
                 if (count) {
                     res.status(200).json({});
                 } else {
@@ -201,10 +202,29 @@ var api = {
             if (!!doc.main && !!doc.main.src) {
                 Flickr.authenticate(flickrOptions, function (err, flickr) {
                     var id = doc.main.src.match(/\/(\d+)_/)[1];
-                    flickr.photos.delete({photo_id: id}, function (err, res) {
+                    flickr.photos.delete({ photo_id: id }, function (err, res) {
                     });
                 });
             }
+        });
+    },
+
+    photosCountByGames: (req, res) => {
+        const ids = (_.isArray(req.query.games) ? req.query.games : (!_.isEmpty(req.query.games) ? [req.query.games] : []))
+            .map(id => new mongoose.Types.ObjectId(id));
+
+        PhotosModel.aggregate([
+            {
+                $match: { type: req.params.type, postId: { $in: ids } },
+            },
+            {
+                $group: {
+                    _id:   '$postId',
+                    count: { $sum: 1 }
+                }
+            }
+        ], (err, count) => {
+            res.json({ count });
         });
     }
 };
@@ -214,7 +234,7 @@ var _toFlickr = function (files, cb) {
         console.info('flickr authed');
 
         var getSize = function (sizes, label) {
-            var image = _.findWhere(sizes, {label: label});
+            var image = _.findWhere(sizes, { label: label });
 
             if (!image) {
                 return undefined;
@@ -228,7 +248,7 @@ var _toFlickr = function (files, cb) {
         };
 
         var photos = files.map(function (file) {
-            return {title: file.filename, photo: file.path, path: file.path, index: file.index};
+            return { title: file.filename, photo: file.path, path: file.path, index: file.index };
         });
 
         var photosCount = photos.length,
@@ -237,7 +257,7 @@ var _toFlickr = function (files, cb) {
 
         async.map(photos, function (photo, cb) {
             if (!photo.path) {
-                return cb(null, {index: photo.index});
+                return cb(null, { index: photo.index });
             }
 
             var options = {
@@ -247,15 +267,15 @@ var _toFlickr = function (files, cb) {
             Flickr.upload(options, flickrOptions, function (err, ids) {
                 if (err) {
                     console.warn('Error uploading photos.', err);
-                    return cb(null, {path: photo.path, index: photo.index});
+                    return cb(null, { path: photo.path, index: photo.index });
                 }
 
                 console.info('Uploaded ' + ++uploaded + ' photos of ' + photosCount, ids);
 
                 ids.forEach(function (id) {
-                    flickr.photos.getSizes({photo_id: id}, function (err, res) {
+                    flickr.photos.getSizes({ photo_id: id }, function (err, res) {
                         if (err) {
-                            return cb(null, {path: photo.path, index: photo.index});
+                            return cb(null, { path: photo.path, index: photo.index });
                         }
                         var sizes = res.sizes.size;
 
@@ -264,7 +284,7 @@ var _toFlickr = function (files, cb) {
                             main:  getSize(sizes, 'Original')
                         };
 
-                        cb(null, {path: photo.path, sizes: set, title: photo.title, index: photo.index});
+                        cb(null, { path: photo.path, sizes: set, title: photo.title, index: photo.index });
                     });
                 });
             });

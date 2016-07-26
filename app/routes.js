@@ -91,6 +91,9 @@ module.exports.initialize = function (app) {
         .put(apiPhotos.save)
         .delete(apiPhotos.delete);
 
+    r.route('/:type/images/count')
+        .get(apiPhotos.photosCountByGames);
+
     r.route('/game-articles')
         .get(apiArticlesGames.list)
         .post(apiArticlesGames.create);
