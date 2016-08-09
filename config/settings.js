@@ -14,5 +14,6 @@ module.exports = {
     // ordersAnapa: 'eumerov.afl@gmail.com',
     // ordersIzhevsk: 'eumerov.afl@gmail.com',
     ordersKiev: 'firstenko95@mail.ru',
-    api: 'http://sharvester.ru/api'
+    api: 'http://sharvester.ru/api',
+    host: 'http://amateurs.io',
 };
