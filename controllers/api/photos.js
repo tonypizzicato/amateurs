@@ -1,12 +1,15 @@
 "use strict";
 
-var _           = require('lodash'),
-    fs          = require('fs.extra'),
-    async       = require('async'),
-    Flickr      = require('flickrapi'),
-    mongoose    = require('mongoose'),
-    PhotosModel = require('../../models/photo'),
-    gm          = require('gm');
+var _               = require('lodash'),
+    fs              = require('fs.extra'),
+    async           = require('async'),
+    Flickr          = require('flickrapi'),
+    mongoose        = require('mongoose'),
+    PhotosModel     = require('../../models/photo'),
+    TournamentModel = require('../../models/tournament'),
+    LeagueModel     = require('../../models/league'),
+    settings        = require('../../config/settings'),
+    gm              = require('gm');
 
 var flickrOptions = {
     api_key:             "ffd56ffb2631d75166e922ed7b5cc5b6",
@@ -213,18 +216,47 @@ var api = {
         const ids = (_.isArray(req.query.games) ? req.query.games : (!_.isEmpty(req.query.games) ? [req.query.games] : []))
             .map(id => new mongoose.Types.ObjectId(id));
 
-        PhotosModel.aggregate([
-            {
-                $match: { type: req.params.type, postId: { $in: ids } },
-            },
-            {
-                $group: {
-                    _id:   '$postId',
-                    count: { $sum: 1 }
-                }
-            }
-        ], (err, count) => {
-            res.json({ count });
+        const gameUrlMap = {};
+
+        PhotosModel.find({ postId: { $in: ids } }, 'postId tournament').exec((err, games) => {
+            games = _.uniq(games, 'postId');
+
+            const tournamentIds = games.map(game => game.tournament);
+
+            TournamentModel.find({ _id: { $in: tournamentIds } }, '_id leagueId slug').exec((err, tournaments) => {
+                const leagueIds = tournaments.map(tournament => tournament.leagueId);
+
+                LeagueModel.find({ _id: { $in: leagueIds } }, '_id slug').exec((err, leagues) => {
+                    games.forEach(game => {
+                        const tournament = _.findWhere(tournaments, { _id: game.tournament});
+                        const league       = _.findWhere(leagues, { _id: tournament.leagueId });
+
+                        gameUrlMap[game.postId] = `${settings.host}/${league.slug}/tournaments/${tournament.slug}/matches/${game.postId}#photos`
+                    });
+
+                    PhotosModel.aggregate([
+                        {
+                            $match: { type: req.params.type, postId: { $in: ids } },
+                        },
+                        {
+                            $group: {
+                                _id:   '$postId',
+                                count: { $sum: 1 }
+                            }
+                        }
+                    ], (err, count) => {
+                        const result = ids.map(id => {
+                            return {
+                                _id:   id,
+                                count: _.get(_.findWhere(count, { _id: id }), 'count', 0),
+                                url:   gameUrlMap[id]
+                            }
+                        });
+                        res.json({ count: result });
+                    });
+
+                });
+            });
         });
     }
 };

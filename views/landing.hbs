@@ -20,6 +20,37 @@
     <!-- endbuild -->
 </head>
 <body>
+<div class="menu">
+    <nav class="menu__content">
+        <div class="menu__list">
+            <a href="http://amateurs.io/moscow">Москва</a>
+            <a href="http://amateurs.io/spb">Санкт-Петербург</a>
+            <a href="http://amateurs.io/ekb">Екатеринбург</a>
+            <a href="http://amateurs.io/kazan">Казань</a>
+            <a href="http://amateurs.io/rostov">Ростов-на-Дону</a>
+            <a href="http://amateurs.io/y-ola">Йошкар-Ола</a>
+            <a href="http://amateurs.io/izhevsk">Ижевск</a>
+            <a href="http://amateurs.io/anapa">Анапа</a>
+            <a href="http://amateurs.io/tagil">Нижний Тагил</a>
+            <a href="http://amateurs.io/sochi">Сочи</a>
+            <a href="http://amateurs.io/chita">Чита</a>
+            <a href="http://amateurs.io/almaty">Алматы</a>
+            <a href="http://amateurs.io/kiev">Киев</a>
+        </div>
+    </nav>
+    <button class="menu__button-close js-menu-button-close" id="close-button">Close Menu</button>
+    <div class="menu__morph-shape" id="morph-shape" data-morph-open="M-1,0h101c0,0,0-1,0,395c0,404,0,405,0,405H-1V0z">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 800" preserveAspectRatio="none">
+            <path d="M-1,0h101c0,0-97.833,153.603-97.833,396.167C2.167,627.579,100,800,100,800H-1V0z"></path>
+            <desc>Created with Snap</desc>
+            <defs></defs>
+        </svg>
+    </div>
+</div>
+
+<button class="menu__button js-menu-button-open" id="open-button">Open Menu</button>
+
+<div class="content-wrap">
     <header class="header">
         <div class="header__arrow">
             <div class="header__arrow">
@@ -89,9 +120,21 @@
                 <div class="section-map__text">
                     К нашему революционному движению уже присоединились 11 городов России и СНГ.
                     В списке городов находятся такие города, как
-                    <strong>Москва</strong>, <strong>Санкт-Петербург</strong>, <strong>Екатеринбург</strong>,
-                    <strong>Казань</strong>, <strong>Киев</strong>, <strong>Ростов-на-Дону</strong>, <strong>Йошкар-Ола</strong>,
-                    <strong>Ижеввск</strong>, <strong>Анапа</strong>, <strong>Сочи</strong> и <strong>Чита</strong>.
+                    <ul class="section-map__list">
+                        <li class="section-map__item"><a href="http://amateurs.io/moscow">Москва</a></li>
+                        <li class="section-map__item"><a href="http://amateurs.io/spb">Санкт-Петербург</a></li>
+                        <li class="section-map__item"><a href="http://amateurs.io/ekb">Екатеринбург</a></li>
+                        <li class="section-map__item"><a href="http://amateurs.io/kazan">Казань</a></li>
+                        <li class="section-map__item"><a href="http://amateurs.io/rostov">Ростов-на-Дону</a></li>
+                        <li class="section-map__item"><a href="http://amateurs.io/y-ola">Йошкар-Ола</a></li>
+                        <li class="section-map__item"><a href="http://amateurs.io/izhevsk">Ижевск</a></li>
+                        <li class="section-map__item"><a href="http://amateurs.io/anapa">Анапа</a></li>
+                        <li class="section-map__item"><a href="http://amateurs.io/tagil">Нижний Тагил</a></li>
+                        <li class="section-map__item"><a href="http://amateurs.io/sochi">Сочи</a></li>
+                        <li class="section-map__item"><a href="http://amateurs.io/chita">Чита</a></li>
+                        <li class="section-map__item"><a href="http://amateurs.io/almaty">Алматы</a></li>
+                        <li class="section-map__item"><a href="http://amateurs.io/kiev">Киев</a></li>
+                    </ul>
                     Присоединяйся к команде или помоги развитию движения Аматеур.
                 </div>
                 <a href="http://amateurs.io/about#open" class="section-join__button" target="_blank">Открой лигу в своем городе</a>
@@ -126,8 +169,8 @@
                 <a href="http://amateurs.io/about#open" class="section-devices__button animated fade" target="_blank">Установить приложение</a>
             </div>
             <!--<div class="section-devices__devices">-->
-                <!--<div class="section-devices__phone"></div>-->
-                <!--<div class="section-devices__book"></div>-->
+            <!--<div class="section-devices__phone"></div>-->
+            <!--<div class="section-devices__book"></div>-->
             <!--</div>-->
         </section>
 
@@ -148,26 +191,26 @@
         <span class="footer__logo"></span>
         <span>handcrafted by tonypizzicato</span>
     </footer>
+</div>
+<script>
+    var cb  = function (href) {
+        var l  = document.createElement('link')
+        l.rel  = 'stylesheet'
+        l.href = href
+        var h  = document.getElementsByTagName('head')[0]
+        h.parentNode.insertBefore(l, h)
+    }
+    var raf = requestAnimationFrame || mozRequestAnimationFrame ||
+            webkitRequestAnimationFrame || msRequestAnimationFrame
+    if (raf) {
+        raf(cb.bind(null, 'https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&subset=latin,cyrillic'))
+    }
+    else window.addEventListener('load', cb)
+</script>
 
-    <script>
-        var cb  = function (href) {
-            var l  = document.createElement('link');
-            l.rel  = 'stylesheet';
-            l.href = href;
-            var h  = document.getElementsByTagName('head')[0];
-            h.parentNode.insertBefore(l, h);
-        };
-        var raf = requestAnimationFrame || mozRequestAnimationFrame ||
-                webkitRequestAnimationFrame || msRequestAnimationFrame;
-        if (raf) {
-            raf(cb.bind(null, 'https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&subset=latin,cyrillic'));
-        }
-        else window.addEventListener('load', cb);
-    </script>
-
-    <!-- build:js({public,.tmp}) /scripts/landing_out.js -->
-    <script src="/scripts/landing_out.js"></script>
-    <!-- endbuild -->
+<!-- build:js({public,.tmp}) /scripts/landing_out.js -->
+<script src="/scripts/landing_out.js"></script>
+<!-- endbuild -->
 
 
 </body>
