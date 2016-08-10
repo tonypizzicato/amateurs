@@ -40,7 +40,7 @@ main {
 }
 
 .content {
-    position:   relative;
+    position: relative;
 
     &::before {
         position:   absolute;
@@ -80,6 +80,8 @@ main {
     font-size:       12px;
     background:      #171E28;
     color:           #AFB6BC;
+    
+    transform:       translateY(-1px);
 }
 
 .footer__logo {
@@ -131,7 +133,7 @@ main {
 
 .menu {
     position:   absolute;
-    right:      0;
+    left:       calc(100% - 360px);
     z-index:    1001;
     width:      360px;
     height:     100%;
@@ -265,6 +267,7 @@ only screen and (max-width: 480px) {
 
     .menu {
         width:     560px;
+        left:      calc(100% - 560px);
         transform: translate3d(560px, 0, 0);
     }
 
