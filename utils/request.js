@@ -5,13 +5,17 @@ const padStrUrl   = Array(60).join(' ');
 const padStrState = Array(16).join(' ');
 const padStrTime  = Array(5).join(' ');
 
+export const SCOPE_SITE = 'SITE';
+export const SCOPE_ADMIN = 'ADMIN';
+
 /**
  * @param {String} url
+ * @param {String} scope
  *
  * @return {axios.Promise}
  */
-export default function request(url) {
-    console.info(`[API CALL] ${pad(padStrUrl, url)} ${pad(padStrState, 'started')}`);
+export default function request(url, scope = SCOPE_SITE) {
+    console.info(`[${scope}][API CALL] ${pad(padStrUrl, url)} ${pad(padStrState, 'started')}`);
 
     const startTime = new Date().getTime();
 
@@ -21,7 +25,7 @@ export default function request(url) {
     }).then((response) => {
         const endTime = new Date().getTime();
 
-        console.info(`[API CALL] ${pad(padStrUrl, url)} ${pad(padStrState, 'finished in')} ${pad(padStrTime, (endTime - startTime).toString())}ms`);
+        console.info(`[${scope}][API CALL] ${pad(padStrUrl, url)} ${pad(padStrState, 'finished in')} ${pad(padStrTime, (endTime - startTime).toString())}ms`);
 
         return response;
     }).catch(function (response) {
@@ -33,7 +37,7 @@ export default function request(url) {
         }
         const endTime = new Date().getTime();
 
-        console.info(`[API CALL] ${pad(padStrUrl, url)} ${pad(padStrState, 'gone down in')} ${pad(padStrTime, (endTime - startTime).toString())}ms`);
+        console.info(`[${scope}][API CALL] ${pad(padStrUrl, url)} ${pad(padStrState, 'gone down in')} ${pad(padStrTime, (endTime - startTime).toString())}ms`);
     });
 }
 

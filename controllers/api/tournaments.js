@@ -1,13 +1,12 @@
 "use strict";
 
-var RestClient      = require('node-rest-client').Client,
-    TournamentModel = require('../../models/tournament'),
-    CountryModel    = require('../../models/country'),
-    LeagueModel     = require('../../models/league'),
-    async           = require('async'),
-    remoteConfig    = require('../../config/tinyapi');
+var TournamentModel = require('../../models/tournament'),
+    CountryModel = require('../../models/country'),
+    LeagueModel = require('../../models/league'),
+    async = require('async'),
+    remoteConfig = require('../../config/tinyapi');
 
-var client = new RestClient(remoteConfig.authOptions);
+import request, { SCOPE_ADMIN } from '../../utils/request';
 
 var api = {
 
@@ -30,51 +29,53 @@ var api = {
 
         LeagueModel.find({}, function (err, leagues) {
             if (err) {
-                res.status(500).json({error: err});
+                res.status(500).json({ error: err });
                 return;
             }
 
             var _tournaments = [];
-            var pending      = 0;
+            var pending = 0;
 
             function getTournaments(league) {
                 pending += 1;
-                client.get(remoteConfig.url + '/league/' + league._id + '/tournaments/active', function (tournaments) {
-                    var queries = [];
+                request(`/league/${league._id}/tournaments/active`, SCOPE_ADMIN)
+                    .then(response => {
+                        const tournaments = response.data;
 
-                    tournaments.forEach(function (item) {
-                        item.remoteId = item._id;
-                        item.leagueId = league._id;
+                        var queries = [];
 
-                        delete item.__v;
+                        tournaments.forEach(function (item) {
+                            item.remoteId = item._id;
+                            item.leagueId = league._id;
 
-                        var query = function (cb) {
-                            TournamentModel.findOne({remoteId: item._id}).exec(function (err, doc) {
-                                if (doc) {
-                                    TournamentModel.update({remoteId: item._id}, {$set: item}).exec(cb);
-                                } else {
-                                    TournamentModel.create(item);
-                                }
-                            });
-                        };
-                        queries.push(query);
+                            delete item.__v;
+
+                            var query = function (cb) {
+                                TournamentModel.findOne({ remoteId: item._id }).exec(function (err, doc) {
+                                    if (doc) {
+                                        TournamentModel.update({ remoteId: item._id }, { $set: item }).exec(cb);
+                                    } else {
+                                        TournamentModel.create(item);
+                                    }
+                                });
+                            };
+                            queries.push(query);
+                        });
+
+                        async.parallel(queries, function (err, docs) {
+                            _tournaments = _tournaments.concat(docs);
+
+                            if (!--pending) {
+                                result(_tournaments);
+                            }
+                        });
                     });
-
-                    async.parallel(queries, function (err, docs) {
-                        _tournaments = _tournaments.concat(docs);
-
-                        if (!--pending) {
-                            result(_tournaments);
-                        }
-                    });
-
-                });
             }
 
             var result = function () {
-                TournamentModel.find({state: {$in: ['CREATED', 'IN_PROGRESS']}}).sort({show: -1, sort: 1}).populate('country').exec(function (err, docs) {
+                TournamentModel.find({ state: { $in: ['CREATED', 'IN_PROGRESS'] } }).sort({ show: -1, sort: 1 }).populate('country').exec(function (err, docs) {
                     if (err) {
-                        res.status(500).json({error: err});
+                        res.status(500).json({ error: err });
                         return;
                     }
 
@@ -97,7 +98,7 @@ var api = {
 
         TournamentModel.create(req.body, function (err, article) {
             if (err) {
-                res.status(500).json({error: err});
+                res.status(500).json({ error: err });
                 return;
             }
 
@@ -113,17 +114,17 @@ var api = {
     save: function (req, res, next) {
         console.info('/api/tournaments/:id PUT handled');
 
-        TournamentModel.update({_id: req.params.id}, {$set: req.body}, function (err, count) {
+        TournamentModel.update({ _id: req.params.id }, { $set: req.body }, function (err, count) {
             if (err) {
-                res.status(500).json({error: err});
+                res.status(500).json({ error: err });
                 return;
             }
 
             if (req.body.country) {
-                CountryModel.update({tournaments: req.params.id}, {$pull: {tournaments: req.params.id}},
-                    {multi: true}).exec(function () {
-                        CountryModel.findOneAndUpdate({_id: req.body.country}, {$addToSet: {tournaments: req.params.id}}).exec();
-                    });
+                CountryModel.update({ tournaments: req.params.id }, { $pull: { tournaments: req.params.id } },
+                    { multi: true }).exec(function () {
+                    CountryModel.findOneAndUpdate({ _id: req.body.country }, { $addToSet: { tournaments: req.params.id } }).exec();
+                });
             }
 
             res.status(200).json({});
@@ -138,9 +139,9 @@ var api = {
     delete: function (req, res) {
         console.info('/api/tournaments/:id DELETE handled');
 
-        TournamentModel.remove({_id: req.params.id}, function (err, count) {
+        TournamentModel.remove({ _id: req.params.id }, function (err, count) {
             if (err) {
-                res.status(500).json({error: err});
+                res.status(500).json({ error: err });
             }
 
             if (count) {
