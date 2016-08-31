@@ -1,9 +1,9 @@
 "use strict";
 
-var _               = require('lodash'),
-    LeagueModel     = require('../models/league'),
+var _ = require('lodash'),
+    LeagueModel = require('../models/league'),
     TournamentModel = require('../models/tournament'),
-    FieldModel      = require('../models/field');
+    FieldModel = require('../models/field');
 
 module.exports = {
 
@@ -26,7 +26,7 @@ module.exports = {
 
                 field.countries = _.mapValues(field.countries, function (tournaments) {
                     return {
-                        country:     tournaments.length ? tournaments[0].country : null,
+                        country: tournaments.length ? tournaments[0].country : null,
                         tournaments: tournaments
                     };
                 });
@@ -40,7 +40,7 @@ module.exports = {
 
     list: function (req, res) {
         LeagueModel.findOne({ slug: req.params.league }).exec(function (err, league) {
-            var query = { show: true, leagueId: league._id };
+            var query = { show: true, leagueId: league._id, image: { $ne: null } };
             if (req.params.name) {
                 TournamentModel.findOne({ slug: req.params.name, leagueId: league._id }).exec(function (err, tournament) {
                     if (!tournament) {

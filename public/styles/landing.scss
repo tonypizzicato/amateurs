@@ -32,6 +32,10 @@ main {
     flex: 1;
 }
 
+.container {
+    position: relative;
+}
+
 .content-wrap {
     overflow-y:                 scroll;
     -webkit-overflow-scrolling: touch;
@@ -80,7 +84,7 @@ main {
     font-size:       12px;
     background:      #171E28;
     color:           #AFB6BC;
-    
+
     transform:       translateY(-1px);
 }
 
