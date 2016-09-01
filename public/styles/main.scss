@@ -827,6 +827,17 @@ a:hover .fixture__looser a {
     //    display:       inline-block;
 }
 
+.fixture__score_type_cup {
+    display:         flex;
+    justify-content: space-between;
+    align-items:     center;
+    flex-direction:  row-reverse;
+}
+
+.fixture__score_type_pen {
+    font-size: 12px;
+}
+
 .panel_type_form .panel__body {
     padding-top:    29px;
     padding-bottom: 29px;

@@ -67,7 +67,7 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-10">
+                                        <div class="col-md-9">
                                         <span class="fixture__team s_display_block
                                             {{~#eq (gameResTeam teams.[0] this) 'w'}} fixture__winner{{/eq~}}
                                             {{~#eq (gameResTeam teams.[0] this) 'l'}} fixture__looser{{/eq~}}
@@ -91,12 +91,28 @@
                                             {{/if}}
                                         </span>
                                         </div>
-                                        <div class="col-md-2 text_align_r">
+                                        <div class="col-md-3 text_align_r">
                                             {{#if _id}}
                                                 <a href="/{{../../../globals.league.slug}}/tournaments/{{../../../globals.tournament.slug}}/matches/{{_id}}">
                                                     {{#if score}}
-                                                        <div>{{~score.ft.[0]}}</div>
-                                                        <div>{{~score.ft.[1]}}</div>
+                                                        <div class="fixture__score_type_cup
+                                                            {{~#eq (gameResTeam teams.[0] this) 'w'}} fixture__winner{{/eq~}}
+                                                            {{~#eq (gameResTeam teams.[0] this) 'l'}} fixture__looser{{/eq~}}
+                                                        ">
+                                                            {{#if score.pen}}
+                                                                <span class="fixture__score_type_pen">{{~score.pen.[0]}}</span>
+                                                            {{/if}}
+                                                            <span>{{~score.ft.[0]}}</span>
+                                                        </div>
+                                                        <div class="fixture__score_type_cup
+                                                            {{~#eq (gameResTeam teams.[0] this) 'l'}} fixture__winner{{/eq~}}
+                                                            {{~#eq (gameResTeam teams.[0] this) 'w'}} fixture__looser{{/eq~}}
+                                                        ">
+                                                            {{#if score.pen}}
+                                                                <span class="fixture__score_type_pen">{{~score.pen.[1]}}</span>
+                                                            {{/if}}
+                                                            <span>{{~score.ft.[1]}}</span>
+                                                        </div>
                                                     {{else}}
                                                         <div>-</div>
                                                         <div>-</div>
@@ -152,13 +168,21 @@
                                             {{~teams.[0].name~}}
                                         {{/if}}
                                     </span>
-                                    {{#if score}}
+                                    {{#if score~}}
                                         <span class="
                                             {{~#eq (gameResTeam teams.[0] this) 'w'}} fixture__winner{{/eq~}}
                                             {{~#eq (gameResTeam teams.[0] this) 'l'}} fixture__looser{{/eq~}}
                                             ">
-                                            {{~score.ft.[0]}}
+                                            {{~score.ft.[0]~}}
                                         </span>
+                                        {{~#if score.pen~}}
+                                            <br/><span class="fixture__score_type_pen
+                                            {{~#eq (gameResTeam teams.[0] this) 'w'}} fixture__winner{{/eq~}}
+                                                {{~#eq (gameResTeam teams.[0] this) 'l'}} fixture__looser{{/eq~}}
+                                            ">
+                                                {{~score.pen.[0]~}}
+                                            </span>
+                                        {{/if}}
                                     {{/if}}
                                 </div>
 
@@ -173,13 +197,21 @@
                                             {{~teams.[1].name~}}
                                         {{/if}}
                                     </span>
-                                    {{#if score}}
+                                    {{#if score~}}
                                         <span class="
                                             {{~#eq (gameResTeam teams.[1] this) 'w'}} fixture__winner{{/eq~}}
                                             {{~#eq (gameResTeam teams.[1] this) 'l'}} fixture__looser{{/eq~}}
                                             ">
-                                            {{~score.ft.[1]}}
+                                            {{~score.ft.[1]~}}
                                         </span>
+                                        {{~#if score.pen~}}
+                                            <br/><span class="fixture__score_type_pen
+                                            {{~#eq (gameResTeam teams.[1] this) 'w'}} fixture__winner{{/eq~}}
+                                                {{~#eq (gameResTeam teams.[1] this) 'l'}} fixture__looser{{/eq~}}
+                                            ">
+                                                {{~score.pen.[1]~}}
+                                            </span>
+                                        {{/if}}
                                     {{/if}}
                                 </div>
                             </a>
