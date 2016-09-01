@@ -45,7 +45,23 @@
                                                         {{~#eq globals.league.slug 'beach'~}}
                                                             Москва. Пляжный Футбол
                                                             {{~else~}}
-                                                            NoNname
+                                                            {{~#eq globals.league.slug 'mr'~}}
+                                                                Московская Область
+                                                                {{~else~}}
+                                                                {{~#eq globals.league.slug 'sumy'~}}
+                                                                    Сумы
+                                                                    {{~else~}}
+                                                                    {{~#eq globals.league.slug 'minsk'~}}
+                                                                        Минск
+                                                                        {{~else~}}
+                                                                        {{~#eq globals.league.slug 'pinsk'~}}
+                                                                            Пинск
+                                                                            {{~else~}}
+                                                                            NoNname
+                                                                        {{~/eq~}}
+                                                                    {{~/eq~}}
+                                                                {{~/eq~}}
+                                                            {{~/eq~}}
                                                         {{~/eq~}}
                                                     {{~/eq~}}
                                                 {{~/eq~}}

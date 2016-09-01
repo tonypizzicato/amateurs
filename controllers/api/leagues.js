@@ -1,6 +1,7 @@
 "use strict";
 
-var async        = require('async'),
+var _            = require('lodash'),
+    async        = require('async'),
     RestClient   = require('node-rest-client').Client,
     LeagueModel  = require('../../models/league'),
     remoteConfig = require('../../config/tinyapi');
@@ -27,7 +28,7 @@ var api = {
         LeagueModel.findOne(req.params.id, function (err, league) {
             if (err) {
                 console.info(err);
-                res.status(500).json({error: err});
+                res.status(500).json({ error: err });
                 return;
             }
 
@@ -51,14 +52,18 @@ var api = {
                 delete league.__v;
 
                 var query = function (cb) {
-                    LeagueModel.findOneAndUpdate({remoteId: league._id}, league, {new: true, upsert: true, setDefaultsOnInsert: true}).exec(cb);
+                    LeagueModel.findOneAndUpdate({ remoteId: league._id }, _.omit(league, ['show']), {
+                        new:                 true,
+                        upsert:              true,
+                        setDefaultsOnInsert: true
+                    }).exec(cb);
                 };
                 queries.push(query);
             });
 
             async.parallel(queries, function (err, docs) {
                 if (err) {
-                    res.status(500).json({error: err});
+                    res.status(500).json({ error: err });
                     return;
                 }
 
@@ -78,9 +83,9 @@ var api = {
     save: function (req, res, next) {
         console.info('/api/leagues/:id PUT handled');
 
-        LeagueModel.update({_id: req.params.id}, {$set: req.body}, function (err, count) {
+        LeagueModel.update({ _id: req.params.id }, { $set: req.body }, function (err, count) {
             if (err) {
-                res.status(500).json({error: err});
+                res.status(500).json({ error: err });
                 return;
             }
             if (!count) {
