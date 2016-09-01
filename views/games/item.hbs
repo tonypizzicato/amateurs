@@ -9,8 +9,14 @@
                             <div class="col-md-4 text_align_r">
                                 <img class="pull-left" src="http://sharvester.ru/api/img/teams/{{game.teams.[0]._id}}.png" height="64">
 
-                                <p class="text_size_32 text_weight_light s_mb_20">{{#if game.score.ft.[0]}}{{game.score.ft.[0]}}{{else}}
-                                    0{{/if}}</p>
+                                <p class="text_weight_light s_mb_20">
+                                    {{#if game.score.pen}}
+                                        <span class="text_size_18 text_weight_light s_mr_10">{{game.score.pen.[0]}}</span>
+                                    {{/if}}
+                                    <span class="text_size_32">
+                                        {{#if game.score.ft.[0]}}{{game.score.ft.[0]}}{{else}}0{{/if~}}
+                                    </span>
+                                </p>
 
                                 <p class="text_color_orange text_size_16">{{game.teams.[0].name}}</p>
 
@@ -36,7 +42,7 @@
                                         <div class="pcc-percents-wrapper">
                                             {{#eq game.state 'CLOSED'}}
                                                 <span class="match__time_value match__time_value_finished">
-                                                    <i class="flaticon flaticon-black188"></i><br>Матч завершен
+                                                    <i class="flaticon flaticon-black188"></i><br>Матч завершен{{#if game.score.pen}}<br>после серии<br>пенальти{{/if}}
                                                 </span>
                                             {{else}}
                                                 {{#eq game.state 'STARTED'}}
@@ -76,8 +82,14 @@
                             <div class="col-md-4 text_align_l">
                                 <img class="pull-right" src="http://sharvester.ru/api/img/teams/{{game.teams.[1]._id}}.png" height="64">
 
-                                <p class="text_size_32 text_weight_light s_mb_20">{{#if game.score.ft.[1]}}{{game.score.ft.[1]}}{{else}}
-                                    0{{/if}}</p>
+                                <p class="text_size_32 text_weight_light s_mb_20">
+                                    <span class="text_size_32">
+                                        {{#if game.score.ft.[1]}}{{game.score.ft.[1]}}{{else}}0{{/if}}
+                                    </span>
+                                    {{#if game.score.pen}}
+                                        <span class="text_size_18 text_weight_light s_ml_10">{{game.score.pen.[1]}}</span>
+                                    {{/if}}
+                                </p>
 
                                 <p class="text_color_orange text_size_16">{{game.teams.[1].name}}</p>
 
