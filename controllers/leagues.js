@@ -167,6 +167,18 @@ function leagueName(slug) {
         case 'beach':
             name = 'Москва. Пляжный футбол';
             break;
+        case 'mr':
+            name = 'Московская Область';
+            break;
+        case 'sumy':
+            name = 'Сумы';
+            break;
+        case 'minsk':
+            name = 'Минск';
+            break;
+        case 'pinsk':
+            name = 'Пинск';
+            break;
     }
 
     return name;

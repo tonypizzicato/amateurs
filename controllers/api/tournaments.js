@@ -1,10 +1,11 @@
 "use strict";
 
-var TournamentModel = require('../../models/tournament'),
-    CountryModel = require('../../models/country'),
-    LeagueModel = require('../../models/league'),
-    async = require('async'),
-    remoteConfig = require('../../config/tinyapi');
+var _               = require('lodash'),
+    TournamentModel = require('../../models/tournament'),
+    CountryModel    = require('../../models/country'),
+    LeagueModel     = require('../../models/league'),
+    async           = require('async'),
+    remoteConfig    = require('../../config/tinyapi');
 
 import request, { SCOPE_ADMIN } from '../../utils/request';
 
@@ -34,7 +35,7 @@ var api = {
             }
 
             var _tournaments = [];
-            var pending = 0;
+            var pending      = 0;
 
             function getTournaments(league) {
                 pending += 1;
@@ -47,6 +48,8 @@ var api = {
                         tournaments.forEach(function (item) {
                             item.remoteId = item._id;
                             item.leagueId = league._id;
+
+                            item = _.omit(item, ['show']);
 
                             delete item.__v;
 
@@ -73,7 +76,10 @@ var api = {
             }
 
             var result = function () {
-                TournamentModel.find({ state: { $in: ['CREATED', 'IN_PROGRESS'] } }).sort({ show: -1, sort: 1 }).populate('country').exec(function (err, docs) {
+                TournamentModel.find({ state: { $in: ['CREATED', 'IN_PROGRESS'] } }).sort({
+                    show: -1,
+                    sort: 1
+                }).populate('country').exec(function (err, docs) {
                     if (err) {
                         res.status(500).json({ error: err });
                         return;
