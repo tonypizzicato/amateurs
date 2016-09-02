@@ -13,10 +13,75 @@
                     <div class="team">{{player.profile.teamName}}</div>
                     <div class="info">
                         <div>
-                            <div class="title">Номер</div>{{player.profile.number}}</div>
-                        <div><img src="http://sharvester.ru/api/img/teams/{{player.profile.teamId}}.png" height="96"/></div>
+                            <div class="title">Номер</div>
+                            {{player.profile.number}}
+                        </div>
                         <div>
-                            <div class="title">Позиция</div>{{player.profile.position}}</div>
+                            <div class="title">Возраст</div>
+                            {{age player.profile.birthDate}}
+                        </div>
+                        <div>
+                            <img src="http://sharvester.ru/api/img/teams/{{player.profile.teamId}}.png" height="96"/>
+                        </div>
+                        <div>
+                            <div class="title">Дата Рождения</div>
+                            <span class="birthday">{{birthDay player.profile.birthDate}}</span>
+                        </div>
+                        <div>
+                            <div class="title">Позиция</div>
+                            {{player.profile.position}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="stats s_mb_40">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="panel s_m_0">
+                    <div class="panel__header">
+                        <i class="fa fa-list-ol s_mr_10"></i> История Выступлений
+                    </div>
+                    <div class="panel__body s_p_0 s_pb_5">
+
+                        <table class="table table_type_table s_m_0">
+                            <thead>
+                            <tr>
+                                <th class="col-md-3 text_align_l">Клуб</th>
+                                <th class="col-md-3 text_align_l text_overflow_ellipsis">Турнир</th>
+                                <th class="col-md-1 text_align_l">Стадия</th>
+                                <th class="col-md-05 text_align_c">Позиция</th>
+                                <th class="col-md-05 text_align_c">Игры</th>
+                                <th class="col-md-05 text_align_c text_overflow_ellipsis">Голы</th>
+                                <th class="col-md-05 text_align_c">Пасы</th>
+                                <th class="col-md-05 text_align_c"><i class="fa fa-star"></i></th>
+                                <th class="col-md-05 text_align_c">Очки</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            {{#each player.stats}}
+                                <tr>
+                                    <td class="text_align_l text_overflow_ellipsis">
+                                        <span class="tl tl-{{get (last teams) '_id'}}-20 s_mr_10"></span>{{get
+                                        (last teams)
+                                        'name'}}
+                                    </td>
+                                    <td class="text_align_l text_overflow_ellipsis">{{tournamentName}}</td>
+                                    <td class="text_align_l text_overflow_ellipsis">{{stageName}}</td>
+                                    <td class="text_align_c">{{playerPosition}}</td>
+                                    <td class="text_align_c">{{played}}</td>
+                                    <td class="text_align_c">{{goals}}</td>
+                                    <td class="text_align_c">{{assists}}</td>
+                                    <td class="text_align_c">{{hearts_stars}}</td>
+                                    <td class="text_align_c">{{goals_assists_hearts_stars}}</td>
+                                </tr>
+                            {{/each}}
+                            </tbody>
+                        </table>
+
                     </div>
                 </div>
             </div>

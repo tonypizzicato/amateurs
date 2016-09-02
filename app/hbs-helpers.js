@@ -318,7 +318,7 @@ var helpers = {
     },
 
     noYear: function (name) {
-        if(!_.isString(name)) {
+        if (!_.isString(name)) {
             console.warn(`Can not apply "noYear". "${name}" is not a string.`);
             return '';
         }
@@ -332,15 +332,15 @@ var helpers = {
     },
 
     noSecondName: function (name) {
-        if(!_.isString(name)) {
+        if (!_.isString(name)) {
             return '';
         }
 
         return name.replace(/\s\s+/g, ' ').split(' ').slice(0, 2).join(' ');
     },
 
-    noAfl: function(name) {
-        if(!_.isString(name)) {
+    noAfl: function (name) {
+        if (!_.isString(name)) {
             return '';
         }
 
@@ -365,8 +365,26 @@ var helpers = {
         return Math.floor((width - padding) / sum);
     },
 
-    sc: function() {
+    sc: function () {
         return ` sc${_.random(1, 9)}`;
+    },
+
+    birthDay: function (birthDay) {
+        if (!birthDay) {
+            return '—';
+        }
+        birthDay = birthDay * 1000;
+
+        return moment(birthDay).isValid() ? dateFn(birthDay, 'DD-MM-YYYY') : '—';
+    },
+
+    age: function (birthDay) {
+        if (!birthDay) {
+            return '—';
+        }
+        birthDay = birthDay * 1000;
+
+        return moment(birthDay).isValid() ? moment().diff(birthDay, 'years') : '—';
     }
 };
 
