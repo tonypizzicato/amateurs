@@ -238,7 +238,7 @@ var helpers = {
                 return undefined;
             }
         }
-        if (obj.hasOwnProperty(key)) {
+        if (!!obj && obj.hasOwnProperty(key)) {
             return obj[key];
         } else {
             console.log('no value', obj, key);
