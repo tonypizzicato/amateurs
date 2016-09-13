@@ -389,19 +389,6 @@ module.exports = {
                             return resolve([]);
                         }
 
-                        docs = docs.sort(function (a, b) {
-                            var format = 'YYYY-MM-DD';
-                            var dateA  = moment(a.dc).format(format);
-                            var dateB  = moment(b.dc).format(format);
-                            if (dateB < dateA) {
-                                return -1
-                            } else if (dateA == dateB) {
-                                return a.sort < b.sort ? -1 : 1;
-                            } else {
-                                return 1;
-                            }
-                        });
-
                         docs = _.groupBy(docs, item => item.postId);
 
                         const ids = _.keys(docs);
@@ -410,7 +397,9 @@ module.exports = {
                             .then(response => {
                                 const res = [];
 
-                                response.data.forEach(function (item) {
+                                const games = _.sortBy(response.data, 'timestamp');
+
+                                games.forEach(function (item) {
                                     res.push({
                                         game:   item,
                                         photos: docs[item._id].slice(0, 5)
