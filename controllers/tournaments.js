@@ -397,7 +397,7 @@ module.exports = {
                             .then(response => {
                                 const res = [];
 
-                                const games = _.sortBy(response.data, 'timestamp');
+                                const games = _.orderBy(response.data, 'timestamp', 'desc');
 
                                 games.forEach(function (item) {
                                     res.push({
