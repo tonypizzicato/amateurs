@@ -11,15 +11,20 @@ export const SCOPE_ADMIN = 'ADMIN';
 /**
  * @param {String} url
  * @param {String} scope
+ * @param {Boolean} trimPublic
  *
  * @return {axios.Promise}
  */
-export default function request(url, scope = SCOPE_SITE) {
+export default function request(url, scope = SCOPE_SITE, trimPublic = false) {
     console.info(`[${scope}][API CALL] ${pad(padStrUrl, url)} ${pad(padStrState, 'started')}`);
 
     const startTime = new Date().getTime();
 
-    return axios.get(config.url + url, {
+    const host = !trimPublic ? config.url : config.url.replace('/public', '');
+
+    console.info(`host: ${host}`);
+
+    return axios.get(host + url, {
         auth:    config.authOptions,
         headers: { 'Accept-Encoding': 'gzip, deflate, sdch' }
     }).then((response) => {
@@ -37,7 +42,7 @@ export default function request(url, scope = SCOPE_SITE) {
         }
         const endTime = new Date().getTime();
 
-        console.info(`[${scope}][API CALL] ${pad(padStrUrl, url)} ${pad(padStrState, 'gone down in')} ${pad(padStrTime, (endTime - startTime).toString())}ms`);
+        console.warn(`[${scope}][API CALL] ${pad(padStrUrl, url)} ${pad(padStrState, 'gone down in')} ${pad(padStrTime, (endTime - startTime).toString())}ms ${error}`);
     });
 }
 
