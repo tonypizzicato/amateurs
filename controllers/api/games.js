@@ -18,13 +18,13 @@ var api = {
     list: function (req, res) {
         console.info('/api/games GET handled');
 
-        TournamentModel.find({leagueId: req.query.leagueId}).exec(function (err, tournaments) {
+        TournamentModel.find({leagueId: req.query.leagueId, show: true}).exec(function (err, tournaments) {
             var ids = tournaments.map(function (item) {
                 return item._id;
             });
 
             if(ids.length) {
-                client.get(remoteConfig.url + '/tournaments/games?ids=' + ids.join('&ids='), games => res.json(games));
+                client.get(remoteConfig.url + '/tournaments/games?ids=' + ids.join('&ids='), games => res.json(games && games.length ? games : []));
             } else {
                 res.json([]);
             }
