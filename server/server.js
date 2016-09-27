@@ -40,11 +40,12 @@ export function init() {
     app.use(cookieParser());
 
     app.use(busboy());
+
     // parse application/json
-    app.use(bodyParser.json({ limit: '10mb' }));
+    app.use(bodyParser.json({ limit: '20mb' }));
 
     // parse application/x-www-form-urlencoded
-    app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }))
+    app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
 
     app.use(session({
         secret:            'test secret',
@@ -168,7 +169,12 @@ export function init() {
                 return next(err);
             }
 
-            var populateTournaments = { path: 'countries.tournaments', model: 'Tournament', match: { show: true }, options: { sort: { 'sort': 1 } } };
+            var populateTournaments = {
+                path:    'countries.tournaments',
+                model:   'Tournament',
+                match:   { show: true },
+                options: { sort: { 'sort': 1 } }
+            };
             var populateCountries   = { path: 'countries', match: { show: true }, options: { sort: { 'sort': 1 } } };
 
             if (!doc) {
