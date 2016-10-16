@@ -1,30 +1,25 @@
 <nav class="navbar navbar-default" role="navigation">
     <ul class="nav navbar-nav">
-        {{#gt globals.leagues.length 1}}
-            <li class="dropdown dropdown_type_leagues">
+        <li class="dropdown dropdown_type_leagues">
 
 
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <i class="fa fa-angle-down"></i>
-                    {{~globals.league.name~}}
-                </a>
-                <ul class="dropdown-menu dropdown-menu_type_leagues row">
-                    <li>
-                        <ul>
-                            {{~#each globals.leagues~}}
-                                <li class="dropdown-header">
-                                    <a href="/{{slug}}">{{name}}</a>
-                                </li>
-                            {{~/each~}}
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-        {{else}}
-            <li class="navbar__item">
-                <a href="/{{globals.league.slug}}">{{~globals.league.name~}}</a>
-            </li>
-        {{/gt}}
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-angle-down"></i>
+                {{~globals.league.name~}}
+            </a>
+            <ul class="dropdown-menu dropdown-menu_type_leagues row">
+                <li>
+                    <ul>
+                        <li class="dropdown-header">
+                            <a href="/minsk">Минск</a>
+                        </li>
+                        <li class="dropdown-header">
+                            <a href="/pinsk">Пинск</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
     </ul>
     <ul class="nav navbar-nav navbar_border_left">
         <li class="dropdown dropdown_type_tournaments">
@@ -82,13 +77,6 @@
         {{/eq}}
     </ul>
     <ul class="nav navbar-nav pull-right">
-        {{# if opts.showPromoTournamentLink }}
-            {{#eq globals.league.slug 'moscow' }}
-                <li class="navbar__item{{#if promoTournamentPage}} navbar__item_active_yes{{/if}}">
-                    <a class="navbar-link_type_promo" href="/{{globals.league.slug}}/tournaments/promo/vdv-day">2 Августа</a>
-                </li>
-            {{/eq}}
-        {{/if}}
         <li class="navbar__item{{#if pageAbout}} navbar__item_active_yes{{/if}}">
             <a href="/about">О Лиге</a>
         </li>
