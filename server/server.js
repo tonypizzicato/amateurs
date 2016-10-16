@@ -128,7 +128,7 @@ export function init() {
 
 
     app.get('/', function (req, res) {
-        res.redirect('/' + (req.session.league ? req.session.league.slug : 'moscow'));
+        res.redirect('/' + (req.session.league ? req.session.league.slug : 'minsk'));
     });
 
     app.get('*', function (req, res, next) {
@@ -155,11 +155,11 @@ export function init() {
 
             var match = param.match(/^(\w+)\/?(.*|$)/);
 
-            var leaguesNames = ['moscow', 'spb', 'ekb', 'kazan', 'rostov', 'y-ola', 'anapa', 'izhevsk', 'chita', 'sochi', 'tagil', 'almaty', 'kiev', 'beach', 'mr', 'sumy', 'minsk', 'pinsk'];
+            var leaguesNames = ['minsk', 'pinsk'];
             if (match && match.length >= 1 && _.contains(leaguesNames, match[1])) {
                 query.slug = match[1];
             } else {
-                query.slug = req.session.league ? req.session.league.slug : 'moscow';
+                query.slug = req.session.league ? req.session.league.slug : 'minsk';
             }
         }
 
