@@ -19,35 +19,35 @@
 }
 
 .flag__wrapper_america {
-    background-image:   image-url('/images/nationals/promo/flag-america.jpg');
+    background-image: image-url('/images/nationals/promo/flag-america.jpg');
 }
 
 .flag__wrapper_en {
-    background-image:   image-url('/images/nationals/promo/flag-en.jpg');
+    background-image: image-url('/images/nationals/promo/flag-en.jpg');
 }
 
 .flag__wrapper_gr {
-    background-image:   image-url('/images/nationals/promo/flag-gr.jpg');
+    background-image: image-url('/images/nationals/promo/flag-gr.jpg');
 }
 
 .flag__wrapper_it {
-    background-image:   image-url('/images/nationals/promo/flag-it.jpg');
+    background-image: image-url('/images/nationals/promo/flag-it.jpg');
 }
 
 .flag__wrapper_sp {
-    background-image:   image-url('/images/nationals/promo/flag-sp.jpg');
+    background-image: image-url('/images/nationals/promo/flag-sp.jpg');
 }
 
 .flag__wrapper_fr {
-    background-image:   image-url('/images/nationals/promo/flag-fr.jpg');
+    background-image: image-url('/images/nationals/promo/flag-fr.jpg');
 }
 
 .flag__wrapper_pr {
-    background-image:   image-url('/images/nationals/promo/flag-pr.jpg');
+    background-image: image-url('/images/nationals/promo/flag-pr.jpg');
 }
 
 .flag__wrapper_bx {
-    background-image:   image-url('/images/nationals/promo/flag-bx.jpg');
+    background-image: image-url('/images/nationals/promo/flag-bx.jpg');
 }
 
 .flag__wrapper:before {
@@ -106,6 +106,10 @@
     font-weight: bold;
     color:       #3dc9b3;
     text-align:  center;
+}
+
+.flag_country_america {
+    background-image: image-url('/images/nationals/promo/flag-america.jpg');
 }
 
 .flag_country_br {
@@ -171,7 +175,6 @@
 .flag_country_eu {
     background-image: image-url('/images/nationals/promo/flag-eu.jpg');
 }
-
 
 .flag_country_tk {
     //background-image: image-url('/images/nationals/promo/flag-tk.jpg');
