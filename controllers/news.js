@@ -139,9 +139,9 @@ var getNewsList = function (req, cb) {
 
         NewsModel.aggregate([
             { $match: query },
-            { $group: { _id: { slug: "$slug", date: { $dateToString: { format: "%d-%m-%Y", date: "$dc" } } } } }
+            { $group: { _id: { slug: "$slug", date: { $dateToString: { format: "%d-%m-%Y", date: "$dc" } } }, id: { $first: '$_id' } } }
         ]).exec((err, slugs) => {
-            NewsModel.find({ slug: { $in: slugs.map(sl => _.get(sl, '_id.slug')) } }).sort({ dc: -1 }).lean().populate(populateOptions).exec(function (err, docs) {
+            NewsModel.find({ _id: { $in: slugs.map(sl => sl.id) } }).sort({ dc: -1 }).lean().populate(populateOptions).exec(function (err, docs) {
                 cb(err, docs);
             });
         });
