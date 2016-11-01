@@ -21,7 +21,7 @@ var controller = {
                 return moment(item.dc).locale('ru').format('DD MMMM YYYY');
             });
 
-            var newsSticked = Array.prototype.slice.call(docs.filter(function (item) {
+            let newsSticked = Array.prototype.slice.call(docs.filter(function (item) {
                 return item.stick == true;
             }), 0, 5);
 
@@ -52,9 +52,9 @@ var controller = {
     },
 
     item: function (req, res, next) {
-        var populateOptions = { path: 'country' };
-        const dateFrom      = moment(req.params.date, "DD-MM-YYYY");
-        const dateTill      = moment(dateFrom).add(1, 'd');
+        const populateOptions = { path: 'country' };
+        const dateFrom        = moment(req.params.date, "DD-MM-YYYY");
+        const dateTill        = moment(dateFrom).add(1, 'd');
         console.log(req.params.date, dateFrom.toDate(), dateTill.toDate());
 
         LeagueModel.findOne({ slug: req.params.league }).exec(function (err, league) {
@@ -73,14 +73,17 @@ var controller = {
     },
 
     globals: function (req, res, next) {
-        var parallels = [];
         /* Leagues */
-        var populateOptions = { path: 'countries', match: { show: true }, options: { sort: { 'sort': 1 } } };
+        const populateOptions = { path: 'countries', match: { show: true }, options: { sort: { 'sort': 1 } } };
         LeagueModel.find({ show: true }).sort({ sort: 1 }).populate(populateOptions).exec(function (err, league) {
 
             res.locals.globals.leagues = league;
 
-            ContactModel.find({ leagueId: res.locals.globals.league._id, show: true, tournaments: [] }).sort({ sort: 1 }).exec(function (err, contacts) {
+            ContactModel.find({
+                leagueId:    res.locals.globals.league._id,
+                show:        true,
+                tournaments: []
+            }).sort({ sort: 1 }).exec(function (err, contacts) {
                 res.locals.globals.contacts = contacts;
 
                 next();
@@ -91,8 +94,7 @@ var controller = {
 };
 
 var getNewsList = function (req, cb) {
-    var query  = {},
-        series = [];
+    let series = [];
 
     /** Get league if defined in request */
     series = series.concat(function (cb) {
@@ -106,7 +108,7 @@ var getNewsList = function (req, cb) {
                 return cb(true);
             }
 
-            var query = {
+            const query = {
                 slug:     req.params.name,
                 leagueId: league._id
             };
@@ -119,7 +121,7 @@ var getNewsList = function (req, cb) {
         if (err || !res) {
             return cb(true);
         }
-        var query = {};
+        const query = {};
 
         if (req.params.name) {
             query.leagueId = res.leagueId;
@@ -132,11 +134,16 @@ var getNewsList = function (req, cb) {
     });
 
     function findNews(query, cb) {
-        var populateOptions = { path: 'country' };
-        query.show          = true;
+        const populateOptions = { path: 'country' };
+        query.show            = true;
 
-        NewsModel.find(query).sort({ dc: -1 }).lean().populate(populateOptions).exec(function (err, docs) {
-            cb(err, docs);
+        NewsModel.aggregate([
+            { $match: query },
+            { $group: { _id: { slug: "$slug", date: { $dateToString: { format: "%d-%m-%Y", date: "$dc" } } } } }
+        ]).exec((err, slugs) => {
+            NewsModel.find({ slug: { $in: slugs.map(sl => _.get(sl, '_id.slug')) } }).sort({ dc: -1 }).lean().populate(populateOptions).exec(function (err, docs) {
+                cb(err, docs);
+            });
         });
     }
 };
