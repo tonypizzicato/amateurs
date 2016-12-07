@@ -511,40 +511,54 @@ ul, ol {
     padding:  10px 15px;
 }
 
+.nav-tabs .tab__title {
+    width: auto;
+    font-size: 12px;
+}
+
 .nav-tabs .tab__title.tab__title_size_quarter {
     width: 25%;
+    font-size: 14px;
 }
 
 .nav-tabs .tab__title.tab__title_size_third {
     width: 33.3333%;
+    font-size: 14px;
 }
 
 .nav-tabs .tab__title.tab__title_size_half {
     width: 50%;
+    font-size: 14px;
 }
 
 .nav-tabs .tab__title.tab__title_size_full {
     width: 100%;
+    font-size: 14px;
 }
 
 .nav-tabs .tab__title.tab__title_size_5 {
     width: 20%;
+    font-size: 14px;
 }
 
 .nav-tabs .tab__title.tab__title_size_4 {
     width: 25%;
+    font-size: 14px;
 }
 
 .nav-tabs .tab__title.tab__title_size_3 {
     width: 33.3333%;
+    font-size: 14px;
 }
 
 .nav-tabs .tab__title.tab__title_size_2 {
     width: 50%;
+    font-size: 14px;
 }
 
 .nav-tabs .tab__title.tab__title_size_1 {
     width: 100%;
+    font-size: 14px;
 }
 
 .nav-tabs .tab__title,
@@ -2250,6 +2264,6 @@ td .tl {
     }
 
     .contact__photo {
-        margin: 10px 0;
+        margin: 10px auto;
     }
 }

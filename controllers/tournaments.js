@@ -35,9 +35,9 @@ const sumStats = stats => {
 
     stats.forEach(player => {
         if (result.hasOwnProperty(player.playerId)) {
-            var summed = playerFieldsToSum.reduce((player, field) => _.merge(player, { [field]: player[field] + result[player.playerId][field]}), player);
+            var summed = playerFieldsToSum.reduce((player, field) => _.merge(player, { [field]: player[field] + result[player.playerId][field] }), player);
 
-            player     = {
+            player = {
                 ...player,
                 ...summed
             }
@@ -209,8 +209,8 @@ module.exports = {
 
                         res.render('partials/lazy/stats', {
                             league:    res.locals.globals.league,
-                                       tournament,
-                                       stats,
+                            tournament,
+                            stats,
                             emptyText: 'Нет данных',
                             layout:    false
                         });
@@ -342,7 +342,10 @@ module.exports = {
                 });
 
                 var articles = new Promise(function (resolve, reject) {
-                    GameArticleModel.find({ tournament: tournament.remoteId, show: true }).sort({ dc: -1 }).limit(30).lean().exec(function (err, docs) {
+                    GameArticleModel.find({
+                        tournament: tournament.remoteId,
+                        show:       true
+                    }).sort({ dc: -1 }).limit(30).lean().exec(function (err, docs) {
                         if (err) {
                             return reject(err);
                         }
@@ -566,12 +569,22 @@ module.exports = {
                                 }
                             });
 
-                        var fixture = {};
-                        games.forEach(function (item) {
-                            if (Object.prototype.toString.call(fixture[item.tourText]) !== '[object Array]') {
-                                fixture[item.tourText] = [];
-                            }
-                            fixture[item.tourText].push(item);
+                        const gs = games.reduce((acc, game) => {
+                            acc[game.stageId] = acc[game.stageId] ? [...acc[game.stageId], game] : [game];
+
+                            return acc;
+                        }, {});
+
+                        const fixture = {};
+                        Object.keys(gs).forEach(function (stageId) {
+                            fixture[stageId] = {};
+
+                            gs[stageId].forEach(function (item) {
+                                if (Object.prototype.toString.call(fixture[stageId][item.tourText]) !== '[object Array]') {
+                                    fixture[stageId][item.tourText] = [];
+                                }
+                                fixture[stageId][item.tourText].push(item);
+                            });
                         });
 
                         res.title('Календарь');
@@ -620,6 +633,11 @@ module.exports = {
             var tournament = result,
                 parallels  = [];
 
+            tournament.stages = tournament.stages.reduce((acc, stage) => ({
+                ...acc,
+                [stage._id]: stage,
+            }), {});
+
             /* Leagues */
             parallels = parallels.concat(function (cb) {
                 var populateOptions = { path: 'countries', match: { show: true }, options: { sort: { 'sort': 1 } } };
@@ -650,7 +668,7 @@ module.exports = {
                 request(`/tournaments/players?ids=${tournament._id}`)
                     .then(response => {
                         const summed = sumStats(response.data);
-                        const goals = summed
+                        const goals  = summed
                             .sort((a, b) => a.goals >= b.goals ? -1 : 1)
                             .slice(0, 15);
 
