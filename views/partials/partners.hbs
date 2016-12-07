@@ -5,13 +5,17 @@
     <div class="panel__body">
         <div class="partners">
 
-            <div class="row s_mb_20">
-                <div class="col-md-12">
-                    <a href="http://formanazakaz.ru/" title="Производство футбольной экипировки." target="_blank">
-                        <img class="partner__image" src="/images/partner-fabrika-rostov.jpg">
-                    </a>
+            {{#eq globals.league.slug 'rostov'}}
+                <div class="row s_mb_20">
+                    <div class="col-md-12">
+                        <div class="partner__border">
+                            <a href="http://formanazakaz.ru/" title="Производство футбольной экипировки." target="_blank">
+                                <img class="partner__image" src="/images/partner-fabrika-rostov.jpg">
+                            </a>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            {{/eq}}
 
             <div class="row s_mb_20">
                 <div class="col-md-12">
@@ -24,7 +28,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="row s_mb_20">
                 <div class="col-md-12">
                     <div class="partner__border">
