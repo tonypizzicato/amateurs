@@ -128,6 +128,9 @@ function leagueName(slug) {
         case 'moscow':
             name = 'Москва';
             break;
+        case 'moscow5x5':
+            name = 'Москва 5x5';
+            break;
         case 'spb':
             name = 'Санкт-Петербург';
             break;
