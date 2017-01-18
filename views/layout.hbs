@@ -3,7 +3,8 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>
-        {{#if title}}{{title}} — {{/if}} Amateur Football League. Любительская Футбольная Лига Аматеур {{#eq globals.league.slug 'moscow'~}}
+    {{#if title}}{{title}} — {{/if}} Amateur Football League. Любительская Футбольная Лига Аматеур
+    {{#eq globals.league.slug 'moscow'~}}
         Москва
         {{~else~}}
         {{~#eq globals.league.slug 'moscow5x5'~}}
@@ -78,7 +79,8 @@
                     {{~/eq~}}
                 {{~/eq~}}
             {{~/eq~}}
-        {{~/eq~}}.
+        {{~/eq~}}
+    {{~/eq~}}.
     </title>
 
     <meta name="description" content="{{desc}}">
